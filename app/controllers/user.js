@@ -85,3 +85,17 @@ module.exports.delete = function(req,res){
     res.json({success: 1});
   });
 }
+
+// change user's role
+module.exports.change = function(req,res){
+  var _user = req.body;
+  var role = parseInt(_user.role);
+
+  User.where({_id: _user.id}).update({role: role},function(err){
+    if(err){
+      console.log(err);
+      res.json({success: 0});
+    }
+    res.json({success: 1,role: _user.role});
+  });
+}

@@ -24,17 +24,36 @@
 
   // show edit role pannel
   function showEditpannel(user_id){
-    var tr = $('span[data-role='+user_id+']');
-    if(tr.css('display') === "inline"){
-      tr.fadeOut('slow');
+    var tr = $('span[data-user="'+user_id+'"]');
+    if(tr.css('display') === "none"){
+      tr.fadeIn('fast');
     }else{
-      tr.fadeIn('slow');
+      tr.fadeOut('fast');
     }
   }
-  $('#edit').on('click',function(){
+  $('.edit').on('click',function(){
     var id = $(this).data('user');
+    console.log(id);
     showEditpannel(id);
   });
   // 修改用户角色
-  function changeRole(){};
+  function changeRole(id){
+    var role = parseInt($('span[data-user="'+id+'"] .user_id').val());
+    $.ajax({
+      method: "POST",
+      url: "/user/changerole",
+      data: {id: id,role: role},
+      type: 'json',
+      success: function(data){
+        if(data.success === 1){
+          $('.item-id-'+ id+ ' .role').html(data.role);
+          $('.js-form-wrapper[data-user="'+id+'"]').fadeOut('fast');
+        }
+      }
+    });
+  };
+  $('.js-form-wrapper button').on('click',function(){
+    var id = $(this).data('user');
+    changeRole(id);
+  });
 })(jQuery)

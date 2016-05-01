@@ -19,6 +19,7 @@ module.exports = function(app){
   app.get('/logout',User.logout);
   app.get('/user/list',User.list);
   app.post('/user/delete',User.delete);
+  app.post('/user/changerole',User.change);
 
   // admin
   app.get('/admin',User.signinRequire, Admin.admin);

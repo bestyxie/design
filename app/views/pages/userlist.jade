@@ -11,14 +11,14 @@ block content
       tr(class="item-id-#{user._id}")
         td #{index}
         td #{user.name}
-        td #{user.role}
+        td.role #{user.role}
         td
-          a#edit.btn.btn-link(type="button",data-user="#{user._id}") 编辑
+          a.edit.btn.btn-link(type="button",data-user="#{user._id}") 编辑
           a.btn.btn-link.deleteUser(type="button",data-user="#{user._id}") 删除
-          span.form-wrapper(data-role="#{user._id}")
-            label(for="user_id") 角色
-            input#user_id.form-control(typ="text")
-            button.btn.btn-default 确定
+          span.form-wrapper.js-form-wrapper(data-user="#{user._id}")
+            label(for="user_id") 权限
+            input.user_id.form-control(typ="text")
+            button.btn.btn-default(data-user="#{user._id}") 确定
   script(src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js")
   script(src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js")
   script(src="/js/action.js")

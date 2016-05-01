@@ -15,7 +15,13 @@ label[for="user_id"]{
   display: none;
   overflow: hidden;
   transition: all 200ms;
+  border-left: 1px solid #ccc;
+  padding-left: 20px;
 }
 .form-wrapper button{
   margin-left: 20px;
+}
+.form-wrapper .user_id{
+  display: inline-block;
+  width: 196px;
 }
