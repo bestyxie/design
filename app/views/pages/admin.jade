@@ -1,0 +1,16 @@
+extends ../layout
+
+block content
+  .col-md-6
+    h1 录入商品
+    form(method="POST",action="/admin/new")
+      .form-group
+        label(for="productname") 商品名称
+        input#productname.form-control(type="text",name="product[name]")
+      .form-group
+        label(for="producturl") 图片链接
+        input#producturl.form-control(type="text",name="product[url]")
+      .form-group
+        label(for="productprice") 价格
+        input#productprice.form-control(type="text",name="product[price]")
+      button.btn.btn-default(type="submit") 提交

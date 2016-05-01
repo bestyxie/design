@@ -1,0 +1,8 @@
+extends ../layout
+
+block content
+  .row.container-fluid
+    each product in products
+      .col-xs-6.col-md-3
+        a.thumbnail(href="#")
+          img(src="#{product.url}")
