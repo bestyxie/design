@@ -17,11 +17,11 @@ module.exports = function(app){
   app.post('/user/signup',User.signup);
   app.post('/user/signin',User.signin);
   app.get('/logout',User.logout);
-  app.get('/user/list',User.list);
-  app.post('/user/delete',User.delete);
-  app.post('/user/changerole',User.change);
 
   // admin
-  app.get('/admin',User.signinRequire, Admin.admin);
+  app.get('/admin',User.signinRequire, User.adminRequire, Admin.admin);
   app.post('/admin/new',Admin.new);
+  app.get('/admin/user/list',User.signinRequire, User.adminRequire, User.list);
+  app.post('/user/delete',User.delete);
+  app.post('/user/changerole',User.change);
 }

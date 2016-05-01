@@ -60,6 +60,17 @@ module.exports.signinRequire = function(req,res,next){
   }
 }
 
+// administor require
+module.exports.adminRequire = function(req,res,next){
+  var user = req.session.user;
+  if(user.role > 10){
+    next();
+  }
+  else{
+    res.redirect('/');
+  }
+}
+
 // user list page
 module.exports.list = function(req,res){
   User.find({},function(err,users){
