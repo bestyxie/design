@@ -1,0 +1,25 @@
+extends ../layout
+
+block content
+  table.table.table-hover.user-list
+    tr
+      td #
+      td name
+      td role
+      td oparate
+    each user,index in users
+      tr(class="item-id-#{user._id}")
+        td #{index}
+        td #{user.name}
+        td #{user.role}
+        td
+          a#edit.btn.btn-link(type="button",data-user="#{user._id}") 编辑
+          a.btn.btn-link.deleteUser(type="button",data-user="#{user._id}") 删除
+          span.form-wrapper(data-role="#{user._id}")
+            label(for="user_id") 角色
+            input#user_id.form-control(typ="text")
+            button.btn.btn-default 确定
+  script(src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js")
+  script(src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js")
+  script(src="/js/action.js")
+        

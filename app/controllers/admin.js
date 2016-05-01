@@ -1,5 +1,12 @@
 var Product = require('../models/product');
 
+// admin page
+module.exports.admin = function(req,res){
+  res.render('admin',{
+    user: req.session.user
+  });
+}
+// 新增商品
 module.exports.new = function(req,res){
   var new_product = req.body.product;
 

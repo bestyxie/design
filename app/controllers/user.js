@@ -1,4 +1,5 @@
 var User = require('../models/user');
+
 // 注册
 module.exports.signup = function(req,res){
   var _user = req.body.user;
@@ -6,15 +7,14 @@ module.exports.signup = function(req,res){
     if(err){
       console.log(err);
     }
-    console.log(typeof(user));
     if(!user){
       var user = new User(_user);
       user.save(function(err,user){
         if(err){
           console.log(err);
         }
-        res.redirect("/");
         req.session.user = user;
+        res.redirect("/");
       });
     }
     else if(user.length>0){
@@ -22,6 +22,7 @@ module.exports.signup = function(req,res){
     }
   });
 }
+
 // 登录
 module.exports.signin = function(req,res){
   var _user = req.body.user;
@@ -42,9 +43,45 @@ module.exports.signin = function(req,res){
     }
   })
 }
+
 // 注销
 module.exports.logout = function(req,res){
   req.session.user = null;
 
   res.redirect('/');
+}
+
+// 必须登录
+module.exports.signinRequire = function(req,res,next){
+  if(req.session.user){
+    next();
+  }else{
+    res.redirect('/');
+  }
+}
+
+// user list page
+module.exports.list = function(req,res){
+  User.find({},function(err,users){
+    if(err){
+      console.log('查询用户出错');
+      res.redirect('/');
+    }
+    res.render('userlist',{
+      users: users,
+      user: req.session.user
+    });
+  });
+}
+
+// delete user
+module.exports.delete = function(req,res){
+  var id = req.body.id;
+  User.remove({_id: id},function(err){
+    if(err){
+      console.log(err);
+      res.json({success: 0});
+    }
+    res.json({success: 1});
+  });
 }

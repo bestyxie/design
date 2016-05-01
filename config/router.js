@@ -17,12 +17,10 @@ module.exports = function(app){
   app.post('/user/signup',User.signup);
   app.post('/user/signin',User.signin);
   app.get('/logout',User.logout);
+  app.get('/user/list',User.list);
+  app.post('/user/delete',User.delete);
 
   // admin
-  app.get('/admin',function(req,res){
-    res.render('admin',{
-      user: req.session.user
-    });
-  });
+  app.get('/admin',User.signinRequire, Admin.admin);
   app.post('/admin/new',Admin.new);
 }
