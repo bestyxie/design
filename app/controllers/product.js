@@ -1,3 +1,4 @@
+var mongoose = require('mongoose');
 var Product = require('../models/product');
 var ShoppingCart = require('../models/shoppingcart');
 
@@ -29,30 +30,60 @@ module.exports.detail = function(req,res){
 // 加入购物车
 module.exports.addToCart = function(req,res){
   var product = req.body;
-  var new_user = {};
+  var new_user = {},name = '',url='';
+
+  function getNameUrl(_id){
+    var promise = Product.findOne({_id: _id},function(err,one_product){
+      if(err){
+        console.log(err);
+        return;
+      }
+      name = one_product.name;
+      url = one_product.url;
+    });
+    return promise;
+  }
+
+  function updateCartProducts(userId,products){
+    ShoppingCart.where({userId: product.userId}).update({products: products},function(err){
+      if(err){
+        console.log(err);
+        res.json({success: 0})
+      }
+    });
+  }
 
   ShoppingCart.findOne({userId: product.userId},function(err,user){
     if(err){
       console.log(err);
       res.json({success: 0});
     }
-    if(!user || user.length<=0){
-      new_user.userId = product.userId;
-      new_user.products = [];
-      new_user.products.push({
-        productId: product.productId,
-        name: '',
-        url: '',
-        price: product.price,
-        qty: product.qty
+    var promise;
+    if(!user){
+
+      promise = getNameUrl(product.productId);
+
+      promise.then(function(){
+
+        new_user.userId = product.userId;
+        new_user.products = [];
+        new_user.products.push({
+          productId: product.productId,
+          name: name,
+          url: url,
+          price: product.price,
+          qty: product.qty
+        })
+
+        var new_product = new ShoppingCart(new_user);
+        new_product.save(function(err){
+          if(err){
+            console.log(err);
+            res.json({success: 0})
+          }
+        });
+        
       })
-      var new_product = new ShoppingCart(new_user);
-      new_product.save(function(err){
-        if(err){
-          console.log(err);
-          res.json({success: 0})
-        }
-      });
     }
     else{
       var products = user.products;
@@ -60,26 +91,26 @@ module.exports.addToCart = function(req,res){
 
       for(i; i<products.length; i++){
         if(products[i].productId == product.productId){
-          products[i].qty += parseInt(product.productId);
+          products[i].qty += parseInt(product.qty);
           break;
         }
       }
-      if(i == products.length){
-        user.products.push({
-          productId: product.productId,
-          name: '',
-          url: '',
-          price: product.price,
-          qty: product.qty
+      if(i == products.length){ //购物车没有 productId 为 product.productId的商品
+        promise = getNameUrl(product.productId);
+        promise.then(function(){
+          user.products.push({
+            productId: product.productId,
+            name: name,
+            url: url,
+            price: product.price,
+            qty: product.qty
+          })
+          console.log(name +' '+ url);
+          updateCartProducts(product.userId,products);
         })
       }
-
-      ShoppingCart.where({userId: product.userId}).update({products: products},function(err){
-        if(err){
-          console.log(err);
-          res.json({success: 0})
-        }
-      });
+      
+      updateCartProducts(product.userId,products);
     }
     res.json({success: 1});
   })
@@ -91,22 +122,20 @@ module.exports.shoppingCart = function(req,res){
   var carts = [];
   var a;
   ShoppingCart.find({userId: user._id})
-              .populate()
-  // if(err){
-  //     console.log(err);
-  //     res.render('shoppingCart',{
-  //       carts: []
-  //     });
-  //   }
-  //   for(var i = 0;i<products.length;i++){
-  //     Product.find({_id: products[i].productId})
-  //           .populate()
-  //   }
-  //   carts.push(product[0]);
-  //   a = product[0];
-  //   console.log(a);
-  //   res.render('shoppingCart',{
-  //     carts: carts,
-  //     user: user
-  //   });
+              .populate('products[0].name','name')
+              .populate('products[0].url','url')
+              .exec(function(err,carts){
+                if(err){
+                  console.log(err);
+                  res.render('shoppingcart',{
+                    carts: [],
+                    user: user
+                  })
+                }
+                console.log(carts);
+                res.render('shoppingcart',{
+                  carts: carts,
+                  user: user
+                });
+              });
 }
