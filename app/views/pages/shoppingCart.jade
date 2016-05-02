@@ -1,0 +1,20 @@
+extends ../layout
+
+block content
+  .container-fluid
+    h1 购物车
+    if carts.length == 0
+      p 您的购物车没有商品！
+      a(href="/") 去挑选商品吧
+    else
+      .row
+        .cols-md-2 图片
+        .cols-md-2 名称
+        .cols-md-2 单价
+        .cols-md-2 数量
+        .cols-md-2 总价
+        .cols-md-2 操作
+      each product in carts
+        .row
+          .cols-md-2
+            img(src="#{product.url}")

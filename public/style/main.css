@@ -25,3 +25,20 @@ label[for="user_id"]{
   display: inline-block;
   width: 196px;
 }
+
+// 详情页
+.details .price{
+  display: block;
+}
+.img-wrapper{
+  overflow: hidden;
+  max-height: 400px;
+}
+.img-wrapper .img{
+  width: auto;
+  height: 100%;
+}
+.details input{
+  display: block;
+  margin: 20px 0;
+}

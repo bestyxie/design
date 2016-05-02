@@ -1,3 +1,15 @@
 extends ../layout
 
 block content
+  .container-fluid.details
+    .row
+      .col-md-6.img-wrapper
+        img.img(src="#{product.url}")
+      .col-md-6
+        h1 #{product.name}
+        span.price #{product.price}
+        input.quantity(type="number")
+        button.btn.btn-default.js-addCart(data-productid="#{product._id}") 加入购入车
+  script(src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js")
+  script(src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js")
+  script(src="/js/action.js")

@@ -1,17 +1,14 @@
 var User = require('../app/controllers/user');
 var Admin = require('../app/controllers/admin');
-var Product = require('../app/models/product');
+var Product = require('../app/controllers/product');
 
 module.exports = function(app){
-  app.get('/',function(req,res,next){
-    Product.find({},function(err,products){
-      console.log(products.length);
-      res.render('home',{
-        user: req.session.user,
-        products: products
-      });
-    });
-  });
+
+  // product
+  app.get('/',Product.list);
+  app.get('/details/:id',Product.detail);
+  app.post('/product/addtocart',Product.addToCart);
+  app.get('/cart',User.signinRequire, Product.shoppingCart);
 
   // user
   app.post('/user/signup',User.signup);

@@ -51,7 +51,7 @@ module.exports.logout = function(req,res){
   res.redirect('/');
 }
 
-// 必须登录
+// 必须登录 midware
 module.exports.signinRequire = function(req,res,next){
   if(req.session.user){
     next();
@@ -60,7 +60,7 @@ module.exports.signinRequire = function(req,res,next){
   }
 }
 
-// administor require
+// administor require midware
 module.exports.adminRequire = function(req,res,next){
   var user = req.session.user;
   if(user.role > 10){

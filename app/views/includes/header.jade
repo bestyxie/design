@@ -5,7 +5,7 @@ nav.navbar.navbar-default
     .collapse.navbar-collapse
       ul.nav.navbar-nav
         li
-          a(href="#") Home
+          a(href="/") Home
         li
           a(href="#") Catogery
       form.navbar-form.navbar-left(role="search")
@@ -13,9 +13,11 @@ nav.navbar.navbar-default
           input.form-control(type="text",placeholder="Search")
         button.btn.btn-default(type="submit") submit
       ul.nav.navbar-nav.right
+        li
+          a.shoppinng-cart(href="/cart") 购物车
         if user
           li
-            a(href="#") #{user.name}
+            a.user(href="#",data-userId="#{user._id}") #{user.name}
           li
             a(href="/logout") 注销
         else
