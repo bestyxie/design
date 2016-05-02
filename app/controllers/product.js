@@ -30,6 +30,7 @@ module.exports.detail = function(req,res){
 module.exports.addToCart = function(req,res){
   var product = req.body;
   var new_user = {};
+
   ShoppingCart.findOne({userId: product.userId},function(err,user){
     if(err){
       console.log(err);
@@ -63,6 +64,15 @@ module.exports.addToCart = function(req,res){
           break;
         }
       }
+      if(i == products.length){
+        user.products.push({
+          productId: product.productId,
+          name: '',
+          url: '',
+          price: product.price,
+          qty: product.qty
+        })
+      }
 
       ShoppingCart.where({userId: product.userId}).update({products: products},function(err){
         if(err){
@@ -80,8 +90,8 @@ module.exports.shoppingCart = function(req,res){
   var user = req.session.user;
   var carts = [];
   var a;
-  // ShoppingCart.find({userId: user._id})
-  //             .populate()
+  ShoppingCart.find({userId: user._id})
+              .populate()
   // if(err){
   //     console.log(err);
   //     res.render('shoppingCart',{
