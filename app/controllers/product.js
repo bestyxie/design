@@ -109,7 +109,7 @@ module.exports.addToCart = function(req,res){
           updateCartProducts(product.userId,products);
         })
       }
-      
+
       updateCartProducts(product.userId,products);
     }
     res.json({success: 1});
@@ -119,23 +119,63 @@ module.exports.addToCart = function(req,res){
 // 购物车页面
 module.exports.shoppingCart = function(req,res){
   var user = req.session.user;
-  var carts = [];
-  var a;
-  ShoppingCart.find({userId: user._id})
-              .populate('products[0].name','name')
-              .populate('products[0].url','url')
-              .exec(function(err,carts){
-                if(err){
-                  console.log(err);
-                  res.render('shoppingcart',{
-                    carts: [],
-                    user: user
-                  })
-                }
-                console.log(carts);
-                res.render('shoppingcart',{
-                  carts: carts,
-                  user: user
-                });
-              });
+  ShoppingCart.findOne({userId: user._id},function(err,goods){
+    if(err){
+      console.log(err);
+      res.render('shoppingcart',{
+        products: [],
+        user: user
+      })
+    }
+    if(goods){
+      res.render('shoppingcart',{
+        products: goods.products,
+        user: user
+      });
+    }else{
+      res.render('shoppingcart',{
+        products: [],
+        user: user
+      });
+    }
+  });
+}
+
+// 删除购物车商品
+module.exports.deleteCart = function(req,res){
+  var cartObj = req.body,
+      productId = cartObj.productId,
+      userId = cartObj.userId;
+  ShoppingCart.findOne({ userId: userId},function(err,cart){
+    if(err){
+      console.log(err);
+      res.json({success: false});
+    }
+    var products = cart.products,i = 0;
+    for( i; i<products.length; i++ ){
+      if(products[i].productId == productId){
+        products.splice(i,1);
+        break;
+      }
+    }
+    if(products.length == 0){
+      ShoppingCart.remove({userId: userId},function(err){
+        if(err){
+          console.log(err);
+          res.json({success: false});
+        }
+        res.json({success: true})
+        return;
+      });
+    }else{
+      ShoppingCart.where({ userId: userId }).update({products: products},function(err){
+        if(err){
+          console.log(err);
+          res.json({success: false});
+        }
+        res.json({success: true});
+      });
+    }
+    
+  });
 }

@@ -87,5 +87,29 @@
   $('.js-addCart').on('click',function(){
     var product_id = $(this).data('productid');
     addtocart(product_id);
-  })
+  });
+
+  // 删除购物车的商品
+  $('.js-deleteCart').on('click',deleteCart);
+  function deleteCart(tg){
+    var data = {
+      userId: $('.user').data('userid'),
+      productId: $(this).data('productid')
+    }
+
+    $.ajax({
+      url: '/cart/delete',
+      method: 'POST',
+      type: 'json',
+      data: data,
+      success: function(result){
+        if(result.success){
+          $('.row[data-productid="'+data.productId+'"').remove();
+        }
+        else{
+          alert('删除失败，请重新删除!');
+        }
+      }
+    })
+  }
 })(jQuery)

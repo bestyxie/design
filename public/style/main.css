@@ -42,3 +42,25 @@ label[for="user_id"]{
   display: block;
   margin: 20px 0;
 }
+
+// 购物车
+.shoppingcart{
+  width: 1200px;
+  margin: auto;
+}
+.shoppingcart .row{
+  height: 150px;
+  overflow: hidden;
+  border-bottom: 1px solid #ccc;
+  padding: 10px 0;
+}
+.shoppingcart .head{
+  height: 50px;
+}
+.shoppingcart .col{
+  overflow: hidden;
+}
+.shoppingcart .img{
+  width: auto;
+  height: 100%;
+}

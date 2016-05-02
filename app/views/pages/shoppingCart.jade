@@ -1,20 +1,33 @@
 extends ../layout
 
 block content
-  .container-fluid
+  .container.shoppingcart
     h1 购物车
-    if carts.length == 0
+    if products.length == 0
       p 您的购物车没有商品！
       a(href="/") 去挑选商品吧
     else
-      .row
-        .cols-md-2 图片
-        .cols-md-2 名称
-        .cols-md-2 单价
-        .cols-md-2 数量
-        .cols-md-2 总价
-        .cols-md-2 操作
-      each product in carts
-        .row
-          .cols-md-2
-            img(src="#{product.url}")
+      .row.head
+        .col-md-4 图片
+        .col-md-3 名称
+        .col-md-1 单价
+        .col-md-1 数量
+        .col-md-1 总价
+        .col-md-2 操作
+      each product in products
+        .row(data-productid="#{product.productId}")
+          .col-md-4.col
+            img.img(src="#{product.url}")
+          .col-md-3.col
+            p #{product.name}
+          .col-md-1.col
+            p #{product.price}
+          .col-md-1.col
+            input.qty(type="number",value="#{product.qty}",style="width:100%;")
+          .col-md-1.col
+            p #{product.qty*product.price}
+          .col-md-2.col
+            a.btn.btn-link.js-deleteCart(data-productid="#{product.productId}") 删除
+  script(src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js")
+  script(src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js")
+  script(src="/js/action.js")

@@ -9,6 +9,7 @@ module.exports = function(app){
   app.get('/details/:id',Product.detail);
   app.post('/product/addtocart',Product.addToCart);
   app.get('/cart',User.signinRequire, Product.shoppingCart);
+  app.post('/cart/delete',Product.deleteCart);
 
   // user
   app.post('/user/signup',User.signup);
