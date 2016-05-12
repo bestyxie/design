@@ -1,0 +1,111 @@
+body,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+code,
+form,
+figure,
+fieldset,
+legend,
+input,
+textarea,
+p,
+blockquote,
+th,
+td,
+hr,
+button {
+  margin: 0;
+  padding: 0;
+}
+li {
+  list-style: none;
+}
+i {
+  font-style: normal;
+}
+em {
+  font-style: normal;
+}
+a {
+  color: #588eda;
+  text-decoration: none;
+}
+a:active {
+  outline: 0;
+}
+::-webkit-input-placeholder {
+  color: #C3C3C3;
+}
+:-moz-placeholder {
+  color: #C3C3C3;
+}
+::-moz-placeholder {
+  color: #C3C3C3;
+}
+:-ms-input-placeholder {
+  color: #C3C3C3;
+}
+header {
+  position: fixed;
+  width: 100%;
+  height: 2.25rem;
+  border-bottom: 1px solid #c9c7c8;
+  top: 0;
+  z-index: 999;
+  background: #fafafa;
+}
+header .subfield {
+  display: inline-block;
+  width: 2.5rem;
+  padding: 0 15px;
+  height: 100%;
+  float: left;
+}
+header .subfield i {
+  background: rgba(0, 0, 0, 0) url("../images/icon/subfield_icon.png") no-repeat 0 0;
+  display: inline-block;
+  width: 1rem;
+  height: 100%;
+  -webkit-background-size: contain;
+  background-size: contain;
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  background-position: center;
+}
+header .badget {
+  display: inline-block;
+  float: right;
+  width: 2.5rem;
+  height: 100%;
+  text-align: center;
+}
+header .badget:after {
+  content: '';
+  background: rgba(0, 0, 0, 0) url("../images/icon/shoppingcart_icon.png") no-repeat 0 0;
+  display: inline-block;
+  width: 1.1rem;
+  height: 1.05rem;
+  -webkit-background-size: contain;
+  background-size: contain;
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  vertical-align: middle;
+}
+header form {
+  position: relative;
+  height: 100%;
+  margin: 0 2.5rem;
+}

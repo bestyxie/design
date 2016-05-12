@@ -1,27 +1,7 @@
-nav.navbar.navbar-default
-  .container-fluid
-    .navbar-header
-      a.navbar-brand(href="#") Brand
-    .collapse.navbar-collapse
-      ul.nav.navbar-nav
-        li
-          a(href="/") Home
-        li
-          a(href="#") Catogery
-      form.navbar-form.navbar-left(role="search")
-        .form-group
-          input.form-control(type="text",placeholder="Search")
-        button.btn.btn-default(type="submit") submit
-      ul.nav.navbar-nav.right
-        li
-          a.shoppinng-cart(href="/cart") 购物车
-        if user
-          li
-            a.user(href="#",data-userId="#{user._id}") #{user.name}
-          li
-            a(href="/logout") 注销
-        else
-          li
-            a(href="#",data-toggle="modal",data-target="#signinModal") 登录
-          li
-            a(href="#",data-toggle="modal",data-target="#signupModal") 注册
+header
+  span.subfield.J_subfield
+    i.subfield_icon
+  form#search_form
+    input(type="text",name="keywords")
+    a.search-btn(href="javascript:;")
+  span.badget

@@ -1,0 +1,66 @@
+//
+// Mixins
+// --------------------------------------------------
+
+// 清除浮动
+// -------------------------
+.clearfix() {
+  &:after {
+    content: " ";
+    display: block;
+    clear: both;
+    height: 0;
+    font-size: 0;
+    visibility: hidden;
+  }
+}
+// 背景尺寸
+// -------------------------
+.backgroundSize(@size: contain) {
+  -webkit-background-size: @size;
+  background-size: @size;
+}
+// 背景图
+// -------------------------
+.background(@img; @imgType: png; @color: rgba(0,0,0,0);) {
+  background: @color url("../images/@{img}.@{imgType}") no-repeat 0 0;
+}
+
+// icon
+// -------------------------
+.icon(@width; @height; @backgroundSize: contain; @display: inline-block) {
+  display: @display;
+  width: @width;
+  height: @height;
+  .backgroundSize(@backgroundSize);
+  .hide-text();
+}
+// 单行文本省略
+// -------------------------
+.ellipsis() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+// 隐藏文字(图片替换文字)
+// -------------------------
+.hide-text() {
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+// CSS3动画
+// -------------------------
+// 过渡
+.transition(@property: all; @duration: .3s; @type: linear; @delay: 0s) {
+  -moz-transition: @property @duration @type @delay;
+  -webkit-transition: @property @duration @type @delay;
+  -o-transition: @property @duration @type @delay;
+  transition: @property @duration @type @delay;
+}
+// 位移
+.translate3d(@x: 0; @y: 0; @z: 0) {
+  -ms-transform: translate3d(@x, @y, @z);
+  -webkit-transform: translate3d(@x, @y, @z);
+  transform: translate3d(@x, @y, @z);
+}

@@ -1,0 +1,40 @@
+header{
+  position: fixed;
+  width: 100%;
+  height: 2.25rem;
+  border-bottom: 1px solid #c9c7c8;
+  top: 0;
+  z-index: 999;
+  background: #fafafa;
+  .subfield{
+    display: inline-block;
+    width: 2.5rem;
+    padding: 0 15px;
+    height: 100%;
+    float: left;
+    i{
+      .background('icon/subfield_icon');
+      .icon(1rem,100%);
+      background-position: center;
+    }
+  }
+  .badget{
+    display: inline-block;
+    float: right;
+    width: 2.5rem;
+    height: 100%;
+    text-align: center;
+    &:after{
+      content: '';
+      display: inline-block;
+      .background('icon/shoppingcart_icon');
+      .icon(1.1rem,1.05rem);
+      vertical-align: middle;
+    }
+  }
+  form{
+    position:relative;
+    height: 100%;
+    margin: 0 2.5rem;
+  }
+}

@@ -1,0 +1,47 @@
+//
+// Reset CSS
+// Adapted from http://github.com/necolas/normalize.css
+// --------------------------------------------------
+
+// Base settings
+// -------------------------
+body,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,figure,
+fieldset,legend,input,textarea,p,blockquote,th,td,hr,button {margin: 0; padding: 0;}
+
+li {
+  list-style: none;
+}
+i{
+  font-style: normal;
+}
+em {
+  font-style: normal;
+}
+
+a {
+  color: #588eda;
+  text-decoration: none;
+
+  &:active {
+    outline: 0;
+  }
+}
+
+
+// Placeholder
+// -------------------------
+::-webkit-input-placeholder {  // WebKit browsers
+  color: #C3C3C3;
+}
+
+:-moz-placeholder {  // Mozilla Firefox 4 to 18
+  color: #C3C3C3;
+}
+
+::-moz-placeholder {  // Mozilla Firefox 19+
+  color: #C3C3C3;
+}
+
+:-ms-input-placeholder { // IE 10+
+  color: #C3C3C3;
+}

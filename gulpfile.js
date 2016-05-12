@@ -8,6 +8,7 @@ var istanbul = require('gulp-istanbul');
 var nsp = require('gulp-nsp');
 var plumber = require('gulp-plumber');
 var nodemon = require('gulp-nodemon');
+var less = require('gulp-less');
 
 gulp.task('static', function () {
   return gulp.src('**/*.js')
@@ -47,6 +48,13 @@ gulp.task('test', ['pre-test'], function (cb) {
 
 gulp.task('watch', function () {
   gulp.watch(['lib\**\*.js', 'test/**'], ['test']);
+  gulp.watch([ './public/less/*' ], ['less']);
+});
+
+gulp.task('less',function(){
+  return gulp.src('./public/less/global.less')
+              .pipe(less())
+              .pipe(gulp.dest('./public/style'));
 });
 
 gulp.task('nodemon',function(){
