@@ -9,6 +9,7 @@ var nsp = require('gulp-nsp');
 var plumber = require('gulp-plumber');
 var nodemon = require('gulp-nodemon');
 var less = require('gulp-less');
+var livereload = require('gulp-livereload');
 
 gulp.task('static', function () {
   return gulp.src('**/*.js')

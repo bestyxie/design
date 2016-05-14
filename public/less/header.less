@@ -1,40 +1,74 @@
-header{
-  position: fixed;
-  width: 100%;
-  height: 2.25rem;
-  border-bottom: 1px solid #c9c7c8;
-  top: 0;
-  z-index: 999;
-  background: #fafafa;
-  .subfield{
+header.bar.bar-nav{
+  height: 2.1rem;
+  padding: 0;
+  background: rgba(0,0,0,.4);
+  .logo{
     display: inline-block;
-    width: 2.5rem;
-    padding: 0 15px;
-    height: 100%;
+    width: 3rem;
+    height: 2.1rem;
+    line-height: 2.1rem;
     float: left;
-    i{
-      .background('icon/subfield_icon');
-      .icon(1rem,100%);
-      background-position: center;
+    color: #fff;
+    text-align: right;
+    overflow: hidden;
+    img{
+      width: 2.45rem;
+      height: auto;
+      vertical-align: middle;
     }
   }
   .badget{
     display: inline-block;
-    float: right;
-    width: 2.5rem;
+    width: 2.4rem;
     height: 100%;
+    font-size: 1rem;
+    line-height: 2.1rem;
+    float: right;
     text-align: center;
-    &:after{
-      content: '';
-      display: inline-block;
-      .background('icon/shoppingcart_icon');
-      .icon(1.1rem,1.05rem);
-      vertical-align: middle;
-    }
+    color: #fff;
   }
   form{
-    position:relative;
+    position:absolute;
+    top: 0;
+    left: 3.5rem;
+    right: 2.45rem;
     height: 100%;
-    margin: 0 2.5rem;
+    line-height: 2.1rem;
+    .search{
+      width: 10rem;
+      height: 1.45rem;
+      border-radius: 0.15rem;
+      padding: 0 0.5rem;
+      margin: 0 auto;
+      position:relative;
+      top: 0.35rem;
+      background: #fff;
+    }
+    input{
+      display: inline-block;
+      border:none;
+      width: 100%;
+      height: 100%;
+      padding: 0.25rem 2.5rem 0.25rem 0;
+      background: transparent;
+      position:absolute;
+      top: 0;
+      font-size: 0.6rem;
+    }
+    .search-btn{
+      display: inline-block;
+      width: 2.4rem;
+      height: 1.4rem;
+      border-top-right-radius: 0.15rem;
+      border-bottom-right-radius: 0.15rem;
+      line-height: 1.4rem;
+      background: #fff;
+      text-align: center;
+      vertical-align: middle;
+      border-left: 1px solid #ccc;
+      color: #ccc;
+      position: absolute;
+      right: 0;
+    }
   }
 }

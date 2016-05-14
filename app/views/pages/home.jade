@@ -1,15 +1,82 @@
 extends ../layout
 
 block content
-  .container.page
+  #subfield-panel.subfield.panel.panel-right.panel-reveal
+    .subfield-wrap.content-block
+      a.close-panel(href="javascript:;")
+        i.fa.fa-close
+      ul.subfield-cont
+        li
+          a(href="/") 首页
+        li
+          a(href="") 上衣
+        li
+          a(href="") 裤子
+        li
+          a(href="") 裙子
+      .user-panel
+        i.fa.fa-user
+        span 请登录
+  .home.page
     include ../includes/header
-    .row
-      each product in products
-        .col-xs-6.col-md-3
-          a.thumbnail(href="/details/#{product._id}")
-            img(src="#{product.url}")
-            .caption
-              p.name #{product.name}
-              p.price #{product.price}元
-  script(src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js")
-  script(src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js")
+    .content.native-scroll.wrapper
+      .banner
+        .swiper_wrap
+          .wipe_img_con
+            a.swiper_wrap_a
+              img(src="images/upload_ie4tcmbzmvrwmnjxhazdambqgqyde_750x250.jpg")
+          .wipe_img_con
+            a.swiper_wrap_a
+              img(src="images/upload_ie4tcmbzmvrwmnjxhazdambqgqyde_750x250.jpg")
+          .wipe_img_con
+            a.swiper_wrap_a
+              img(src="images/upload_ie4tcmbzmvrwmnjxhazdambqgqyde_750x250.jpg")
+      .user-nav
+        ul.row
+          li.col-25
+            a(href="")
+              img(src="")
+              p 全部分类
+          li.col-25
+            a(href="")
+              img(src="")
+              p 我的订单
+          li.col-25
+            a(href="")
+              img(src="")
+              p 我的收藏
+          li.col-25
+            a(href="")
+              img(src="")
+              p 购物车
+      .shopin-head
+        hr
+        span 热卖单品
+      .wall
+        .wal-list.clearfix
+          .wall-col.lf
+            each product,index in products
+              if index%2==0
+                .wall-item
+                  a.thumbnail(href="/details/#{product._id}")
+                    .img
+                      img(src="#{product.url}")
+                    .caption
+                      p.name #{product.name}
+                      .priceattention.clearfix
+                        p.price ￥#{product.price}
+                        span.attention.rt 1841
+                          i.fa.fa-heart-o.lf
+          .wall-col.rt
+            each product,index in products
+              if index%2!=0
+                .wall-item
+                  a.thumbnail(href="/details/#{product._id}")
+                    .img
+                      img(src="#{product.url}")
+                    .caption
+                      p.name #{product.name}
+                      .priceattention.clearfix
+                        p.price ￥#{product.price}
+                        span.attention.rt 1841
+                          i.fa.fa-heart-o.lf

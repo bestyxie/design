@@ -1,4 +1,5 @@
-(function($){
+$(function(){
+  $.init();
   // 删除用户
   function deleteUser(user_id){
     var tr = $('.item-id-'+user_id);
@@ -112,4 +113,4 @@
       }
     })
   }
-})(jQuery)
+})

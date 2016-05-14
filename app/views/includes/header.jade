@@ -1,7 +1,8 @@
-header
-  span.subfield.J_subfield
-    i.subfield_icon
+header.bar.bar-nav
+  span.logo
+    img(src="images/wap_logo.png")
   form#search_form
-    input(type="text",name="keywords")
-    a.search-btn(href="javascript:;")
-  span.badget
+    .search
+      input(type="text",name="keywords",placeholder="请输入搜索关键字：")
+      a.fa.fa-search.search-btn(href="javascript:;")
+  span.fa.fa-list-ul.badget.open-panel(data-panel="#subfield-panel")

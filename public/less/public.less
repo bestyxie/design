@@ -1,12 +1,23 @@
 body{
   background: #fff;
-  font: 400 16px/1.5 Arial,sans-serif;
   color: #5e5e5e;
+  &.with-panel-right-reveal{
+    .page{
+      -webkit-transform: translate3d(-8rem,0,0);
+      transform: translate3d(-8rem,0,0);
+    }
+  }
 }
-*{
-  box-sizing: border-box;
+.clearfix{
+  .clearfix();
+}
+.lf{
+  float: left;
+}
+.rt{
+  float: right;
 }
 
-.with-header{
-  margin-top: 2.8125rem;
+.content{
+  overflow-x: hidden;
 }
