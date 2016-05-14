@@ -155,9 +155,8 @@ header.bar.bar-nav form .search-btn {
   position: absolute;
   right: 0;
 }
-.home.page.content {
-  margin-top: -2.1rem;
-  z-index: 1;
+.content.wrapper {
+  top: 0;
 }
 .activity {
   display: block;
