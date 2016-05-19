@@ -2,6 +2,7 @@ var User = require('../app/controllers/user');
 var Admin = require('../app/controllers/admin');
 var Product = require('../app/controllers/product');
 
+
 module.exports = function(app){
 
   // product
