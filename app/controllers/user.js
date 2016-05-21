@@ -18,7 +18,7 @@ module.exports.signup = function(req,res){
       });
     }
     else if(user.length>0){
-      res.redirect('/signin');
+      res.redirect('/admin');
     }
   });
 }
@@ -36,17 +36,17 @@ module.exports.signin = function(req,res){
     }
     else if(user.name === _user.name && user.password === _user.password){
       req.session.user = user;
-      res.redirect('/');
+      res.redirect('/admin');
     }else{
       console.log("password is not matched!");
-      res.redirect('/');
+      res.redirect('/login');
     }
   })
 }
 
 //登录页面
 module.exports.login = function(req,res){
-  
+  res.render('admin/login');
 }
 
 // 注销
@@ -58,6 +58,7 @@ module.exports.logout = function(req,res){
 
 // 必须登录 midware
 module.exports.signinRequire = function(req,res,next){
+  console.log(req.session.user);
   if(req.session.user){
     next();
   }else{
@@ -68,11 +69,12 @@ module.exports.signinRequire = function(req,res,next){
 // administor require midware
 module.exports.adminRequire = function(req,res,next){
   var user = req.session.user;
+  console.log(user.role);
   if(user.role > 10){
     next();
   }
   else{
-    res.redirect('/');
+    res.redirect('/login');
   }
 }
 

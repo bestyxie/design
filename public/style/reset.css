@@ -1,0 +1,58 @@
+body,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+code,
+form,
+figure,
+fieldset,
+legend,
+input,
+textarea,
+p,
+blockquote,
+th,
+td,
+hr,
+button {
+  margin: 0;
+  padding: 0;
+}
+li {
+  list-style: none;
+}
+i {
+  font-style: normal;
+}
+em {
+  font-style: normal;
+}
+a {
+  color: #5e5e5e;
+  text-decoration: none;
+}
+a:active {
+  outline: 0;
+}
+::-webkit-input-placeholder {
+  color: #C3C3C3;
+}
+:-moz-placeholder {
+  color: #C3C3C3;
+}
+::-moz-placeholder {
+  color: #C3C3C3;
+}
+:-ms-input-placeholder {
+  color: #C3C3C3;
+}

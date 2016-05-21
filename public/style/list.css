@@ -1,0 +1,37 @@
+.wall .wal-list .wall-col {
+  width: 50%;
+  overflow: hidden;
+}
+.wall .wal-list .wall-col .wall-item {
+  width: 96%;
+  margin: 0 2% 2%;
+  border: 1px solid #ededed;
+  color: #bebebe;
+  font-size: 0.6rem;
+  background: #fff;
+}
+.wall .wal-list .wall-col .wall-item .img {
+  font-size: 0;
+}
+.wall .wal-list .wall-col .wall-item .img img {
+  width: 100%;
+}
+.wall .wal-list .wall-col .wall-item p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.wall .wal-list .wall-col .wall-item .priceattention {
+  height: 1rem;
+  padding: 0 2%;
+}
+.wall .wal-list .wall-col .wall-item .price {
+  display: inline-block;
+  color: #ee4566;
+}
+.wall .wal-list .wall-col .wall-item .attention {
+  line-height: 1rem;
+}
+.wall .wal-list .wall-col .wall-item .attention i {
+  margin: 0.2rem 0.2rem 0 0;
+}
