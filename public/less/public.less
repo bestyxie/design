@@ -1,6 +1,7 @@
 body{
   background: #fff;
   color: #5e5e5e;
+  font: 400 0.7rem/1.5 Arial,sans-serif;
   &.with-panel-right-reveal{
     .page{
       -webkit-transform: translate3d(-8rem,0,0);
@@ -20,4 +21,30 @@ body{
 
 .content{
   overflow-x: hidden;
+}
+
+// slider
+.slide-box{
+  width: 100%;
+  // min-height: 5rem;
+  height: auto;
+  background: #fff;
+  overflow: hidden;
+  position: relative;
+  .swiper_wrap{
+    width: 960px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 0;
+    .clearfix();
+  }
+  .wipe_img_con{
+    width: 320px;
+    float: left;
+    .transition();
+    img{
+      width: 100%;
+    }
+  }
 }

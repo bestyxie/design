@@ -1,15 +1,130 @@
 extends ../layout
 
 block content
-  .container-fluid.details
-    .row
-      .col-md-6.img-wrapper
-        img.img(src="#{product.url}")
-      .col-md-6
-        h1 #{product.name}
-        span.price #{product.price}
-        input.quantity(type="number")
-        button.btn.btn-default.js-addCart(data-productid="#{product._id}") 加入购入车
-  script(src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js")
-  script(src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js")
-  script(src="/js/action.js")
+  .page.detail
+    .content.native-scroll.wrapper
+      .detail-wrap.detail-primary
+        //- 导航条
+        .detaile-slide.slide-box
+          .swiper_wrap
+            .wipe_img_con
+              a.swiper_wrap_a
+                img(src="/images/d3.jpg")
+            .wipe_img_con
+              a.swiper_wrap_a
+                img(src="/images/d1.jpg")
+            .wipe_img_con
+              a.swiper_wrap_a
+                img(src="/images/d2.jpg")
+            .wipe_img_con
+              a.swiper_wrap_a
+                img(src="/images/d3.jpg")
+            .wipe_img_con
+              a.swiper_wrap_a
+                img(src="/images/d1.jpg")
+          .swiper-page
+            em#SwiperPageNum 1
+            i &frasl;
+            em 3
+        .primary-info
+          p.info-title.break jcoolstory 卡通韩版纯棉短袖T恤
+          p.info-desc.break jcoolstory夏装新款 钓鱼卡通印花  宽松舒适版型 休闲百搭
+          .info-price.center
+            span.now  &yen;49.00
+            span.market   &yen;70.00
+            span.discount 7.0折
+          .info-other.center
+            span.item 默认快递
+            span.item 销量 64
+      .detail-rates
+        .rates-head
+          a.title(href="") 累计评价 9
+            span.more 更多
+              i.fa.fa-angle-right
+        .rates-list
+          .rate-item
+            .rate-user
+              img.avatar(src="/images/d1.jpg")
+              span.name 空间规划2016
+            .rate-cont 衣服很漂亮和图片一样的，海域就是好便宜呀，店家很好，准备再买几件
+            .rate-attr
+              span.time 2016-05-18
+              span.sku 颜色：白色（两面可穿宽） 尺码：均码
+            .show-img
+              ul.clearfix
+                li.small-img
+                  img(src="/images/d1.jpg")
+                li.small-img
+                  img(src="/images/d2.jpg")
+                li.small-img
+                  img(src="/images/d3.jpg")
+                li.small-img
+                  img(src="/images/d3.jpg")
+      .detail-tabpanel
+        .buttons-row.row
+          a.col-50.tab-link.actve(href="#graphic")
+            span 图文详情
+          a.col-50.tab-link(href="#parameters")
+            span 商品参数
+        .tabs
+          #graphic.graphic.tab.active
+            dl.pic-box
+              dt.pic-title 穿着效果
+              dd.pic-list
+                img.fadeIn(src="/images/d1.jpg")
+                img.fadeIn(src="/images/d2.jpg")
+                img.fadeIn(src="/images/d3.jpg")
+          #parameters.parameters.tab.active
+            .size-list
+              table
+                tbody
+                  tr
+                    td.param-name 尺码
+                    td.param-info 均码
+                  tr
+                    td.param-name 肩宽
+                    td.param-info 45
+                  tr
+                    td.param-name 衣长
+                    td.param-info 59
+                  tr
+                    td.param-name 胸围
+                    td.param-info 110
+                  tr
+                    td.param-name 袖长
+                    td.param-info 39
+                  tr
+                    td.param-name 材质
+                    td.param-info 雪纺
+                  tr
+                    td.param-name 季节
+                    td.param-info 夏季
+      .recommend
+    .detail-footbar
+      .footer-fav
+        i.fa.fa-star-o
+        span.text 收藏
+      .footer-cart
+        i.fa.fa-shopping-cart
+        span.text 购物车
+      .footer-buy
+        span.buy-cart 加入购物车
+        span.buy-now 立即购买
+block scripts
+  script.
+    window.onload = function(){
+      InitSlider({
+      container: '.detaile-slide',
+      autoSlide: false,
+      slideIndex: '#SwiperPageNum'
+      });
+    }
+  //- .container-fluid.details
+  //-   .row
+  //-     .col-md-6.img-wrapper
+  //-       img.img(src="#{product.url}")
+  //-     .col-md-6
+  //-       h1 #{product.name}
+  //-       span.price #{product.price}
+  //-       input.quantity(type="number")
+  //-       button.btn.btn-default.js-addCart(data-productid="#{product._id}") 加入购入车

@@ -1,0 +1,263 @@
+.detail{
+  .content{
+    padding-bottom: 42px;
+    .detail-primary{
+      background: #fff;
+    }
+    .detaile-slide{
+      .swiper-page{
+        position: absolute;
+        bottom: 0.4rem;
+        right: 0.6rem;
+        width: 2.025rem;
+        height: 0.85rem;
+        line-height: 0.85rem;
+        padding: 0 0.425rem;
+        border-radius: 0.425rem;
+        background: rgba(0,0,0,.3);
+        color: #fff;
+      }
+    }
+    .break{
+      word-break: break-all;
+      word-wrap: break-word;
+    }
+    .center{
+      text-align: center;
+    }
+    .primary-info{
+      background: #fff;
+      border-bottom: 1px solid #eaeaea;
+      .info-title{
+        color: #424242;
+        margin-top: 0.65rem;
+        text-align: center;
+      }
+      .info-desc{
+        color: #999;
+        padding: 0 0.6rem;
+        text-align: center;
+        margin-top: 0.35rem;
+      }
+      .info-price{
+        margin-top: 0.25rem;
+        .now{
+          color: #000;
+          font-size: 0.95rem;
+        }
+        .market{
+          font-size: 0.6rem;
+          color: #999;
+          margin: 0.3rem 0 0 0.3rem;
+        }
+        .discount{
+          background: #f13e3a;
+          color: #fff;
+          font-size: 0.6rem;
+          padding: 0 0.2rem;
+          margin-left: 0.3rem;
+        }
+      }
+      .info-other{
+        margin: 0.85rem 0.65rem 0.65rem;
+        .item{
+          display: inline-block;
+          width: 4.1rem;
+          font-size: 0.6rem;
+          color: #999;
+          &:first-child{
+            border-right: 1px solid #dbdbdb;
+          }
+        }
+      }
+    }
+  }
+  .detail-rates{
+    background: #fff;
+    margin-top: 0.5rem;
+    padding: 0 0.6rem;
+    border-bottom: 1px solid #dedede;
+    .rates-head{
+      // height: 2.1rem;
+      border-bottom: 1px solid #dcdcdc;
+      a.title{
+        position: static;
+        color: #000;
+        font-size: 0.65rem;
+        text-align: left;
+        line-height: 1;
+        padding: 0.85rem 0 0.65rem;
+        margin: 0;
+        .more{
+          float: right;
+          color: #666;
+          font-size: 0.6rem;
+          .fa{
+            font-size: 0.7rem;
+            margin-left: 0.25rem;
+          }
+        }
+      }
+    }
+    .rates-list{
+      .rate-item{
+        padding-top: 0.65rem;
+        .avatar{
+          width: 2.46rem;
+          height: 2.46rem;
+          border-radius: 50%;
+          vertical-align: middle;
+        }
+        .name{
+          margin-left: 0.43rem;
+          color: #424242;
+        }
+        .rate-cont{
+          color: #727272;
+          font-size: 0.65rem;
+          line-height: 1.1;
+          margin-top: 0.2rem;
+        }
+        .time,.sku{
+          font-size: 0.6rem;
+          color: #999;
+        }
+        .sku{
+          margin-left: 0.3rem;
+        }
+        .show-img{
+          .small-img{
+            float: left;
+            margin: 0 0.1rem 0.1rem 0;
+            width: 2.9rem;
+            height: 2.9rem;
+            overflow: hidden;
+            img{
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+  .detail-tabpanel{
+    background: #fff;
+    margin-top: 0.35rem;
+    border-top: 1px solid #dedede;
+    .buttons-row{
+      font-size: 0.65rem;
+      text-align: center;
+      background: #fff;
+      width: 100%;
+      a.col-50{
+        color: #333;
+        display: inline-block;
+        padding: 0.4rem 0;
+        border-bottom: 1px solid transparent;
+        &.actve{
+          border-bottom: 1px solid #f13e3a;
+        }
+        span{
+          display: inline-block;
+          width: 100%;
+          border-right: 1px solid #e5e5e5;
+        }
+        &:nth-child(2n) span{
+          border: none;
+        }
+      }
+    }
+    .tabs{
+      overflow-x: hidden;
+    }
+    .graphic{
+      padding: 0 0.25rem;
+      .pic-title{
+        font-size: 0.62rem;
+        color: #333;
+        margin: 0.5rem 0;
+      }
+      .pic-list{
+        overflow-x: hidden;
+        img{
+          width: 100%;
+        }
+      }
+    }
+    .parameters{
+      padding: 0 0.5rem;
+      table{
+        width: 100%;
+        table-layout: fixed;
+        border-collapse: collapse;
+        tr{
+          border-bottom: 1px solid #f4f4f4;
+          color: #727272;
+        }
+        td{
+          line-height: 1.9rem;
+          text-align: left;
+        }
+        .param-name{
+          width: 5rem;
+        }
+        .param-info{
+          color: #eb4868;
+        }
+      }
+    }
+  }
+  .detail-footbar{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    font-size: 0;
+    width: 100%;
+    height: 42px;
+    border: 1px solid #dcdcdc;
+    background: #fff;
+    overflow: hidden;
+    .footer-fav,.footer-cart{
+      display: inline-block;
+      width: 2.9rem;
+      height: 2.1rem;
+      text-align: center;
+      .text{
+        display: block;
+        line-height: 0.8;
+        font-size: 0.6rem;
+        margin-top: 0.1rem;
+      }
+      .fa{
+        font-size: 0.9rem;
+        margin-top: 0.2rem;
+      }
+    }
+    .footer-fav{
+      border-right: 1px solid #dcdcdc;
+    }
+    .footer-buy{
+      display: inline-block;
+      height: 2.1rem;
+      float: right;
+      margin-right: 0.5rem;
+      span{
+        display: inline-block;
+        font-size: 0.6rem;
+        width: 4.1rem;
+        height: 1.35rem;
+        line-height: 1.35rem;
+        text-align: center;
+        margin: 0.3rem 0 0 0.5rem;
+      }
+      .buy-cart{
+        color: #ec312d;
+        border: 1px solid #ec312d;
+      }
+      .buy-now{
+        color: #fff;
+        background: #ec312d;
+      }
+    }
+  }
+}

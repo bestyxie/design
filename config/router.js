@@ -13,6 +13,7 @@ module.exports = function(app){
   app.post('/cart/delete',Product.deleteCart);
 
   // user
+  app.get('/login',User.login);
   app.post('/user/signup',User.signup);
   app.post('/user/signin',User.signin);
   app.get('/logout',User.logout);

@@ -20,23 +20,23 @@ block content
   .home.page
     include ../includes/header
     .content.native-scroll.wrapper
-      .banner
+      .banner.slide-box
         .swiper_wrap
           .wipe_img_con
             a.swiper_wrap_a
-              img(src="images/upload_ie4tcmbzmvrwmnjxhazdambqgqyde_750x250.jpg")
+              img(src="/images/upload_ie4tcmbzmvrwmnjxhazdambqgqyde_750x250.jpg")
           .wipe_img_con
             a.swiper_wrap_a
-              img(src="images/upload_ie4tcmbzmvrwmnjxhazdambqgqyde_750x250.jpg")
+              img(src="/images/upload_ie4tcmbzmvrwmnjxhazdambqgqyde_750x250.jpg")
           .wipe_img_con
             a.swiper_wrap_a
-              img(src="images/upload_ie4tcmbzmvrwmnjxhazdambqgqyde_750x250.jpg")
+              img(src="/images/upload_ie4tcmbzmvrwmnjxhazdambqgqyde_750x250.jpg")
           .wipe_img_con
             a.swiper_wrap_a
-              img(src="images/upload_ie4tcmbzmvrwmnjxhazdambqgqyde_750x250.jpg")
+              img(src="/images/upload_ie4tcmbzmvrwmnjxhazdambqgqyde_750x250.jpg")
           .wipe_img_con
             a.swiper_wrap_a
-              img(src="images/upload_ie4tcmbzmvrwmnjxhazdambqgqyde_750x250.jpg")
+              img(src="/images/upload_ie4tcmbzmvrwmnjxhazdambqgqyde_750x250.jpg")
       .user-nav
         ul.row
           li.col-25
@@ -64,7 +64,7 @@ block content
             each product,index in products
               if index%2==0
                 .wall-item
-                  a.thumbnail(href="/details/#{product._id}")
+                  a.thumbnail(href="/details/#{product._id}",external)
                     .img
                       img(src="#{product.url}")
                     .caption
@@ -77,7 +77,7 @@ block content
             each product,index in products
               if index%2!=0
                 .wall-item
-                  a.thumbnail(href="/details/#{product._id}")
+                  a.thumbnail(href="/details/#{product._id}",external)
                     .img
                       img(src="#{product.url}")
                     .caption
@@ -86,3 +86,10 @@ block content
                         p.price ￥#{product.price}
                         span.attention.rt 1841
                           i.fa.fa-heart-o.lf
+
+block scripts
+  script.
+    window.onload = function(){
+      InitSlider();
+    }
+    

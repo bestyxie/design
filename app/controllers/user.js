@@ -44,6 +44,11 @@ module.exports.signin = function(req,res){
   })
 }
 
+//登录页面
+module.exports.login = function(req,res){
+  
+}
+
 // 注销
 module.exports.logout = function(req,res){
   req.session.user = null;

@@ -13,79 +13,55 @@
   }
 }
 
-// slider
-.banner{
-  width: 100%;
-  min-height: 5rem;
-  background: #fff;
-  overflow: hidden;
-  font-size: 0;
-  position: relative;
-  .swiper_wrap{
-    width: 960px;
-    position: absolute;
-    left: 0;
-    top: 0;
-    .clearfix();
+.home{
+  // 导航
+  .user-nav{
+    background: #fff;
+    margin-bottom: 0.65rem;
+    padding-top: 0.5rem;
+    .col-25{
+      height: 3rem;
+      padding: 0 0.35rem;
+      font-size: 0.6rem;
+      img{
+        width: 1.8rem;
+        height: 1.8rem;
+        display: block;
+        margin: 0 auto;
+      }
+      p{
+        color: #555;
+        text-align: center;
+      }
+    }
   }
-  .wipe_img_con{
-    width: 320px;
-    float: left;
-    .transition();
-    img{
+  // shopin head
+  .shopin-head{
+    text-align: center;
+    margin-bottom: 0.5rem;
+    position: relative;
+    hr{
       width: 100%;
+      position: absolute;
+      top: 50%;
+      z-index: -1;
+      border-top: 1px solid #e5e5e5;
+    }
+    span{
+      display: inline-block;
+      box-sizing: content-box;
+      padding: 0 0.2rem 0 1.2rem;
+      font-size: 0.625rem;
+      font-weight: normal;
+      color: #5e5e5e;
+      .background('red_star');
+      background-color: #eee;
+      background-position: 0.2rem 0;
+      background-size: 0.9rem 0.9rem;
     }
   }
+  
 }
-
-// 导航
-.user-nav{
-  background: #fff;
-  margin-bottom: 0.65rem;
-  padding-top: 0.5rem;
-  .col-25{
-    height: 3rem;
-    padding: 0 0.35rem;
-    font-size: 0.6rem;
-    img{
-      width: 1.8rem;
-      height: 1.8rem;
-      display: block;
-      margin: 0 auto;
-    }
-    p{
-      color: #555;
-      text-align: center;
-    }
-  }
-}
-
-// shopin head
-.shopin-head{
-  text-align: center;
-  margin-bottom: 0.5rem;
-  position: relative;
-  hr{
-    width: 100%;
-    position: absolute;
-    top: 50%;
-    z-index: -1;
-    border-top: 1px solid #e5e5e5;
-  }
-  span{
-    display: inline-block;
-    box-sizing: content-box;
-    padding: 0 0.2rem 0 1.2rem;
-    font-size: 0.625rem;
-    font-weight: normal;
-    color: #5e5e5e;
-    .background('red_star');
-    background-color: #eee;
-    background-position: 0.2rem 0;
-    background-size: 0.9rem 0.9rem;
-  }
-}
-
 // swipe panel
 .subfield{
   width: 8rem;
