@@ -2,7 +2,7 @@ var Product = require('../models/product');
 
 // admin page
 module.exports.admin = function(req,res){
-  res.render('admin',{
+  res.render('admin/admin',{
     user: req.session.user
   });
 }
