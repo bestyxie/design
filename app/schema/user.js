@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
-var bcrypt = require('bcrypt');
-var SALT_WORK_FACTOR = 10;
+var crypto = require('crypto');
+var md5 = crypto.createHash('md5');
 
 var UserSchema = new mongoose.Schema({
   name: {
@@ -22,20 +22,11 @@ var UserSchema = new mongoose.Schema({
 
 UserSchema.pre('save',function(next){
   var user = this;
-
-  if(this.isNew){
-  }
-  bcrypt.genSalt(SALT_WORK_FACTOR,function(err,salt){
-    if(err){
-      return next(err)
-    }
-    bcrypt.hash(user.password,salt,function(err,hash){
-      if(err) return next(err);
-
-      user.password = hash;
-      next();
-    })
-  })
+  
+  md5.update(this.password);
+  // console.log(md5.digest('hex'));
+  user.password = md5.digest('hex');
+  next();
 })
 
 module.exports = UserSchema;
