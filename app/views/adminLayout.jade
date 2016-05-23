@@ -8,6 +8,16 @@ html
     link(rel="stylesheet",href="/style/font-awesome.min.css")
     link(rel="stylesheet",href="/style/admin.css")
   body
-    block content
+    header
+      .title
+        .logo SHOPIN
+        span.name 后台管理系统
+      .user
+        a.username(href="javascrip:;") 123@123.com
+        a.logout(href="#") 注销
+    .container
+      .sidebar
+      .main
+        block content
     include ./includes/admin-footer
     block scripts

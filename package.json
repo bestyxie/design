@@ -18,10 +18,12 @@
   "devDependencies": {
     "body-parser": "^1.15.0",
     "config": "^1.20.3",
+    "connect-mongo": "^1.2.0",
     "cookie-session": "^2.0.0-alpha.1",
     "eslint": "^2.1.0",
     "eslint-config-xo-space": "^0.12.0",
     "express": "^4.13.4",
+    "express-session": "^1.13.0",
     "gulp": "^3.9.0",
     "gulp-eslint": "^2.0.0",
     "gulp-exclude-gitignore": "^1.0.0",

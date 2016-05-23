@@ -14,11 +14,11 @@ module.exports.signup = function(req,res){
           console.log(err);
         }
         req.session.user = user;
-        res.redirect("/");
+        res.redirect("/admin");
       });
     }
     else if(user.length>0){
-      res.redirect('/admin');
+      res.redirect('/login');
     }
   });
 }
@@ -46,7 +46,15 @@ module.exports.signin = function(req,res){
 
 //登录页面
 module.exports.login = function(req,res){
-  res.render('admin/login');
+  res.render('admin/login',{
+    page: 'login'
+  });
+}
+// 注册页面
+module.exports.logup = function(req,res){
+  res.render('admin/login',{
+    page: 'logup'
+  });
 }
 
 // 注销

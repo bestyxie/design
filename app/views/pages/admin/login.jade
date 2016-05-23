@@ -5,22 +5,40 @@ block content
       .login-inner
         .icon-box
           .fa.fa-user
-        .login-wrap.wrap
-          h2 登录
-          form(method="POST",action="/user/signin")
-            input.username(name="user[name]",type="text",placeholder="登录邮箱")
-            input.pwd(name="user[password]",type="password",placeholder="密码")
-            button(type="submit") 登录
-            a.forgetpwd(href="") 忘记密码
-            a#newuser.newuser(href="javacript:;") 注册
-        .signup-wrap.wrap.rotate
-          h2 注册
-          form(method="POST",action="/user/signup")
-            input.username(name="user[name]",type="text",placeholder="注册邮箱")
-            input.pwd(name="user[password]",type="password",placeholder="密码")
-            input.repwd(type="password",placeholder="重复密码")
-            button(type="submit") 注册
-            a#login.newuser(href="javacript:;") 登录
+        if page == 'login'
+          .login-wrap.wrap
+            h2 登录
+            form(method="POST",action="/user/signin")
+              input.username(name="user[name]",type="text",placeholder="登录邮箱")
+              input.pwd(name="user[password]",type="password",placeholder="密码")
+              button(type="submit") 登录
+              a.forgetpwd(href="") 忘记密码
+              a#newuser.newuser(href="javacript:;") 注册
+          .signup-wrap.wrap.rotate
+            h2 注册
+            form(method="POST",action="/user/signup")
+              input.username(name="user[name]",type="text",placeholder="注册邮箱")
+              input.pwd(name="user[password]",type="password",placeholder="密码")
+              input.repwd(type="password",placeholder="重复密码")
+              button(type="submit") 注册
+              a#login.newuser(href="javacript:;") 登录
+        else
+          .login-wrap.wrap.rotate
+            h2 登录
+            form(method="POST",action="/user/signin")
+              input.username(name="user[name]",type="text",placeholder="登录邮箱")
+              input.pwd(name="user[password]",type="password",placeholder="密码")
+              button(type="submit") 登录
+              a.forgetpwd(href="") 忘记密码
+              a#newuser.newuser(href="javacript:;") 注册
+          .signup-wrap.wrap
+            h2 注册
+            form(method="POST",action="/user/signup")
+              input.username(name="user[name]",type="text",placeholder="注册邮箱")
+              input.pwd(name="user[password]",type="password",placeholder="密码")
+              input.repwd(type="password",placeholder="重复密码")
+              button(type="submit") 注册
+              a#login.newuser(href="javacript:;") 登录
 
 block scripts
   script.

@@ -6,16 +6,23 @@ var port = process.env.PORT || 3000;
 var app = express();
 var bodyParser = require('body-parser');
 var cookieSession = require('cookie-session');
+var session = require('express-session');
+var mongoStore = require('connect-mongo')(session);
+var dbUrl = 'mongodb://localhost/shop';
+
+mongoose.connect(dbUrl);
 
 app.set('views','./app/views/pages');
 app.set('view engine', 'jade');
 app.use(express.static(path.join(__dirname,'public')));
 app.use(bodyParser());
 app.use(cookieSession({
-  secret: 'shop'
+  secret: 'shop',
+  store: new mongoStore({
+    url: dbUrl,
+    collection: 'sessions'
+  })
 }));
-
-mongoose.connect('mongodb://localhost/shop');
 
 require('./config/router.js')(app);
 

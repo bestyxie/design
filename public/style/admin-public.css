@@ -1,0 +1,78 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+body {
+  background-color: #eee;
+}
+header {
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  background: #fff;
+  padding: 0 20px;
+  border-bottom: 1px solid #e5e5e5;
+  margin-bottom: 20px;
+}
+header .title {
+  display: inline-block;
+}
+header .title .logo {
+  display: inline-block;
+  font-size: 42px;
+  color: #d06868;
+  font-weight: bold;
+}
+header .title .name {
+  font-size: 16px;
+  color: #262525;
+  font-weight: bold;
+}
+header .user {
+  display: inline-block;
+  float: right;
+}
+header .user .username {
+  color: #262525;
+  margin-right: 20px;
+}
+header .user .username:hover {
+  text-decoration: none;
+}
+header .user .logout {
+  color: #12a3ee;
+}
+header .user .logout:hover {
+  text-decoration: underline;
+}
+.container {
+  width: 1250px;
+}
+.container:after {
+  content: " ";
+  display: block;
+  clear: both;
+  height: 0;
+  font-size: 0;
+  visibility: hidden;
+}
+.container .sidebar {
+  width: 150px;
+  background: #fff;
+  height: 600px;
+  float: left;
+  border-right: 1px solid #e5e5e5;
+}
+.container .main {
+  background: #fff;
+  margin-left: 150px;
+}
+.container .main:after {
+  content: " ";
+  display: block;
+  clear: both;
+  height: 0;
+  font-size: 0;
+  visibility: hidden;
+}
