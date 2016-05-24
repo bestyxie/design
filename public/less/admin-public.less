@@ -4,21 +4,25 @@ html,body{
   height: 100%;
 }
 body{
-  background-color: #eee;
+  background-color: #eceff2;
 }
 header{
   width: 100%;
-  height: 60px;
+  height: 70px;
   line-height: 60px;
   background: #fff;
   padding: 0 20px;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid #d9dadc;
   margin-bottom: 20px;
+  .inner{
+    width: 1170px;
+    margin: 0 auto;
+  }
   .title{
     display: inline-block;
     .logo{
       display: inline-block;
-      font-size: 42px;
+      font-size: 36px;
       color: #d06868;
       font-weight: bold;
     }
@@ -26,6 +30,7 @@ header{
       font-size: 16px;
       color: #262525;
       font-weight: bold;
+      margin-left: 8px;
     }
   }
   .user{
@@ -47,14 +52,40 @@ header{
   }
 }
 .container{
-  width: 1250px;
+  width: 1170px;
+  border: 1px solid #e5e5e5;
+  padding: 0;
   .clearfix();
   .sidebar{
-    width: 150px;
+    width: 210px;
     background: #fff;
     height: 600px;
     float: left;
     border-right: 1px solid #e5e5e5;
+    .nav{
+      margin-top: 35px;
+      li{
+        width: 100%;
+        height: 38px;
+        &.active{
+          border-left: 4px solid #4285f4;
+          cursor: pointer;
+          a{
+            background: #fafbfc;
+            color: #4285f4;
+          }
+        }
+        a{
+          border-radius: 0;
+          text-indent: 20px;
+          margin: 0;
+          color: #5a626d;
+          &:hover{
+            background: #fff;
+          }
+        }
+      }
+    }
   }
   .main{
     background: #fff;
