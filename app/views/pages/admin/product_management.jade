@@ -1,0 +1,32 @@
+extends ../../adminLayout
+
+block content
+  .header
+    h2 商品管理
+  .productlist.section
+    .head
+      p 商品资源（共555件）
+      a.newpdt(href="javascript:;")
+        i.fa.fa-plus
+        | 添加商品
+    table
+      thead
+        tr
+          td 图片
+          td 商品名称
+          td 商品分类
+          td 创建时间
+          td 操作
+      tbody
+        tr
+          td
+            .imgbox
+              img(src="")
+          td 短袖圆领白衬衫
+          td
+            span 夏季
+            span 衬衫
+          td 2016/5/23
+          td
+            a(href="javascript:;") 编辑
+            a(href="javascript:;") 删除
