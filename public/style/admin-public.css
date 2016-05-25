@@ -5,6 +5,7 @@ body {
 }
 body {
   background-color: #eceff2;
+  font-family: 'Microsoft YaHei', sans-serif;
 }
 header {
   width: 100%;
@@ -97,7 +98,7 @@ header .user .logout:hover {
 }
 .container .main {
   background: #fff;
-  margin-left: 150px;
+  margin-left: 210px;
 }
 .container .main:after {
   content: " ";
@@ -106,4 +107,100 @@ header .user .logout:hover {
   height: 0;
   font-size: 0;
   visibility: hidden;
+}
+.magnifier {
+  width: 231px;
+  height: 223px;
+  border: 1px solid #e7e7eb;
+  padding: 4px 0;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  text-align: center;
+  background: #fff;
+}
+.magnifier img {
+  height: 100%;
+  width: 100%;
+}
+.icon-sort {
+  display: inline-block;
+  width: 9px;
+  height: 14px;
+  -webkit-background-size: contain;
+  background-size: contain;
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0) url("../images/sort_icon.png") no-repeat 0 0;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+.main > h2 {
+  font-size: 16px;
+  padding: 30px 30px 15px;
+  border-bottom: 1px solid #e7e7eb;
+}
+.wrapper {
+  padding: 20px 28px;
+}
+.wrapper .section.productlist table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #e7e7eb;
+}
+.wrapper .section.productlist table thead {
+  background: #fafbfc;
+  font-weight: bold;
+  border: 1px solid #e7e7eb;
+}
+.wrapper .section.productlist table thead tr {
+  height: 46px;
+}
+.wrapper .section.productlist table thead .sort {
+  cursor: pointer;
+}
+.wrapper .section.productlist table tr td:first-child {
+  padding-left: 17px;
+}
+.wrapper .section.productlist table tbody {
+  color: #212121;
+}
+.wrapper .section.productlist table tbody tr {
+  height: 78px;
+  border-bottom: 1px solid #e7e7eb;
+}
+.wrapper .section.productlist table tbody tr:last-child {
+  border-bottom: none;
+}
+.wrapper .section.productlist table tbody tr td {
+  padding: 15px 0;
+  vertical-align: top;
+}
+.wrapper .section.productlist table tbody tr .name-column p {
+  width: 230px;
+}
+.wrapper .section.productlist table .img-box {
+  width: 50px;
+  height: 50px;
+  box-sizing: border-box;
+  position: relative;
+  border: 1px solid #e7e7eb;
+  text-align: center;
+  cursor: pointer;
+}
+.wrapper .section.productlist table .img-box img {
+  width: auto;
+  height: 100%;
+}
+.wrapper .section.productlist table .bk-name .name {
+  color: #212121;
+  margin-bottom: 10px;
+}
+.wrapper .section.productlist table .edit,
+.wrapper .section.productlist table .delete {
+  color: #4285f4;
+}
+.wrapper .section.productlist table .edit {
+  margin-right: 9px;
 }

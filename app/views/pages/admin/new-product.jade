@@ -1,0 +1,27 @@
+.model
+  .model-wrapper
+    .model-header
+      h3 新建书籍
+      a.close(href="javascrip:;")
+        i.fa.fa-close
+    .model-content
+      form(action="",method="POST")
+        .form-group
+          label(for="name") 商品名称
+          input#name(type="text")
+        .form-group
+          label(for="price") 价格
+          input#price(type="text")
+        .form-group
+          label(for="discount") 折扣
+          input#discount(type="text")
+        .form-group
+          label(for="size") 尺寸
+          input#size(type="text")
+        .form-group
+          label(for="stock") 库存
+          input#stock(type="text")
+    .model-footer
+      button.next 确定
+      button.cancle 取消
+.mask
