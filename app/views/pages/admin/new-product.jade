@@ -1,27 +1,36 @@
-.model
-  .model-wrapper
-    .model-header
+.modal.fade#new
+  .modal-wrapper.modal-dialog
+    .modal-header
       h3 新建书籍
-      a.close(href="javascrip:;")
+      a.close(href="javascrip:;",data-dismiss="modal")
         i.fa.fa-close
-    .model-content
-      form(action="",method="POST")
+    .modal-content
+      form#newproduct(action="/admin/new",method="POST",enctype="multipart/form-data")
         .form-group
           label(for="name") 商品名称
-          input#name(type="text")
+          input#name(type="text",name="product[name]")
         .form-group
           label(for="price") 价格
-          input#price(type="text")
+          input#price(type="text",name="product[price]")
         .form-group
           label(for="discount") 折扣
-          input#discount(type="text")
-        .form-group
-          label(for="size") 尺寸
-          input#size(type="text")
+          input#discount(type="text",name="product[discount]")
+        .size-box
+          .form-group
+            label 尺寸
+            input.size(type="text",name="product[size]")
+            a.newsize(href="javascrip:void(0);")
+              i.fa.fa-plus
+              | 增加尺寸
         .form-group
           label(for="stock") 库存
           input#stock(type="text")
-    .model-footer
-      button.next 确定
+        .form-group
+          label 图片
+          .pic-wrap
+          a.newpic(href="javascrip:void(0);")
+            i.fa.fa-plus
+            input(type="file",name="picture")
+    .modal-footer
+      button.next(type="submit") 确定
       button.cancle 取消
-.mask

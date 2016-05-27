@@ -7,7 +7,7 @@ block content
     .productlist.section
       .head
         h3 商品资源（共555件）
-        a.newpdt(href="javascript:;")
+        a.newpdt(href="javascript:void(0);",data-toggle="modal",data-target="#new")
           i.fa.fa-plus
           | 添加商品
       table
@@ -29,6 +29,64 @@ block content
               span 衬衫
             td 2016/5/23
             td
-              a.edit(href="javascript:;") 编辑
-              a.delete(href="javascript:;") 删除
+              a.edit(href="javascript:void(0);") 编辑
+              a.delete(href="javascript:void(0);") 删除
   include new-product
+block scripts
+  script#newsize(type="text/tmpl").
+    <div class="form-group">
+      <label></label>
+      <input type="text">
+      <a href="javascript:void(0);" class="delete">
+        <i class="fa fa-trash"></i>
+      </a>
+    </div>
+  script.
+    $(function(){
+      $('.newsize').on('click',function(){
+        var newsize = $($('#newsize').html());
+        $('.size-box').append(newsize);
+      });
+      $('.size-box').on('click','.delete',function(){
+        $(this).parent().remove();
+      });
+
+      function uploadPic(){
+        function checkType(picPath){
+          //- console.log($this);
+          //- var picPath = $($this).value;
+          console.log(picPath);
+          var type = picPath.substring(picPath.lastIndexOf('.')+1,picPath.length).toLowerCase();
+          if( type != 'jpg' && type != 'bmp' && type != 'gif' && type != 'png'){
+           return false;
+          }
+          return true;
+        }
+        function previewPic($this){
+          var $this = $($this);
+          console.log($this);
+          var type = checkType($this.value);
+          var prevDiv = $('.pic-wrap');
+          if(type){
+            if($this.files && $this.files[0]){
+              var reader = new FileReader();
+              reader.onload = function(evt){
+                var newImg = $('img src="'+evt.target.result+'" />');
+                prevDiv.append(newImg);
+              }
+              reader.readAsDataURL($this.files[0]);
+            }else{
+              prevDive.append('<div class="img" style="filter:progid:DXImagesTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src=\''+file.value+'\'"></div>');
+            }
+          }
+        }
+        $('input[type="file"]').on('change',function(){
+          console.log($(this).context.value);
+        });
+      }
+      uploadPic();
+      $('.next').on('click',function(){
+        console.log('next');
+        $('#newproduct').trigger('submit');
+      })
+    })

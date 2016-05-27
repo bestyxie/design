@@ -3,12 +3,14 @@ var Product = require('../models/product');
 // admin page
 module.exports.admin = function(req,res){
   res.render('admin/product_management',{
-    user: req.session.user
+    // user: req.session.user
   });
 }
 // 新增商品
 module.exports.new = function(req,res){
   var new_product = req.body.product;
+  console.log(new_product);
+  console.log(req.file);
 
   Product.findOne({name: new_product.name},function(err,product){
     if(err){
@@ -21,7 +23,7 @@ module.exports.new = function(req,res){
           console.log(err);
           res.redirect('/admin');
         }
-        res.redirect('/');
+        res.redirect('/admin');
       });
     }
     else{
