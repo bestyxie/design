@@ -6,7 +6,20 @@ var ProductSchema = new mongoose.Schema({
     type: String
   },
   url: String,
-  price: Number
+  price: Number,
+  discount: Number,
+  size: String,
+  sku: Number,
+  meta:  {
+    createAt: {
+      type: Date,
+      default: Date.now()
+    },
+    updateAt: {
+      type: Date,
+      default: Date.now()
+    }
+  }
 });
 
 module.exports = ProductSchema;

@@ -37,6 +37,11 @@
         }
         .pic-wrap{
           display: inline-block;
+          img{
+            display: inline-block;
+            width: 50px;
+            margin-right: 5px;
+          }
         }
         .newpic{
           display: inline-block;
@@ -47,6 +52,7 @@
           text-align: center;
           line-height: 50px;
           position: relative;
+          cursor: pointer;
           &:hover{
             border-color: #a9a9a9;
             color: #a9a9a9;
@@ -59,6 +65,7 @@
             left: 0;
             cursor: pointer;
             opacity: 0;
+            filter: alpha(opacity=0);
           }
         }
       }

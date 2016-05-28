@@ -9,8 +9,14 @@ module.exports.admin = function(req,res){
 // 新增商品
 module.exports.new = function(req,res){
   var new_product = req.body.product;
-  console.log(new_product);
-  console.log(req.file);
+  var files = req.files;
+  
+  new_product.url = "";
+  console.log(files);
+  // files.forEach(function(file){
+  //   new_product.url = new_product + ','+file.filename;
+  // });
+  console.log(new_product.url);
 
   Product.findOne({name: new_product.name},function(err,product){
     if(err){

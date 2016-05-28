@@ -18,19 +18,19 @@
         .size-box
           .form-group
             label 尺寸
-            input.size(type="text",name="product[size]")
+            input.size.sizetext(type="text",name="product[size]")
             a.newsize(href="javascrip:void(0);")
               i.fa.fa-plus
               | 增加尺寸
         .form-group
           label(for="stock") 库存
           input#stock(type="text")
-        .form-group
+        .form-group.uploadPic-form
           label 图片
           .pic-wrap
           a.newpic(href="javascrip:void(0);")
             i.fa.fa-plus
-            input(type="file",name="picture")
+            input(type="file",name="picture",accept="image/*",multiple="multiple")
     .modal-footer
       button.next(type="submit") 确定
       button.cancle 取消

@@ -66,7 +66,6 @@ module.exports.logout = function(req,res){
 
 // 必须登录 midware
 module.exports.signinRequire = function(req,res,next){
-  console.log(req.session.user);
   if(req.session.user){
     next();
   }else{

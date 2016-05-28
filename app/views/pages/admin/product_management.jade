@@ -36,7 +36,7 @@ block scripts
   script#newsize(type="text/tmpl").
     <div class="form-group">
       <label></label>
-      <input type="text">
+      <input class="sizetext" type="text" name="">
       <a href="javascript:void(0);" class="delete">
         <i class="fa fa-trash"></i>
       </a>
@@ -45,6 +45,7 @@ block scripts
     $(function(){
       $('.newsize').on('click',function(){
         var newsize = $($('#newsize').html());
+        newsize.find('input').attr('name','product[size]')
         $('.size-box').append(newsize);
       });
       $('.size-box').on('click','.delete',function(){
@@ -62,26 +63,36 @@ block scripts
           }
           return true;
         }
-        function previewPic($this){
-          var $this = $($this);
-          console.log($this);
-          var type = checkType($this.value);
+        function previewPic(picURL,$this){
+          var type = checkType(picURL);
           var prevDiv = $('.pic-wrap');
           if(type){
-            if($this.files && $this.files[0]){
+            console.log(($this.context.files)[0]);
+            if( $this.context.files && ($this.context.files)[0] ){
               var reader = new FileReader();
               reader.onload = function(evt){
-                var newImg = $('img src="'+evt.target.result+'" />');
+                var newImg = $('<img src="'+evt.target.result+'" />');
                 prevDiv.append(newImg);
+                console.log(prevDiv.find("img"));
               }
-              reader.readAsDataURL($this.files[0]);
+              reader.readAsDataURL(($this.context.files)[0]);
             }else{
-              prevDive.append('<div class="img" style="filter:progid:DXImagesTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src=\''+file.value+'\'"></div>');
+              prevDiv.append('<div class="img" style="filter:progid:DXImagesTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src=\''+file.value+'\'"></div>');
             }
           }
         }
+        //- $('.newpic').on('click',function(){
+        //-   var newpic = $('<input class="hide" type="file" name="picture" accept="image/*" />')
+        //-   var len = $(this).parent().find('input[type="file"]').length;
+        //-   $(this).parent().append(newpic);
+        //-   $(this).parent().find('input[type="file"]')[len-1].trigger('click')
+        //- });
         $('input[type="file"]').on('change',function(){
-          console.log($(this).context.value);
+          var self = $(this);
+          //- var otherPic = $(this).clone();
+          previewPic($(this).context.value,self);
+          //- $(this).parent().hide();
+          //- $('.uploadPic-form').append(otherPic);
         });
       }
       uploadPic();

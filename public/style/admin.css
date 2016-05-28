@@ -431,6 +431,11 @@ body {
 .modal .modal-content form .form-group .pic-wrap {
   display: inline-block;
 }
+.modal .modal-content form .form-group .pic-wrap img {
+  display: inline-block;
+  width: 50px;
+  margin-right: 5px;
+}
 .modal .modal-content form .form-group .newpic {
   display: inline-block;
   width: 50px;
@@ -440,6 +445,7 @@ body {
   text-align: center;
   line-height: 50px;
   position: relative;
+  cursor: pointer;
 }
 .modal .modal-content form .form-group .newpic:hover {
   border-color: #a9a9a9;
@@ -453,6 +459,7 @@ body {
   left: 0;
   cursor: pointer;
   opacity: 0;
+  filter: alpha(opacity=0);
 }
 .modal .modal-content form label {
   width: 76px;
