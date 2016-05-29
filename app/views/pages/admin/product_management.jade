@@ -80,20 +80,18 @@ block scripts
           }
         }
         $('.newpic').on('click',function(){
-          var imglen = $('.pic-wrap img').length;
-          if(imglen === 0){
-            console.log(imglen);
-            $('input[type="file"]').trigger('click');
+          var file = $('input[type="file"]');
+          if(file.length == 1){
+            file.trigger('click');
           }else{
-            console.log(imglen);
-            var newpic = $('<input type="file" name="picture" accept="image/*" class="hide" />')
-            $(this).parent().append(newpic);
-            $(newpic).trigger('click');
+            $(file[1]).trigger('click');
           }
         });
         $(document).on('change','input[type="file"]',function(){
           var self = $(this);
-          previewPic($(this).context.value,self);
+          previewPic(self.val(),self);
+          var newpic = $('<input type="file" name="picture" accept="image/*" class="hide" />')
+          self.parent().append(newpic);
         });
       }
       uploadPic();

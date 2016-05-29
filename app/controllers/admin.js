@@ -17,7 +17,7 @@ module.exports.new = function(req,res){
     var filename = (file.filename).toString();
     new_product.url = new_product.url+filename+',';
   });
-  new_product = new_product.substring(0,new_product.lastIndexOf(','));
+  new_product.url = new_product.url.substring(0,new_product.url.lastIndexOf(','));
 
   Product.findOne({name: new_product.name},function(err,product){
     if(err){
