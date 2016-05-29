@@ -9,7 +9,7 @@ var storage = multer.diskStorage({
   },
   filename: function(req,file,cb){
     var fileFormat = (file.originalname).split('.');
-    cb(null,file.originalname + '-' + Date.now() + '.' + fileFormat[fileFormat.length-1])
+    cb(null,file.originalname.substring(0,file.originalname.lastIndexOf('.')) + '-' + Date.now() + '.' + fileFormat[fileFormat.length-1])
   }
 })
 var upload = multer({
@@ -35,7 +35,7 @@ module.exports = function(app){
 
   // admin
   app.get('/admin',User.signinRequire, User.adminRequire, Admin.admin);
-  app.post('/admin/new',upload.fields([{name:'picture',maxCount:8}]),Admin.new);
+  app.post('/admin/new',upload.array('picture',8),Admin.new);
   app.get('/admin/user/list',User.signinRequire, User.adminRequire, User.list);
   app.post('/user/delete',User.delete);
   app.post('/user/changerole',User.change);

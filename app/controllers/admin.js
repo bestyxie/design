@@ -12,10 +12,14 @@ module.exports.new = function(req,res){
   var files = req.files;
   
   new_product.url = "";
-  console.log(files);
-  // files.forEach(function(file){
-  //   new_product.url = new_product + ','+file.filename;
-  // });
+  // console.log(files[0].filename);
+  // for(var i=0,len = files.length;i<len;i++){
+  //   new_product.url = new_product + ',/images/upload/'+files[i].filename;
+  // }
+  files.forEach(function(file){
+    var filename = (file.filename).toString();
+    new_product.url = new_product.url+','+filename;
+  });
   console.log(new_product.url);
 
   Product.findOne({name: new_product.name},function(err,product){

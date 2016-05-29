@@ -86,7 +86,7 @@ block scripts
             $('input[type="file"]').trigger('click');
           }else{
             console.log(imglen);
-            var newpic = $('<input class="hide" type="file" name="picture" accept="image/*" />')
+            var newpic = $('<input type="file" name="picture" accept="image/*" class="hide" />')
             $(this).parent().append(newpic);
             $(newpic).trigger('click');
           }
