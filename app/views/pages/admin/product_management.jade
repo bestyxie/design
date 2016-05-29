@@ -56,7 +56,7 @@ block scripts
         function checkType(picPath){
           //- console.log($this);
           //- var picPath = $($this).value;
-          console.log(picPath);
+          //- console.log(picPath);
           var type = picPath.substring(picPath.lastIndexOf('.')+1,picPath.length).toLowerCase();
           if( type != 'jpg' && type != 'bmp' && type != 'gif' && type != 'png'){
            return false;
@@ -67,13 +67,11 @@ block scripts
           var type = checkType(picURL);
           var prevDiv = $('.pic-wrap');
           if(type){
-            console.log(($this.context.files)[0]);
             if( $this.context.files && ($this.context.files)[0] ){
               var reader = new FileReader();
               reader.onload = function(evt){
                 var newImg = $('<img src="'+evt.target.result+'" />');
                 prevDiv.append(newImg);
-                console.log(prevDiv.find("img"));
               }
               reader.readAsDataURL(($this.context.files)[0]);
             }else{
@@ -81,23 +79,27 @@ block scripts
             }
           }
         }
-        //- $('.newpic').on('click',function(){
-        //-   var newpic = $('<input class="hide" type="file" name="picture" accept="image/*" />')
-        //-   var len = $(this).parent().find('input[type="file"]').length;
-        //-   $(this).parent().append(newpic);
-        //-   $(this).parent().find('input[type="file"]')[len-1].trigger('click')
-        //- });
-        $('input[type="file"]').on('change',function(){
+        $('.newpic').on('click',function(){
+          var imglen = $('.pic-wrap img').length;
+          if(imglen === 0){
+            console.log(imglen);
+            $('input[type="file"]').trigger('click');
+          }else{
+            console.log(imglen);
+            var newpic = $('<input class="hide" type="file" name="picture" accept="image/*" />')
+            $(this).parent().append(newpic);
+            $(newpic).trigger('click');
+          }
+          //- var len = $(this).parent().find('input[type="file"]').length;
+          //- $(this).parent().find('input[type="file"]')[len-1].trigger('click')
+        });
+        $(document).on('change','input[type="file"]',function(){
           var self = $(this);
-          //- var otherPic = $(this).clone();
           previewPic($(this).context.value,self);
-          //- $(this).parent().hide();
-          //- $('.uploadPic-form').append(otherPic);
         });
       }
       uploadPic();
       $('.next').on('click',function(){
-        console.log('next');
         $('#newproduct').trigger('submit');
       })
     })
