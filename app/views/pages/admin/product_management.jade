@@ -90,8 +90,6 @@ block scripts
             $(this).parent().append(newpic);
             $(newpic).trigger('click');
           }
-          //- var len = $(this).parent().find('input[type="file"]').length;
-          //- $(this).parent().find('input[type="file"]')[len-1].trigger('click')
         });
         $(document).on('change','input[type="file"]',function(){
           var self = $(this);
