@@ -54,9 +54,6 @@ block scripts
 
       function uploadPic(){
         function checkType(picPath){
-          //- console.log($this);
-          //- var picPath = $($this).value;
-          //- console.log(picPath);
           var type = picPath.substring(picPath.lastIndexOf('.')+1,picPath.length).toLowerCase();
           if( type != 'jpg' && type != 'bmp' && type != 'gif' && type != 'png'){
            return false;
@@ -70,7 +67,7 @@ block scripts
             if( $this.context.files && ($this.context.files)[0] ){
               var reader = new FileReader();
               reader.onload = function(evt){
-                var newImg = $('<img src="'+evt.target.result+'" />');
+                var newImg = $('<div class="imgbox"><img src="'+evt.target.result+'" /><i class="icon">&times;</i></div>');
                 prevDiv.append(newImg);
               }
               reader.readAsDataURL(($this.context.files)[0]);
@@ -93,6 +90,18 @@ block scripts
           var newpic = $('<input type="file" name="picture" accept="image/*" class="hide" />')
           self.parent().append(newpic);
         });
+        $(document).on('click','.imgbox .icon',function(){
+          var selt = $(this),i=0;
+          var imgboxes = $(this).parent().siblings();
+          for(i,len=imgboxes.length;i<len;i++){
+            if($(imgboxes[i]).has(self)){
+              break;
+            }
+          }
+          console.log(i);
+          $($('input[type="file"]')[i]).remove();
+          $(this).parent().remove();
+        })
       }
       uploadPic();
       $('.next').on('click',function(){
