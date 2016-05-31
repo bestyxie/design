@@ -105,8 +105,12 @@
   height: 32px;
   box-sizing: border-box;
   padding: 8px;
+  border-radius: 3px;
   border: 1px solid #e7e7eb;
   outline: none;
+}
+.modal .modal-content form input.err {
+  border-color: #a94442;
 }
 .modal .modal-footer {
   width: 100%;

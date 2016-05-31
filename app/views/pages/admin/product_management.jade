@@ -43,15 +43,21 @@ block scripts
     </div>
   script.
     $(function(){
-      $('.newsize').on('click',function(){
-        var newsize = $($('#newsize').html());
-        newsize.find('input').attr('name','product[size]')
-        $('.size-box').append(newsize);
-      });
-      $('.size-box').on('click','.delete',function(){
-        $(this).parent().remove();
-      });
 
+      //- 新尺寸
+      function newSize(){
+        $('.newsize').on('click',function(){
+          var newsize = $($('#newsize').html());
+          newsize.find('input').attr('name','product[size]')
+          $('.size-box').append(newsize);
+        });
+        $('.size-box').on('click','.delete',function(){
+          $(this).parent().remove();
+        });
+      }
+      newSize();
+
+      //- 图片上传预览
       function uploadPic(){
         function checkType(picPath){
           var type = picPath.substring(picPath.lastIndexOf('.')+1,picPath.length).toLowerCase();
@@ -104,7 +110,46 @@ block scripts
         })
       }
       uploadPic();
+      //- 确定新增商品
       $('.next').on('click',function(){
-        $('#newproduct').trigger('submit');
-      })
+        if($(this).hasClass('disabled')){
+          var ipts = Array.prototype.slice.call($('#newproduct .required'));
+          ipts.forEach(function(ipt){
+            if($(ipt).val().length == 0){
+              $(ipt).addClass('err');
+            }
+          });
+          return;
+        }else{
+          var ipts = Array.prototype.slice.call($('input.rqrednum'));
+          var pattern = /[^\d]/g;
+          console.log(ipts.length);
+          var isnum = true;
+          ipts.forEach(function(ipt){
+            if($(ipt).val() != 0 && pattern.test($(ipt).val())){
+              isnum = false;
+            }
+          });
+          if(isnum){
+            $('#newproduct').trigger('submit');
+          }
+        }
+      });
+
+      //- validate
+      $('#newproduct').on('keyup','.required',validate);
+
+      function validate(){
+        var isAllow = Array.prototype.slice.call($('#newproduct .required')).every(function(input){
+          if($(input).val().length>0){
+            $(input).removeClass('err');
+          }
+          return $(input).val().length > 0;
+        });
+        console.log(isAllow);
+        if(isAllow){
+          $('.modal-footer .next').removeClass('disabled');
+        }
+      }
+
     })
