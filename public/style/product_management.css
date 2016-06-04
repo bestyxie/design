@@ -23,3 +23,12 @@
 .productlist .head .newpdt .fa {
   margin-right: 6px;
 }
+.productlist table .imgbox {
+  width: 50px;
+  height: 75px;
+  text-align: center;
+  overflow: hidden;
+}
+.productlist table .imgbox img {
+  width: 100%;
+}

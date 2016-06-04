@@ -19,18 +19,19 @@ block content
             td 创建时间
             td 操作
         tbody
-          tr
-            td
-              .imgbox
-                img(src="")
-            td 短袖圆领白衬衫
-            td
-              span 夏季
-              span 衬衫
-            td 2016/5/23
-            td
-              a.edit(href="javascript:void(0);") 编辑
-              a.delete(href="javascript:void(0);") 删除
+          each product,index in products
+            tr
+              td
+                .imgbox
+                  img(src="#{product.url.split(',')[0]}")
+              td #{product.name}
+              td
+                span 夏季
+                span 衬衫
+              td #{product.meta.createAt.getFullYear()}/#{product.meta.createAt.getMonth()}/#{product.meta.createAt.getDate()}
+              td
+                a.edit(href="javascript:void(0);") 编辑
+                a.delete(href="javascript:void(0);") 删除
   include new-product
 block scripts
   script#newsize(type="text/tmpl").
@@ -95,16 +96,16 @@ block scripts
           previewPic(self.val(),self);
           var newpic = $('<input type="file" name="picture" accept="image/*" class="hide" />')
           self.parent().append(newpic);
+          validate();
         });
         $(document).on('click','.imgbox .icon',function(){
-          var selt = $(this),i=0;
+          var self = $(this),i=0;
           var imgboxes = $(this).parent().siblings();
           for(i,len=imgboxes.length;i<len;i++){
             if($(imgboxes[i]).has(self)){
               break;
             }
           }
-          console.log(i);
           $($('input[type="file"]')[i]).remove();
           $(this).parent().remove();
         })
@@ -119,11 +120,9 @@ block scripts
               $(ipt).addClass('err');
             }
           });
-          return;
         }else{
           var ipts = Array.prototype.slice.call($('input.rqrednum'));
           var pattern = /[^\d]/g;
-          console.log(ipts.length);
           var isnum = true;
           ipts.forEach(function(ipt){
             if($(ipt).val() != 0 && pattern.test($(ipt).val())){

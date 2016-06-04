@@ -27,7 +27,6 @@ module.exports.list = function(req,res){
   // console.log(url);
   Product.find({},function(err,products){
     res.render('home',{
-      user: req.session.user,
       products: products
     });
   });
@@ -43,7 +42,6 @@ module.exports.detail = function(req,res){
     }
     res.render('details',{
       product: product,
-      user: req.session.user
     });
   });
 }

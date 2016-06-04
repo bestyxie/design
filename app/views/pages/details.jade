@@ -9,30 +9,26 @@ block content
           .swiper_wrap
             .wipe_img_con
               a.swiper_wrap_a
-                img(src="/images/d3.jpg")
+                img(src="#{product.url.split(',')[product.url.split(',').length-1]}")
+            each url in product.url.split(',')
+              .wipe_img_con
+                a.swiper_wrap_a
+                  img(src="#{url}")
             .wipe_img_con
               a.swiper_wrap_a
-                img(src="/images/d1.jpg")
-            .wipe_img_con
-              a.swiper_wrap_a
-                img(src="/images/d2.jpg")
-            .wipe_img_con
-              a.swiper_wrap_a
-                img(src="/images/d3.jpg")
-            .wipe_img_con
-              a.swiper_wrap_a
-                img(src="/images/d1.jpg")
+                img(src="#{product.url.split(',')[0]}")
           .swiper-page
             em#SwiperPageNum 1
             i &frasl;
-            em 3
+            em #{product.url.split(',').length}
         .primary-info
-          p.info-title.break jcoolstory 卡通韩版纯棉短袖T恤
+          p.info-title.break #{product.name}
           p.info-desc.break jcoolstory夏装新款 钓鱼卡通印花  宽松舒适版型 休闲百搭
           .info-price.center
-            span.now  &yen;49.00
-            span.market   &yen;70.00
-            span.discount 7.0折
+            span.now  &yen;#{product.price}
+            if product.discount >0
+              span.market   &yen;70.00
+              span.discount 7.0折
           .info-other.center
             span.item 默认快递
             span.item 销量 64
@@ -52,14 +48,9 @@ block content
               span.sku 颜色：白色（两面可穿宽） 尺码：均码
             .show-img
               ul.clearfix
-                li.small-img
-                  img(src="/images/d1.jpg")
-                li.small-img
-                  img(src="/images/d2.jpg")
-                li.small-img
-                  img(src="/images/d3.jpg")
-                li.small-img
-                  img(src="/images/d3.jpg")
+                each url in product.url.split(',')
+                  li.small-img
+                    img(src="#{url}")
       .detail-tabpanel
         .buttons-row.row
           a.col-50.tab-link.actve(href="#graphic")
@@ -71,9 +62,8 @@ block content
             dl.pic-box
               dt.pic-title 穿着效果
               dd.pic-list
-                img.fadeIn(src="/images/d1.jpg")
-                img.fadeIn(src="/images/d2.jpg")
-                img.fadeIn(src="/images/d3.jpg")
+                each url in product.url.split(',')
+                  img.fadeIn(src="#{url}")
           #parameters.parameters.tab.active
             .size-list
               table

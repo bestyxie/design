@@ -2,8 +2,10 @@ var Product = require('../models/product');
 
 // admin page
 module.exports.admin = function(req,res){
-  res.render('admin/product_management',{
-    // user: req.session.user
+  Product.find({},function(err,products){
+    res.render('admin/product_management',{
+      products: products
+    });
   });
 }
 // 新增商品
@@ -15,7 +17,7 @@ module.exports.new = function(req,res){
 
   files.forEach(function(file){
     var filename = (file.filename).toString();
-    new_product.url = new_product.url+filename+',';
+    new_product.url = new_product.url+'/images/upload/'+filename+',';
   });
   new_product.url = new_product.url.substring(0,new_product.url.lastIndexOf(','));
 
