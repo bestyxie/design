@@ -527,3 +527,21 @@ body {
   border: 1px solid #e7e7eb;
   background: #fff;
 }
+.userlist .table {
+  width: 100%;
+  border: 1px solid #e7e7eb;
+}
+.userlist .table dd,
+.userlist .table dt {
+  display: inline-block;
+  width: 50px;
+  padding-left: 15px;
+  height: 40px;
+  border-bottom: 1px solid #e7e7eb;
+}
+.userlist .table .name {
+  width: 350px;
+}
+.userlist .table .operate {
+  width: auto;
+}

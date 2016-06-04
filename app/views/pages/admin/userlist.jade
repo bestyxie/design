@@ -1,0 +1,28 @@
+extends ../../adminLayout
+
+block content
+  h2 用户管理
+  .wrapper
+    .userlist.section
+      div.table.user-list
+        dl
+          dt #
+          dt.name name
+          dt role
+          dt.operate operate
+        each user,index in users
+          dl(class="item-id-#{user._id}")
+            dd #{index}
+            dd.name #{user.name}
+            dd.role #{user.role}
+            dd.operate
+              a.edit.btn.btn-link(type="button",data-user="#{user._id}") 编辑
+              a.btn.btn-link.deleteUser(type="button",data-user="#{user._id}") 删除
+              span.hide.form-wrapper.js-form-wrapper(data-user="#{user._id}")
+                label(for="user_id") 权限
+                input.user_id.form-control(typ="text")
+                button.btn.btn-default(data-user="#{user._id}") 确定
+
+block scripts
+  script.
+    $(document).ready(function(){})

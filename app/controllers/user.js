@@ -91,9 +91,9 @@ module.exports.list = function(req,res){
       console.log('查询用户出错');
       res.redirect('/');
     }
-    res.render('userlist',{
-      users: users,
-      user: req.session.user
+    res.render('admin/userlist',{
+      user: req.session.user,
+      users: users
     });
   });
 }
