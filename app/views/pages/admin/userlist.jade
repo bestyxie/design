@@ -4,25 +4,88 @@ block content
   h2 用户管理
   .wrapper
     .userlist.section
-      div.table.user-list
-        dl
-          dt #
-          dt.name name
-          dt role
-          dt.operate operate
+      table.table.table-hover.user-list
+        tr
+          td #
+          td name
+          td role
+          td.operate oparate
         each user,index in users
-          dl(class="item-id-#{user._id}")
-            dd #{index}
-            dd.name #{user.name}
-            dd.role #{user.role}
-            dd.operate
-              a.edit.btn.btn-link(type="button",data-user="#{user._id}") 编辑
+          tr(class="item-id-#{user._id}")
+            td #{index}
+            td #{user.name}
+            td.role #{user.role}
+            td.opetate
+              a.edit.j-edit.btn.btn-link(type="button",data-user="#{user._id}") 编辑
               a.btn.btn-link.deleteUser(type="button",data-user="#{user._id}") 删除
-              span.hide.form-wrapper.js-form-wrapper(data-user="#{user._id}")
+              span.form-wrapper.js-form-wrapper(data-user="#{user._id}")
                 label(for="user_id") 权限
                 input.user_id.form-control(typ="text")
                 button.btn.btn-default(data-user="#{user._id}") 确定
+                button.btn.btn-default.j-closePanel 取消
 
 block scripts
   script.
-    $(document).ready(function(){})
+    $(document).ready(function(){
+      // show edit role pannel
+      function showEditpannel(user_id){
+        var tr = $('span[data-user="'+user_id+'"]');
+        console.log(tr.css('display') === 'none');
+        if(tr.css('display') === "none"){
+          tr.fadeIn('fast');
+        }else{
+          tr.fadeOut('fast');
+        }
+      }
+      $('.j-edit').on('click',function(){
+        var id = $(this).data('user');
+        showEditpannel(id);
+      });
+      $('.j-closePanel').on('click',function(){
+        $(this).parent().parent().find('.j-edit').trigger('click');
+      })
+
+      // 修改用户角色
+      function changeRole(id){
+        var role = parseInt($('span[data-user="'+id+'"] .user_id').val());
+        $.ajax({
+          method: "POST",
+          url: "/user/changerole",
+          data: {id: id,role: role},
+          type: 'json',
+          success: function(data){
+            if(data.success === 1){
+              $('.item-id-'+ id+ ' .role').html(data.role);
+              $('.js-form-wrapper[data-user="'+id+'"]').fadeOut('fast');
+            }
+          }
+        });
+      };
+      $('.js-form-wrapper button').on('click',function(){
+        var id = $(this).data('user');
+        changeRole(id);
+      });
+
+      // 删除用户
+      function deleteUser(user_id){
+        var tr = $('.item-id-'+user_id);
+        $.ajax({
+          type: 'POST',
+          url: '/user/delete',
+          data: {id:user_id},
+          dataType: 'json',
+          global: false,
+          success: function(data){
+            if(data.success === 1 && tr.length>0){
+              tr.remove();
+            }
+          }
+        });
+      }
+      var delect = $('.deleteUser');
+      delect.on('click',function(e){
+        e.preventDefault();
+        console.log('click!');
+        deleteUser($(this).data('user'));
+      });
+    })

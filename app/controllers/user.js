@@ -34,13 +34,23 @@ module.exports.signin = function(req,res){
     if(!user){
       res.redirect('/');
     }
-    else if(user.name === _user.name && user.password === _user.password){
-      req.session.user = user;
-      res.redirect('/admin');
-    }else{
-      console.log("password is not matched!");
-      res.redirect('/login');
-    }
+    user.comparePassword(_user.password,function(isMatch){
+      console.log(isMatch);
+      if(isMatch){
+        req.session.user = user;
+        res.redirect('/admin');
+      }
+      else{
+        res.redirect('/login');
+      }
+    })
+    // else if(user.name === _user.name && user.password === _user.password){
+    //   req.session.user = user;
+    //   res.redirect('/admin');
+    // }else{
+    //   console.log("password is not matched!");
+    //   res.redirect('/login');
+    // }
   })
 }
 
@@ -61,7 +71,7 @@ module.exports.logup = function(req,res){
 module.exports.logout = function(req,res){
   req.session.user = null;
 
-  res.redirect('/');
+  res.redirect('/login');
 }
 
 // 必须登录 midware

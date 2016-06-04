@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
 var crypto = require('crypto');
-var md5 = crypto.createHash('md5');
 
 var UserSchema = new mongoose.Schema({
   name: {
@@ -22,11 +21,25 @@ var UserSchema = new mongoose.Schema({
 
 UserSchema.pre('save',function(next){
   var user = this;
+  var md5 = crypto.createHash('md5');
   
   md5.update(this.password);
-  // console.log(md5.digest('hex'));
   user.password = md5.digest('hex');
   next();
-})
+});
+
+UserSchema.methods = {
+  comparePassword: function(_password,cb){
+    var password, isMatch = false;
+    var md5 = crypto.createHash('md5');
+    md5.update(_password);
+    _password = md5.digest('hex');
+    console.log(_password);
+    if(this.password === _password){
+      isMatch = true;
+    }
+    cb(isMatch);
+  }
+}
 
 module.exports = UserSchema;
