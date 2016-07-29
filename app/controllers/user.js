@@ -31,8 +31,10 @@ module.exports.signin = function(req,res){
     if(err){
       return console.log(err);
     }
+    console.log(user);
     if(!user){
       res.redirect('/');
+      return;
     }
     user.comparePassword(_user.password,function(isMatch){
       console.log(isMatch);
