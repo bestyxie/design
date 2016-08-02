@@ -25,11 +25,16 @@ module.exports.list = function(req,res){
   // apps();
   // console.log(app_id+ ","+app_secret);
   // console.log(url);
-  Product.find({},function(err,products){
+  Product.find({}).sort({'meta.updateAt':-1}).exec(function(err,products){
     res.render('home',{
       products: products
     });
-  });
+  })
+  // Product.find({},function(err,products){
+  //   res.render('home',{
+  //     products: products
+  //   });
+  // });
 }
 
 // 商品详情页

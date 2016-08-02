@@ -25,10 +25,12 @@ block content
           p.info-title.break #{product.name}
           p.info-desc.break jcoolstory夏装新款 钓鱼卡通印花  宽松舒适版型 休闲百搭
           .info-price.center
-            span.now  &yen;#{product.price}
             if product.discount >0
+              span.now  &yen;#{product.price * product.discount/10}
               span.market   &yen;70.00
-              span.discount 7.0折
+              span.discount #{product.discount}折
+            else
+              span.now  &yen;#{product.price}
           .info-other.center
             span.item 默认快递
             span.item 销量 64
