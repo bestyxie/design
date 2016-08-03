@@ -198,3 +198,8 @@ module.exports.deleteCart = function(req,res){
     
   });
 }
+
+// 编辑商品
+module.exports.editproduct = function(req,res){
+  res.render('admin/product_edit');
+}
