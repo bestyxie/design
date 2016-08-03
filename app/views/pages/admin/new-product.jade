@@ -8,23 +8,28 @@
       form#newproduct(action="/admin/new",method="POST",enctype="multipart/form-data")
         .form-group
           label(for="name") 商品名称*
-          input#name.required(type="text",name="product[name]")
+          .input-box
+            input#name.required(type="text",name="product[name]")
         .form-group
           label(for="price") 价格*
-          input#price.required.rqrednum(type="text",name="product[price]")
+          .input-box
+            input#price.required.rqrednum(type="text",name="product[price]")
         .form-group
           label(for="discount") 折扣
-          input#discount.rqrednum(type="text",name="product[discount]",placeholder="1-10")
+          .input-box
+            input#discount.rqrednum(type="text",name="product[discount]",placeholder="1-10")
         .size-box
           .form-group
             label 尺寸*
-            input.required.size.sizetext(type="text",name="product[size]")
+            .input-box
+              input.required.size.sizetext(type="text",name="product[size]")
             a.newsize(href="javascrip:void(0);")
               i.fa.fa-plus
               | 增加尺寸
         .form-group
           label(for="stock") 库存*
-          input#stock.required.rqrednum(type="text")
+          .input-box
+            input#stock.required.rqrednum(type="text")
         .form-group.uploadPic-form
           label 图片*
           .pic-wrap

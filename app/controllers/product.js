@@ -30,11 +30,6 @@ module.exports.list = function(req,res){
       products: products
     });
   })
-  // Product.find({},function(err,products){
-  //   res.render('home',{
-  //     products: products
-  //   });
-  // });
 }
 
 // 商品详情页
