@@ -34,6 +34,7 @@ module.exports = function(app){
   // product
   app.get('/',Product.list);
   app.get('/details/:id',Product.detail);
+  app.post('/product/delete',Product.delete);
 
   // shopping cart management
   app.post('/product/addtocart',ShoppingCart.addToCart);

@@ -46,6 +46,19 @@ module.exports.detail = function(req,res){
   });
 }
 
+// 删除商品
+module.exports.delete = function(req,res){
+  var product_id  = req.body._id;
+  Product.remove({_id: product_id},function(err){
+    if(err){
+      console.log(err);
+      res.json( {success: 0} );
+    }
+
+    res.json( {success: 1} );
+  })
+}
+
 // 编辑商品
 module.exports.editproduct = function(req,res){
   res.render('admin/product_edit');

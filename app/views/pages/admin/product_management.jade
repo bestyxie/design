@@ -6,7 +6,7 @@ block content
   .wrapper
     .productlist.section
       .head
-        h3 商品资源（共555件）
+        h3 商品资源（共#{products.length}件）
         a.newpdt(href="javascript:void(0);",data-toggle="modal",data-target="#new")
           i.fa.fa-plus
           | 添加商品
@@ -18,20 +18,21 @@ block content
             td 商品分类
             td 创建时间
             td 操作
-        tbody
+        tbody.j-product-list
           each product,index in products
-            tr
+            tr.j-productItem
               td
                 .imgbox
                   img(src="#{product.url.split(',')[0]}")
-              td #{product.name}
+              td
+                a(href='admin/product') #{product.name}
               td
                 span 夏季
                 span 衬衫
               td #{product.meta.createAt.getFullYear()}/#{product.meta.createAt.getMonth()}/#{product.meta.createAt.getDate()}
-              td
+              td(data-product_id="#{product._id}")
                 a.edit(href="javascript:void(0);") 编辑
-                a.delete(href="javascript:void(0);") 删除
+                a.delete.j-delete(href="javascript:void(0);") 删除
   include new-product
 block scripts
   script#newsize(type="text/tmpl").
@@ -51,7 +52,7 @@ block scripts
       function newSize(){
         $('.newsize').on('click',function(){
           var newsize = $($('#newsize').html());
-          newsize.find('input').attr('name','product[size]')
+          newsize.find('input').attr('name','product[size]');
           $('.size-box').append(newsize);
         });
         $('.size-box').on('click','.delete',function(){
@@ -152,5 +153,25 @@ block scripts
           $('.modal-footer .next').removeClass('disabled');
         }
       }
+
+      //- delete product
+      function deleteProduct(){
+        var _id = $(this).parent().data('product_id');
+        var $this = $(this);
+
+        $.ajax({
+          url: 'product/delete',
+          type: 'POST',
+          dataType: 'json',
+          data: {_id: _id},
+          success: function(data){
+            if(data.success){
+              $this.parents('.j-productItem').remove();
+            }
+          }
+        })
+      }
+
+      $('.j-product-list').on('click','.j-delete',deleteProduct);
 
     })
