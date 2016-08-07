@@ -1,6 +1,8 @@
 var User = require('../app/controllers/user');
 var Admin = require('../app/controllers/admin');
 var Product = require('../app/controllers/product');
+var ShoppingCart = require('../app/controllers/shoppingCart');
+
 var multer = require('multer');
 
 var storage = multer.diskStorage({
@@ -32,9 +34,11 @@ module.exports = function(app){
   // product
   app.get('/',Product.list);
   app.get('/details/:id',Product.detail);
-  app.post('/product/addtocart',Product.addToCart);
-  app.get('/cart',User.signinRequire, Product.shoppingCart);
-  app.post('/cart/delete',Product.deleteCart);
+
+  // shopping cart management
+  app.post('/product/addtocart',ShoppingCart.addToCart);
+  app.get('/cart',User.signinRequire, ShoppingCart.shoppingCart);
+  app.post('/cart/delete',ShoppingCart.deleteCart);
 
   // user
   app.get('/login',User.login);
