@@ -5,10 +5,11 @@ var ProductSchema = new mongoose.Schema({
     unique: true,
     type: String
   },
-  url: String,
+  img: Array,
   price: Number,
   discount: Number,
-  size: String,
+  size: Array,
+  color: Array,
   sku: Number,
   meta:  {
     createAt: {

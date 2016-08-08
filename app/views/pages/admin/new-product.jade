@@ -5,7 +5,7 @@
       a.close(href="javascrip:;",data-dismiss="modal")
         i.fa.fa-close
     .modal-content
-      form#newproduct(action="/admin/new",method="POST",enctype="multipart/form-data")
+      form#newproduct(action="/admin/product/new",method="POST",enctype="multipart/form-data")
         .form-group
           label(for="name") 商品名称*
           .input-box
@@ -18,14 +18,22 @@
           label(for="discount") 折扣
           .input-box
             input#discount.rqrednum(type="text",name="product[discount]",placeholder="1-10")
-        .size-box
+        .size-box.j-form-box
           .form-group
             label 尺寸*
             .input-box
               input.required.size.sizetext(type="text",name="product[size]")
-            a.newsize(href="javascrip:void(0);")
+            a.newsize.j-newInput(href="javascrip:void(0);",data-name="size")
               i.fa.fa-plus
-              | 增加尺寸
+              | 添加尺寸
+        .size-box.j-form-box
+          .form-group
+            label 颜色
+            .input-box
+              input.required.size.sizetext(type="text",name="product[color]")
+            a.newsize.j-newInput(href="javascrip:void(0);",data-name="color")
+              i.fa.fa-plus
+              | 添加颜色
         .form-group
           label(for="stock") 库存*
           .input-box

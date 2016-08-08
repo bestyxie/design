@@ -35,6 +35,7 @@ module.exports = function(app){
   app.get('/',Product.list);
   app.get('/details/:id',Product.detail);
   app.post('/product/delete',Product.delete);
+  app.post('/admin/product/new',upload.array('picture',8),Product.new);
 
   // shopping cart management
   app.post('/product/addtocart',ShoppingCart.addToCart);
@@ -50,7 +51,6 @@ module.exports = function(app){
 
   // admin
   app.get('/admin',User.signinRequire, User.adminRequire, Admin.admin);
-  app.post('/admin/new',upload.array('picture',8),Admin.new);
   app.get('/admin/user/list',User.signinRequire, User.adminRequire, User.list);
   app.post('/user/delete',User.delete);
   app.post('/user/changerole',User.change);

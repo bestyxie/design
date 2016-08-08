@@ -46,6 +46,36 @@ module.exports.detail = function(req,res){
   });
 }
 
+// 新增商品
+module.exports.new = function(req,res){
+  var new_product = req.body.product;
+  var files = req.files;
+
+  new_product.img = files.map(function(item){
+    return '/images/upload/'+item.filename
+  })
+
+  Product.findOne({name: new_product.name},function(err,product){
+    if(err){
+      return console.log(err);
+    }
+    if(!product || product.length<=0){
+      var _product = new Product(new_product);
+      _product.save(function(err){
+        if(err){
+          console.log(err);
+          res.redirect('/admin');
+        }
+        res.redirect('/admin');
+      });
+    }
+    else{
+      console.log("product existed!");
+      res.redirect('/admin');
+    }
+  })
+}
+
 // 删除商品
 module.exports.delete = function(req,res){
   var product_id  = req.body._id;

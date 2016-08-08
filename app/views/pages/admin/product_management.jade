@@ -23,7 +23,7 @@ block content
             tr.j-productItem
               td
                 .imgbox
-                  img(src="#{product.url.split(',')[0]}")
+                  img(src="#{product.img[0]}")
               td
                 a(href='admin/product') #{product.name}
               td
@@ -35,13 +35,13 @@ block content
                 a.delete.j-delete(href="javascript:void(0);") 删除
   include new-product
 block scripts
-  script#newsize(type="text/tmpl").
-    <div class="form-group">
+  script#newInput(type="text/tmpl").
+    <div class="form-group j-form-group">
       <label></label>
       <div class="input-box">
         <input class="sizetext" type="text" name="">
       </div>
-      <a href="javascript:void(0);" class="delete">
+      <a href="javascript:void(0);" class="delete j-delete">
         <i class="fa fa-trash"></i>
       </a>
     </div>
@@ -49,17 +49,25 @@ block scripts
     $(function(){
 
       //- 新尺寸
-      function newSize(){
-        $('.newsize').on('click',function(){
-          var newsize = $($('#newsize').html());
-          newsize.find('input').attr('name','product[size]');
-          $('.size-box').append(newsize);
+      (function(){
+        function newInput(name,target,$this){
+          var newInput = $($('#newInput').html());
+          newInput.find('input').attr('name','product['+name+']');
+          $($this).parents(target).append(newInput);
+        }
+
+        function removeInput(){
+          $(this).parents('.j-form-group').remove();
+        }
+
+        $('.j-newInput').on('click',function(){
+          var name = $(this).data('name');
+          var target = '.j-form-box';
+          newInput(name,target,$(this));
         });
-        $('.size-box').on('click','.delete',function(){
-          $(this).parent().remove();
-        });
-      }
-      newSize();
+
+        $('.form-box').on('click','.j-delete',removeInput);
+      })();
 
       //- 图片上传预览
       function uploadPic(){

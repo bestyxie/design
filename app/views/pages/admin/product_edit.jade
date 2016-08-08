@@ -2,3 +2,29 @@ extends ../../adminLayout
 
 block content
   h2 用户管理/商品编辑
+  .wrapper
+    form#newproduct(action="",method="POST",enctype="multipart/form-data")
+      .form-group
+        label 商品名称
+        .input-box
+          input#name.required(type='text',name='product[name]')
+      .form-group
+        label 简述
+        .input-box
+          textarea#desc.required(type='text',name='product[desc]')
+      .form-group
+        label 单价
+        .input-box
+          input#price.required(type='text',name='product[price]')
+      .form-group
+        label 折扣
+        .input-box
+          input#discount.required(type='text',name='product[discount]')
+      .form-group
+        label 尺寸
+        .input-box
+          input#size.required(type='text',name='product[size]')
+      .form-group
+        label 颜色
+        .input-box
+          input#colors.required(type='text',name='product[colors]')
