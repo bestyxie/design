@@ -97,7 +97,7 @@ module.exports.shoppingCart = function(req,res){
   ShoppingCart.findOne({userId: user._id},function(err,goods){
     if(err){
       console.log(err);
-      res.render('shoppingcart',{
+      res.render('mobile/shoppingcart',{
         products: [],
         user: user
       })
