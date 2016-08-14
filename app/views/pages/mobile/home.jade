@@ -1,4 +1,4 @@
-extends ../layout
+extends ../../layout
 
 block content
   #subfield-panel.subfield.panel.panel-right.panel-reveal
@@ -18,7 +18,7 @@ block content
         i.fa.fa-user
         span 请登录
   .home.page
-    include ../includes/header
+    include ../../includes/header
     .content.native-scroll.wrapper
       .banner.slide-box
         .swiper_wrap
@@ -66,7 +66,7 @@ block content
                 .wall-item
                   a.thumbnail(href="/details/#{product._id}",external)
                     .img
-                      img(src="#{product.url.split(',')[0]}")
+                      img(src="#{product.pics[0]}")
                     .caption
                       p.name #{product.name}
                       .priceattention.clearfix
@@ -79,7 +79,7 @@ block content
                 .wall-item
                   a.thumbnail(href="/details/#{product._id}",external)
                     .img
-                      img(src="#{product.url.split(',')[0]}")
+                      img(src="#{product.pics[0]}")
                     .caption
                       p.name #{product.name}
                       .priceattention.clearfix

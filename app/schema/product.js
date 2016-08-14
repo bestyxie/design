@@ -1,16 +1,24 @@
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+var ObjectId = Schema.Types.ObjectId;
 
-var ProductSchema = new mongoose.Schema({
+var ProductSchema = new Schema({
   name: {
     unique: true,
     type: String
   },
-  img: Array,
+  category_id: {
+    type: ObjectId,
+    ref: 'Category'
+  },
   price: Number,
   discount: Number,
   size: Array,
   color: Array,
-  sku: Number,
+  pics: Array,
+  stock: Number,
+  sale_num: Number,
+  description: String,
   meta:  {
     createAt: {
       type: Date,

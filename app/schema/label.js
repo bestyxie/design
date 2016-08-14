@@ -6,3 +6,5 @@ var LabelSchema = new mongoose.Schema({
     unique: true
   }
 });
+
+module.exports = LabelSchema;

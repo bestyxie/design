@@ -37,13 +37,13 @@
         .form-group
           label(for="stock") 库存*
           .input-box
-            input#stock.required.rqrednum(type="text")
+            input#stock.required.rqrednum(type="text",name="product[stock]")
         .form-group.uploadPic-form
           label 图片*
           .pic-wrap
           a.newpic(href="javascrip:void(0);")
             i.fa.fa-plus
-          input.required.hide(type="file",name="picture",accept="image/*")
+          input.required.hide(type="file",name="pics",accept="image/*")
     .modal-footer
       button.next.disabled(type="submit") 确定
       button.cancle 取消
