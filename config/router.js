@@ -2,21 +2,7 @@ var User = require('../app/controllers/user');
 var Admin = require('../app/controllers/admin');
 var Product = require('../app/controllers/product');
 var ShoppingCart = require('../app/controllers/shoppingCart');
-
-var multer = require('multer');
-
-var storage = multer.diskStorage({
-  destination: function(req,file,cb){
-    cb(null,'./public/images/upload');
-  },
-  filename: function(req,file,cb){
-    var fileFormat = (file.originalname).split('.');
-    cb(null,file.originalname.substring(0,file.originalname.lastIndexOf('.')) + '-' + Date.now() + '.' + fileFormat[fileFormat.length-1])
-  }
-})
-var upload = multer({
-  storage: storage
-});
+var upload = require('../app/controllers/uploadPic');
 
 
 module.exports = function(app){
