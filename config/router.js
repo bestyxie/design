@@ -2,7 +2,7 @@ var User = require('../app/controllers/user');
 var Admin = require('../app/controllers/admin');
 var Product = require('../app/controllers/product');
 var ShoppingCart = require('../app/controllers/shoppingCart');
-var upload = require('../app/controllers/uploadPic');
+var UploadPic = require('../app/controllers/uploadPic');
 
 
 module.exports = function(app){
@@ -21,7 +21,7 @@ module.exports = function(app){
   app.get('/',Product.list);
   app.get('/details/:id',Product.detail);
   app.post('/product/delete',Product.delete);
-  app.post('/admin/product/new',upload.array('picture',8),Product.new);
+  app.post('/admin/product/new',UploadPic.upload.array('picture',8),Product.new);
 
   // shopping cart management
   app.post('/product/addtocart',ShoppingCart.addToCart);
