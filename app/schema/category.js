@@ -6,7 +6,7 @@ var CategorySchema = new Schema({
     type: String,
     unique: true
   },
-  description: String
+  desc: String
 });
 
 module.exports = CategorySchema;

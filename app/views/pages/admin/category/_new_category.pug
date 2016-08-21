@@ -1,0 +1,19 @@
+.modal.fade#new
+  .modal-wrapper.modal-dialog
+    .modal-header
+      h3 新建分类
+      a.close(href="javascrip:;",data-dismiss="modal")
+        i.fa.fa-close
+    .modal-content
+      form#newproduct(action="/admin/category/new",method="POST")
+        .form-group
+          label(for="name") 分类名称*
+          .input-box
+            input#name.required(type="text",name="category[name]")
+        .form-group
+          label(for="price") 价格*
+          .input-box
+            input#price.required.rqrednum(type="text",name="category[desc]")
+    .modal-footer
+      button.next.disabled(type="submit") 确定
+      button.cancle 取消
