@@ -10,18 +10,18 @@ block content
           td name
           td role
           td.operate oparate
-        each user,index in users
-          tr(class="item-id-#{user._id}")
+        each userItem,index in users
+          tr(class="item-id-#{userItem._id}")
             td #{index}
-            td #{user.name}
-            td.role #{user.role}
+            td #{userItem.name}
+            td.role #{userItem.role}
             td.opetate
-              a.edit.j-edit.btn.btn-link(type="button",data-user="#{user._id}") 编辑
-              a.btn.btn-link.deleteUser(type="button",data-user="#{user._id}") 删除
-              span.form-wrapper.js-form-wrapper(data-user="#{user._id}")
+              a.edit.j-edit.btn.btn-link(type="button",data-user="#{userItem._id}") 编辑
+              a.btn.btn-link.deleteUser(type="button",data-user="#{userItem._id}") 删除
+              span.form-wrapper.js-form-wrapper(data-user="#{userItem._id}")
                 label(for="user_id") 权限
                 input.user_id.form-control(typ="text")
-                button.btn.btn-default(data-user="#{user._id}") 确定
+                button.btn.btn-default(data-user="#{userItem._id}") 确定
                 button.btn.btn-default.j-closePanel 取消
 
 block scripts

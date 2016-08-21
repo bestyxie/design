@@ -104,7 +104,6 @@ module.exports.list = function(req,res){
       res.redirect('/');
     }
     res.render('admin/userlist',{
-      user: req.session.user,
       users: users
     });
   });
