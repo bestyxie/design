@@ -1,0 +1,22 @@
+extends ../../adminLayout.pug
+
+block content
+  h2 分类管理
+  .wrapper
+    .productlist.section
+      .head
+        h3 商品分类（共#{categories.length}件）
+        a.newpdt(href="javascript:void(0);",data-toggle="modal",data-target="#new")
+          i.fa.fa-plus
+          | 添加分类
+      table
+        thead
+          tr
+            td 分类名称
+            td 描述
+        tbody.j-product-list
+          each category,index in categories
+            tr.j-productItem
+              td
+                a(href='javascript:;') #{category.name}
+              td category.description

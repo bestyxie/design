@@ -3,6 +3,7 @@ var Admin = require('../app/controllers/admin');
 var Product = require('../app/controllers/product');
 var ShoppingCart = require('../app/controllers/shoppingCart');
 var UploadPic = require('../app/controllers/uploadPic');
+var Category = require('../app/controllers/category');
 
 
 module.exports = function(app){
@@ -11,11 +12,10 @@ module.exports = function(app){
   app.use(function(req,res,next){
     var _user = req.session.user;
     if(_user){
-    app.locals.user = _user;
+      app.locals.user = _user;
     }
-
     next();
-  })
+  });
 
   // product
   app.get('/',Product.list);
@@ -41,4 +41,5 @@ module.exports = function(app){
   app.post('/user/delete',User.delete);
   app.post('/user/changerole',User.change);
   app.get('/admin/product',Product.editproduct);
+  app.get('/admin/category',Category.category);
 }
