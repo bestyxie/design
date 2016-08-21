@@ -7,11 +7,13 @@ module.exports.category = function(req,res){
       console.log(err);
       res.redirect('/admin');
     }
-    res.render('admin/category_list',{
+    res.render('admin/category/category_list',{
       categories: categories
     });
   })
 }
 
 // new category
-module.exports.new = function(req,res){}
+module.exports.new = function(req,res){
+  console.log(req.body.category);
+}

@@ -1,4 +1,4 @@
-extends ../../adminLayout.pug
+extends ../../../adminLayout.pug
 
 block content
   h2 分类管理
@@ -21,3 +21,13 @@ block content
                 a(href='javascript:;') #{category.name}
               td #{category.desc}
   include _new_category
+block scripts
+  script.
+    $(function(){
+      //- 确定新增商品
+      $('.next').on('click',function(){
+        alert('clicked');
+        $('#newcategory').trigger('submit');
+        }
+      });
+    })

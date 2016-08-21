@@ -42,4 +42,5 @@ module.exports = function(app){
   app.post('/user/changerole',User.change);
   app.get('/admin/product',Product.editproduct);
   app.get('/admin/category',Category.category);
+  app.post('/admin/category/new',Category.new);
 }
