@@ -2,9 +2,22 @@ var User = require('../app/controllers/user');
 var Admin = require('../app/controllers/admin');
 var Product = require('../app/controllers/product');
 var ShoppingCart = require('../app/controllers/shoppingCart');
-var UploadPic = require('../app/controllers/uploadPic');
 var Category = require('../app/controllers/category');
+// var UploadPic = require('../app/controllers/uploadPic');
 
+
+var multer = require('multer');
+
+var storage = multer.diskStorage({
+  destination: function(req,file,cb){
+    cb(null,'./public/images/upload');
+  },
+  filename: function(req,file,cb){
+    var fileFormat = (file.originalname).split('.');
+    cb(null,file.originalname.substring(0,file.originalname.lastIndexOf('.')) + '-' + Date.now() + '.' + fileFormat[fileFormat.length-1])
+  }
+})
+var upload = multer({ storage: storage });
 
 module.exports = function(app){
 
@@ -21,7 +34,7 @@ module.exports = function(app){
   app.get('/',Product.list);
   app.get('/details/:id',Product.detail);
   app.post('/product/delete',Product.delete);
-  app.post('/admin/product/new',UploadPic.upload.array('picture',8),Product.new);
+  app.post('/admin/product/new',upload.array('pics',8),Product.new);
 
   // shopping cart management
   app.post('/product/addtocart',ShoppingCart.addToCart);

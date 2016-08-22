@@ -17,7 +17,10 @@ var ProductSchema = new Schema({
   color: Array,
   pics: Array,
   stock: Number,
-  sale_num: Number,
+  sale_num: {
+    type:Number,
+    default: 0
+  },
   description: String,
   meta:  {
     createAt: {
