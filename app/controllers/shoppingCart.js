@@ -93,24 +93,20 @@ module.exports.addToCart = function(req,res){
 
 // 购物车页面
 module.exports.shoppingCart = function(req,res){
-  var user = req.session.user;
   ShoppingCart.findOne({userId: user._id},function(err,goods){
     if(err){
       console.log(err);
-      res.render('mobile/shoppingcart',{
-        products: [],
-        user: user
+      res.render('mobile/shoppingcart/',{
+        products: []
       })
     }
     if(goods){
       res.render('shoppingcart',{
-        products: goods.products,
-        user: user
+        products: goods.products
       });
     }else{
       res.render('shoppingcart',{
-        products: [],
-        user: user
+        products: []
       });
     }
   });

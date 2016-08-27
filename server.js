@@ -12,7 +12,7 @@ var dbUrl = 'mongodb://localhost/shop';
 
 mongoose.connect(dbUrl);
 
-app.set('views','./app/views/pages');
+app.set('views','./app/views');
 app.set('view engine', 'jade');
 app.use(express.static(path.join(__dirname,'public')));
 app.use(bodyParser());

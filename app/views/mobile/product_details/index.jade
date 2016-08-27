@@ -1,4 +1,4 @@
-extends ../layout
+extends ../../layout
 
 block content
   .page.detail
@@ -9,18 +9,18 @@ block content
           .swiper_wrap
             .wipe_img_con
               a.swiper_wrap_a
-                img(src="#{product.url.split(',')[product.url.split(',').length-1]}")
-            each url in product.url.split(',')
+                img(src="#{product.pics[0]}")
+            each pic in product.pics
               .wipe_img_con
                 a.swiper_wrap_a
-                  img(src="#{url}")
+                  img(src="#{pic}")
             .wipe_img_con
               a.swiper_wrap_a
-                img(src="#{product.url.split(',')[0]}")
+                img(src="#{product.pics[product.pics.length - 1]}")
           .swiper-page
             em#SwiperPageNum 1
             i &frasl;
-            em #{product.url.split(',').length}
+            em #{product.pics.length}
         .primary-info
           p.info-title.break #{product.name}
           p.info-desc.break jcoolstory夏装新款 钓鱼卡通印花  宽松舒适版型 休闲百搭
@@ -50,9 +50,9 @@ block content
               span.sku 颜色：白色（两面可穿宽） 尺码：均码
             .show-img
               ul.clearfix
-                each url in product.url.split(',')
+                each pic in product.pics
                   li.small-img
-                    img(src="#{url}")
+                    img(src="#{pic}")
       .detail-tabpanel
         .buttons-row.row
           a.col-50.tab-link.actve(href="#graphic")
@@ -64,8 +64,8 @@ block content
             dl.pic-box
               dt.pic-title 穿着效果
               dd.pic-list
-                each url in product.url.split(',')
-                  img.fadeIn(src="#{url}")
+                each pic in product.pics
+                  img.fadeIn(src="#{pic}")
           #parameters.parameters.tab.active
             .size-list
               table
@@ -106,9 +106,9 @@ block scripts
   script.
     window.onload = function(){
       InitSlider({
-      container: '.detaile-slide',
-      autoSlide: false,
-      slideIndex: '#SwiperPageNum'
+        container: '.detaile-slide',
+        autoSlide: false,
+        slideIndex: '#SwiperPageNum'
       });
     }
   //- .container-fluid.details

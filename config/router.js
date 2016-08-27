@@ -34,7 +34,7 @@ module.exports = function(app){
   app.get('/',Product.list);
   app.get('/details/:id',Product.detail);
   app.post('/product/delete',Product.delete);
-  app.post('/admin/product/new',upload.array('product[pics]',8),Product.new);
+  app.post('/admin/product/new',upload.array('pics',8),Product.new);
 
   // shopping cart management
   app.post('/product/addtocart',ShoppingCart.addToCart);

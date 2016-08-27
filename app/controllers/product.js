@@ -26,7 +26,7 @@ module.exports.list = function(req,res){
   // console.log(app_id+ ","+app_secret);
   // console.log(url);
   Product.find({}).sort({'meta.updateAt':-1}).exec(function(err,products){
-    res.render('mobile/home',{
+    res.render('mobile/home/',{
       products: products
     });
   })
@@ -40,8 +40,8 @@ module.exports.detail = function(req,res){
       console.log(err);
       res.redirect('/');
     }
-    res.render('mobile/details',{
-      product: product,
+    res.render('mobile/product_details/',{
+      product: product
     });
   });
 }
