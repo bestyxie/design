@@ -92,5 +92,5 @@ module.exports.delete = function(req,res){
 
 // 编辑商品
 module.exports.editproduct = function(req,res){
-  res.render('admin/product_edit');
+  res.render('admin/product_management/product_edit');
 }
