@@ -21,7 +21,10 @@ var ProductSchema = new Schema({
     type:Number,
     default: 0
   },
-  description: String,
+  description: {
+    type: String,
+    default: ''
+  },
   meta:  {
     createAt: {
       type: Date,

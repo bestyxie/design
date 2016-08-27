@@ -27,13 +27,13 @@ block content
           .info-price.center
             if product.discount >0
               span.now  &yen;#{product.price * product.discount/10}
-              span.market   &yen;70.00
+              span.market   &yen;#{product.price}
               span.discount #{product.discount}折
             else
               span.now  &yen;#{product.price}
           .info-other.center
             span.item 默认快递
-            span.item 销量 64
+            span.item 销量 #{product.sale_num}
       .detail-rates
         .rates-head
           a.title(href="") 累计评价 9
