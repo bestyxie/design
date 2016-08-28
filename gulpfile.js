@@ -49,7 +49,7 @@ gulp.task('test', ['pre-test'], function (cb) {
 gulp.task('watch', function () {
 
   gulp.watch(['lib\**\*.js', 'test/**'], ['test']);
-  gulp.watch([ './public/less/*' ], ['less']);
+  gulp.watch([ './public/less/global.less','./public/less/admin.less' ], ['less']);
 
 });
 
