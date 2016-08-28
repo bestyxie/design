@@ -56,6 +56,9 @@ a:active {
 :-ms-input-placeholder {
   color: #C3C3C3;
 }
+* {
+  box-sizing: border-box;
+}
 body {
   background: #fff;
   color: #5e5e5e;
@@ -598,4 +601,71 @@ header.bar.bar-nav form .search-btn {
 .detail .detail-footbar .footer-buy .buy-now {
   color: #fff;
   background: #ec312d;
+}
+.mask {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+}
+.pop {
+  text-align: left;
+  color: inherit;
+  font-size: 0.6rem;
+  display: block;
+  opacity: 1;
+  width: 100%;
+  height: auto;
+  max-height: 75%;
+  background: #fff;
+  position: absolute;
+  bottom: 0;
+}
+.pop .modal-header {
+  padding: 15px 0;
+  display: -webkit-box;
+  display: box;
+  position: relative;
+  border-bottom: 1px solid #ccc;
+}
+.pop .modal-header .close_icon {
+  color: #bbb;
+  font-family: serif;
+  position: absolute;
+  right: 0;
+  top: 0;
+  line-height: 50px;
+  width: 35px;
+  height: 35px;
+}
+.pop .modal-header .subtitle-img {
+  min-width: 70px;
+  max-width: 70px;
+  height: 70px;
+  -webkit-box-flex: 1;
+  box-flex: 1;
+  overflow: hidden;
+  margin-left: 15px;
+}
+.pop .modal-header img {
+  width: 100%;
+}
+.pop .modal-header .subtitle-desc {
+  margin: 0 15px 0 10px;
+  -webkit-box-flex: 1;
+  box-flex: 1;
+}
+.pop .modal-header .pirce {
+  color: red;
+}
+.pop .modal-header .stock {
+  margin-left: 10px;
+}
+.pop .modal-footer {
+  border-top: 1px solid #ccc;
+  height: 40px;
+  text-align: center;
 }

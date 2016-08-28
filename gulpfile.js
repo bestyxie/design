@@ -49,12 +49,12 @@ gulp.task('test', ['pre-test'], function (cb) {
 gulp.task('watch', function () {
 
   gulp.watch(['lib\**\*.js', 'test/**'], ['test']);
-  gulp.watch([ './public/less/global.less','./public/less/admin.less' ], ['less']);
+  gulp.watch([ './public/less/**'], ['less']);
 
 });
 
 gulp.task('less',function(){
-  return gulp.src('./public/less/*.less')
+  return gulp.src('./public/less/*')
               .pipe(less())
               .pipe(gulp.dest('./public/style'));
 });

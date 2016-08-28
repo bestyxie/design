@@ -1,28 +1,29 @@
 .mask
-.modal.add_to_cart
-  .modal-header
-    i.icon.close_icon
-    .header-content
-      img(src="#{product.pics[0]}")
-      p.title #{product.name}
-      .info-price
-        span.now  &yen;#{product.price * product.discount/10}
-        span.discount 库存#{product.stock}件
-  .modal-content
-    .condiction
-      label 颜色：
-      span 黑白套装
-      span 灰白套装
-    .condiction
-      label 尺寸
-      span S
-      span M
-      span L
-    .condiction
-      label 数量：
-      .qty-box
-        a(href="javascript:;") -
-        input(type="text")
-        a(href="javascript:;") +
-  .modal-footer
-    a.button(href="javascript:;") 确认
+  .pop.add_to_cart
+    .modal-header
+      i.icon.close_icon ╳
+      .subtitle-img
+        img(src="#{product.pics[0]}")
+      .subtitle-desc
+        p.subtitle-text #{product.name}
+        .info-price
+          span.pirce  &yen;#{product.price * product.discount/10}
+          span.stock 库存#{product.stock}件
+    .modal-content
+      .condiction
+        label 颜色：
+        span 黑白套装
+        span 灰白套装
+      .condiction
+        label 尺寸
+        span S
+        span M
+        span L
+      .condiction
+        label 数量：
+        .qty-box
+          a(href="javascript:;") -
+          input(type="text")
+          a(href="javascript:;") +
+    .modal-footer
+      a.button(href="javascript:;") 确认
