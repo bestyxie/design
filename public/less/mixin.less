@@ -42,6 +42,15 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+// 多行文本省略
+// -------------------------
+.ellipsises(@line: 2){
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: @line;
+  -webkit-box-orient: vertical;
+}
 // 隐藏文字(图片替换文字)
 // -------------------------
 .hide-text() {

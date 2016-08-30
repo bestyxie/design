@@ -654,9 +654,21 @@ header.bar.bar-nav form .search-btn {
   width: 100%;
 }
 .pop .modal-header .subtitle-desc {
-  margin: 0 15px 0 10px;
+  margin: 0 35px 0 10px;
   -webkit-box-flex: 1;
   box-flex: 1;
+  position: relative;
+}
+.pop .modal-header .subtitle-text {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.pop .modal-header .info-price {
+  position: absolute;
+  bottom: 0;
 }
 .pop .modal-header .pirce {
   color: red;
@@ -664,8 +676,71 @@ header.bar.bar-nav form .search-btn {
 .pop .modal-header .stock {
   margin-left: 10px;
 }
+.pop .modal-content {
+  font-size: 14px;
+  padding: 0 10px;
+}
+.pop .condiction {
+  margin-top: 10px;
+}
+.pop .condiction label {
+  display: block;
+}
+.pop .condiction span {
+  display: inline-block;
+  font-size: 12px;
+  line-height: 26px;
+  border-radius: 3px;
+  padding: 0 15px;
+  margin-right: 10px;
+  border: 1px solid #bbb;
+}
+.pop .qty-box {
+  border: 1px solid #bbb;
+  border-radius: 3px;
+  width: 88px;
+  height: 26px;
+  line-height: 26px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.pop .qty-box .num-reduce,
+.pop .qty-box .num-input,
+.pop .qty-box .num-add {
+  width: 28px;
+  border: none;
+  border-radius: 0;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+.pop .qty-box .num-input {
+  display: inline-block;
+  border-left: 1px solid #bbb;
+  border-right: 1px solid #bbb;
+}
+.pop .qty-box .num-add {
+  font-size: 16px;
+  color: #ed4566;
+}
 .pop .modal-footer {
-  border-top: 1px solid #ccc;
+  border-top: 0.5px solid #ccc;
   height: 40px;
   text-align: center;
+  width: 100%;
+  display: -moz-box;
+  display: -webkit-box;
+  display: box;
+  -webkit-box-align: center;
+  -webkit-box-pack: center;
+}
+.pop .modal-footer .button {
+  color: #fff;
+  width: 30%;
+  padding: 0 12px;
+  border-radius: 3px;
+  border: none;
+  background: #ff5e7a;
+  background: -webkit-linear-gradient(top, #ff5e7a, #f24868);
+  background: linear-gradient(top, #ff5e7a, #f24868);
 }

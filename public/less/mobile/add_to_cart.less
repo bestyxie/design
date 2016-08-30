@@ -48,9 +48,17 @@
       width: 100%;
     }
     .subtitle-desc{
-      margin: 0 15px 0 10px;
+      margin: 0 35px 0 10px;
       -webkit-box-flex: 1;
       box-flex: 1;
+      position: relative;
+    }
+    .subtitle-text{
+      .ellipsises();
+    }
+    .info-price{
+      position: absolute;
+      bottom: 0;
     }
     .pirce{
       color: red;
@@ -59,9 +67,70 @@
       margin-left: 10px;
     }
   }
+  .modal-content{
+    font-size: 14px;
+    padding: 0 10px;
+  }
+  .condiction{
+    margin-top: 10px;
+    label{
+      display: block;
+    }
+    span{
+      display: inline-block;
+      font-size: 12px;
+      line-height: 26px;
+      border-radius: 3px;
+      padding: 0 15px;
+      margin-right: 10px;
+      border: 1px solid #bbb;
+    }
+  }
+  .qty-box{
+    border: 1px solid #bbb;
+    border-radius: 3px;
+    width: 88px;
+    height: 26px;
+    line-height: 26px;
+    text-align: center;
+    margin-bottom: 10px;
+    .num-reduce,.num-input,.num-add{
+      width: 28px;
+      border: none;
+      border-radius: 0;
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+    .num-input{
+      display: inline-block;
+      border-left: 1px solid #bbb;
+      border-right: 1px solid #bbb;
+    }
+    .num-add{
+      font-size: 16px;
+      color: #ed4566;
+    }
+  }
   .modal-footer{
-    border-top: 1px solid #ccc;
+    border-top: 0.5px solid #ccc;
     height: 40px;
     text-align: center;
+    width: 100%;
+    display: -moz-box;
+    display: -webkit-box;
+    display: box;
+    -webkit-box-align: center;
+    -webkit-box-pack: center;
+    .button{
+      color: #fff;
+      width: 30%;
+      padding: 0 12px;
+      border-radius: 3px;
+      border: none;
+      background: #ff5e7a;
+      background: -webkit-linear-gradient(top,#ff5e7a,#f24868);
+      background: linear-gradient(top,#ff5e7a,#f24868);
+    }
   }
 }
