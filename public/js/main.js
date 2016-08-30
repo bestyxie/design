@@ -1,5 +1,4 @@
 // 轮播
-
 function InitSlider(opts){
   var opts = opts || {};
   var options = {
@@ -122,6 +121,45 @@ function InitSlider(opts){
     }
 
   });
+}
+
+// popup
+function popup(params){
+  var defaults = {
+    pop: '.j-popup',
+    openbtn: '.j-open',
+    close: '.j-close',
+    confirmbtncb: function(){}
+  }
+
+  this.params = $.extend(defaults, params);
+  var self = this;
+
+  function _init(){
+    $(self.params.openbtn).on('tap',function(){
+      self.open();
+    });
+    $(self.params.close).on('click',function(){
+      self.close();
+    });
+    $(self.params.pop).on('click',function(e){
+      if($(e.target).hasClass('mask')){
+        self.close();
+      }
+    });
+    $('.j-confirm').on('click',function(e){
+      self.close();
+      self.params.confirmbtncb();
+    })
+  }
+  _init();
+  
+}
+popup.prototype.open = function(){
+  $(this.params.pop).show();
+}
+popup.prototype.close = function(){
+  $(this.params.pop).hide();
 }
 $(function(){
   $.config = { router: false }

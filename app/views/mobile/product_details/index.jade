@@ -100,8 +100,8 @@ block content
         i.fa.fa-shopping-cart
         span.text 购物车
       .footer-buy
-        span.buy-cart 加入购物车
-        span.buy-now 立即购买
+        span.buy-cart.j-open 加入购物车
+        span.buy-now.j-open 立即购买
     include _add_to_cart
 block scripts
   script.
@@ -112,12 +112,6 @@ block scripts
         slideIndex: '#SwiperPageNum'
       });
     }
-  //- .container-fluid.details
-  //-   .row
-  //-     .col-md-6.img-wrapper
-  //-       img.img(src="#{product.url}")
-  //-     .col-md-6
-  //-       h1 #{product.name}
-  //-       span.price #{product.price}
-  //-       input.quantity(type="number")
-  //-       button.btn.btn-default.js-addCart(data-productid="#{product._id}") 加入购入车
+    $(function(){
+      var pop = new popup();
+    })
