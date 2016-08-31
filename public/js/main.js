@@ -136,6 +136,8 @@ function popup(params){
 
   function _init(){
     $(self.params.openbtn).on('tap',function(){
+      var type = $(this).data('type');
+      $(self.params.pop + ' .j-confirm').attr('data-type',type);
       self.open();
     });
     $(self.params.close).on('click',function(){
