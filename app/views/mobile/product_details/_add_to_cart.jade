@@ -10,15 +10,14 @@
           span.pirce  &yen;#{product.price * product.discount/10}
           span.stock 库存#{product.stock}件
     .modal-content
-      .condiction.j-style(data-rules="single")
+      .condiction.j-style(data-rules="single",data-type="color")
         label 颜色：
-        span 黑白套装
-        span 灰白套装
-      .condiction.j-style(data-rules="single")
+        each color in product.color
+          span #{color}
+      .condiction.j-style(data-rules="single",data-type="size")
         label 尺寸
-        span S
-        span M
-        span L
+        each size in product.size
+          span #{size}
       .condiction
         label 数量：
         .qty-box
