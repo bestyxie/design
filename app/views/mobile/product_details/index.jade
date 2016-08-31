@@ -100,8 +100,8 @@ block content
         i.fa.fa-shopping-cart
         span.text 购物车
       .footer-buy
-        span.buy-cart.j-open 加入购物车
-        span.buy-now.j-open 立即购买
+        span.buy-cart.j-open(data-type="add") 加入购物车
+        span.buy-now.j-open(data-type="buy") 立即购买
     include _add_to_cart
 block scripts
   script.
@@ -114,4 +114,33 @@ block scripts
     }
     $(function(){
       var pop = new popup();
-    })
+      function select(){
+        $('.j-style span').on('click',function(){
+          var rules = $(this).parents('.j-style').data('rules');
+          console.log(rules);
+          if($(this).hasClass('selected')){
+            $(this).removeClass('selected');
+          }else{
+            $(this).addClass('selected');
+            if(rules === 'single'){
+              $(this).siblings('span').removeClass('selected');
+            }
+          }
+        });
+      }
+      select();
+      function changeQTY(){
+        $('.j-reduct').on('click',reduceNum);
+        $('.j-add').on('click',addNum);
+        function reduceNum(){
+          var now = parseInt($('.j-num').html());
+          if(now == 1) return;
+          $('.j-num').html(--now);
+        }
+        function addNum(){
+          var now = parseInt($('.j-num').html());
+          $('.j-num').html(++now);
+        }
+      }
+      changeQTY();
+    });

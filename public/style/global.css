@@ -696,6 +696,10 @@ header.bar.bar-nav form .search-btn {
   margin-right: 10px;
   border: 1px solid #bbb;
 }
+.pop .condiction .selected {
+  color: #ed4566;
+  border-color: #ed4566;
+}
 .pop .qty-box {
   border: 1px solid #bbb;
   border-radius: 3px;

@@ -128,8 +128,7 @@ function popup(params){
   var defaults = {
     pop: '.j-popup',
     openbtn: '.j-open',
-    close: '.j-close',
-    confirmbtncb: function(){}
+    close: '.j-close'
   }
 
   this.params = $.extend(defaults, params);
