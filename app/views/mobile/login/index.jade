@@ -1,0 +1,6 @@
+extends ../../layout
+block content
+  form(method="POST",action="/user/signin")
+    input.username(name="user[name]",type="text",placeholder="登录邮箱")
+    input.pwd(name="user[password]",type="password",placeholder="密码")
+    button(type="submit") 登录

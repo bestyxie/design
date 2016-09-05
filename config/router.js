@@ -47,6 +47,7 @@ module.exports = function(app){
   app.post('/user/signup',User.signup);
   app.post('/user/signin',User.signin);
   app.get('/logout',User.logout);
+  app.get('/mobile/login',User.mlogin)
 
   // admin
   app.get('/admin',User.signinRequire, User.adminRequire, Admin.admin);

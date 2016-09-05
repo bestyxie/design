@@ -5,6 +5,7 @@ var ShoppingCart = require('../models/shoppingcart');
 // 加入购物车
 module.exports.addToCart = function(req,res){
   var product = req.body;
+  console.log(product);
   var new_user = {},product_name = '',product_url='';
 
   function getNameUrl(_id){

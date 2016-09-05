@@ -55,6 +55,10 @@ module.exports.signin = function(req,res){
     // }
   })
 }
+// 手机登陆
+module.exports.mlogin = function(req,res){
+  res.render('mobile/login/')
+}
 
 //登录页面
 module.exports.login = function(req,res){

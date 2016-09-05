@@ -150,7 +150,6 @@ function popup(params){
     });
     $('.j-confirm').on('click',function(e){
       self.close();
-      self.params.confirmbtncb();
     })
   }
   _init();
