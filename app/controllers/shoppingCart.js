@@ -5,7 +5,7 @@ var ShoppingCart = require('../models/shoppingcart');
 // 加入购物车
 module.exports.addToCart = function(req,res){
   var product = req.body;
-  var new_user = {},name = '',url='';
+  var new_user = {},product_name = '',product_url='';
 
   function getNameUrl(_id){
     var promise = Product.findOne({_id: _id},function(err,one_product){
@@ -13,8 +13,8 @@ module.exports.addToCart = function(req,res){
         console.log(err);
         return;
       }
-      name = one_product.name;
-      url = one_product.url;
+      product_name = one_product.name;
+      product_url = one_product.url;
     });
     return promise;
   }
@@ -149,4 +149,9 @@ module.exports.deleteCart = function(req,res){
     }
     
   });
+}
+
+// 立即购买
+module.exports.buy = function(req,res){
+  res.redirect('/');
 }

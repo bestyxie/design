@@ -114,26 +114,35 @@ block scripts
     }
     $(function(){
       var pop = new popup();
-      $('.j-confirm').on('click',function(){
+
+      $('.j-open').on('click',function(){
+        $('.j-popup .j-confirm').attr('data-type',$(this).data('type'));
+      });
+      $('.j-confirm').on('click',send_msg);
+      function send_msg(){
         pop.close();
         var type = $(this).data('type');
-        if(type == 'add'){
-          var size = $('.j-style[data-type="size"] .selected').html(),
-              color = $('.j-style[data-type="color"] .selected').html();
-          var cart = {
-            qty: parseInt($('.j-num').html()),
-            size: size,
-            color: color
-          };
-          $.ajax({
-            url: '/product/addtocart',
-            method: 'POST',
-            type: 'JSON',
-            data: cart,
-            success: function(data){}
-          });
-        }else if(type == "buy"){}
-      });
+        var url = '/product/addtocart'
+        if(type == 'buy'){
+          url = '';
+        }
+        var size = $('.j-style[data-type="size"] .selected').html(),
+            color = $('.j-style[data-type="color"] .selected').html();
+        var cart = {
+          qty: parseInt($('.j-num').html()),
+          size: size,
+          color: color,
+          price: parseInt($('.j-price').html())
+        };
+        $.ajax({
+          url: url,
+          method: 'POST',
+          type: 'JSON',
+          data: cart,
+          success: function(data){}
+        });
+
+      }
       function select(){
         $('.j-style span').on('click',function(){
           var rules = $(this).parents('.j-style').data('rules');
