@@ -132,7 +132,8 @@ block scripts
           qty: parseInt($('.j-num').html()),
           size: size,
           color: color,
-          price: parseInt($('.j-price').html())
+          price: parseInt($('.j-price').html()),
+          productId: $('.j-confirm').data('productid')
         };
         $.ajax({
           url: url,

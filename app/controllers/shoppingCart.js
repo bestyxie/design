@@ -5,6 +5,7 @@ var ShoppingCart = require('../models/shoppingcart');
 // 加入购物车
 module.exports.addToCart = function(req,res){
   var product = req.body;
+  var _user = req.session.user;
   console.log(product);
   var new_user = {},product_name = '',product_url='';
 
@@ -13,23 +14,27 @@ module.exports.addToCart = function(req,res){
       if(err){
         console.log(err);
         return;
+      }else{
+        console.log(one_product);
+        product_name = one_product.name;
+        product_url = one_product.url;
       }
-      product_name = one_product.name;
-      product_url = one_product.url;
     });
     return promise;
   }
 
   function updateCartProducts(userId,products){
-    ShoppingCart.where({userId: product.userId}).update({products: products},function(err){
+    ShoppingCart.where({userId: _user._id}).update({products: products},function(err){
       if(err){
         console.log(err);
-        res.json({success: 0})
+        res.json({success: 0});
+      }else{
+        res.json({success: 1});
       }
     });
   }
 
-  ShoppingCart.findOne({userId: product.userId},function(err,user){
+  ShoppingCart.findOne({userId: _user._id},function(err,user){
     if(err){
       console.log(err);
       res.json({success: 0});
@@ -41,7 +46,7 @@ module.exports.addToCart = function(req,res){
 
       promise.then(function(){
 
-        new_user.userId = product.userId;
+        new_user.userId = _user._id;
         new_user.products = [];
         new_user.products.push({
           productId: product.productId,
@@ -49,16 +54,17 @@ module.exports.addToCart = function(req,res){
           url: url,
           price: product.price,
           qty: product.qty
-        })
+        });
 
         var new_product = new ShoppingCart(new_user);
         new_product.save(function(err){
           if(err){
             console.log(err);
             res.json({success: 0})
+          }else{
+            res.json({success:1});
           }
-        });
-        
+        }); 
       })
     }
     else{
