@@ -6,7 +6,6 @@ var ShoppingCart = require('../models/shoppingcart');
 module.exports.addToCart = function(req,res){
   var product = req.body;
   var _user = req.session.user;
-  console.log(_user);
   var product_name = '',product_url='';
 
   function getNameUrl(_id){
@@ -26,14 +25,21 @@ module.exports.addToCart = function(req,res){
     ShoppingCart.where({userId: _user._id}).update({products: products},function(err){
       if(err){
         console.log(err);
+        res_status(0)
+      }else{
+        res_status(1);
       }
     });
+  }
+  function res_status(status){
+    res.json({success: status});
+    return;
   }
 
   ShoppingCart.findOne({userId: _user._id},function(err,user){
     if(err){
       console.log(err);
-      res.json({success: 0});
+      res_status(0);
       return;
     }
     var promise;
@@ -44,7 +50,7 @@ module.exports.addToCart = function(req,res){
       promise.then(function(){
         var new_user = {}
         new_user.userId = _user._id;
-        var products = [];
+        new_user.products = [];
         new_user.products.push({
           productId: product.productId,
           name: product_name,
@@ -53,17 +59,14 @@ module.exports.addToCart = function(req,res){
           qty: product.qty
         });
 
-        console.log(new_user);
-
         var new_product = new ShoppingCart(new_user);
         new_product.save(function(err){
           if(err){
             console.log(err);
-            res.json({success: 0})
+            res_status(0)
             return;
           }else{
-            res.json({success:1});
-            return;
+            res_status(1)
           }
         }); 
       })
@@ -77,6 +80,7 @@ module.exports.addToCart = function(req,res){
           products[i].qty += parseInt(product.qty);
           break;
         }
+        updateCartProducts(product.userId,products);
       }
       if(i == products.length){ //购物车没有 productId 为 product.productId的商品
         promise = getNameUrl(product.productId);
@@ -93,9 +97,7 @@ module.exports.addToCart = function(req,res){
         })
       }
 
-      updateCartProducts(product.userId,products);
     }
-    res.json({success: 1});
 
   })
 }
