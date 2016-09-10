@@ -6,18 +6,17 @@ var ShoppingCart = require('../models/shoppingcart');
 module.exports.addToCart = function(req,res){
   var product = req.body;
   var _user = req.session.user;
-  console.log(product);
-  var new_user = {},product_name = '',product_url='';
+  console.log(_user);
+  var product_name = '',product_url='';
 
   function getNameUrl(_id){
     var promise = Product.findOne({_id: _id},function(err,one_product){
       if(err){
         console.log(err);
-        return;
       }else{
-        console.log(one_product);
+        // console.log(one_product);
         product_name = one_product.name;
-        product_url = one_product.url;
+        product_pics = one_product.pics;
       }
     });
     return promise;
@@ -27,9 +26,6 @@ module.exports.addToCart = function(req,res){
     ShoppingCart.where({userId: _user._id}).update({products: products},function(err){
       if(err){
         console.log(err);
-        res.json({success: 0});
-      }else{
-        res.json({success: 1});
       }
     });
   }
@@ -38,6 +34,7 @@ module.exports.addToCart = function(req,res){
     if(err){
       console.log(err);
       res.json({success: 0});
+      return;
     }
     var promise;
     if(!user){
@@ -45,24 +42,28 @@ module.exports.addToCart = function(req,res){
       promise = getNameUrl(product.productId);
 
       promise.then(function(){
-
+        var new_user = {}
         new_user.userId = _user._id;
-        new_user.products = [];
+        var products = [];
         new_user.products.push({
           productId: product.productId,
-          name: name,
-          url: url,
+          name: product_name,
+          pics: product_url,
           price: product.price,
           qty: product.qty
         });
+
+        console.log(new_user);
 
         var new_product = new ShoppingCart(new_user);
         new_product.save(function(err){
           if(err){
             console.log(err);
             res.json({success: 0})
+            return;
           }else{
             res.json({success:1});
+            return;
           }
         }); 
       })
@@ -80,14 +81,14 @@ module.exports.addToCart = function(req,res){
       if(i == products.length){ //购物车没有 productId 为 product.productId的商品
         promise = getNameUrl(product.productId);
         promise.then(function(){
+
           user.products.push({
             productId: product.productId,
-            name: name,
-            url: url,
+            name: product_name,
+            pics: product_url,
             price: product.price,
             qty: product.qty
-          })
-          console.log(name +' '+ url);
+          });
           updateCartProducts(product.userId,products);
         })
       }
@@ -95,6 +96,7 @@ module.exports.addToCart = function(req,res){
       updateCartProducts(product.userId,products);
     }
     res.json({success: 1});
+
   })
 }
 

@@ -13,7 +13,7 @@ var ShoppingCartSchema = new Schema({
     name: { type: String, ref: 'Product' },
     size: String,
     color: String,
-    price: { type: Number, ref: 'Product'},
+    price: Number,
     pics: { type: String, ref: 'Product'}
   }]
 });
