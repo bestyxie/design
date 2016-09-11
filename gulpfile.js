@@ -54,7 +54,7 @@ gulp.task('watch', function () {
 });
 
 gulp.task('less',function(){
-  return gulp.src('./public/less/*')
+  return gulp.src('./public/less/**')
               .pipe(less())
               .pipe(gulp.dest('./public/style'));
 });

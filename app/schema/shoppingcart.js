@@ -8,13 +8,13 @@ var ShoppingCartSchema = new Schema({
     ref: 'User'
   },
   products: [{
-    productId: { type:ObjectId, ref: 'Product' },
+    productId: ObjectId,
     qty: Number,
-    name: { type: String, ref: 'Product' },
+    name: String,
     size: String,
     color: String,
     price: Number,
-    pics: { type: String, ref: 'Product'}
+    pics: [String]
   }]
 });
 

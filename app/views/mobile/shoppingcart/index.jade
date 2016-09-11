@@ -1,33 +1,60 @@
-extends ../layout
+extends ../../layout
 
 block content
-  .container.shoppingcart
-    h1 购物车
-    if products.length == 0
-      p 您的购物车没有商品！
-      a(href="/") 去挑选商品吧
-    else
-      .row.head
-        .col-md-4 图片
-        .col-md-3 名称
-        .col-md-1 单价
-        .col-md-1 数量
-        .col-md-1 总价
-        .col-md-2 操作
-      each product in products
-        .row(data-productid="#{product.productId}")
-          .col-md-4.col
-            img.img(src="#{product.url}")
-          .col-md-3.col
-            p #{product.name}
-          .col-md-1.col
-            p #{product.price}
-          .col-md-1.col
-            input.qty(type="number",value="#{product.qty}",style="width:100%;")
-          .col-md-1.col
-            p #{product.qty*product.price}
-          .col-md-2.col
-            a.btn.btn-link.js-deleteCart(data-productid="#{product.productId}") 删除
+  .page.cart
+    header.bar.bar-nav
+      a.arr(href="javascript:void(history.back());")
+        i.fa.fa-angle-left
+      h1.title 购物车
+    .content.native-scroll
+      .ui-list.cart-goods
+        each product in products
+          li.ui-list-item
+          a.cart-goods-pic(href="/details/#{product.productId}")
+            img.fadeIn(src="#{product.pics[0]}")
+          .cart-goods-des
+            a(href="/details/#{product.productId}")
+              h5 #{product.name}
+            p.cart-goods-sku 颜色：#{product.color} 尺码：#{product.size}
+            .cart-goods-counter
+              .qty-box
+                span.num-reduce.lf.j-reduct -
+                em.num-input.lf.j-num 1
+                span.num-add.lf.j-add +
+          p.cart-goods-price
+            //- span.price-origin 
+            span.price #{product.price}
+          a.cart-goods-dustbin(href="javascript:;")
+            i.icon.icon-remove
+    .footer
+//- block content
+//-   .container.shoppingcart
+//-     h1 购物车
+//-     if products.length == 0
+//-       p 您的购物车没有商品！
+//-       a(href="/") 去挑选商品吧
+//-     else
+//-       .row.head
+//-         .col-md-4 图片
+//-         .col-md-3 名称
+//-         .col-md-1 单价
+//-         .col-md-1 数量
+//-         .col-md-1 总价
+//-         .col-md-2 操作
+//-       each product in products
+//-         .row(data-productid="#{product.productId}")
+//-           .col-md-4.col
+//-             img.img(src="#{product.url}")
+//-           .col-md-3.col
+//-             p #{product.name}
+//-           .col-md-1.col
+//-             p #{product.price}
+//-           .col-md-1.col
+//-             input.qty(type="number",value="#{product.qty}",style="width:100%;")
+//-           .col-md-1.col
+//-             p #{product.qty*product.price}
+//-           .col-md-2.col
+//-             a.btn.btn-link.js-deleteCart(data-productid="#{product.productId}") 删除
   script(src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js")
   script(src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js")
   script(src="/js/action.js")

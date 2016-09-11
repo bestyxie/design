@@ -7,6 +7,7 @@ module.exports.addToCart = function(req,res){
   var product = req.body;
   var _user = req.session.user;
   var product_name = '',product_url='';
+  var productMsg = {};
 
   function getNameUrl(_id){
     var promise = Product.findOne({_id: _id},function(err,one_product){
@@ -14,8 +15,15 @@ module.exports.addToCart = function(req,res){
         console.log(err);
       }else{
         // console.log(one_product);
-        product_name = one_product.name;
-        product_pics = one_product.pics;
+        productMsg = {
+          productId: one_product._id,
+          name: one_product.name,
+          pics: one_product.pics,
+          color: product.color,
+          size: product.size,
+          price: one_product.price,
+          qty: product.qty
+        }
       }
     });
     return promise;
@@ -48,16 +56,10 @@ module.exports.addToCart = function(req,res){
       promise = getNameUrl(product.productId);
 
       promise.then(function(){
-        var new_user = {}
+        var new_user = {};
         new_user.userId = _user._id;
         new_user.products = [];
-        new_user.products.push({
-          productId: product.productId,
-          name: product_name,
-          pics: product_url,
-          price: product.price,
-          qty: product.qty
-        });
+        new_user.products.push(productMsg);
 
         var new_product = new ShoppingCart(new_user);
         new_product.save(function(err){
@@ -77,49 +79,40 @@ module.exports.addToCart = function(req,res){
 
       for(i; i<products.length; i++){
         if(products[i].productId == product.productId){
-          products[i].qty += parseInt(product.qty);
+          if(products[i].color == product.color && products[i].size == product.size){
+            products[i].qty += parseInt(product.qty);
+            updateCartProducts(product.userId,products);
+          }
           break;
         }
-        updateCartProducts(product.userId,products);
       }
       if(i == products.length){ //购物车没有 productId 为 product.productId的商品
         promise = getNameUrl(product.productId);
         promise.then(function(){
 
-          user.products.push({
-            productId: product.productId,
-            name: product_name,
-            pics: product_url,
-            price: product.price,
-            qty: product.qty
-          });
+          user.products.push(productMsg);
           updateCartProducts(product.userId,products);
         })
       }
 
     }
-
   })
 }
 
 // 购物车页面
 module.exports.shoppingCart = function(req,res){
+  var user = req.session.user;
   ShoppingCart.findOne({userId: user._id},function(err,goods){
+    var products = [];
     if(err){
       console.log(err);
-      res.render('mobile/shoppingcart/',{
-        products: []
-      })
     }
     if(goods){
-      res.render('shoppingcart',{
-        products: goods.products
-      });
-    }else{
-      res.render('shoppingcart',{
-        products: []
-      });
+      products = goods.products;
     }
+    res.render('mobile/shoppingcart/',{
+      products: products
+    });
   });
 }
 
