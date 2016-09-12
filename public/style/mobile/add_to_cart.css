@@ -1,0 +1,119 @@
+.mask {
+  display: none;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+}
+.pop {
+  text-align: left;
+  color: inherit;
+  font-size: 0.6rem;
+  display: block;
+  opacity: 1;
+  width: 100%;
+  height: auto;
+  max-height: 75%;
+  background: #fff;
+  position: absolute;
+  bottom: 0;
+}
+.pop .modal-header {
+  padding: 15px 0;
+  display: -webkit-box;
+  display: box;
+  position: relative;
+  border-bottom: 1px solid #ccc;
+}
+.pop .modal-header .close_icon {
+  color: #bbb;
+  font-family: serif;
+  position: absolute;
+  right: 0;
+  top: 0;
+  line-height: 50px;
+  width: 35px;
+  height: 35px;
+}
+.pop .modal-header .subtitle-img {
+  min-width: 70px;
+  max-width: 70px;
+  height: 70px;
+  -webkit-box-flex: 1;
+  box-flex: 1;
+  overflow: hidden;
+  margin-left: 15px;
+}
+.pop .modal-header img {
+  width: 100%;
+}
+.pop .modal-header .subtitle-desc {
+  margin: 0 35px 0 10px;
+  -webkit-box-flex: 1;
+  box-flex: 1;
+  position: relative;
+}
+.pop .modal-header .subtitle-text {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.pop .modal-header .info-price {
+  position: absolute;
+  bottom: 0;
+}
+.pop .modal-header .pirce {
+  color: red;
+}
+.pop .modal-header .stock {
+  margin-left: 10px;
+}
+.pop .modal-content {
+  font-size: 14px;
+  padding: 0 10px;
+}
+.pop .condiction {
+  margin-top: 10px;
+}
+.pop .condiction label {
+  display: block;
+}
+.pop .condiction span {
+  display: inline-block;
+  font-size: 12px;
+  line-height: 26px;
+  border-radius: 3px;
+  padding: 0 15px;
+  margin-right: 10px;
+  border: 1px solid #bbb;
+}
+.pop .condiction .selected {
+  color: #ed4566;
+  border-color: #ed4566;
+}
+.pop .modal-footer {
+  border-top: 0.5px solid #ccc;
+  height: 40px;
+  text-align: center;
+  width: 100%;
+  display: -moz-box;
+  display: -webkit-box;
+  display: box;
+  -webkit-box-align: center;
+  -webkit-box-pack: center;
+}
+.pop .modal-footer .button {
+  color: #fff;
+  width: 30%;
+  padding: 0 12px;
+  border-radius: 3px;
+  border: none;
+  background: #ff5e7a;
+  background: -webkit-linear-gradient(top, #ff5e7a, #f24868);
+  background: linear-gradient(top, #ff5e7a, #f24868);
+}
