@@ -161,6 +161,65 @@ popup.prototype.open = function(){
 popup.prototype.close = function(){
   $(this.params.pop).hide();
 }
+
+// 弹窗
+;(function($){
+  $.fn.Modal = function(opts){
+    var self = this;
+    var options = {
+      height: 0,
+      width: 0,
+      openbtn: '.j-open'
+    };
+    var opts =  opts || {};
+    $.extend(options,opts);
+
+    function _init(){
+      var height = $(self).height();
+      var winHeight = window.innerHeight;
+      if(options.width>0){
+        $(self).css({
+          width: options.width + 'px',
+          marginLeft: '-'+ options.width/2 + 'px'
+        });
+      }
+      if(options.height>0){
+        $(self).css({
+          height: options.height + 'px'
+        });
+      }
+      // $(self).css({
+      //   display: 'none'
+      // });
+      $(options.openbtn).on('click',function(){
+        self.open();
+      });
+      $(self).find('.j-close').on('click',function(){
+        self.close();
+      });
+    }
+
+    self.open = function(){
+      this.css({top:$("body").scrollTop()-70+"px"});
+      this.fadeIn();
+      $('body').append('<div class="mask" style="display: none;"></div>');
+      $('.mask').one('click', function(event) {
+        $(self).close();
+      });
+      $('.j-modal-mask').fadeIn();
+    }
+
+    self.close = function(){
+      this.fadeOut();
+      $('.j-modal-mask').fadeOut();
+      $('.mask').remove();
+    }
+    
+    _init();
+    return self;
+  }
+})(Zepto)
+
 $(function(){
   $.config = { router: false }
   $.init();

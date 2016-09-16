@@ -890,3 +890,15 @@ header.bar.bar-nav form .search-btn {
   right: 0.75rem;
   padding: 6px 20px;
 }
+.ui-modal {
+  width: 10.12rem;
+  height: 4.3rem;
+  background: #fff;
+  border-radius: 3px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
