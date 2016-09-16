@@ -164,4 +164,20 @@ popup.prototype.close = function(){
 $(function(){
   $.config = { router: false }
   $.init();
+
+  // qty operation
+  function changeQTY(){
+    $('.j-reduct').on('click',reduceNum);
+    $('.j-add').on('click',addNum);
+    function reduceNum(){
+      var now = parseInt($('.j-num').html());
+      if(now == 1) return;
+      $('.j-num').html(--now);
+    }
+    function addNum(){
+      var now = parseInt($('.j-num').html());
+      $('.j-num').html(++now);
+    }
+  }
+  changeQTY();
 });
