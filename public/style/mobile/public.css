@@ -134,3 +134,6 @@ input[type=radio] {
 .ui-radio:checked {
   background-position: 0 0;
 }
+.ui-confirm .action {
+  margin: 0rem;
+}

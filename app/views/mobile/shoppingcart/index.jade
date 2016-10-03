@@ -9,7 +9,7 @@ block content
     .content.native-scroll
       .ui-list.cart-goods
         each product in products
-          li.ui-list-item
+          li.ui-list-item.j-list-item(data-id="#{product.id}")
             a.cart-goods-pic(href="/details/#{product.productId}")
               img.fadeIn(src="#{product.pics[0]}")
             .cart-goods-des
@@ -37,17 +37,21 @@ block content
       a.ui-btn-pink.ui-btn(href="javascript:;") 去结算
     .ui-modal
       .modal-content
-        p 确定要删除该商品吗
+        p.content-p 确定要删除该商品吗
       .action
         span.ui-btn.ui-btn-white.cancle 取消
-        span.ui-btn.ui-btn-pink.confirm 确定
+        span.ui-btn.ui-btn-pink.confirm.j-confirm 确定
   //- script(src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js")
   //- script(src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js")
-  //- script(src="/js/action.js")
 block scripts
+  script(src="/js/action.js")
   script.
     $(function(){
-      $('.ui-modal').Modal({
+      var remove = $('.ui-modal').Modal({
         openbtn: '.j-remove'
       });
-    })
+      $('.j-remove').on('tap',function(){
+        remove.open();
+        $('.j-confirm').attr('data-id',this.parents('.j-list-item').data('id'));
+      });
+    });

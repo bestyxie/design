@@ -83,7 +83,7 @@
 .pop .condiction label {
   display: block;
 }
-.pop .condiction span {
+.pop .condiction .block {
   display: inline-block;
   font-size: 12px;
   line-height: 26px;
