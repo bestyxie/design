@@ -119,8 +119,8 @@ module.exports.shoppingCart = function(req,res){
 // 删除购物车商品
 module.exports.deleteCart = function(req,res){
   var cartObj = req.body,
-      productId = cartObj.productId,
-      userId = cartObj.userId;
+      productId = cartObj.id,
+      userId = req.session.user._id;
   ShoppingCart.findOne({ userId: userId},function(err,cart){
     if(err){
       console.log(err);
@@ -128,7 +128,7 @@ module.exports.deleteCart = function(req,res){
     }
     var products = cart.products,i = 0;
     for( i; i<products.length; i++ ){
-      if(products[i].productId == productId){
+      if(products[i]._id == productId){
         products.splice(i,1);
         break;
       }

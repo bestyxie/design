@@ -41,17 +41,22 @@ block content
       .action
         span.ui-btn.ui-btn-white.cancle 取消
         span.ui-btn.ui-btn-pink.confirm.j-confirm 确定
-  //- script(src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js")
-  //- script(src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js")
 block scripts
   script(src="/js/action.js")
   script.
     $(function(){
-      var remove = $('.ui-modal').Modal({
-        openbtn: '.j-remove'
+      $('.ui-modal').Modal({
+        openbtn: '.j-remove',
+        afterOpen: function(){
+          console.log($(this))
+          var id = $(this).parents('.j-list-item').data('id')
+          $('.ui-modal').attr('data-id',id);
+        }
       });
-      $('.j-remove').on('tap',function(){
-        remove.open();
-        $('.j-confirm').attr('data-id',this.parents('.j-list-item').data('id'));
+      $('.j-confirm').on('click',function(){
+        $(this).parents('.j-list-item').remove();
+        $.post('/cart/delete',{id: $(this).parents('.ui-modal').data('id')},function(data){
+          console.log(data);
+        },'json');
       });
     });

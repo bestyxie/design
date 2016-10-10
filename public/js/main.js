@@ -164,59 +164,76 @@ popup.prototype.close = function(){
 
 // 弹窗
 ;(function($){
-  Zepto.Modal = function(opts){
-    var self = {
+  $.fn.Modal = function(opts){
+    var self = this;
+
+    var defaults = {
       modal: '.modal',
       height: 0,
       width: 0,
-      _init: function(){
-        var height = $(self.modal).height()
-        var winHeight = window.innerHeight;
-        if(self.width>0){
-          $(self.modal).css({
-            width: self.width + 'px',
-            marginLeft: '-'+ self.width/2 + 'px'
-          });
-        }
-        if(self.height>0){
-          $(self.modal).css({
-            height: self.height + 'px'
-          })
-        }
-        // if(height-winHeight>=-30){
-          $('body').css({
-            position: 'relative'
-          })
-          $(self.modal).css({
-            position: 'absolute',
-            top: '-70px',
-            marginBottom: '100px',
-            transform: 'translateY(0)'
-          })
-        // }
-      },
-      open: function(){
-        $(this.modal).css({top:$("body").scrollTop()+"px"});
-        $(this.modal).fadeIn();
-        $('<div class="mask"></div>').appendTo('body').fadeIn();
-        // $('.j-modal-mask').fadeIn();
-      },
-      close: function(){
-        $(this.modal).fadeOut();
-        $('.mask').fadeOut();
-        // $('.j-modal-mask').fadeOut();
-      }
+      openbtn: '',
+      afterOpen: function(){},
+      afterClose: function(){},
     };
-    self = $.extend(self,opts);
-    self._init();
-    $(self.modal).find('.j-close').on('click',function(){
-      self.close();
-    });
-    $('.j-modal-mask').on('click',function(){
-      self.close();
-    });
-    return self;
+    this.param = $.extend(defaults,opts);
+    this.open = function(){
+      $(this).fadeIn();
+      var parent = $(this).parent();
+      $('<div class="mask"></div>').appendTo(parent).fadeIn();
+      // this.param.afterOpen();
+    }
+    this.close = function(){
+      $(this).fadeOut();
+      $('.mask').fadeOut('400', function() {
+       $(this).remove(); 
+      });
+    }
+
+    this._init = function(){
+      var height = $(self.modal).height()
+      var winHeight = window.innerHeight;
+      if(self.width>0){
+        $(self).css({
+          width: self.width + 'px',
+          marginLeft: '-'+ self.width/2 + 'px'
+        });
+      }
+      if(self.param.height>0){
+        $(self).css({
+          height: self.height + 'px'
+        })
+      }
+
+      // $(self).css({
+      //   position: 'absolute',
+      //   top: '-70px',
+      //   marginBottom: '100px',
+      //   transform: 'translateY(0)'
+      // })
+
+
+      $(this).find('.j-close').on('click',function(){
+        self.close();
+        $('.mask').remove();
+        self.param.afterClose.apply(this);
+      });
+      $('body').on('click','.mask',function(){
+        self.close();
+        $(this).remove();
+        self.param.afterClose.apply(this);
+      });
+
+      $(this.param.openbtn).on('click',function(){
+        self.open();
+        self.param.afterOpen.apply(this);
+      })
+    }
+    this._init();
+    
+
+    return this;
   }
+
 })(Zepto)
 
 $(function(){
