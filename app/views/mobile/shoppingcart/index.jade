@@ -45,18 +45,18 @@ block scripts
   script(src="/js/action.js")
   script.
     $(function(){
-      $('.ui-modal').Modal({
+      var modal = $('.ui-modal').Modal({
         openbtn: '.j-remove',
         afterOpen: function(){
-          console.log($(this))
           var id = $(this).parents('.j-list-item').data('id')
           $('.ui-modal').attr('data-id',id);
         }
       });
       $('.j-confirm').on('click',function(){
-        $(this).parents('.j-list-item').remove();
-        $.post('/cart/delete',{id: $(this).parents('.ui-modal').data('id')},function(data){
-          console.log(data);
+        var id = $(this).parents('.ui-modal').data('id');
+        $('.j-list-item[data-id="'+id+'"]').remove();
+        modal.close();
+        $.post('/cart/delete',{id: id},function(data){
         },'json');
       });
     });
