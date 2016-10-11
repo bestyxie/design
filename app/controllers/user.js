@@ -107,7 +107,7 @@ module.exports.list = function(req,res){
       console.log('查询用户出错');
       res.redirect('/');
     }
-    res.render('admin/userlist',{
+    res.render('admin/user_management/userlist',{
       users: users
     });
   });
