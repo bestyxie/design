@@ -19,13 +19,24 @@ html
     .container
       .sidebar
         ul.nav
-          li.active
+          li.active#index
             a(href="/admin") 商品管理
-          li
+          li#list
             a(href="/admin/user/list") 用户列表
-          li
+          li#category
             a(href="/admin/category") 商品分类
       .main
         block content
     include ./includes/admin-footer
+    script.
+      $(function(){
+        var url = window.location.pathname;
+        if(url.indexOf('list')>0){
+          $('.nav #list').addClass('active').siblings('li').removeClass('active');
+        }else if(url.indexOf('category') > 0){
+          $('.nav #category').addClass('active').siblings('li').removeClass('active');
+        }else{
+          $('.nav #index').addClass('active').siblings('li').removeClass('li');
+        }
+      })
     block scripts
