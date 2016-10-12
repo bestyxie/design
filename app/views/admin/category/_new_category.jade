@@ -7,11 +7,11 @@
     .modal-content
       form#newcategory(action="/admin/category/new",method="POST")
         .form-group
-          label(for="name") 分类名称*
+          label(for="name") 标签名称*
           .input-box
             input#name.required(type="text",name="category[name]")
         .form-group
-          label(for="price") 价格*
+          label(for="price") 描述*
           .input-box
             input#price.required.rqrednum(type="text",name="category[desc]")
     .modal-footer

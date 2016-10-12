@@ -15,5 +15,24 @@ module.exports.category = function(req,res){
 
 // new category
 module.exports.new = function(req,res){
-  console.log(req.body.category);
+  var new_label = req.body.category;
+
+  Category.find({name: new_label.name},function(err,label){
+    if(err){
+      res.redirect('/admin/category');
+      return;
+    }
+    if(label.length > 0){
+      res.redirect('/admin/category');
+    }else{
+      var _category = new Category(new_label);
+      _category.save(function(err){
+        if(err){
+          res.redirect('/admin/category');
+        }else{
+          res.redirect('/admin/category');
+        }
+      })
+    }
+  })
 }

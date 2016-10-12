@@ -50,7 +50,6 @@ module.exports.detail = function(req,res){
 module.exports.new = function(req,res){
   var new_product = req.body.product;
   var files = req.files;
-  console.log(files);
 
   new_product.pics = files.map(function(item){
     return '/images/upload/'+item.filename
