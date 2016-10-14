@@ -91,5 +91,14 @@ module.exports.delete = function(req,res){
 
 // 编辑商品
 module.exports.editproduct = function(req,res){
-  res.render('admin/product_management/product_edit');
+  var product_id = req.params.id;
+  Product.find({_id: product_id},function(err,product){
+    if(err){
+      console.log(err);
+    }else{
+      res.render('admin/product_management/product_edit',{
+        product: product[0]
+      });
+    }
+  });
 }

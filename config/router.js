@@ -54,7 +54,7 @@ module.exports = function(app){
   app.get('/admin/user/list',User.signinRequire, User.adminRequire, User.list);
   app.post('/user/delete',User.delete);
   app.post('/user/changerole',User.change);
-  app.get('/admin/product',Product.editproduct);
+  app.get('/admin/product/:id',Product.editproduct);
   app.get('/admin/category',Category.category);
   app.post('/admin/category/new',Category.new);
 }
