@@ -59,27 +59,6 @@ block scripts
   script.
     $(function(){
 
-      //- 新尺寸
-      (function(){
-        function newInput(name,target,$this){
-          var newInput = $($('#newInput').html());
-          newInput.find('input').attr('name','product['+name+']');
-          $($this).parents(target).append(newInput);
-        }
-
-        function removeInput(){
-          $(this).parents('.j-form-group').remove();
-        }
-
-        $('.j-newInput').on('click',function(){
-          var name = $(this).data('name');
-          var target = '.j-form-box';
-          newInput(name,target,$(this));
-        });
-
-        $('.form-box').on('click','.j-delete',removeInput);
-      })();
-
       //- 图片上传预览
       function uploadPic(){
         function checkType(picPath){
@@ -133,64 +112,5 @@ block scripts
         })
       }
       uploadPic();
-      //- 确定新增商品
-      $('.next').on('click',function(){
-        if($(this).hasClass('disabled')){
-          var ipts = Array.prototype.slice.call($('#newproduct .required'));
-          ipts.forEach(function(ipt){
-            if($(ipt).val().length == 0){
-              $(ipt).addClass('err');
-            }
-          });
-        }else{
-          var ipts = Array.prototype.slice.call($('input.rqrednum'));
-          var pattern = /[^\d]/g;
-          var isnum = true;
-          ipts.forEach(function(ipt){
-            if($(ipt).val() != 0 && pattern.test($(ipt).val())){
-              isnum = false;
-            }
-          });
-          if(isnum){
-            $('#newproduct').trigger('submit');
-          }
-        }
-      });
-
-      //- validate
-      $('#newproduct').on('keyup','.required',validate);
-
-      function validate(){
-        var isAllow = Array.prototype.slice.call($('#newproduct .required')).every(function(input){
-          if($(input).val().length>0){
-            $(input).removeClass('err');
-          }
-          return $(input).val().length > 0;
-        });
-        console.log(isAllow);
-        if(isAllow){
-          $('.modal-footer .next').removeClass('disabled');
-        }
-      }
-
-      //- delete product
-      function deleteProduct(){
-        var _id = $(this).parent().data('product_id');
-        var $this = $(this);
-
-        $.ajax({
-          url: 'product/delete',
-          type: 'POST',
-          dataType: 'json',
-          data: {_id: _id},
-          success: function(data){
-            if(data.success){
-              $this.parents('.j-productItem').remove();
-            }
-          }
-        })
-      }
-
-      $('.j-product-list').on('click','.j-delete',deleteProduct);
 
     })
