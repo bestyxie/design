@@ -44,6 +44,19 @@ block content
               a.newsize.j-newInput(href="javascrip:void(0);",data-name="color")
                 i.fa.fa-plus
                 | 添加颜色
+      .form-group.uploadPic-form
+          label 图片*
+          .pic-wrap
+            each url,index in product.pics
+              .imgbox
+                image(src="#{url}",data-index="#{index}")
+                i.icon &times;
+          a.newpic(href="javascrip:void(0);")
+            i.fa.fa-plus
+          input.required.hide(type="file",name="pics",accept="image/*")
+  .footer
+    button.btn.btn-primary.confirm 确定
+    a.btn.btn-default(href="/admin") 取消
 
 block scripts
   script#newInput(type="text/tmpl").

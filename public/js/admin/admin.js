@@ -13,6 +13,62 @@ $(function(){
     }
   }
 
+  (function(){
+    //- 图片上传预览
+    function uploadPic(){
+      function checkType(picPath){
+        var type = picPath.substring(picPath.lastIndexOf('.')+1,picPath.length).toLowerCase();
+        if( type != 'jpg' && type != 'bmp' && type != 'gif' && type != 'png'){
+         return false;
+        }
+        return true;
+      }
+      function previewPic(picURL,$this){
+        var type = checkType(picURL);
+        var prevDiv = $('.pic-wrap');
+        if(type){
+          if( $this.context.files && ($this.context.files)[0] ){
+            var reader = new FileReader();
+            reader.onload = function(evt){
+              var newImg = $('<div class="imgbox"><img src="'+evt.target.result+'" /><i class="icon">&times;</i></div>');
+              prevDiv.append(newImg);
+            }
+            reader.readAsDataURL(($this.context.files)[0]);
+          }else{
+            prevDiv.append('<div class="img" style="filter:progid:DXImagesTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src=\''+file.value+'\'"></div>');
+          }
+        }
+      }
+      $('.newpic').on('click',function(){
+        var file = $('input[type="file"]');
+        if(file.length == 1){
+          file.trigger('click');
+        }else{
+          $(file[1]).trigger('click');
+        }
+      });
+      $(document).on('change','input[type="file"]',function(){
+        var self = $(this);
+        previewPic(self.val(),self);
+        var newpic = $('<input type="file" name="picture" accept="image/*" class="hide" />')
+        self.parent().append(newpic);
+        validate();
+      });
+      $(document).on('click','.imgbox .icon',function(){
+        var self = $(this),i=0;
+        var imgboxes = $(this).parent().siblings();
+        for(i,len=imgboxes.length;i<len;i++){
+          if($(imgboxes[i]).has(self)){
+            break;
+          }
+        }
+        $($('input[type="file"]')[i]).remove();
+        $(this).parent().remove();
+      })
+    }
+    uploadPic();
+  })();
+
   //- new input
   (function(){
     function newInput(name,target,$this){
@@ -34,7 +90,7 @@ $(function(){
     $('.form-box').on('click','.j-delete',removeInput);
   })();
 
-  // 购物车
+  // 商品管理
   (function(){
     //- validate
     $('#newproduct').on('input','.required',validate);

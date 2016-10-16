@@ -614,3 +614,13 @@ body {
 .userlist table .form-wrapper {
   display: none;
 }
+.footer {
+  width: 100%;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  border-top: 1px solid #e5e5e5;
+}
+.footer .btn {
+  margin-right: 10px;
+}
