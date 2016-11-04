@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Product = require('../models/product');
 var ShoppingCart = require('../models/shoppingcart');
+var Category = require('../models/category');
 
 // var OAuth = require('wechat-oauth');
 // var config = require('config');
@@ -91,14 +92,26 @@ module.exports.delete = function(req,res){
 
 // 编辑商品
 module.exports.editproduct = function(req,res){
-  var product_id = req.params.id;
-  Product.find({_id: product_id},function(err,product){
-    if(err){
-      console.log(err);
-    }else{
-      res.render('admin/product_management/product_edit',{
-        product: product[0]
-      });
-    }
-  });
+  var product_id = req.params.id,pd;
+  var promise = Product.find({_id: product_id}).exec();
+  promise.then(function(product){
+    pd = product[0];
+    return Category.find({}).exec()
+  }).then(function(categories){
+    res.render('admin/product_management/product_edit',{
+      product: pd,
+      categories: categories
+    });
+  })
+  // var promise = Product.find({_id: product_id},function(err,product){
+  //   if(err){
+  //     console.log(err);
+  //   }else{
+  //     pd = product
+  //     res.render('admin/product_management/product_edit',{
+  //       product: product[0]
+  //     });
+  //   }
+  // });
+  // promise.then(function())
 }

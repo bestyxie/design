@@ -56,6 +56,12 @@ block content
           a.newpic(href="javascrip:void(0);")
             i.fa.fa-plus
           input.required.hide(type="file",name="pics",accept="image/*")
+      .form-group
+        label 标签
+        div.label-group
+          input(type="hidden",name="labels")
+          each category in categories
+            span #{category.names}
   .footer
     button.btn.btn-primary.confirm 确定
     a.btn.btn-default(href="/admin") 取消
