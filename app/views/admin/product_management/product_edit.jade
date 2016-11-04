@@ -2,7 +2,7 @@ extends ../../adminLayout
 
 block content
   h2 用户管理/商品编辑
-  .wrapper
+  .wrapper.edit-page
     form#newproduct(action="",method="POST",enctype="multipart/form-data")
       .form-group
         label 商品名称
@@ -58,10 +58,10 @@ block content
           input.required.hide(type="file",name="pics",accept="image/*")
       .form-group
         label 标签
-        div.label-group
-          input(type="hidden",name="labels")
+        div.label-group.j-label-group
+          input(type="hidden",name="labels",value="")
           each category in categories
-            span #{category.names}
+            span.labels.j-labels #{category.name}
   .footer
     button.btn.btn-primary.confirm 确定
     a.btn.btn-default(href="/admin") 取消

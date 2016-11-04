@@ -113,7 +113,26 @@ $(function(){
       })
     }
     $('.j-product-list').on('click','.j-delete',deleteProduct);
-  })
+  })();
+
+  // 编辑商品
+  (function(){
+    $('.j-label-group').on('click','.j-labels',function(){
+      $(this).toggleClass('selected');
+      if($(this).hasClass('selected')){
+        $('input[name="labels"]').val($('input[name="labels"]').val()+" "+$(this).html());
+      }else{
+        var oldval = $('input[name="labels"]').val().split(' ');
+        var delVal = $(this).html();
+        for(var i = 0;i<oldval.length;i++){
+          if(oldval[i] == delVal){
+            oldval.splice(i,1);
+          }
+        }
+        $('input[name="labels"]').val(oldval);
+      }
+    })
+  })();
 
 
 })

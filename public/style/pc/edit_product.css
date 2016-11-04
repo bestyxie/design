@@ -8,3 +8,13 @@
 .footer .btn {
   margin-right: 10px;
 }
+.edit-page .labels {
+  padding: 3px 10px;
+  border: 1px solid #999;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.edit-page .labels.selected {
+  border-color: #709ef9;
+  color: #709ef9;
+}
