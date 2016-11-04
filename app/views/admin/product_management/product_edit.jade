@@ -20,30 +20,32 @@ block content
         label 折扣
         .input-box
           input#discount.required(type='text',name='product[discount]',value="#{product.discount}")
-      each size,index in product.size
-        .form-group
-          label 尺寸
-          .input-box
-            input#size.required(type='text',name='product[size]',value="#{size}")
-            if index > 0
-              a.delete.j-delete(href="javascript:;")
-                i.fa.fa-trash
-            else
-              a.newsize.j-newInput(href="javascrip:void(0);",data-name="size")
-                i.fa.fa-plus
-                | 添加尺寸
-      each color,index in product.color
-        .form-group
-          label 颜色
-          .input-box
-            input#colors.required(type='text',name='product[colors]',value="#{color}")
-            if index > 0
-              a.delete.j-delete(href="javascript:;")
-                i.fa.fa-trash
-            else
-              a.newsize.j-newInput(href="javascrip:void(0);",data-name="color")
-                i.fa.fa-plus
-                | 添加颜色
+      .size-box.j-form-box
+        each size,index in product.size
+          .form-group
+            label 尺寸
+            .input-box
+              input#size.required(type='text',name='product[size]',value="#{size}")
+              if index > 0
+                a.delete.j-delete(href="javascript:;")
+                  i.fa.fa-trash
+              else
+                a.newsize.j-newInput(href="javascrip:void(0);",data-name="size")
+                  i.fa.fa-plus
+                  | 添加尺寸
+      .size-box.j-form-box
+        each color,index in product.color
+          .form-group
+            label 颜色
+            .input-box
+              input#colors.required(type='text',name='product[colors]',value="#{color}")
+              if index > 0
+                a.delete.j-delete(href="javascript:;")
+                  i.fa.fa-trash
+              else
+                a.newsize.j-newInput(href="javascrip:void(0);",data-name="color")
+                  i.fa.fa-plus
+                  | 添加颜色
       .form-group.uploadPic-form
           label 图片*
           .pic-wrap
@@ -64,10 +66,10 @@ block scripts
       <label></label>
       <div class="input-box">
         <input class="sizetext" type="text" name="">
+        <a href="javascript:void(0);" class="delete j-delete">
+          <i class="fa fa-trash"></i>
+        </a>
       </div>
-      <a href="javascript:void(0);" class="delete j-delete">
-        <i class="fa fa-trash"></i>
-      </a>
     </div>
   script.
     $(function(){
