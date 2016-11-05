@@ -96,22 +96,11 @@ module.exports.editproduct = function(req,res){
   var promise = Product.find({_id: product_id}).exec();
   promise.then(function(product){
     pd = product[0];
-    return Category.find({}).exec()
+    return Category.find({},{name: 1,_id: 0}).exec()
   }).then(function(categories){
     res.render('admin/product_management/product_edit',{
       product: pd,
       categories: categories
     });
   })
-  // var promise = Product.find({_id: product_id},function(err,product){
-  //   if(err){
-  //     console.log(err);
-  //   }else{
-  //     pd = product
-  //     res.render('admin/product_management/product_edit',{
-  //       product: product[0]
-  //     });
-  //   }
-  // });
-  // promise.then(function())
 }
