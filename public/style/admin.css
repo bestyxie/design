@@ -624,10 +624,23 @@ body {
 .footer .btn {
   margin-right: 10px;
 }
+.edit-page .self-dropdown {
+  display: inline-block;
+  position: relative;
+}
+.edit-page .dropdown-menu {
+  display: none;
+  width: 300px;
+}
+.edit-page .dropdown-content {
+  padding: 10px 20px;
+}
 .edit-page .labels {
   padding: 3px 10px;
   border: 1px solid #999;
   border-radius: 3px;
+  margin-right: 10px;
+  line-height: normal;
   cursor: pointer;
 }
 .edit-page .labels.selected {

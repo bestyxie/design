@@ -9,10 +9,23 @@
   }
 }
 .edit-page{
+  .self-dropdown{
+    display: inline-block;
+    position: relative;
+  }
+  .dropdown-menu{
+    display: none;
+    width: 300px;
+  }
+  .dropdown-content{
+    padding: 10px 20px;
+  }
   .labels{
     padding: 3px 10px;
     border: 1px solid #999;
     border-radius: 3px;
+    margin-right: 10px;
+    line-height: normal; //覆盖form-group的样式
     cursor: pointer;
     &.selected{
       border-color: #709ef9;

@@ -12,7 +12,21 @@ $(function(){
       $('.modal-footer .next').removeClass('disabled');
     }
   }
-
+  
+  // dropdown
+  (function(){
+    function hide_dropdown(){
+      $(this).parents('.j-label-group').hide();
+      
+    }
+    $('.dropdown-toggle').on('click',function(e){
+      $(this).siblings('.dropdown-menu').show();
+    });
+    $('.dropdown-menu .j-cancle').on('click',hide_dropdown);
+    $('.dropdown-menu .j-ok').on('click',hide_dropdown);
+  })();
+  
+  // 图片上传
   (function(){
     //- 图片上传预览
     function uploadPic(){
@@ -131,7 +145,9 @@ $(function(){
         }
         $('input[name="labels"]').val(oldval);
       }
-    })
+    });
+
+    $('.dropdown-menu .j-ok').on('click',hide_dropdown);
   })();
 
 

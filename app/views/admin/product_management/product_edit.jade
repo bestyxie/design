@@ -60,8 +60,17 @@ block content
         label 标签
         div.label-group.j-label-group
           input(type="hidden",name="labels",value="")
-          each category in categories
-            span.labels.j-labels #{category.name}
+          div.self-dropdown
+            span.labels.dropdown-toggle#newlabels
+              i.glyphicon.glyphicon-plus
+              | 添加标签
+            div.dropdown-menu
+              .dropdown-content
+                each category in categories
+                  span.labels.j-labels #{category.name}
+              .footer
+                button.btn.btn-primary.j-ok 确定
+                a.btn.btn-default.j-cancle(href="javascript:;") 取消
   .footer
     button.btn.btn-primary.confirm 确定
     a.btn.btn-default(href="/admin") 取消
@@ -132,6 +141,6 @@ block scripts
           $(this).parent().remove();
         })
       }
-      uploadPic();
+      //- uploadPic();
 
     })
