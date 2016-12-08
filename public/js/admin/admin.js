@@ -162,7 +162,8 @@ $(function(){
     $('.dropdown-menu .j-ok').on('click',newLabel);
     $('.j-label-group').on('click','.j-selected_lb',deleteLabel);
 
-    function newLabel(){
+    function newLabel(e){
+      e.preventDefault();
       var labels = $('.j-label-group .j-labels.selected');
       var fragment = '';
       for(var i=0; i<labels.length; i++){
