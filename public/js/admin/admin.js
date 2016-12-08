@@ -7,7 +7,7 @@ $(function(){
       }
       return $(input).val().length > 0;
     });
-    console.log(isAllow);
+    // console.log(isAllow);
     if(isAllow){
       $('.modal-footer .next').removeClass('disabled');
     }
@@ -15,15 +15,34 @@ $(function(){
   
   // dropdown
   (function(){
-    function hide_dropdown(){
-      $(this).parents('.j-label-group').hide();
-      
+    function dropdown(selector){
+      var dropdownSel = '.dropdown';
+      if(selector){
+        dropdownSel = selector;
+      }
+      console.log(dropdownSel);
+      function hide_dropdown(){
+        $(this).parents('.dropdown-menu').hide();
+      }
+      function show_dropdown(){
+        console.log('toggle')
+        $(this).siblings('.dropdown-menu').show();
+      }
+
+      $(dropdownSel + ' .dropdown-toggle').on('click',show_dropdown);
+      $('.dropdown-menu .j-cancle').on('click',hide_dropdown);
+      $('.dropdown-menu .j-ok').on('click',hide_dropdown);
+
+      // $('body').on('click',function(e){
+      //   console.log($(e.target) != $(dropdownSel));
+      //   if($(e.target) != $(dropdownSel)){
+      //     $(dropdownSel + ' .dropdown-menu').hide();
+      //   }
+      // })
+
     }
-    $('.dropdown-toggle').on('click',function(e){
-      $(this).siblings('.dropdown-menu').show();
-    });
-    $('.dropdown-menu .j-cancle').on('click',hide_dropdown);
-    $('.dropdown-menu .j-ok').on('click',hide_dropdown);
+    dropdown('.self-dropdown');
+
   })();
   
   // 图片上传
@@ -147,7 +166,7 @@ $(function(){
       }
     });
 
-    $('.dropdown-menu .j-ok').on('click',hide_dropdown);
+    $('.dropdown-menu .j-ok').on('click',function(){});
   })();
 
 

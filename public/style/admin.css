@@ -542,6 +542,14 @@ body {
 .productlist table .imgbox img {
   width: 100%;
 }
+.self-dropdown {
+  display: inline-block;
+  position: relative;
+}
+.self-dropdown .dropdown-menu {
+  display: none;
+  width: 300px;
+}
 .modal .modal-header {
   width: 100%;
   height: 52px;
@@ -623,10 +631,6 @@ body {
 }
 .footer .btn {
   margin-right: 10px;
-}
-.edit-page .self-dropdown {
-  display: inline-block;
-  position: relative;
 }
 .edit-page .dropdown-menu {
   display: none;

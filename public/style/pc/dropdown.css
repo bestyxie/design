@@ -1,0 +1,8 @@
+.self-dropdown {
+  display: inline-block;
+  position: relative;
+}
+.self-dropdown .dropdown-menu {
+  display: none;
+  width: 300px;
+}
