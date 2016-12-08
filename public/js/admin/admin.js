@@ -39,7 +39,6 @@ $(function(){
       //     $(dropdownSel + ' .dropdown-menu').hide();
       //   }
       // })
-
     }
     dropdown('.self-dropdown');
 
@@ -150,23 +149,52 @@ $(function(){
 
   // 编辑商品
   (function(){
-    $('.j-label-group').on('click','.j-labels',function(){
+    $('.dropdown-content').on('click','.j-labels',function(){
       $(this).toggleClass('selected');
       if($(this).hasClass('selected')){
         $('input[name="labels"]').val($('input[name="labels"]').val()+" "+$(this).html());
       }else{
-        var oldval = $('input[name="labels"]').val().split(' ');
         var delVal = $(this).html();
-        for(var i = 0;i<oldval.length;i++){
-          if(oldval[i] == delVal){
-            oldval.splice(i,1);
-          }
-        }
-        $('input[name="labels"]').val(oldval);
+        resetLabels(delVal);
       }
     });
 
-    $('.dropdown-menu .j-ok').on('click',function(){});
+    $('.dropdown-menu .j-ok').on('click',newLabel);
+    $('.j-label-group').on('click','.j-selected_lb',deleteLabel);
+
+    function newLabel(){
+      var labels = $('.j-label-group .j-labels.selected');
+      var fragment = '';
+      for(var i=0; i<labels.length; i++){
+        fragment += '<span class="labels j-selected_lb">'+labels[i]+'<i class=""></i></span>'
+      }
+      $('.j-label-group').append(fragment);
+    }
+
+    function resetLabels(delVal){
+      var oldvals = $('input[name="labels"]').val().split(' ');
+      for(var i = 0;i<oldvals.length;i++){
+        if(oldvals[i] == delVal){
+          oldvals.splice(i,1);
+        }
+      }
+      $('input[name="labels"]').val(oldsval);
+    }
+
+    function deleteLabel(e){
+      var labels = $('.dropdown-content .j-labels');
+      var oldval = $(this).html();
+      $(this).remove();
+      for(var i=0;i<labels.length;i++){
+        var thisLabel = $(labels[i]);
+        if(thisLabel.html() == oldval){
+          thisLabel.removeClass('selected');
+        }
+      }
+      resetLabels(oldval);
+    }
+
+
   })();
 
 
