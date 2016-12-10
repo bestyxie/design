@@ -167,7 +167,7 @@ $(function(){
       var labels = $('.j-label-group .j-labels.selected');
       var fragment = '';
       for(var i=0; i<labels.length; i++){
-        fragment += '<span class="labels j-selected_lb">'+labels[i]+'<i class=""></i></span>'
+        fragment += '<span class="labels j-selected_lb">'+$(labels[i]).html()+'<i class=""></i></span>'
       }
       $('.j-label-group').append(fragment);
     }
