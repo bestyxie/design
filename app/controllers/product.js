@@ -104,3 +104,8 @@ module.exports.editproduct = function(req,res){
     });
   })
 }
+
+// 更新商品
+module.exports.updateproduct = function(req,res){
+  
+}

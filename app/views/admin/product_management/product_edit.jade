@@ -3,7 +3,7 @@ extends ../../adminLayout
 block content
   h2 用户管理/商品编辑
   .wrapper.edit-page
-    form#newproduct(action="",method="POST",enctype="multipart/form-data")
+    form#newproduct(action="/admin/product/update",method="POST",enctype="multipart/form-data")
       .form-group
         label 商品名称
         .input-box
@@ -72,7 +72,7 @@ block content
                 button.btn.btn-primary.j-ok 确定
                 a.btn.btn-default.j-cancle(href="javascript:;") 取消
   .footer
-    button.btn.btn-primary.confirm 确定
+    button.btn.btn-primary.confirm.j-confirm 确定
     a.btn.btn-default(href="/admin") 取消
 
 block scripts
@@ -142,5 +142,8 @@ block scripts
         })
       }
       //- uploadPic();
-
+      
+      $('.j-confirm').on('click',function(e){
+        $('#newproduct').trigger('submit');
+      })
     })
