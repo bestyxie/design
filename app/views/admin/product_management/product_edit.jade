@@ -7,6 +7,7 @@ block content
       .form-group
         label 商品名称
         .input-box
+          input(type="hidden",name="product[id]",value="#{product._id}")
           input#name.required(type='text',name='product[name]',value="#{product.name}")
       .form-group.textarea
         label 简述
@@ -48,18 +49,19 @@ block content
                   | 添加颜色
       .form-group.uploadPic-form
           label 图片*
-          .pic-wrap
+          .pic-wrap.j-pic-wrap
+            input.j-deletepic(type="hidden",name="product[deletepic]")
             each url,index in product.pics
               .imgbox
                 image(src="#{url}",data-index="#{index}")
-                i.icon &times;
+                i.icon.j-origin_img &times;
           a.newpic(href="javascrip:void(0);")
             i.fa.fa-plus
           input.required.hide(type="file",name="pics",accept="image/*")
       .form-group
         label 标签
         div.label-group.j-label-group
-          input(type="hidden",name="labels",value="")
+          input.input(type="hidden",name="product[labels]",value="")
           div.self-dropdown
             span.labels.dropdown-toggle#newlabels
               i.glyphicon.glyphicon-plus

@@ -152,7 +152,7 @@ $(function(){
     $('.dropdown-content').on('click','.j-labels',function(){
       $(this).toggleClass('selected');
       if($(this).hasClass('selected')){
-        $('input[name="labels"]').val($('input[name="labels"]').val()+" "+$(this).html());
+        $('.input').val($('.input').val()+" "+$(this).html());
       }else{
         var delVal = $(this).html();
         resetLabels(delVal);
@@ -173,13 +173,13 @@ $(function(){
     }
 
     function resetLabels(delVal){
-      var oldvals = $('input[name="labels"]').val().split(' ');
+      var oldvals = $('.input').val().split(' ');
       for(var i = 0;i<oldvals.length;i++){
         if(oldvals[i] == delVal){
           oldvals.splice(i,1);
         }
       }
-      $('input[name="labels"]').val(oldsval);
+      $('.input').val(oldsval);
     }
 
     function deleteLabel(e){
@@ -195,7 +195,11 @@ $(function(){
       resetLabels(oldval);
     }
 
-
+    $('.j-pic-wrap').on('click','.j-origin_img',origin_pic_operate);
+    function origin_pic_operate(){
+      var index = $(this).siblings('img').data('index');
+      $('.j-deletepic').val($('.j-deletepic').val()+index+' ');
+    }
   })();
 
 

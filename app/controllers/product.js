@@ -54,7 +54,7 @@ module.exports.new = function(req,res){
 
   new_product.pics = files.map(function(item){
     return '/images/upload/'+item.filename
-  })
+  });
 
   Product.findOne({name: new_product.name},function(err,product){
     if(err){
@@ -107,5 +107,27 @@ module.exports.editproduct = function(req,res){
 
 // 更新商品
 module.exports.updateproduct = function(req,res){
-  
+  var product = req.body.product;
+  var files = req.files;
+  var deletepic = product.deletepic.split(' ');
+  console.log(deletepic.length);
+  console.log(files);
+
+  var pic_list = '';
+  var promise = Product.find({_id: product.id}).exec();
+  promise.then(function(thispro){
+    pic_list = thispro.pics.map(function(img,index){
+      if(index.indexof(deletepic)<0){
+        return img;
+      }
+    });
+  }).then(function(){
+    files.each(function(index, el) {
+      pic_list.push('/images/upload/'+item.filename);
+    });
+    product.pics = pic_list;
+    var _product = new Product(product);
+    _product.save();
+  })
+  res.redirect('/admin/product/'+product.id);
 }
