@@ -146,6 +146,9 @@ block scripts
       //- uploadPic();
       
       $('.j-confirm').on('click',function(e){
+        if($('input[type="file"]').length<2){
+          $('input[type="file"]').remove();
+        }
         $('#newproduct').trigger('submit');
       })
     })
