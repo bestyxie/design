@@ -50,7 +50,7 @@ $(function(){
     function uploadPic(){
       function checkType(picPath){
         var type = picPath.substring(picPath.lastIndexOf('.')+1,picPath.length).toLowerCase();
-        if( type != 'jpg' && type != 'bmp' && type != 'gif' && type != 'png'){
+        if( type != 'jpg' && type != 'bmp' && type != 'gif' && type != 'png' && type != 'jpeg'){
          return false;
         }
         return true;

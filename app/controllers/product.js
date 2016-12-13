@@ -127,6 +127,7 @@ module.exports.updateproduct = function(req,res){
     });
     product.pics = pic_list;
     var _product = new Product(product);
+    console.log(_product);
     _product.save();
   })
   res.redirect('/admin/product/'+product.id);
