@@ -109,26 +109,45 @@ module.exports.editproduct = function(req,res){
 module.exports.updateproduct = function(req,res){
   var product = req.body.product;
   var files = req.files;
-  var deletepic = product.deletepic.split(' ');
-  console.log(deletepic.length);
-  console.log(files);
+  var deletepic = product.deletepic.split(' ').slice(0,-1);
 
-  var pic_list = '';
-  var promise = Product.find({_id: product.id}).exec();
+  var pic_list = [];
+  var promise = Product.find({_id: product._id}).exec();
   promise.then(function(thispro){
+    thispro = thispro[0]
+    var pics = thispro.pics;
+
+    // for(var i = 0;i<pics.length;i++){
+    //   console.log(deletepic.indexOf(i+'')<0);
+    //   if(deletepic.indexOf(i+'')<0){
+    //     pic_list.push(pics[i]);
+    //     console.log(pics[i]);
+    //   }
+    // }
     pic_list = thispro.pics.map(function(img,index){
-      if(index.indexof(deletepic)<0){
+      if(deletepic.indexOf(index+'')<0){
         return img;
       }
     });
-  }).then(function(){
-    files.each(function(index, el) {
-      pic_list.push('/images/upload/'+item.filename);
-    });
+
+    for(var i = 0;i<files.length;i++){
+      pic_list.push('/images/upload/'+files[i].filename);
+    }
+
     product.pics = pic_list;
-    var _product = new Product(product);
-    console.log(_product);
-    _product.save();
+    for(item in product){
+      thispro[item] = product[item];
+      console.log(thispro[item],product[item])
+    }
+    console.log(thispro);
+    thispro.update(function(err){
+      if(err){
+        console.log(err);
+        res.redirect('/admin/product/'+product._id);
+      }
+      console.log('update');
+      res.redirect('/admin/product/'+product._id);
+    });
+
   })
-  res.redirect('/admin/product/'+product.id);
 }
