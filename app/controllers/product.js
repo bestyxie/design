@@ -117,13 +117,6 @@ module.exports.updateproduct = function(req,res){
     thispro = thispro[0]
     var pics = thispro.pics;
 
-    // for(var i = 0;i<pics.length;i++){
-    //   console.log(deletepic.indexOf(i+'')<0);
-    //   if(deletepic.indexOf(i+'')<0){
-    //     pic_list.push(pics[i]);
-    //     console.log(pics[i]);
-    //   }
-    // }
     pic_list = thispro.pics.map(function(img,index){
       if(deletepic.indexOf(index+'')<0){
         return img;
@@ -139,15 +132,15 @@ module.exports.updateproduct = function(req,res){
       thispro[item] = product[item];
       console.log(thispro[item],product[item])
     }
-    console.log(thispro);
-    thispro.update(function(err){
+
+    console.log(product);
+    thispro.save(function(err){
       if(err){
         console.log(err);
         res.redirect('/admin/product/'+product._id);
       }
-      console.log('update');
       res.redirect('/admin/product/'+product._id);
-    });
+    })
 
   })
 }

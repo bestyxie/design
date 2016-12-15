@@ -12,7 +12,7 @@ block content
       .form-group.textarea
         label 简述
         .input-box.area-box
-          textarea#desc.required(type='text',name='product[description]',value="#{product.description}")
+          textarea#desc.required(type='text',name='product[description]',value="#{product.description}") #{product.description}
       .form-group
         label 单价
         .input-box
@@ -39,7 +39,7 @@ block content
           .form-group
             label 颜色
             .input-box
-              input#colors.required(type='text',name='product[colors]',value="#{color}")
+              input#colors.required(type='text',name='product[color]',value="#{color}")
               if index > 0
                 a.delete.j-delete(href="javascript:;")
                   i.fa.fa-trash

@@ -7,10 +7,7 @@ var ProductSchema = new Schema({
     unique: true,
     type: String
   },
-  category_id: {
-    type: ObjectId,
-    ref: 'Category'
-  },
+  labels: Array,
   price: Number,
   discount: Number,
   size: Array,
