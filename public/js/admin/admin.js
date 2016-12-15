@@ -160,32 +160,33 @@ $(function(){
     });
 
     $('.dropdown-menu .j-ok').on('click',newLabel);
-    $('.j-label-group').on('click','.j-selected_lb',deleteLabel);
+    $('.j-label-group').on('click','.j-selected_lb i',deleteLabel);
 
     function newLabel(e){
       e.preventDefault();
       var labels = $('.j-label-group .j-labels.selected');
       var fragment = '';
       for(var i=0; i<labels.length; i++){
-        fragment += '<span class="labels j-selected_lb">'+$(labels[i]).html()+'<i class=""></i></span>'
+        fragment += '<span class="labels j-selected_lb"><span>'+$(labels[i]).html()+'</span><i class=""></i></span>'
       }
       $('.j-label-group').append(fragment);
     }
 
     function resetLabels(delVal){
       var oldvals = $('.input').val().split(' ');
+      console.log(oldvals);
       for(var i = 0;i<oldvals.length;i++){
         if(oldvals[i] == delVal){
           oldvals.splice(i,1);
         }
       }
-      $('.input').val(oldsval);
+      $('.input').val(oldvals.join(' '));
     }
 
     function deleteLabel(e){
       var labels = $('.dropdown-content .j-labels');
-      var oldval = $(this).html();
-      $(this).remove();
+      var oldval = $(this).siblings('span').html();
+      $(this).parent().remove();
       for(var i=0;i<labels.length;i++){
         var thisLabel = $(labels[i]);
         if(thisLabel.html() == oldval){

@@ -110,6 +110,10 @@ module.exports.updateproduct = function(req,res){
   var product = req.body.product;
   var files = req.files;
   var deletepic = product.deletepic.split(' ').slice(0,-1);
+  product.labels = product.labels.split(' ');
+  if(product.labels.length == 1 && product.labels[0] == ''){
+    product.labels = [];
+  }
 
   var pic_list = [];
   var promise = Product.find({_id: product._id}).exec();
@@ -117,7 +121,7 @@ module.exports.updateproduct = function(req,res){
     thispro = thispro[0]
     var pics = thispro.pics;
 
-    pic_list = thispro.pics.map(function(img,index){
+    pic_list = thispro.pics.filter(function(img,index){
       if(deletepic.indexOf(index+'')<0){
         return img;
       }
@@ -130,14 +134,11 @@ module.exports.updateproduct = function(req,res){
     product.pics = pic_list;
     for(item in product){
       thispro[item] = product[item];
-      console.log(thispro[item],product[item])
     }
 
-    console.log(product);
     thispro.save(function(err){
       if(err){
         console.log(err);
-        res.redirect('/admin/product/'+product._id);
       }
       res.redirect('/admin/product/'+product._id);
     })
