@@ -8,24 +8,11 @@
   },
   "sms":{
     "host": "127.0.0.1",
-    "port": "3000"
+    "port": "8080"
   },
   "wx":{
     "app_id": "wx4719fe75af9211e8",
     "app_secret": "09ea48000fc2345e3b5e17a865b6d97a",
-    "wx_menu": {
-      "button":[
-        {
-          "name": "菜单",
-          "sub_button": [
-             {
-              "type": "view",
-              "name": "咨询菜单",
-              "url": "http://ip:port"
-             }
-          ]
-        }
-      ]
-    }
+    "token": "shopin"
   }
 }
