@@ -2,7 +2,7 @@ var express = require('express');
 var path = require('path');
 var mongoose = require('mongoose');
 
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 80;
 var app = express();
 var bodyParser = require('body-parser');
 var cookieSession = require('cookie-session');
@@ -10,8 +10,8 @@ var session = require('express-session');
 var mongoStore = require('connect-mongo')(session);
 var dbUrl = 'mongodb://localhost/shop';
 
-var config = require('config/default.json');
-var utils = require('app/controllers/weixin');
+var config = require('./config/default.json');
+var utils = require('./app/controllers/weixin');
 
 mongoose.connect(dbUrl);
 
