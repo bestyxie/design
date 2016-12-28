@@ -19,13 +19,15 @@ utils.sign = function(config){
     var str = [token,timestamp,nonce].sort().join('');
     var sha = crypto.createHash('sha1');
     sha.update(str);
-    console.log(sha)
+    sha = sha.digest('hex');
+    console.log(sha == signature);
     if(req.method == 'GET'){
       if(sha == signature){
         res.send(echostr+'');
       }else{
         res.send('err');
       }
+      next();
     }else if(req.method == 'POST'){
       if(sha != signature){
         return
