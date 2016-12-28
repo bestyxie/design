@@ -10,9 +10,6 @@ var session = require('express-session');
 var mongoStore = require('connect-mongo')(session);
 var dbUrl = 'mongodb://localhost/shop';
 
-var config = require('./config/default.json');
-var utils = require('./app/controllers/weixin');
-
 mongoose.connect(dbUrl);
 
 app.set('views','./app/views');
@@ -26,9 +23,6 @@ app.use(cookieSession({
     collection: 'sessions'
   })
 }));
-
-// 微信认证
-app.use(utils.sign(config));
 
 require('./config/router.js')(app);
 

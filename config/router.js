@@ -3,6 +3,7 @@ var Admin = require('../app/controllers/admin');
 var Product = require('../app/controllers/product');
 var ShoppingCart = require('../app/controllers/shoppingCart');
 var Category = require('../app/controllers/category');
+var Token = require('../app/controllers/token');
 // var UploadPic = require('../app/controllers/uploadPic');
 
 
@@ -58,4 +59,7 @@ module.exports = function(app){
   app.get('/admin/product/:id',Product.editproduct);
   app.get('/admin/category',Category.category);
   app.post('/admin/category/new',Category.new);
+
+  // wechat test token
+  app.get('/token',Token.token);
 }
