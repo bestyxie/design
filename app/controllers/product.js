@@ -2,33 +2,17 @@ var mongoose = require('mongoose');
 var Product = require('../models/product');
 var ShoppingCart = require('../models/shoppingcart');
 var Category = require('../models/category');
+var weixin = require('./weixin');
 
-// var OAuth = require('wechat-oauth');
-// var config = require('config');
-// var API = require('wechat-api');
-// var menu_config = config.get('wx.wx_menu');
-// var app_id = config.get('wx.app_id');
-// var app_secret = config.get('wx.app_secret');
-// // 配置
-// var api = new API(app_id,app_secret);
-
-// var client = new OAuth(app_id,app_secret);
 
 // product list || home
 module.exports.list = function(req,res){
 
-  // var url = client.getAuthorizeURL('http://127.0.0.1:3000/weixin/callback','','snsapi_userinfo');
-  // function apps(){
-  // api.createMenu(menu_config,function(err,result){
-  //     console.log(result);
-  //   });
-  // }
-  // apps();
-  // console.log(app_id+ ","+app_secret);
-  // console.log(url);
+  // console.log(weixin.auth_url);
   Product.find({}).sort({'meta.updateAt':-1}).exec(function(err,products){
     res.render('mobile/home/',{
-      products: products
+      products: products,
+      auth_url:weixin.auth_url
     });
   })
 }
