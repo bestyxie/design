@@ -19,7 +19,7 @@ var app_id = wx.app_id,
     app_secret = wx.app_secret,
     SCOPE = 'snsapi_userinfo',
     REDIRECT_URI = encodeURIComponent('http://bestyxie.cn/cart');
-console.log(REDIRECT_URI);
+// console.log(REDIRECT_URI);
 var auth_url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="+app_id+"&redirect_uri="+REDIRECT_URI+"&response_type=code&scope="+SCOPE+"&state=123#wechat_redirect";
 
 module.exports.auth_url = auth_url;

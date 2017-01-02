@@ -101,6 +101,7 @@ module.exports.addToCart = function(req,res){
 
 // 购物车页面
 module.exports.shoppingCart = function(req,res){
+  console.log(req);
   var user = req.session.user;
   ShoppingCart.findOne({userId: user._id},function(err,goods){
     var products = [];
