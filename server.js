@@ -2,7 +2,7 @@ var express = require('express');
 var path = require('path');
 var mongoose = require('mongoose');
 
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 80;
 var app = express();
 var bodyParser = require('body-parser');
 var cookieSession = require('cookie-session');
