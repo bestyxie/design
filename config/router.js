@@ -40,7 +40,8 @@ module.exports = function(app){
 
   // shopping cart management
   app.post('/product/addtocart',ShoppingCart.addToCart);
-  app.get('/cart',User.signinRequire, ShoppingCart.shoppingCart);
+  // app.get('/cart',User.signinRequire, ShoppingCart.shoppingCart);
+  app.get('/cart',ShoppingCart.shoppingCart);
   app.post('/cart/delete',ShoppingCart.deleteCart);
 
   // user
