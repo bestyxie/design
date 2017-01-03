@@ -3,6 +3,7 @@
 var mongoose = require('mongoose');
 var Product = require('../models/product');
 var ShoppingCart = require('../models/shoppingcart');
+var weixin = require('./weixin');
 
 // 加入购物车
 module.exports.addToCart = function (req, res) {
@@ -105,6 +106,12 @@ module.exports.addToCart = function (req, res) {
 module.exports.shoppingCart = function (req, res) {
   var user = req.session.user;
   var code = req.query.code;
+
+  var promise = weixin.getAccesstoken(code);
+  promise.then(function (openid) {
+    weixin.getUserinfo(openid);
+  });
+
   ShoppingCart.findOne({ userId: user._id }, function (err, goods) {
     var products = [];
     if (err) {

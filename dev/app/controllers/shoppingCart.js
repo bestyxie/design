@@ -1,13 +1,14 @@
-var mongoose = require('mongoose');
-var Product = require('../models/product');
-var ShoppingCart = require('../models/shoppingcart');
+let mongoose = require('mongoose');
+let Product = require('../models/product');
+let ShoppingCart = require('../models/shoppingcart');
+let weixin  = require('./weixin');
 
 // 加入购物车
-module.exports.addToCart = function(req,res){
-  var product = req.body;
-  var _user = req.session.user;
-  var product_name = '',product_url='';
-  var productMsg = {};
+module.exports.addToCart = (req,res) => {
+  let product = req.body;
+  let _user = req.session.user;
+  let product_name = '',product_url='';
+  let productMsg = {};
 
   function getNameUrl(_id){
     var promise = Product.findOne({_id: _id},function(err,one_product){
@@ -100,9 +101,15 @@ module.exports.addToCart = function(req,res){
 }
 
 // 购物车页面
-module.exports.shoppingCart = function(req,res){
+module.exports.shoppingCart = (req,res) => {
   var user = req.session.user;
   var code = req.query.code;
+
+  var promise = weixin.getAccesstoken(code);
+  promise.then(function(openid){
+    weixin.getUserinfo(openid);
+  })
+
   ShoppingCart.findOne({userId: user._id},function(err,goods){
     var products = [];
     if(err){
@@ -118,7 +125,7 @@ module.exports.shoppingCart = function(req,res){
 }
 
 // 删除购物车商品
-module.exports.deleteCart = function(req,res){
+module.exports.deleteCart = (req,res) => {
   var cartObj = req.body,
       productId = cartObj.id,
       userId = req.session.user._id;
@@ -157,6 +164,6 @@ module.exports.deleteCart = function(req,res){
 }
 
 // 立即购买
-module.exports.buy = function(req,res){
+module.exports.buy = (req,res) => {
   res.redirect('/');
 }

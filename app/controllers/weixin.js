@@ -14,7 +14,9 @@ module.exports.getAccesstoken = function (code) {
   return new Promise(function (resolve) {
     request.get(tokenUrl, function (err, res, body) {
       if (!err && res.statusCode == 200) {
-        var access_token = JSON.parse(body).access_token;
+        var data = JSON.parse(body);
+        var access_token = data.access_token;
+        var openid = data.openid;
 
         fs.writeFile(path.join(__dirname, "access_token.txt"), access_token, function (err) {
           if (err) {
@@ -22,17 +24,22 @@ module.exports.getAccesstoken = function (code) {
             throw err;
           }
         });
+
+        return openid;
       }
     });
   });
 };
 
-module.exports.getUserinfo = function () {
+module.exports.getUserinfo = function (openid) {
   var access_token = '';
   fs.readFile(path.join(__dirname, 'access_token.txt'), { encoding: 'utf-8' }, function (err, data) {
     if (err) throw err;
     access_token = data;
-    // let infoUrl = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token='+access_token+'&openid='
+    var infoUrl = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token=' + access_token + '&openid=' + openid;
+    request.get(infoUrl, function (err, res, body) {
+      console.log(res, "::", body);
+    });
   });
 };
 
@@ -41,7 +48,7 @@ var APP_ID = wx.app_id,
     APP_SECRET = wx.app_secret,
     SCOPE = 'snsapi_userinfo',
     REDIRECT_URI = encodeURIComponent('http://bestyxie.cn/cart');
-// console.log(REDIRECT_URI);
+
 var auth_url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + APP_ID + "&redirect_uri=" + REDIRECT_URI + "&response_type=code&scope=" + SCOPE + "&state=123#wechat_redirect";
 
 module.exports.auth_url = auth_url;
