@@ -50,7 +50,7 @@ gulp.task('test', ['pre-test'], function (cb) {
 gulp.task('watch', function () {
 
   // gulp.watch(['lib\**\*.js', 'test/**'], ['test']);
-  gulp.watch(['./app_es6/**'],['es6']);
+  gulp.watch(['./prod/**'],['es6']);
   gulp.watch([ './public/less/**'], ['less']);
 
 });
@@ -70,11 +70,11 @@ gulp.task('nodemon',function(){
 });
 
 gulp.task('es6',function(){
-  return gulp.src('app_es6/**')
+  return gulp.src('prod/**')
             .pipe(babel({
               presets: 'es2015'
             }))
-            .pipe(gulp.dest('app/'));
+            .pipe(gulp.dest('./'));
 });
 
 gulp.task('prepublish', ['nsp']);

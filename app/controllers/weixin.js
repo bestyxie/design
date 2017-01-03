@@ -28,6 +28,14 @@ module.exports.getAccesstoken = function (code) {
   // var infoUrl = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token='+access_token+'&openid='
 };
 
+module.exports.getUserinfo = function () {
+  var access_token = '';
+  fs.readFile(path.join(__dirname, 'access_token.txt'), { encoding: 'utf-8' }, function (err, data) {
+    if (err) throw err;
+    access_token = data;
+  });
+};
+
 var wx = config.wx;
 var APP_ID = wx.app_id,
     APP_SECRET = wx.app_secret,

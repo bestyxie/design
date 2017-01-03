@@ -26,6 +26,14 @@ module.exports.getAccesstoken = function(code){
   // var infoUrl = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token='+access_token+'&openid='
 }
 
+module.exports.getUserinfo = function(){
+  let access_token = '';
+  fs.readFile(path.join(__dirname,'access_token.txt'),{encoding: 'utf-8'},(err,data) => {
+    if(err) throw err;
+    access_token = data;
+  })
+}
+
 let wx = config.wx;
 const APP_ID = wx.app_id,
     APP_SECRET = wx.app_secret,
