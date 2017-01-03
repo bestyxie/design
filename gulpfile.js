@@ -50,7 +50,7 @@ gulp.task('test', ['pre-test'], function (cb) {
 gulp.task('watch', function () {
 
   // gulp.watch(['lib\**\*.js', 'test/**'], ['test']);
-  gulp.watch(['./prod/**'],['es6']);
+  gulp.watch(['./dev/**'],['es6']);
   gulp.watch([ './public/less/**'], ['less']);
 
 });
@@ -70,7 +70,7 @@ gulp.task('nodemon',function(){
 });
 
 gulp.task('es6',function(){
-  return gulp.src('prod/**')
+  return gulp.src('dev/**')
             .pipe(babel({
               presets: 'es2015'
             }))

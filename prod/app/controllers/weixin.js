@@ -23,7 +23,6 @@ module.exports.getAccesstoken = function(code){
       }
     })
   });
-  // var infoUrl = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token='+access_token+'&openid='
 }
 
 module.exports.getUserinfo = function(){
@@ -31,6 +30,8 @@ module.exports.getUserinfo = function(){
   fs.readFile(path.join(__dirname,'access_token.txt'),{encoding: 'utf-8'},(err,data) => {
     if(err) throw err;
     access_token = data;
+    // let infoUrl = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token='+access_token+'&openid='
+    
   })
 }
 
