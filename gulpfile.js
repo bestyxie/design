@@ -9,6 +9,7 @@ var nsp = require('gulp-nsp');
 var plumber = require('gulp-plumber');
 var nodemon = require('gulp-nodemon');
 var less = require('gulp-less');
+var babel = require('gulp-babel');
 
 gulp.task('static', function () {
   return gulp.src('**/*.js')
@@ -48,7 +49,8 @@ gulp.task('test', ['pre-test'], function (cb) {
 
 gulp.task('watch', function () {
 
-  gulp.watch(['lib\**\*.js', 'test/**'], ['test']);
+  // gulp.watch(['lib\**\*.js', 'test/**'], ['test']);
+  gulp.watch(['./app_es6/**'],['es6']);
   gulp.watch([ './public/less/**'], ['less']);
 
 });
@@ -65,6 +67,14 @@ gulp.task('nodemon',function(){
     ext: 'js html',
     env: { 'NODE_ENV': 'development'}
   });
+});
+
+gulp.task('es6',function(){
+  return gulp.src('app_es6/**')
+            .pipe(babel({
+              presets: 'es2015'
+            }))
+            .pipe(gulp.dest('app/'));
 });
 
 gulp.task('prepublish', ['nsp']);

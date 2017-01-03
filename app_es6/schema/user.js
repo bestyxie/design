@@ -1,5 +1,3 @@
-'use strict';
-
 var mongoose = require('mongoose');
 var crypto = require('crypto');
 
@@ -21,28 +19,27 @@ var UserSchema = new mongoose.Schema({
   }
 });
 
-UserSchema.pre('save', function (next) {
+UserSchema.pre('save',function(next){
   var user = this;
   var md5 = crypto.createHash('md5');
-
+  
   md5.update(this.password);
   user.password = md5.digest('hex');
   next();
 });
 
 UserSchema.methods = {
-  comparePassword: function comparePassword(_password, cb) {
-    var password,
-        isMatch = false;
+  comparePassword: function(_password,cb){
+    var password, isMatch = false;
     var md5 = crypto.createHash('md5');
     md5.update(_password);
     _password = md5.digest('hex');
     console.log(_password);
-    if (this.password === _password) {
+    if(this.password === _password){
       isMatch = true;
     }
     cb(isMatch);
   }
-};
+}
 
 module.exports = UserSchema;

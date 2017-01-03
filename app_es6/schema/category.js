@@ -1,5 +1,3 @@
-'use strict';
-
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
@@ -11,15 +9,15 @@ var CategorySchema = new Schema({
   desc: String
 });
 
-CategorySchema.statics.isUnique = function (name) {
+CategorySchema.statics.isUnique = function(name){
   var msg = '';
-  this.find({ name: name }, function (err, objs) {
-    if (err) {
+  this.find({name: name},function(err,objs){
+    if(err){
       console.log(err);
       return;
     }
-    msg;
-  });
-};
+    msg
+  })
+}
 
 module.exports = CategorySchema;

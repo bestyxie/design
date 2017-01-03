@@ -1,5 +1,3 @@
-'use strict';
-
 var mongoose = require('mongoose');
 
 var ManagerSchema = new mongoose.Schema({
@@ -12,4 +10,4 @@ var ManagerSchema = new mongoose.Schema({
     type: Number,
     default: 10
   }
-});
+}) 

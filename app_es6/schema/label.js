@@ -1,9 +1,7 @@
-'use strict';
-
 var mongoose = require('mongoose');
 
 var LabelSchema = new mongoose.Schema({
-  name: {
+  name:{
     type: String,
     unique: true
   }

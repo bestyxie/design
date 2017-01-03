@@ -1,40 +1,38 @@
-'use strict';
-
 var Category = require('../models/category');
 
 // Category list
-module.exports.category = function (req, res) {
-  Category.find({}, function (err, categories) {
-    if (err) {
+module.exports.category = function(req,res){
+  Category.find({},function(err,categories){
+    if(err){
       console.log(err);
       res.redirect('/admin');
     }
-    res.render('admin/category/category_list', {
+    res.render('admin/category/category_list',{
       categories: categories
     });
-  });
-};
+  })
+}
 
 // new category
-module.exports.new = function (req, res) {
+module.exports.new = function(req,res){
   var new_label = req.body.category;
 
-  Category.find({ name: new_label.name }, function (err, label) {
-    if (err) {
+  Category.find({name: new_label.name},function(err,label){
+    if(err){
       res.redirect('/admin/category');
       return;
     }
-    if (label.length > 0) {
+    if(label.length > 0){
       res.redirect('/admin/category');
-    } else {
+    }else{
       var _category = new Category(new_label);
-      _category.save(function (err) {
-        if (err) {
+      _category.save(function(err){
+        if(err){
           res.redirect('/admin/category');
-        } else {
+        }else{
           res.redirect('/admin/category');
         }
-      });
+      })
     }
-  });
-};
+  })
+}
