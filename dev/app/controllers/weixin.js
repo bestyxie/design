@@ -9,6 +9,7 @@ module.exports.getAccesstoken = (code) =>{
   let app_id = config.wx.app_id,
       app_secret = config.wx.app_secret;
   let tokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid="+app_id+"&secret="+app_secret+"&code="+code+"&grant_type=authorization_code ";
+  console.log(code);
   return new Promise((resolve) => {
     request.get(tokenUrl,function(err,res,body){
       if(!err && res.statusCode == 200) {
