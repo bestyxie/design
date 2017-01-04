@@ -5,7 +5,7 @@ var path = require('path');
 var request = require('request');
 var config = require('../../config/default.json');
 
-module.exports.getAccesstoken = function(code){
+module.exports.getAccesstoken = (code) =>{
   let app_id = config.wx.app_id,
       app_secret = config.wx.app_secret;
   let tokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid="+app_id+"&secret="+app_secret+"&code="+code+"&grant_type=authorization_code ";
@@ -29,7 +29,7 @@ module.exports.getAccesstoken = function(code){
   });
 }
 
-module.exports.getUserinfo = function(openid){
+module.exports.getUserinfo = (openid) =>{
   let access_token = '';
   fs.readFile(path.join(__dirname,'access_token.txt'),{encoding: 'utf-8'},(err,data) => {
     if(err) throw err;

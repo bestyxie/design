@@ -110,19 +110,19 @@ module.exports.shoppingCart = function (req, res) {
   var promise = weixin.getAccesstoken(code);
   promise.then(function (openid) {
     weixin.getUserinfo(openid);
-  });
 
-  ShoppingCart.findOne({ userId: user._id }, function (err, goods) {
-    var products = [];
-    if (err) {
-      console.log(err);
-    }
-    if (goods) {
-      products = goods.products;
-    }
-    res.render('mobile/shoppingcart/', {
-      products: products
-    });
+    // ShoppingCart.findOne({userId: user._id},function(err,goods){
+    //   var products = [];
+    //   if(err){
+    //     console.log(err);
+    //   }
+    //   if(goods){
+    //     products = goods.products;
+    //   }
+    //   res.render('mobile/shoppingcart/',{
+    //     products: products
+    //   });
+    // });
   });
 };
 
