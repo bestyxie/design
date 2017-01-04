@@ -1,7 +1,6 @@
 'use strict';
 
-// 暂时无用
-
+var AccessToken = require('../models/access_token');
 var fs = require('fs');
 var path = require('path');
 var request = require('request');
@@ -20,13 +19,40 @@ module.exports.getAccesstoken = function (code) {
           var access_token = data.access_token;
           var openid = data.openid;
 
-          fs.writeFile(path.join(__dirname, "access_token.txt"), access_token, function (err) {
+          // fs.writeFile(path.join(__dirname,"access_token.txt"),access_token,(err) => {
+          //   if(err){
+          //     console.log('save access_token err!!!');
+          //     reject();
+          //     throw err;
+          //   }
+          //   resolve(openid);
+          // });
+
+          AccessToken.find({}, function (err, access) {
             if (err) {
-              console.log('save access_token err!!!');
+              console.log(err);
               reject();
-              throw err;
+            } else if (access_token.length > 0) {
+              access.access_token = access_token;
+              access.save(function (err, access) {
+                if (err) {
+                  console.log(err);
+                  reject();
+                } else {
+                  resolve(openid);
+                }
+              });
+            } else {
+              var access = new AccessToken({ access_token: access_token });
+              access.save(function (err, access) {
+                if (err) {
+                  console.log(err);
+                  reject();
+                } else {
+                  resolve(openid);
+                }
+              });
             }
-            resolve(openid);
           });
         })();
       }
@@ -36,13 +62,17 @@ module.exports.getAccesstoken = function (code) {
 
 module.exports.getUserinfo = function (openid) {
   var access_token = '';
-  fs.readFile(path.join(__dirname, 'access_token.txt'), { encoding: 'utf-8' }, function (err, data) {
-    if (err) throw err;
-    access_token = data;
-    console.log('data::', data);
-    var infoUrl = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token=' + access_token + '&openid=' + openid;
-    request.get(infoUrl, function (err, res, body) {
-      console.log('body ::', body);
+
+  var promise = new Promise(function (resolve, reject) {
+    AccessToken.find({}, function (err, access) {
+      if (err) {
+        reject();
+      }
+      access_token = access.access_token;
+      var infoUrl = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token=' + access_token + '&openid=' + openid;
+      request.get(infoUrl, function (err, res, body) {
+        resolve(body);
+      });
     });
   });
 };
