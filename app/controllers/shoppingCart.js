@@ -124,6 +124,8 @@ module.exports.shoppingCart = function (req, res) {
     //     products: products
     //   });
     // });
+  }, function (val) {
+    console.log('false', val);
   });
 };
 

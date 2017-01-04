@@ -122,6 +122,8 @@ module.exports.shoppingCart = (req,res) => {
     //     products: products
     //   });
     // });
+  },function(val){
+    console.log('false',val);
   })
 
 }
