@@ -111,6 +111,7 @@ module.exports.shoppingCart = function (req, res) {
   promise.then(function (openid) {
     console.log(openid);
     weixin.getUserinfo(openid);
+  }).then(function (user) {
 
     // ShoppingCart.findOne({userId: user._id},function(err,goods){
     //   var products = [];
@@ -124,8 +125,6 @@ module.exports.shoppingCart = function (req, res) {
     //     products: products
     //   });
     // });
-  }, function (val) {
-    console.log('false', val);
   });
 };
 

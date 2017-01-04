@@ -110,6 +110,8 @@ module.exports.shoppingCart = (req,res) => {
     console.log(openid);
     weixin.getUserinfo(openid);
 
+  }).then((user) =>{
+    
     // ShoppingCart.findOne({userId: user._id},function(err,goods){
     //   var products = [];
     //   if(err){
@@ -122,8 +124,6 @@ module.exports.shoppingCart = (req,res) => {
     //     products: products
     //   });
     // });
-  },(val) => {
-    console.log('false',val);
   })
 
 }

@@ -5,54 +5,46 @@ let request = require('request');
 let config = require('../../config/default.json');
 
 module.exports.getAccesstoken = (code) =>{
-  let app_id = config.wx.app_id,
-      app_secret = config.wx.app_secret;
-  let tokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid="+app_id+"&secret="+app_secret+"&code="+code+"&grant_type=authorization_code ";
-  console.log(code);
-  return new Promise((resolve,reject) => {
-    request.get(tokenUrl,(err,res,body) => {
-      if(!err && res.statusCode == 200) {
-        let data = JSON.parse(body);
-        let access_token = data.access_token;
-        let openid = data.openid;
+  const APPID = config.wx.app_id,
+        APP_SECRET = config.wx.app_secret;
+  let tokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid="+APPID+"&secret="+APP_SECRET+"&code="+code+"&grant_type=authorization_code ";
 
-        // fs.writeFile(path.join(__dirname,"access_token.txt"),access_token,(err) => {
-        //   if(err){
-        //     console.log('save access_token err!!!');
-        //     reject();
-        //     throw err;
-        //   }
-        //   resolve(openid);
-        // });
-
-        AccessToken.find({},(err,access) => {
-          if(err){
-            console.log(err);
-            reject();
-          }else if(access_token.length>0){
-            access.access_token = access_token;
-            access.save((err,access) => {
-              if(err){
-                console.log(err);
-                reject();
-              }else{
-                resolve(openid);
-              }
-            });
-          }else{
-            var access = new AccessToken({access_token: access_token});
-            access.save((err,access) => {
-              if(err){
-                console.log(err);
-                reject();
-              }else{
-                resolve(openid);
-              }
-            });
-          }
-        })
-
+  return new Promise((resolve,reject)=> {
+    AccessToken.find({},(err,access)=>{
+      if(err){
+        console.log(err);
+        return;
       }
+      if(access.length>0){
+        let refresh_token = access.refresh_token;
+        tokenUrl = 'https://api.weixin.qq.com/sns/oauth2/refresh_token?appid='+APPID+'&grant_type=refresh_token&refresh_token='+refresh_token;
+      }
+      function req(err,res,body){
+        if(!err && res.statusCode == 200) {
+          if(!body.errcode){
+            let data = JSON.parse(body);
+            let access_token = data.access_token;
+            let refresh_token = data.refresh_token;
+            let openid = data.openid;
+
+            if(tokenUrl.indexOf('code')>=0){
+              AccessToken.remove({},() =>{
+                var new_access = new AccessToken({
+                  refresh_token: refresh_token
+                });
+                new_access.save((err) => {})
+              });
+            }
+            resolve(openid);
+          }else{
+            tokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid="+APPID+"&secret="+APP_SECRET+"&code="+code+"&grant_type=authorization_code ";
+            request.get(tokenUrl,req);
+            console.log('refresh_token 过期！！！');
+            // reject();
+          }
+        }
+      }
+      request.get(tokenUrl,req);//request
     });
   });
 }
@@ -72,6 +64,7 @@ module.exports.getUserinfo = (openid) => {
       })
     });
   });
+  return promise;
 }
 
 let wx = config.wx;
