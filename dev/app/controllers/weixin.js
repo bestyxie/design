@@ -10,7 +10,7 @@ module.exports.getAccesstoken = (code) =>{
       app_secret = config.wx.app_secret;
   let tokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid="+app_id+"&secret="+app_secret+"&code="+code+"&grant_type=authorization_code ";
   console.log(code);
-  return new Promise((resolve) => {
+  return new Promise((resolve,reject) => {
     request.get(tokenUrl,function(err,res,body){
       if(!err && res.statusCode == 200) {
         let data = JSON.parse(body);
@@ -20,11 +20,12 @@ module.exports.getAccesstoken = (code) =>{
         fs.writeFile(path.join(__dirname,"access_token.txt"),access_token,function(err){
           if(err){
             console.log('save access_token err!!!');
+            reject();
             throw err;
           }
+          resolve(openid);
         });
 
-        return openid;
       }
     });
   });

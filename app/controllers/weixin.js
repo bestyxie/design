@@ -12,21 +12,23 @@ module.exports.getAccesstoken = function (code) {
       app_secret = config.wx.app_secret;
   var tokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + app_id + "&secret=" + app_secret + "&code=" + code + "&grant_type=authorization_code ";
   console.log(code);
-  return new Promise(function (resolve) {
+  return new Promise(function (resolve, reject) {
     request.get(tokenUrl, function (err, res, body) {
       if (!err && res.statusCode == 200) {
-        var data = JSON.parse(body);
-        var access_token = data.access_token;
-        var openid = data.openid;
+        (function () {
+          var data = JSON.parse(body);
+          var access_token = data.access_token;
+          var openid = data.openid;
 
-        fs.writeFile(path.join(__dirname, "access_token.txt"), access_token, function (err) {
-          if (err) {
-            console.log('save access_token err!!!');
-            throw err;
-          }
-        });
-
-        return openid;
+          fs.writeFile(path.join(__dirname, "access_token.txt"), access_token, function (err) {
+            if (err) {
+              console.log('save access_token err!!!');
+              reject();
+              throw err;
+            }
+            resolve(openid);
+          });
+        })();
       }
     });
   });

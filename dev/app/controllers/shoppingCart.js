@@ -106,7 +106,7 @@ module.exports.shoppingCart = (req,res) => {
   var code = req.query.code;
 
   var promise = weixin.getAccesstoken(code);
-  promise.then(function(openid){
+  promise.then((openid) => {
     console.log(openid);
     weixin.getUserinfo(openid);
 
@@ -122,7 +122,7 @@ module.exports.shoppingCart = (req,res) => {
     //     products: products
     //   });
     // });
-  },function(val){
+  },(val) => {
     console.log('false',val);
   })
 
