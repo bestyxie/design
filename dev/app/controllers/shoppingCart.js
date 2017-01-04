@@ -107,6 +107,7 @@ module.exports.shoppingCart = (req,res) => {
 
   var promise = weixin.getAccesstoken(code);
   promise.then(function(openid){
+    console.log(openid);
     weixin.getUserinfo(openid);
 
     // ShoppingCart.findOne({userId: user._id},function(err,goods){
