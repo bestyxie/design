@@ -39,9 +39,10 @@ module.exports.getUserinfo = function (openid) {
   fs.readFile(path.join(__dirname, 'access_token.txt'), { encoding: 'utf-8' }, function (err, data) {
     if (err) throw err;
     access_token = data;
+    console.log('data::', data);
     var infoUrl = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token=' + access_token + '&openid=' + openid;
     request.get(infoUrl, function (err, res, body) {
-      console.log(res, "::", body);
+      console.log('body ::', body);
     });
   });
 };
