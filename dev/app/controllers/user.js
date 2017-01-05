@@ -90,6 +90,7 @@ module.exports.msigninRequire = (req,res,next) =>{
   base_set.scope="snsapi_base";
   base_set.redirect_uri = encodeURIComponent('http://bestyxie.cn/login');
   let snsapi_base = base_url+qs.stringify(base_set)+ANCHOR;
+  console.log(snsapi_base)
   res.redirect(snsapi_base);
 }
 
