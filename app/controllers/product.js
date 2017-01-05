@@ -1,30 +1,27 @@
 'use strict';
 
-var _weixin = require('./weixin');
-
 var mongoose = require('mongoose');
 var Product = require('../models/product');
 var ShoppingCart = require('../models/shoppingcart');
 var Category = require('../models/category');
-var qs = require('querystring');
+// let qs = require('querystring');
+// import {base_set,ANCHOR,base_url} from './weixin';
 
 
 // product list || home
 module.exports.list = function (req, res) {
-  _weixin.base_set.scope = "snsapi_base";
-  _weixin.base_set.redirect_uri = encodeURIComponent('http://bestyxie.cn');
-  var snsapi_base = _weixin.base_url + qs.stringify(_weixin.base_set) + _weixin.ANCHOR;
-  console.log(snsapi_base);
-  // res.redirect(snsapi_base);
+  // base_set.scope="snsapi_base";
+  // base_set.redirect_uri = encodeURIComponent('http://bestyxie.cn');
+  // let snsapi_base = base_url+qs.stringify(base_set)+ANCHOR;
+  // console.log(snsapi_base)
 
-  if (req.session.user) {
-    snsapi_base = false;
-  }
+  // if(req.session.user){
+  //   snsapi_base = false;
+  // }
   // console.log(weixin.auth_url);
   Product.find({}).sort({ 'meta.updateAt': -1 }).exec(function (err, products) {
     res.render('mobile/home/', {
-      products: products,
-      auth_url: snsapi_base
+      products: products
     });
   });
 };
