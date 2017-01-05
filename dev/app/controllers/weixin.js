@@ -4,7 +4,23 @@ let path = require('path');
 let request = require('request');
 let config = require('../../config/default.json');
 
-module.exports.getAccesstoken = (code) =>{
+let wx = config.wx;
+const APP_ID = wx.app_id,
+    REDIRECT_URI = encodeURIComponent('http://bestyxie.cn/cart');
+const ANCHOR = '#wechat_redirect';
+
+let base_set = {
+  appid: APP_ID,
+  scope: 'snsapi_base',
+  redirect_uri: '',
+  response_type: 'code'
+}
+
+// let snsapi_userinfo = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="+APP_ID+"&redirect_uri="+REDIRECT_URI+"&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect";
+// let snsapi_base = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri="+REDIRECT_URI+"&response_type=code&scope=snsapi_base&state=123#wechat_redirect"
+
+let base_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?'
+let getAccesstoken = (code) =>{
   const APPID = config.wx.app_id,
         APP_SECRET = config.wx.app_secret;
   let tokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid="+APPID+"&secret="+APP_SECRET+"&code="+code+"&grant_type=authorization_code ";
@@ -19,6 +35,8 @@ module.exports.getAccesstoken = (code) =>{
         let refresh_token = access.refresh_token;
         tokenUrl = 'https://api.weixin.qq.com/sns/oauth2/refresh_token?appid='+APPID+'&grant_type=refresh_token&refresh_token='+refresh_token;
       }
+
+      request.get(tokenUrl,req);//request
       function req(err,res,body){
         if(!err && res.statusCode == 200) {
           if(!body.errcode){
@@ -38,18 +56,17 @@ module.exports.getAccesstoken = (code) =>{
             resolve(openid);
           }else{
             tokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid="+APPID+"&secret="+APP_SECRET+"&code="+code+"&grant_type=authorization_code ";
-            request.get(tokenUrl,req);
             console.log('refresh_token 过期！！！');
+            request.get(tokenUrl,req);
             // reject();
           }
         }
       }
-      request.get(tokenUrl,req);//request
     });
   });
 }
 
-module.exports.getUserinfo = (openid) => {
+let getUserinfo = (openid) => {
   let access_token = '';
 
   let promise = new Promise((resolve,reject) => {
@@ -67,12 +84,4 @@ module.exports.getUserinfo = (openid) => {
   return promise;
 }
 
-let wx = config.wx;
-const APP_ID = wx.app_id,
-    APP_SECRET = wx.app_secret,
-    SCOPE = 'snsapi_userinfo',
-    REDIRECT_URI = encodeURIComponent('http://bestyxie.cn/cart');
-
-let auth_url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="+APP_ID+"&redirect_uri="+REDIRECT_URI+"&response_type=code&scope="+SCOPE+"&state=123#wechat_redirect";
-
-module.exports.auth_url = auth_url;
+export {base_set,ANCHOR,base_url,getAccesstoken,getUserinfo};

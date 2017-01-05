@@ -1,6 +1,10 @@
 'use strict';
 
+var _weixin = require('./weixin');
+
 var User = require('../models/user');
+var qs = require('querystring');
+
 
 // 注册
 module.exports.signup = function (req, res) {
@@ -78,6 +82,17 @@ module.exports.logout = function (req, res) {
   req.session.user = null;
 
   res.redirect('/login');
+};
+
+// mobile端必须登录midware
+module.exports.msigninRequire = function (req, res, next) {
+  if (req, session.user) {
+    next();
+  }
+  _weixin.base_set.scope = "snsapi_base";
+  _weixin.base_set.redirect_uri = encodeURIComponent('http://bestyxie.cn' + req.baseUrl);
+  var snsapi_base = _weixin.base_url + qs.stringify(_weixin.base_set) + _weixin.ANCHOR;
+  res.redirect(snsapi_base);
 };
 
 // 必须登录 midware

@@ -2,7 +2,6 @@ var mongoose = require('mongoose');
 var Product = require('../models/product');
 var ShoppingCart = require('../models/shoppingcart');
 var Category = require('../models/category');
-var weixin = require('./weixin');
 
 
 // product list || home
@@ -11,8 +10,7 @@ module.exports.list = function(req,res){
   // console.log(weixin.auth_url);
   Product.find({}).sort({'meta.updateAt':-1}).exec(function(err,products){
     res.render('mobile/home/',{
-      products: products,
-      auth_url:weixin.auth_url
+      products: products
     });
   })
 }

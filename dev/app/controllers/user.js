@@ -1,4 +1,6 @@
-var User = require('../models/user');
+let User = require('../models/user');
+let qs = require('querystring');
+import {base_set,ANCHOR,base_url} from './weixin';
 
 // 注册
 module.exports.signup = function(req,res){
@@ -78,6 +80,17 @@ module.exports.logout = function(req,res){
   req.session.user = null;
 
   res.redirect('/login');
+}
+
+// mobile端必须登录midware
+module.exports.msigninRequire = (req,res,next) =>{
+  if(req,session.user){
+    next();
+  }
+  base_set.scope="snsapi_base";
+  base_set.redirect_uri = encodeURIComponent('http://bestyxie.cn'+req.baseUrl);
+  let snsapi_base = base_url+qs.stringify(base_set)+ANCHOR;
+  res.redirect(snsapi_base);
 }
 
 // 必须登录 midware
