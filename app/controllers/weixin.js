@@ -16,9 +16,10 @@ var ANCHOR = '#wechat_redirect';
 
 var base_set = {
   appid: APP_ID,
-  scope: 'snsapi_base',
   redirect_uri: '',
-  response_type: 'code'
+  response_type: 'code',
+  scope: 'snsapi_base',
+  state: '123'
 };
 
 // let snsapi_userinfo = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="+APP_ID+"&redirect_uri="+REDIRECT_URI+"&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect";

@@ -12,7 +12,7 @@ const ANCHOR = '#wechat_redirect';
 let base_set = {
   appid: APP_ID,
   redirect_uri: '',
-  response_type: 'code'
+  response_type: 'code',
   scope: 'snsapi_base',
   state: '123'
 }

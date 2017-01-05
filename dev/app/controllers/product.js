@@ -14,15 +14,16 @@ module.exports.list = function(req,res){
   console.log(snsapi_base)
   res.redirect(snsapi_base);
 
-  if(!req.session.user){
-    Product.find({}).sort({'meta.updateAt':-1}).exec(function(err,products){
-      res.render('mobile/home/',{
-        products: products,
-        auth_url: snsapi_base
-      });
-    })
+  if(req.session.user){
+    snsapi_base = false;
   }
   // console.log(weixin.auth_url);
+  Product.find({}).sort({'meta.updateAt':-1}).exec(function(err,products){
+    res.render('mobile/home/',{
+      products: products,
+      auth_url: snsapi_base
+    });
+  })
 
 }
 
