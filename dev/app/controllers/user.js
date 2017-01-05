@@ -84,7 +84,7 @@ module.exports.logout = function(req,res){
 
 // mobile端必须登录midware
 module.exports.msigninRequire = (req,res,next) =>{
-  if(req,session.user){
+  if(req.session.user){
     next();
   }
   base_set.scope="snsapi_base";

@@ -86,7 +86,7 @@ module.exports.logout = function (req, res) {
 
 // mobile端必须登录midware
 module.exports.msigninRequire = function (req, res, next) {
-  if (req, session.user) {
+  if (req.session.user) {
     next();
   }
   _weixin.base_set.scope = "snsapi_base";
