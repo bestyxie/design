@@ -52,9 +52,14 @@ block content
               img(src="")
               p 我的收藏
           li.col-25
-            a.external(href="/cart")
+            if auth_url
+              a.external(href="#{auth_url}")
               img(src="")
               p 购物车
+            else
+              a.external(href="/cart")
+                img(src="")
+                p 购物车
       .shopin-head
         hr
         span 热卖单品
