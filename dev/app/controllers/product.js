@@ -9,7 +9,7 @@ import {base_set,ANCHOR,base_url} from './weixin';
 // product list || home
 module.exports.list = function(req,res){
   base_set.scope="snsapi_base";
-  base_set.redirect_uri = encodeURIComponent('http://bestyxie.cn/login');
+  base_set.redirect_uri = encodeURIComponent('http://bestyxie.cn');
   let snsapi_base = base_url+qs.stringify(base_set)+ANCHOR;
   console.log(snsapi_base)
   // res.redirect(snsapi_base);

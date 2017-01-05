@@ -12,7 +12,7 @@ var qs = require('querystring');
 // product list || home
 module.exports.list = function (req, res) {
   _weixin.base_set.scope = "snsapi_base";
-  _weixin.base_set.redirect_uri = encodeURIComponent('http://bestyxie.cn/login');
+  _weixin.base_set.redirect_uri = encodeURIComponent('http://bestyxie.cn');
   var snsapi_base = _weixin.base_url + qs.stringify(_weixin.base_set) + _weixin.ANCHOR;
   console.log(snsapi_base);
   // res.redirect(snsapi_base);
