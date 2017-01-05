@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Product = require('../models/product');
 var ShoppingCart = require('../models/shoppingcart');
 var Category = require('../models/category');
-let fs = require('fs');
+let qs = require('querystring');
 import {base_set,ANCHOR,base_url} from './weixin';
 
 

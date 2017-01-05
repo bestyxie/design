@@ -6,7 +6,7 @@ var mongoose = require('mongoose');
 var Product = require('../models/product');
 var ShoppingCart = require('../models/shoppingcart');
 var Category = require('../models/category');
-var fs = require('fs');
+var qs = require('querystring');
 
 
 // product list || home
