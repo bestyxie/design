@@ -12,7 +12,7 @@ module.exports.list = function(req,res){
   base_set.redirect_uri = encodeURIComponent('http://bestyxie.cn/login');
   let snsapi_base = base_url+qs.stringify(base_set)+ANCHOR;
   console.log(snsapi_base)
-  res.redirect(snsapi_base);
+  // res.redirect(snsapi_base);
 
   if(req.session.user){
     snsapi_base = false;
