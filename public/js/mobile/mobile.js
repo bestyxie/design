@@ -317,7 +317,7 @@ $(function(){
 });
 
 (function($){
-  $(document).on('open','.popup-search',function(){
+  $(document).on('open','.j-popup-search',function(){
     $('.j-bar').css('display','none');
     var classes = ['red','blue','green','yellow'];
     var cl_len = classes.length;
@@ -330,7 +330,13 @@ $(function(){
     });
   });
 
-  $(document).on('close','.popup-search',function(){
+  $(document).on('close','.j-popup-search',function(){
     $('.j-bar').css('display','block');
+  });
+
+  $('.j-popup-search').on('click',function(e){
+    if($(e.target).hasClass('j-popup-search')){
+      $.closeModal(this)
+    }
   })
 })(Zepto);
