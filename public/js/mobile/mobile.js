@@ -314,4 +314,23 @@ $(function(){
       }
     })
   }
-})
+});
+
+(function($){
+  $(document).on('open','.popup-search',function(){
+    $('.j-bar').css('display','none');
+    var classes = ['red','blue','green','yellow'];
+    var cl_len = classes.length;
+    var labels = '';
+    $.get('/categories',function(data){
+      for(var i=0,len=data.length;i<len;i++){
+        labels += '<a href="" class="labels '+classes[i%cl_len]+'">'+data[i]+'</a>';
+      }
+      document.getElementsByClassName('j_class_pannel')[0].innerHTML=labels;
+    });
+  });
+
+  $(document).on('close','.popup-search',function(){
+    $('.j-bar').css('display','block');
+  })
+})(Zepto);

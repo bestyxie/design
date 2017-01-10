@@ -39,11 +39,15 @@ module.exports.new = function(req,res){
 
 // 分类商品列表，手机端
 module.exports.list = (req,res) => {
-  Category.find({},(err,cg) => {
+  Category.find({},(err,cgs) => {
     if(err){
       console.log(err);
       res.json(null);
     }
-    res.json(cg);
+    var category = [];
+    for(var i=0,len=cgs.length;i<len;i++){
+      category.push(cgs[i].name);
+    }
+    res.send(category);
   })
 }
