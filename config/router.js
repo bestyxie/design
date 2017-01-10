@@ -58,8 +58,10 @@ module.exports = function(app){
   app.post('/user/delete',User.delete);
   app.post('/user/changerole',User.change);
   app.get('/admin/product/:id',Product.editproduct);
+
   app.get('/admin/category',Category.category);
   app.post('/admin/category/new',Category.new);
+  app.get('/categories',Category.list);
 
   // wechat test token
   app.get('/token',Token.token);

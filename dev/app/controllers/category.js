@@ -36,3 +36,14 @@ module.exports.new = function(req,res){
     }
   })
 }
+
+// 分类商品列表，手机端
+module.exports.list = (req,res) => {
+  Category.find({},(err,cg) => {
+    if(err){
+      console.log(err);
+      res.json(null);
+    }
+    res.json(cg);
+  })
+}
