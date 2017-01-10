@@ -1,22 +1,22 @@
 extends ../../layout
 
 block content
-  #subfield-panel.subfield.panel.panel-right.panel-reveal
-    .subfield-wrap
-      a.close-panel(href="javascript:;")
-        i.fa.fa-close
-      ul.subfield-cont
-        li
-          a(href="/") 首页
-        li
-          a(href="") 上衣
-        li
-          a(href="") 裤子
-        li
-          a(href="") 裙子
-      .user-panel
-        i.fa.fa-user
-        span 请登录
+  //- #subfield-panel.subfield.panel.panel-right.panel-reveal
+  //-   .subfield-wrap
+  //-     a.close-panel(href="javascript:;")
+  //-       i.fa.fa-close
+  //-     ul.subfield-cont
+  //-       li
+  //-         a(href="/") 首页
+  //-       li
+  //-         a(href="") 上衣
+  //-       li
+  //-         a(href="") 裤子
+  //-       li
+  //-         a(href="") 裙子
+  //-     .user-panel
+  //-       i.fa.fa-user
+  //-       span 请登录
   .home.page
     include ../../includes/header
     .content.native-scroll.wrapper
@@ -42,7 +42,7 @@ block content
           li.col-25
             a(href="")
               img(src="")
-              p 全部分类
+              p 我
           li.col-25
             a(href="")
               img(src="")
@@ -91,6 +91,7 @@ block content
                         p.price ￥#{product.price}
                         span.attention.rt 1841
                           i.fa.fa-heart-o.lf
+    include ./_search
 
 block scripts
   script.

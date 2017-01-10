@@ -3,6 +3,8 @@
   position: relative;
 }
 .self-dropdown .dropdown-menu {
-  display: none;
-  width: 300px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin: 3px 0 0;
 }

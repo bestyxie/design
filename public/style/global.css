@@ -195,6 +195,10 @@ input[type=radio] {
 .ui-confirm .action {
   margin: 0rem;
 }
+.popup-overlay.modal-overlay-visible {
+  visibility: hidden;
+  display: none !important;
+}
 header.bar.bar-nav {
   height: 2.1rem;
   padding: 0;
@@ -375,6 +379,40 @@ header.bar.bar-nav form .search-btn {
 }
 .subfield .subfield-wrap .user-panel .fa-user {
   margin-right: 0.1rem;
+}
+.popup-search {
+  padding: 1.5rem 0.5rem;
+  background: rgba(0, 0, 0, 0.8);
+}
+.popup-search .search_box input {
+  display: block;
+  width: 13.5rem;
+  height: 1.345rem;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 0.25rem;
+  margin: 0 auto 1.5rem;
+}
+.popup-search .labels {
+  color: #fff;
+  line-height: 1;
+  background: #fff;
+  display: inline-block;
+  margin: 0 0.5rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 15px / 50%;
+}
+.popup-search .labels.red {
+  background: #f78783;
+}
+.popup-search .labels.blue {
+  background: #5fbe9e;
+}
+.popup-search .labels.green {
+  background: #abe7b4;
+}
+.popup-search .labels.yellow {
+  background: #f2e247;
 }
 .wall .wal-list .wall-col {
   width: 50%;
