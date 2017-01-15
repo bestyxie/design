@@ -336,7 +336,7 @@ $(function(){
 
   $('.j-popup-search').on('click',function(e){
     if($(e.target).hasClass('j-popup-search')){
-      $.closeModal(this)
+      $.closeModal(this);
     }
   })
 })(Zepto);

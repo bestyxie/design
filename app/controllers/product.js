@@ -1,9 +1,39 @@
 'use strict';
 
-var mongoose = require('mongoose');
-var Product = require('../models/product');
-var ShoppingCart = require('../models/shoppingcart');
-var Category = require('../models/category');
+var _mongoose = require('mongoose');
+
+var _mongoose2 = _interopRequireDefault(_mongoose);
+
+var _product2 = require('../models/product');
+
+var _product3 = _interopRequireDefault(_product2);
+
+var _shoppingcart = require('../models/shoppingcart');
+
+var _shoppingcart2 = _interopRequireDefault(_shoppingcart);
+
+var _category = require('../models/category');
+
+var _category2 = _interopRequireDefault(_category);
+
+var _elasticsearch = require('elasticsearch');
+
+var _elasticsearch2 = _interopRequireDefault(_elasticsearch);
+
+var _bulkIndex = require('../search/bulkIndex');
+
+var _createIndex = require('../search/createIndex');
+
+var _search = require('../search/search');
+
+var _client = require('../search/client');
+
+var _products = require('./products.json');
+
+var _products2 = _interopRequireDefault(_products);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 // let qs = require('querystring');
 // import {base_set,ANCHOR,base_url} from './weixin';
 
@@ -19,7 +49,7 @@ module.exports.list = function (req, res) {
   //   snsapi_base = false;
   // }
   // console.log(weixin.auth_url);
-  Product.find({}).sort({ 'meta.updateAt': -1 }).exec(function (err, products) {
+  _product3.default.find({}).sort({ 'meta.updateAt': -1 }).exec(function (err, products) {
     res.render('mobile/home/', {
       products: products
     });
@@ -29,7 +59,7 @@ module.exports.list = function (req, res) {
 // 商品详情页
 module.exports.detail = function (req, res) {
   var product_id = req.params.id;
-  Product.findOne({ _id: product_id }, function (err, product) {
+  _product3.default.findOne({ _id: product_id }, function (err, product) {
     if (err) {
       console.log(err);
       res.redirect('/');
@@ -49,12 +79,12 @@ module.exports.new = function (req, res) {
     return '/images/upload/' + item.filename;
   });
 
-  Product.findOne({ name: new_product.name }, function (err, product) {
+  _product3.default.findOne({ name: new_product.name }, function (err, product) {
     if (err) {
       return console.log(err);
     }
     if (!product || product.length <= 0) {
-      var _product = new Product(new_product);
+      var _product = new _product3.default(new_product);
       _product.save(function (err) {
         if (err) {
           console.log(err);
@@ -72,7 +102,7 @@ module.exports.new = function (req, res) {
 // 删除商品
 module.exports.delete = function (req, res) {
   var product_id = req.body._id;
-  Product.remove({ _id: product_id }, function (err) {
+  _product3.default.remove({ _id: product_id }, function (err) {
     if (err) {
       console.log(err);
       res.json({ success: 0 });
@@ -86,10 +116,10 @@ module.exports.delete = function (req, res) {
 module.exports.editproduct = function (req, res) {
   var product_id = req.params.id,
       pd;
-  var promise = Product.find({ _id: product_id }).exec();
+  var promise = _product3.default.find({ _id: product_id }).exec();
   promise.then(function (product) {
     pd = product[0];
-    return Category.find({}, { name: 1, _id: 0 }).exec();
+    return _category2.default.find({}, { name: 1, _id: 0 }).exec();
   }).then(function (categories) {
     res.render('admin/product_management/product_edit', {
       product: pd,
@@ -109,7 +139,7 @@ module.exports.updateproduct = function (req, res) {
   }
 
   var pic_list = [];
-  var promise = Product.find({ _id: product._id }).exec();
+  var promise = _product3.default.find({ _id: product._id }).exec();
   promise.then(function (thispro) {
     thispro = thispro[0];
     var pics = thispro.pics;
@@ -135,5 +165,29 @@ module.exports.updateproduct = function (req, res) {
       }
       res.redirect('/admin/product/' + product._id);
     });
+  });
+};
+
+module.exports.query = function (req, res) {
+  _product3.default.find({}, function (err, products) {
+    if (err) {
+      console.log(err);
+      res.send('err');
+    }
+
+    // esClient.count({index: 'prod',type: 'product'},(err,res,status) =>{
+    //   console.log('product',res);
+    // });
+    (0, _search.search)("fgsfd", function (result) {
+      res.send(result);
+    });
+    // create(esClient);
+    // makebulk(products,function(response){
+    //   console.log("Bulk content prepared");
+    //   indexall(response,function(response){
+    //     console.log(response);
+    //   })
+    // });
+    // res.send(products);
   });
 };

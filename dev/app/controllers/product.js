@@ -1,7 +1,13 @@
-var mongoose = require('mongoose');
-var Product = require('../models/product');
-var ShoppingCart = require('../models/shoppingcart');
-var Category = require('../models/category');
+import mongoose from 'mongoose';
+import Product from '../models/product';
+import ShoppingCart from '../models/shoppingcart';
+import Category from '../models/category';
+import elasticsearch from 'elasticsearch';
+import {makebulk, indexall} from '../search/bulkIndex';
+import {create} from '../search/createIndex';
+import {search} from '../search/search';
+import {esClient} from '../search/client';
+import prdts from './products.json';
 // let qs = require('querystring');
 // import {base_set,ANCHOR,base_url} from './weixin';
 
@@ -136,5 +142,29 @@ module.exports.updateproduct = function(req,res){
       res.redirect('/admin/product/'+product._id);
     })
 
+  })
+}
+
+module.exports.query = function(req,res){
+  Product.find({},function(err,products){
+    if(err){
+      console.log(err);
+      res.send('err');
+    }
+
+    // esClient.count({index: 'prod',type: 'product'},(err,res,status) =>{
+    //   console.log('product',res);
+    // });
+    search("fgsfd",(result) => {
+      res.send(result);
+    });
+    // create(esClient);
+    // makebulk(products,function(response){
+    //   console.log("Bulk content prepared");
+    //   indexall(response,function(response){
+    //     console.log(response);
+    //   })
+    // });
+    // res.send(products);
   })
 }

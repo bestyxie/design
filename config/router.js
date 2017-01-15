@@ -35,6 +35,7 @@ module.exports = function(app){
   app.get('/',Product.list);
   app.get('/details/:id',Product.detail);
   app.post('/product/delete',Product.delete);
+  app.get('/product',Product.query);
   app.post('/admin/product/new',upload.array('pics',8),Product.new);
   app.post('/admin/product/update',upload.array('pics',8),Product.updateproduct);
 

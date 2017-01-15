@@ -36,4 +36,7 @@ var ProductSchema = new Schema({
   }
 });
 
+// ProductSchema.index({name: 1,labels: 1,color: 1,description: 1})
+
+
 module.exports = ProductSchema;
