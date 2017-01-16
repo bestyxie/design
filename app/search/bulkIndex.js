@@ -35,12 +35,12 @@ var _client = require('./client');
 
 var bulk = [];
 var makebulk = exports.makebulk = function makebulk(products, callback) {
-  for (var product in products) {
-    bulk.push({ index: { _index: 'prod', _type: 'product', _id: product._id } }, {
-      'name': product.name,
-      'labels': product.labels,
-      'color': product.color,
-      'description': product.description
+  for (var i = 0, len = products.length; i < len; i++) {
+    bulk.push({ index: { _index: 'prod', _type: 'product', _id: products[i]._id } }, {
+      'name': products[i].name,
+      'labels': products[i].labels.join(" "),
+      'color': products[i].color.join(" "),
+      'description': products[i].description
     });
   }
   callback(bulk);

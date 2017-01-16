@@ -1,14 +1,13 @@
 import {esClient} from './client';
 
 export function search(q,callback){
+  console.log(q);
   esClient.search({
     index: 'prod',
     type: 'product',
     body: {
       query: {
-        match: {
-          'name': q
-        }
+        match: { "description": q }
       }
     }
   }, (err,res,status) => {

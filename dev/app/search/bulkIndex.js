@@ -28,14 +28,14 @@ import {esClient} from './client';
 
 let bulk = []
 export const makebulk = (products,callback) => {
-  for(var product in products){
+  for(let i = 0,len = products.length;i<len;i++){
     bulk.push(
-      { index: {_index: 'prod', _type: 'product', _id: product._id} },
+      { index: {_index: 'prod', _type: 'product', _id: products[i]._id} },
       {
-        'name': product.name,
-        'labels': product.labels,
-        'color': product.color,
-        'description': product.description
+        'name': products[i].name,
+        'labels': products[i].labels.join(" "),
+        'color': products[i].color.join(" "),
+        'description': products[i].description
       }
     );
   }

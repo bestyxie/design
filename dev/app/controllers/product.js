@@ -152,19 +152,26 @@ module.exports.query = function(req,res){
       res.send('err');
     }
 
+    esClient.indices.getMapping({
+      index: 'prod',
+      type: 'product'
+    },(err,res) => {
+      if(err){
+        console.log(err);
+      }
+      else {
+        console.log("Mapping: \n",res.prod.mappings.product.properties);
+      }
+    })
+
     // esClient.count({index: 'prod',type: 'product'},(err,res,status) =>{
     //   console.log('product',res);
     // });
-    search("fgsfd",(result) => {
+    search("连衣",(result) => {
       res.send(result);
     });
-    // create(esClient);
-    // makebulk(products,function(response){
-    //   console.log("Bulk content prepared");
-    //   indexall(response,function(response){
-    //     console.log(response);
-    //   })
-    // });
+    // create(products);
+
     // res.send(products);
   })
 }
