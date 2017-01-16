@@ -7,7 +7,7 @@ import {makebulk, indexall} from '../search/bulkIndex';
 import {create} from '../search/createIndex';
 import {search} from '../search/search';
 import {esClient} from '../search/client';
-import prdts from './products.json';
+import {delete_doc} from '../search/delete_document';
 // let qs = require('querystring');
 // import {base_set,ANCHOR,base_url} from './weixin';
 
@@ -66,6 +66,12 @@ module.exports.new = function(req,res){
           console.log(err);
           res.redirect('/admin');
         }
+        makebulk(_product,function(response){
+          console.log("Bulk content prepared");
+          indexall(response,function(response){
+            console.log(response);
+          })
+        });
         res.redirect('/admin');
       });
     }
@@ -84,7 +90,7 @@ module.exports.delete = function(req,res){
       console.log(err);
       res.json( {success: 0} );
     }
-
+    delete_doc(product_id);
     res.json( {success: 1} );
   })
 }

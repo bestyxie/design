@@ -28,9 +28,7 @@ var _search = require('../search/search');
 
 var _client = require('../search/client');
 
-var _products = require('./products.json');
-
-var _products2 = _interopRequireDefault(_products);
+var _delete_document = require('../search/delete_document');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -90,6 +88,12 @@ module.exports.new = function (req, res) {
           console.log(err);
           res.redirect('/admin');
         }
+        (0, _bulkIndex.makebulk)(_product, function (response) {
+          console.log("Bulk content prepared");
+          (0, _bulkIndex.indexall)(response, function (response) {
+            console.log(response);
+          });
+        });
         res.redirect('/admin');
       });
     } else {
@@ -107,7 +111,7 @@ module.exports.delete = function (req, res) {
       console.log(err);
       res.json({ success: 0 });
     }
-
+    (0, _delete_document.delete_doc)(product_id);
     res.json({ success: 1 });
   });
 };
