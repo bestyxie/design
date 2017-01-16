@@ -324,19 +324,28 @@ $(function(){
     var labels = '';
     $.get('/categories',function(data){
       for(var i=0,len=data.length;i<len;i++){
-        labels += '<a href="" class="labels '+classes[i%cl_len]+'">'+data[i]+'</a>';
+        labels += '<a href="/product?q='+data[i]+'" class="labels '+classes[i%cl_len]+'">'+data[i]+'</a>';
       }
       document.getElementsByClassName('j_class_pannel')[0].innerHTML=labels;
     });
   });
 
+  // 关闭popup
   $(document).on('close','.j-popup-search',function(){
     $('.j-bar').css('display','block');
   });
 
+  // 点击搜索弹窗 隐藏popup
   $('.j-popup-search').on('click',function(e){
     if($(e.target).hasClass('j-popup-search')){
       $.closeModal(this);
     }
-  })
+  });
+
+  // 回车搜索
+  // document.getElementsByClassName('j-search-input')[0].addEventListener('keydown',function(e){
+  //   if(e.keyCode === 13){
+  //     console.log()
+  //   }
+  // },false);
 })(Zepto);
