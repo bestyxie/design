@@ -152,6 +152,8 @@ module.exports.updateproduct = function(req,res){
 }
 
 module.exports.query = function(req,res){
+  var q = req.query.q;
+  console.log(q);
   Product.find({},function(err,products){
     if(err){
       console.log(err);
@@ -173,7 +175,7 @@ module.exports.query = function(req,res){
     // esClient.count({index: 'prod',type: 'product'},(err,res,status) =>{
     //   console.log('product',res);
     // });
-    search("连衣",(result) => {
+    search(q,(result) => {
       res.send(result);
     });
     // create(products);
