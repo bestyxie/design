@@ -30,6 +30,8 @@ var _client = require('../search/client');
 
 var _delete_document = require('../search/delete_document');
 
+var _update_document = require('../search/update_document');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // let qs = require('querystring');
@@ -143,7 +145,6 @@ module.exports.updateproduct = function (req, res) {
   }
 
   var pic_list = [];
-  // console.log(product.labels);
   var promise = new Promise(function (resolve, reject) {
     _product3.default.find({ _id: product._id }, function (err, prod) {
       if (err) {
@@ -175,11 +176,13 @@ module.exports.updateproduct = function (req, res) {
     } catch (err) {
       console.log(err);
     }
+    console.log(thispro.labels);
 
     thispro.save(function (err) {
       if (err) {
         console.log(err);
       }
+      (0, _update_document.update_doc)(thispro);
       res.redirect('/admin/product/' + product._id);
     });
   }, function () {

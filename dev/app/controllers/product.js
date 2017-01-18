@@ -8,6 +8,7 @@ import {create} from '../search/createIndex';
 import {search} from '../search/search';
 import {esClient} from '../search/client';
 import {delete_doc} from '../search/delete_document';
+import {update_doc} from '../search/update_document';
 // let qs = require('querystring');
 // import {base_set,ANCHOR,base_url} from './weixin';
 
@@ -122,7 +123,6 @@ module.exports.updateproduct = function(req,res){
   }
 
   var pic_list = [];
-  // console.log(product.labels);
   var promise = new Promise((resolve,reject) => {
     Product.find({_id: product._id},(err,prod) => {
       if(err){
@@ -154,11 +154,13 @@ module.exports.updateproduct = function(req,res){
     } catch (err){
       console.log(err);
     }
+    console.log(thispro.labels);
 
     thispro.save(function(err){
       if(err){
         console.log(err);
       }
+      update_doc(thispro);
       res.redirect('/admin/product/'+product._id);
     })
 

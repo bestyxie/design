@@ -8,13 +8,12 @@ exports.update_doc = undefined;
 var _client = require('./client');
 
 var update_doc = exports.update_doc = function update_doc(product) {
-  console.log(product);
   _client.esClient.update({
     index: 'prod',
     type: 'product',
-    id: product._id,
+    id: product._id.toString(),
     body: {
-      params: {
+      doc: {
         'name': product.name,
         'labels': product.labels.join(' '),
         'color': product.color.join(' '),
@@ -23,6 +22,10 @@ var update_doc = exports.update_doc = function update_doc(product) {
         'price': product.price,
         'discount': product.discount
       }
+    }
+  }, function (err, res) {
+    if (err) {
+      console.log(err);
     }
   });
 };
