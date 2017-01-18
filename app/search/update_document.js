@@ -8,6 +8,7 @@ exports.update_doc = undefined;
 var _client = require('./client');
 
 var update_doc = exports.update_doc = function update_doc(product) {
+  console.log(product);
   _client.esClient.update({
     index: 'prod',
     type: 'product',
@@ -17,7 +18,10 @@ var update_doc = exports.update_doc = function update_doc(product) {
         'name': product.name,
         'labels': product.labels.join(' '),
         'color': product.color.join(' '),
-        'description': product.description
+        'description': product.description,
+        'pics': product.pics.join(' '),
+        'price': product.price,
+        'discount': product.discount
       }
     }
   });

@@ -140,10 +140,22 @@ module.exports.updateproduct = function (req, res) {
   product.labels = product.labels.split(' ');
   if (product.labels.length == 1 && product.labels[0] == '') {
     product.labels = [];
+  } else if (product.labels[0] == '') {
+    product.labels.splice(0, 1);
+    console.log(product.labels);
   }
 
   var pic_list = [];
-  var promise = _product3.default.find({ _id: product._id }).exec();
+  // console.log(product.labels);
+  var promise = new Promise(function (resolve, reject) {
+    _product3.default.find({ _id: product._id }, function (err, prod) {
+      if (err) {
+        console.log(err);
+        reject();
+      }
+      resolve(prod);
+    });
+  });
   promise.then(function (thispro) {
     thispro = thispro[0];
     var pics = thispro.pics;
@@ -159,9 +171,15 @@ module.exports.updateproduct = function (req, res) {
     }
 
     product.pics = pic_list;
-    for (item in product) {
-      thispro[item] = product[item];
+    try {
+      for (var item in product) {
+        console.log(item);
+        thispro[item] = product[item];
+      }
+    } catch (err) {
+      console.log(err);
     }
+    console.log('after copy!!');
 
     thispro.save(function (err) {
       if (err) {
@@ -169,6 +187,8 @@ module.exports.updateproduct = function (req, res) {
       }
       res.redirect('/admin/product/' + product._id);
     });
+  }, function () {
+    res.send('出错啦！！！');
   });
 };
 

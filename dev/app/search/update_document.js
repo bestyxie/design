@@ -1,6 +1,7 @@
 import {esClient} from './client';
 
 export const update_doc = function(product){
+  console.log(product);
   esClient.update({
     index: 'prod',
     type: 'product',
@@ -10,7 +11,10 @@ export const update_doc = function(product){
         'name': product.name,
         'labels': product.labels.join(' '),
         'color': product.color.join(' '),
-        'description': product.description
+        'description': product.description,
+        'pics': product.pics.join(' '),
+        'price': product.price,
+        'discount': product.discount
       }
     }
   })

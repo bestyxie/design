@@ -119,10 +119,23 @@ module.exports.updateproduct = function(req,res){
   if(product.labels.length == 1 && product.labels[0] == ''){
     product.labels = [];
   }
+  else if(product.labels[0] == ''){
+    product.labels.splice(0,1);
+    console.log(product.labels);
+  }
 
   var pic_list = [];
-  var promise = Product.find({_id: product._id}).exec();
-  promise.then(function(thispro){
+  // console.log(product.labels);
+  var promise = new Promise((resolve,reject) => {
+    Product.find({_id: product._id},(err,prod) => {
+      if(err){
+        console.log(err);
+        reject();
+      }
+      resolve(prod);
+    });
+  })
+  promise.then((thispro) => {
     thispro = thispro[0]
     var pics = thispro.pics;
 
@@ -137,9 +150,15 @@ module.exports.updateproduct = function(req,res){
     }
 
     product.pics = pic_list;
-    for(item in product){
-      thispro[item] = product[item];
+    try{
+      for(let item in product){
+        console.log(item);
+        thispro[item] = product[item];
+      }
+    } catch (err){
+      console.log(err);
     }
+    console.log('after copy!!');
 
     thispro.save(function(err){
       if(err){
@@ -148,6 +167,8 @@ module.exports.updateproduct = function(req,res){
       res.redirect('/admin/product/'+product._id);
     })
 
+  },() => {
+    res.send('出错啦！！！');
   })
 }
 
