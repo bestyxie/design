@@ -27,8 +27,8 @@ block content
               td
                 a(href='admin/product/#{product._id}') #{product.name}
               td
-                span 夏季
-                span 衬衫
+                each label in product.labels
+                  span #{label}
               td #{product.meta.createAt.getFullYear()}/#{product.meta.createAt.getMonth()}/#{product.meta.createAt.getDate()}
               td(data-product_id="#{product._id}")
                 a.edit(href="javascript:void(0);") 编辑

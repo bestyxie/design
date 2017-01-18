@@ -16,7 +16,7 @@ export function search(data,callback){
       match.name = data.q;
   }
 
-  console.log(match);
+  // console.log(match);
   esClient.search({
     index: 'prod',
     type: 'product',
@@ -31,12 +31,12 @@ export function search(data,callback){
       callback(err);
     }
     else {
-      console.log("-- Response --");
+      console.log("-- Response -- "+ data.type +" --");
       console.log(res);
-      console.log("-- Hits --");
-      res.hits.hits.forEach((hit) => {
-        console.log(hit);
-      });
+      // console.log("-- Hits --");
+      // res.hits.hits.forEach((hit) => {
+      //   console.log(hit);
+      // });
       callback(res.hits.hits);
     }
   })

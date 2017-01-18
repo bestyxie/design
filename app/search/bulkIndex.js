@@ -3,35 +3,9 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.indexall = exports.makebulk = undefined;
+exports.create_doc = exports.indexall = exports.makebulk = undefined;
 
 var _client = require('./client');
-
-// export const bulkIndex = function(index,type,data) {
-//   let bulkBody = [];
-//   data.forEach(item => {
-//     bulkBody.push(
-//       { index: {_index: index, _type: type, _id: item._id } },
-//       item
-//     );
-
-//     bulkBody.push(item);
-//   });
-
-//   esClient.bulk({
-//     maxRetries: 5,
-//     index: 'prod',
-//     type: 'product',
-//     body: bulkBody
-//   },(err,res,status) => {
-//     if(err){
-//       console.log('err:',err);
-//     }
-//     else {
-//       console.log('normal:',res);
-//     }
-//   });
-// }
 
 var bulk = [];
 var makebulk = exports.makebulk = function makebulk(products, callback) {
@@ -61,5 +35,28 @@ var indexall = exports.indexall = function indexall(madebulk, callback) {
     } else {
       callback(res.items);
     }
+  });
+};
+
+var create_doc = exports.create_doc = function create_doc(product, callback) {
+  console.log(product._id.toString());
+  _client.esClient.create({
+    index: 'prod',
+    type: 'product',
+    id: product._id.toString(),
+    body: {
+      'name': product.name,
+      'labels': product.labels.join(" "),
+      'color': product.color.join(" "),
+      'description': product.description,
+      'pics': product.pics.join(' '),
+      'price': product.price,
+      'discount': product.discount
+    }
+  }, function (err, res, status) {
+    if (err) {
+      console.log(err);
+    }
+    callback(res);
   });
 };

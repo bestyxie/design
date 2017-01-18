@@ -88,11 +88,8 @@ module.exports.new = function (req, res) {
           console.log(err);
           res.redirect('/admin');
         }
-        (0, _bulkIndex.makebulk)(_product, function (response) {
-          console.log("Bulk content prepared");
-          (0, _bulkIndex.indexall)(response, function (response) {
-            console.log(response);
-          });
+        (0, _bulkIndex.create_doc)(_product, function (res) {
+          console.log(res);
         });
         res.redirect('/admin');
       });
@@ -173,13 +170,11 @@ module.exports.updateproduct = function (req, res) {
     product.pics = pic_list;
     try {
       for (var item in product) {
-        console.log(item);
         thispro[item] = product[item];
       }
     } catch (err) {
       console.log(err);
     }
-    console.log('after copy!!');
 
     thispro.save(function (err) {
       if (err) {
@@ -196,23 +191,20 @@ module.exports.query = function (req, res) {
   var q = req.query.q;
   var type = req.query.type;
 
-  _product3.default.find({}, function (err, products) {
-    if (err) {
-      console.log(err);
-      res.send('err');
-    }
-
-    var product = [];
+  try {
+    // let product = []
     var promise = new Promise(function (resolve, reject) {
       (0, _search.search)({ 'type': type, 'q': q }, function (result) {
-        product.concat(result);
-        resolve(product);
+        // product.concat(result);
+        console.log(result);
+        resolve(result);
       });
     });
 
-    promise.then(function (product) {
+    promise.then(function (pd) {
+      console.log(pd);
       (0, _search.search)({ 'type': 'description', 'q': q }, function (result) {
-        result.concat(product);
+        result = result.concat(pd);
         console.log('product::\n', result);
         res.render('mobile/search/', {
           result: result
@@ -220,9 +212,18 @@ module.exports.query = function (req, res) {
         // res.send(result);
       });
     });
+  } catch (err) {
+    console.log(err);
+  }
+  // Product.find({},function(err,products){
+  //   if(err){
+  //     console.log(err);
+  //     res.send('err');
+  //   }
 
-    // create(products);
 
-    // res.send(products);
-  });
+  //   // create(products);
+
+  //   // res.send(products);
+  // })
 };

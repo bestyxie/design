@@ -23,7 +23,7 @@ function search(data, callback) {
       match.name = data.q;
   }
 
-  console.log(match);
+  // console.log(match);
   _client.esClient.search({
     index: 'prod',
     type: 'product',
@@ -37,12 +37,12 @@ function search(data, callback) {
       console.log('search error: ' + err);
       callback(err);
     } else {
-      console.log("-- Response --");
+      console.log("-- Response -- " + data.type + " --");
       console.log(res);
-      console.log("-- Hits --");
-      res.hits.hits.forEach(function (hit) {
-        console.log(hit);
-      });
+      // console.log("-- Hits --");
+      // res.hits.hits.forEach((hit) => {
+      //   console.log(hit);
+      // });
       callback(res.hits.hits);
     }
   });

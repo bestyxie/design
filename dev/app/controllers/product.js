@@ -3,7 +3,7 @@ import Product from '../models/product';
 import ShoppingCart from '../models/shoppingcart';
 import Category from '../models/category';
 import elasticsearch from 'elasticsearch';
-import {makebulk, indexall} from '../search/bulkIndex';
+import {makebulk, indexall, create_doc} from '../search/bulkIndex';
 import {create} from '../search/createIndex';
 import {search} from '../search/search';
 import {esClient} from '../search/client';
@@ -66,12 +66,9 @@ module.exports.new = function(req,res){
           console.log(err);
           res.redirect('/admin');
         }
-        makebulk(_product,function(response){
-          console.log("Bulk content prepared");
-          indexall(response,function(response){
-            console.log(response);
-          })
-        });
+        create_doc(_product,res => {
+          console.log(res);
+        })
         res.redirect('/admin');
       });
     }
@@ -152,13 +149,11 @@ module.exports.updateproduct = function(req,res){
     product.pics = pic_list;
     try{
       for(let item in product){
-        console.log(item);
         thispro[item] = product[item];
       }
     } catch (err){
       console.log(err);
     }
-    console.log('after copy!!');
 
     thispro.save(function(err){
       if(err){
@@ -176,33 +171,39 @@ module.exports.query = function(req,res){
   var q = req.query.q;
   var type = req.query.type;
 
-  Product.find({},function(err,products){
-    if(err){
-      console.log(err);
-      res.send('err');
-    }
-
-    let product = []
+  try{
+    // let product = []
     let promise = new Promise((resolve,reject) => {
       search({'type':type,'q':q},(result) => {
-        product.concat(result);
-        resolve(product);
+        // product.concat(result);
+        console.log(result);
+        resolve(result);
       });
     });
 
-    promise.then((product)=>{
+    promise.then((pd)=>{
+      console.log(pd);
       search({'type': 'description','q':q},result => {
-        result.concat(product);
+        result = result.concat(pd);
         console.log('product::\n',result);
         res.render('mobile/search/',{
           result: result
         });
         // res.send(result);
       });
-    })
+    });
+  } catch(err){
+    console.log(err);
+  }
+  // Product.find({},function(err,products){
+  //   if(err){
+  //     console.log(err);
+  //     res.send('err');
+  //   }
 
-    // create(products);
 
-    // res.send(products);
-  })
+  //   // create(products);
+
+  //   // res.send(products);
+  // })
 }
