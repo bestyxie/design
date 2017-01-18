@@ -10,6 +10,7 @@ var ProductSchema = new Schema({
   labels: Array,
   price: Number,
   discount: Number,
+  // like: Number,
   size: Array,
   color: Array,
   pics: Array,

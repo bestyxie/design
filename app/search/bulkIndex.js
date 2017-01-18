@@ -40,7 +40,10 @@ var makebulk = exports.makebulk = function makebulk(products, callback) {
       'name': products[i].name,
       'labels': products[i].labels.join(" "),
       'color': products[i].color.join(" "),
-      'description': products[i].description
+      'description': products[i].description,
+      'pics': products[i].pics.join(' '),
+      'price': products[i].price,
+      'discount': products[i].discount
     });
   }
   callback(bulk);

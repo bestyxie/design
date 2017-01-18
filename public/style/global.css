@@ -965,3 +965,6 @@ header.bar.bar-nav form .search-btn {
   z-index: 99998;
   background: rgba(0, 0, 0, 0.5);
 }
+.search-page {
+  padding-top: 2.2rem;
+}

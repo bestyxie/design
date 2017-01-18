@@ -7,14 +7,29 @@ exports.search = search;
 
 var _client = require('./client');
 
-function search(q, callback) {
-  console.log(q);
+function search(data, callback) {
+  var match = {};
+  switch (data.type) {
+    case 'labels':
+      match.labels = data.q;
+      break;
+    case 'color':
+      match.color = data.q;
+      break;
+    case 'description':
+      match.description = data.q;
+      break;
+    default:
+      match.name = data.q;
+  }
+
+  console.log(match);
   _client.esClient.search({
     index: 'prod',
     type: 'product',
     body: {
       query: {
-        match: { "description": q }
+        match: match
       }
     }
   }, function (err, res, status) {

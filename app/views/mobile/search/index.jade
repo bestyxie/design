@@ -1,0 +1,37 @@
+extends ../../layout
+
+block content
+  .home.search-page.page
+    include ../../includes/header
+    .wall
+      .wal-list.clearfix
+        if result.length == 0
+          p 没有您要找的内容，请重新搜索
+        else
+          .wall-col.lf
+            each product,index in result
+              if index%2==0
+                .wall-item
+                  a.thumbnail(href="/details/#{product._id}",external)
+                    .img
+                      img(src="#{product._source.pics.split(' ')[0]}")
+                    .caption
+                      p.name #{product._source.name}
+                      .priceattention.clearfix
+                        p.price ￥#{product._source.price}
+                        span.attention.rt 1841
+                          i.fa.fa-heart-o.lf
+          .wall-col.rt
+            each product,index in result
+              if index%2!=0
+                .wall-item
+                  a.thumbnail(href="/details/#{product._id}",external)
+                    .img
+                      img(src="#{product._source.pics.split(' ')[0]}")
+                    .caption
+                      p.name #{product._source.name}
+                      .priceattention.clearfix
+                        p.price ￥#{product._source.price}
+                        span.attention.rt 1841
+                          i.fa.fa-heart-o.lf
+    include ../home/_search

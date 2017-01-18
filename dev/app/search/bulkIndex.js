@@ -25,7 +25,7 @@ import {esClient} from './client';
 //     }
 //   });
 // }
-
+      
 let bulk = []
 export const makebulk = (products,callback) => {
   for(let i = 0,len = products.length;i<len;i++){
@@ -35,7 +35,10 @@ export const makebulk = (products,callback) => {
         'name': products[i].name,
         'labels': products[i].labels.join(" "),
         'color': products[i].color.join(" "),
-        'description': products[i].description
+        'description': products[i].description,
+        'pics': products[i].pics.join(' '),
+        'price': products[i].price,
+        'discount': products[i].discount
       }
     );
   }

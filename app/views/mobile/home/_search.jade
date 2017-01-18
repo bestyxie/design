@@ -1,6 +1,7 @@
 .popup.popup-search.j-popup-search
-  form.search_box(method="GET",action="/product")
+  form.search_box(method="GET",action="/product?")
     input.j-search-input(type="text",name="q",placeholder="请输入搜索关键词")
+    input(type="hidden",name="type",value="name")
   .class_pannel.j_class_pannel
     a.labels.red(href="") 连衣裙
     a.labels.blue(href="") 半身裙

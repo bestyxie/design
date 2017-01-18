@@ -153,31 +153,33 @@ module.exports.updateproduct = function(req,res){
 
 module.exports.query = function(req,res){
   var q = req.query.q;
-  console.log(q);
+  var type = req.query.type;
+
   Product.find({},function(err,products){
     if(err){
       console.log(err);
       res.send('err');
     }
 
-    esClient.indices.getMapping({
-      index: 'prod',
-      type: 'product'
-    },(err,res) => {
-      if(err){
-        console.log(err);
-      }
-      else {
-        console.log("Mapping: \n",res.prod.mappings.product.properties);
-      }
+    let product = []
+    let promise = new Promise((resolve,reject) => {
+      search({'type':type,'q':q},(result) => {
+        product.concat(result);
+        resolve(product);
+      });
+    });
+
+    promise.then((product)=>{
+      search({'type': 'description','q':q},result => {
+        result.concat(product);
+        console.log('product::\n',result);
+        res.render('mobile/search/',{
+          result: result
+        });
+        // res.send(result);
+      });
     })
 
-    // esClient.count({index: 'prod',type: 'product'},(err,res,status) =>{
-    //   console.log('product',res);
-    // });
-    search(q,(result) => {
-      res.send(result);
-    });
     // create(products);
 
     // res.send(products);

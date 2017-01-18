@@ -324,7 +324,7 @@ $(function(){
     var labels = '';
     $.get('/categories',function(data){
       for(var i=0,len=data.length;i<len;i++){
-        labels += '<a href="/product?q='+data[i]+'" class="labels '+classes[i%cl_len]+'">'+data[i]+'</a>';
+        labels += '<a href="/product?type=labels&q='+data[i]+'" class="labels '+classes[i%cl_len]+'">'+data[i]+'</a>';
       }
       document.getElementsByClassName('j_class_pannel')[0].innerHTML=labels;
     });
