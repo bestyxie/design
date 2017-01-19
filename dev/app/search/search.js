@@ -31,8 +31,8 @@ export function search(data,callback){
       callback(err);
     }
     else {
-      console.log("-- Response -- "+ data.type +" --");
-      console.log(res);
+      // console.log("-- Response -- "+ data.type +" --");
+      // console.log(res);
       // console.log("-- Hits --");
       // res.hits.hits.forEach((hit) => {
       //   console.log(hit);

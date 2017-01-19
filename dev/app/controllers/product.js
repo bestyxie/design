@@ -9,6 +9,8 @@ import {search} from '../search/search';
 import {esClient} from '../search/client';
 import {delete_doc} from '../search/delete_document';
 import {update_doc} from '../search/update_document';
+import {deletePic} from '../common/delete_file';
+
 // let qs = require('querystring');
 // import {base_set,ANCHOR,base_url} from './weixin';
 
@@ -68,7 +70,7 @@ module.exports.new = function(req,res){
           res.redirect('/admin');
         }
         create_doc(_product,res => {
-          console.log(res);
+          // console.log(res);
         })
         res.redirect('/admin');
       });
@@ -83,13 +85,33 @@ module.exports.new = function(req,res){
 // 删除商品
 module.exports.delete = function(req,res){
   var product_id  = req.body._id;
-  Product.remove({_id: product_id},function(err){
-    if(err){
-      console.log(err);
-      res.json( {success: 0} );
-    }
-    delete_doc(product_id);
-    res.json( {success: 1} );
+
+  let promise = new Promise( (resolve,reject) => {
+    Product.find({ _id : product_id}, (err,prod) => {
+      if(err) {
+        console.log(err);
+        reject();
+      }
+      else if (prod.length>0) {
+        let files = prod[0].pics;
+        deletePic(files);
+        resolve();
+      }else {
+        reject();
+      }
+    })
+  });
+  promise.then(() => {
+    Product.remove({_id: product_id},function(err){
+      if(err){
+        console.log(err);
+        res.json( {success: 0} );
+      }
+      delete_doc(product_id);
+      res.json( {success: 1} );
+    })
+  },() => {
+    console.log('oops!!! 出错啦');
   })
 }
 
@@ -133,14 +155,18 @@ module.exports.updateproduct = function(req,res){
     });
   })
   promise.then((thispro) => {
-    thispro = thispro[0]
-    var pics = thispro.pics;
+    thispro = thispro[0];
+    var pics = thispro.pics,
+        deletepic_url = [];
 
     pic_list = thispro.pics.filter(function(img,index){
       if(deletepic.indexOf(index+'')<0){
         return img;
+      }else{
+        deletepic_url.push(thispro.pics[index]);
       }
     });
+    deletePic(deletepic_url);
 
     for(var i = 0;i<files.length;i++){
       pic_list.push('/images/upload/'+files[i].filename);
@@ -154,7 +180,6 @@ module.exports.updateproduct = function(req,res){
     } catch (err){
       console.log(err);
     }
-    console.log(thispro.labels);
 
     thispro.save(function(err){
       if(err){

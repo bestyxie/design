@@ -23,7 +23,7 @@ block content
             tr.j-productItem
               td
                 .imgbox
-                  img(src="#{product.pics}")
+                  img(src="#{product.pics[0]}")
               td
                 a(href='admin/product/#{product._id}') #{product.name}
               td

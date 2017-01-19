@@ -39,7 +39,7 @@ var indexall = exports.indexall = function indexall(madebulk, callback) {
 };
 
 var create_doc = exports.create_doc = function create_doc(product, callback) {
-  console.log(product._id.toString());
+  // console.log(product._id.toString());
   _client.esClient.create({
     index: 'prod',
     type: 'product',

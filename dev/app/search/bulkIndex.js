@@ -36,7 +36,7 @@ export const indexall = (madebulk,callback) => {
 }
 
 export const create_doc = (product,callback) => {
-  console.log(product._id.toString());
+  // console.log(product._id.toString());
   esClient.create({
     index: 'prod',
     type: 'product',

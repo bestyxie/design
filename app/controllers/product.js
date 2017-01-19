@@ -32,6 +32,8 @@ var _delete_document = require('../search/delete_document');
 
 var _update_document = require('../search/update_document');
 
+var _delete_file = require('../common/delete_file');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // let qs = require('querystring');
@@ -91,7 +93,7 @@ module.exports.new = function (req, res) {
           res.redirect('/admin');
         }
         (0, _bulkIndex.create_doc)(_product, function (res) {
-          console.log(res);
+          // console.log(res);
         });
         res.redirect('/admin');
       });
@@ -105,13 +107,32 @@ module.exports.new = function (req, res) {
 // 删除商品
 module.exports.delete = function (req, res) {
   var product_id = req.body._id;
-  _product3.default.remove({ _id: product_id }, function (err) {
-    if (err) {
-      console.log(err);
-      res.json({ success: 0 });
-    }
-    (0, _delete_document.delete_doc)(product_id);
-    res.json({ success: 1 });
+
+  var promise = new Promise(function (resolve, reject) {
+    _product3.default.find({ _id: product_id }, function (err, prod) {
+      if (err) {
+        console.log(err);
+        reject();
+      } else if (prod.length > 0) {
+        var files = prod[0].pics;
+        (0, _delete_file.deletePic)(files);
+        resolve();
+      } else {
+        reject();
+      }
+    });
+  });
+  promise.then(function () {
+    _product3.default.remove({ _id: product_id }, function (err) {
+      if (err) {
+        console.log(err);
+        res.json({ success: 0 });
+      }
+      (0, _delete_document.delete_doc)(product_id);
+      res.json({ success: 1 });
+    });
+  }, function () {
+    console.log('oops!!! 出错啦');
   });
 };
 
@@ -156,13 +177,17 @@ module.exports.updateproduct = function (req, res) {
   });
   promise.then(function (thispro) {
     thispro = thispro[0];
-    var pics = thispro.pics;
+    var pics = thispro.pics,
+        deletepic_url = [];
 
     pic_list = thispro.pics.filter(function (img, index) {
       if (deletepic.indexOf(index + '') < 0) {
         return img;
+      } else {
+        deletepic_url.push(thispro.pics[index]);
       }
     });
+    (0, _delete_file.deletePic)(deletepic_url);
 
     for (var i = 0; i < files.length; i++) {
       pic_list.push('/images/upload/' + files[i].filename);
@@ -176,7 +201,6 @@ module.exports.updateproduct = function (req, res) {
     } catch (err) {
       console.log(err);
     }
-    console.log(thispro.labels);
 
     thispro.save(function (err) {
       if (err) {
