@@ -2,6 +2,7 @@
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var ObjectId = Schema.Types.ObjectId;
 
 var ProductSchema = new Schema({
   name: {
@@ -16,6 +17,10 @@ var ProductSchema = new Schema({
   color: Array,
   pics: Array,
   stock: Number,
+  activity: {
+    type: ObjectId,
+    own: Schema.Types.Mixed
+  },
   sale_num: {
     type: Number,
     default: 0

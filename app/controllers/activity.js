@@ -3,9 +3,15 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.delet_act = exports.update_act = exports.new_act = exports.list = undefined;
+exports.delet_act = exports.update_act = exports.new_act = exports.new_act_page = exports.list = undefined;
 
 var _activity = require('../models/activity');
+
+var _product = require('../models/product');
+
+var _product2 = _interopRequireDefault(_product);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var list = exports.list = function list(req, res) {
   _activity.Activity.find({}, function (err, acts) {
@@ -14,6 +20,17 @@ var list = exports.list = function list(req, res) {
     }
     res.render('admin/activity/', {
       activities: acts
+    });
+  });
+};
+
+var new_act_page = exports.new_act_page = function new_act_page(req, res) {
+  _product2.default.find({}, { _id: 1, name: 1, pics: 1, labels: 1 }).limit(10).exec(function (err, prods) {
+    if (err) {
+      res.send(err);
+    }
+    res.render('admin/activity/new_activity', {
+      products: prods
     });
   });
 };

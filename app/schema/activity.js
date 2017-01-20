@@ -16,5 +16,6 @@ var ObjectId = Schema.Types.ObjectId;
 
 var activitySchema = exports.activitySchema = new Schema({
   name: String,
+  discount: Number,
   products: [ObjectId]
 });

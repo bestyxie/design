@@ -1,0 +1,38 @@
+extends ../../adminLayout
+
+block content
+  h2 新建活动
+  .wrapper
+    from#new_activity(action="",method="POST",enctype="multipart/form-data")
+      .form-group.uploadPic-form
+        label 图片*
+        a.newpic(href="javascrip:void(0);")
+          i.fa.fa-plus
+        input.required.hide(type="file",name="pics",accept="image/*")
+      .form-group
+        label 折扣
+        .input-box
+          input.rqrednum(type="text",name="act[discount]")
+      .product_list
+        table
+          thead
+            tr
+              td
+                input(type="checkbox")
+                | 全部
+              td 图片
+              td 商品名称
+              td 商品分类
+          tbody.j-product-list
+            each product in products
+              tr
+                td
+                  input(type="checkbox",name="products")
+                td
+                  .imgbox
+                  img(src="#{product.pics[0]}")
+                td #{product.name}
+                td #{product.labels.join(' ')}
+
+
+block scripts
