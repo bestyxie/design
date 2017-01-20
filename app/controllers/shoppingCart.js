@@ -1,6 +1,5 @@
 'use strict';
 
-var mongoose = require('mongoose');
 var Product = require('../models/product');
 var ShoppingCart = require('../models/shoppingcart');
 var weixin = require('./weixin');

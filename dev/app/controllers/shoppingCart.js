@@ -1,4 +1,3 @@
-let mongoose = require('mongoose');
 let Product = require('../models/product');
 let ShoppingCart = require('../models/shoppingcart');
 let weixin  = require('./weixin');

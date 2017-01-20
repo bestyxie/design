@@ -1,0 +1,24 @@
+extends ../../adminLayout
+
+block content
+  h2 分类管理
+  .wrapper
+    .productlist.section
+      .head
+        h3 商品活动（共件）
+        a.newpdt(href="javascript:void(0);",data-toggle="modal",data-target="#new")
+          i.fa.fa-plus
+          | 添加活动
+      table
+        thead
+          tr
+            td 活动名称
+            td 描述
+        tbody.j-product-list
+          each activity,index in activities
+            tr.j-productItem
+              td
+                a(href='javascript:;')
+              td
+
+block scripts

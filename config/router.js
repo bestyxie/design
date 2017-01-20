@@ -4,6 +4,7 @@ var Product = require('../app/controllers/product');
 var ShoppingCart = require('../app/controllers/shoppingCart');
 var Category = require('../app/controllers/category');
 var Token = require('../app/controllers/token');
+var Activity = require('../app/controllers/activity');
 // var UploadPic = require('../app/controllers/uploadPic');
 
 
@@ -66,4 +67,7 @@ module.exports = function(app){
 
   // wechat test token
   app.get('/token',Token.token);
+
+  // activity
+  app.get('/admin/activity',Activity.list);
 }
