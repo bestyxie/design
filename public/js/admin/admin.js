@@ -43,6 +43,22 @@ $(function(){
     dropdown('.self-dropdown');
 
   })();
+
+  // select
+  (function(){
+    $('.select').on('click','.dropdown-toggle',function(e){
+      $(this).siblings('#'+$(this).data('id')).toggleClass('show');
+    });
+    $('.select').on('click','.item',function(e){
+      e.preventDefault();
+      var parent = $(this).parent('.dropdown-menu');
+      var val = $(this).find('a').html();
+      console.log($(this).find('a'),val);
+      parent.removeClass('show');
+      parent.siblings('input').val(val);
+      parent.siblings('.dropdown-toggle').find('em').html(val);
+    })
+  })();
   
   // 图片上传
   (function(){

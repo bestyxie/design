@@ -2,7 +2,7 @@ extends ../../adminLayout
 
 block content
   h2 新建活动
-  .wrapper
+  .wrapper.new_act
     from#new_activity(action="",method="POST",enctype="multipart/form-data")
       .form-group.uploadPic-form
         label 图片*
@@ -13,7 +13,20 @@ block content
         label 折扣
         .input-box
           input.rqrednum(type="text",name="act[discount]")
-      .product_list
+      .productlist.section
+        .head
+          label 按类搜索
+          .select
+            button.dropdown-toggle(type="button",data-id="labels")
+              em 商品名称
+              i.fa.fa-chevron-down
+            ul.dropdown-menu#labels
+              li.item
+                a(href="#") 商品名称
+              li.item
+                a(href="#") 标签
+          input.seach(type="text")
+          a.submit 确定
         table
           thead
             tr
@@ -27,12 +40,15 @@ block content
             each product in products
               tr
                 td
-                  input(type="checkbox",name="products")
+                  input(type="checkbox",name="products",value="act[#{product._id}]")
                 td
                   .imgbox
-                  img(src="#{product.pics[0]}")
+                    img(src="#{product.pics[0]}")
                 td #{product.name}
                 td #{product.labels.join(' ')}
+  .footer
+    button.btn.btn-primary.confirm.j-confirm 确定
+    a.btn.btn-default(href="/admin") 取消
 
 
 block scripts

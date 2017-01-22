@@ -1,0 +1,16 @@
+.select {
+  display: inline-block;
+  position: relative;
+}
+.select .dropdown-toggle {
+  border: 1px solid #ccc;
+  padding: 6px 12px;
+  background: #fff;
+  border-radius: 3px;
+  min-width: 94px;
+}
+.select .dropdown-menu {
+  position: absolute;
+  top: 100%;
+  display: none;
+}
