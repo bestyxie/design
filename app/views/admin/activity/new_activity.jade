@@ -13,7 +13,7 @@ block content
         label 折扣
         .input-box
           input.rqrednum(type="text",name="act[discount]")
-      .productlist.section
+      .productlist.j_productlist.section
         .head
           label 按类搜索
           .select
@@ -27,7 +27,8 @@ block content
                 a(href="#") 标签
           input.seach(type="text")
           a.submit 确定
-        table
+        .j_product_list
+        table.current(data-page="1")
           thead
             tr
               td
@@ -46,9 +47,52 @@ block content
                     img(src="#{product.pics[0]}")
                 td #{product.name}
                 td #{product.labels.join(' ')}
+        nav.j_pagenate_bar.pagenate_bar.clearfix
+          ul.pagination.right
+            li
+              a(href="#") &laquo;
+            li.active
+              a(href="#") 1
+            li
+              a(href="#") &raquo;
   .footer
     button.btn.btn-primary.confirm.j-confirm 确定
     a.btn.btn-default(href="/admin") 取消
 
 
 block scripts
+  script(type="text/javascript",src="/js/admin/extendPagination.js")
+  script.
+    $(function(){
+      $('.j_pagenate_bar').extendPagination({
+        totalCount: #{count},
+        showCount: 10,
+        limit: 20,
+        callback: function(curr,limit,totalCount){
+          getProduct(curr,limit)
+        }
+      });
+
+      function getProduct(curr,limit){
+        var current = $('.j_productlist tabel[data-page="'+curr+'"]');
+        if(current.length>0){
+          $('.current').addClass('hide').removeClass('current');
+          current.removeClass('hide').addClass('current');
+          return;
+        }
+        $.get('/admin/product',{curr: curr,limit: limit},function(data){
+          var html = [];
+          html.push(' <tabel data-page="'+curr+'" class="current"> ');
+          html.push(' <thead><tr><td><input type="checkbox">全部</td><td>图片</td><td>商品名称</td></td>商品分类</td></thead><tbody>');
+          for(var i=0,len=data.length;i<len;i++){
+            html.push('<tr><td><input type="checkbox" value="'+data[i]._id+'"></td>');
+            html.push('<td><div class="imgbox"><img src="'+data[i].pics[0]+'"></div></td>');
+            html.push('<td>'+data[i].name+'</td>');
+            html.push('<td>'+data[i].labels.join(' ')+'</td>');
+            html.push('</tr>');
+          }
+          $('.current').addClass('hide').removeClass('current');
+          $('.j_product_list').append(html);
+        })
+      }
+    })

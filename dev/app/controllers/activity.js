@@ -17,9 +17,12 @@ export const new_act_page = (req,res) => {
     if(err) {
       res.send(err);
     }
-    res.render('admin/activity/new_activity',{
-      products: prods
-    });
+    Product.count({},(err,count) => {
+      res.render('admin/activity/new_activity',{
+        products: prods,
+        count: count
+      });
+    })
   })
 }
 

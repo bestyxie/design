@@ -6,6 +6,8 @@
   height: 34px;
   border: 1px solid #ccc;
   outline: none;
+  border-radius: 3px;
+  padding: 5px 10px;
 }
 .new_act .submit {
   color: #fff;
@@ -18,4 +20,7 @@
 }
 .new_act .submit:hover {
   text-decoration: none;
+}
+.new_act .pagenate_bar .pagination {
+  float: right;
 }

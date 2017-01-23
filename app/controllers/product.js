@@ -254,3 +254,8 @@ module.exports.query = function (req, res) {
   //   // res.send(products);
   // })
 };
+
+module.exports.getProduct = function (req, res) {
+  var curr = req.body.curr;
+  var limit = req.body.limit;
+};

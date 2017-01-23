@@ -39,6 +39,7 @@ module.exports = function(app){
   app.get('/product',Product.query);
   app.post('/admin/product/new',upload.array('pics',8),Product.new);
   app.post('/admin/product/update',upload.array('pics',8),Product.updateproduct);
+  app.get('/admin/product',Product.getProduct);
 
   // shopping cart management
   app.post('/product/addtocart',ShoppingCart.addToCart);

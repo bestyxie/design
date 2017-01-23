@@ -10,6 +10,20 @@ body {
 .show {
   display: block !important;
 }
+.hide {
+  display: none !important;
+}
+.clearfix:after {
+  content: " ";
+  display: block;
+  clear: both;
+  height: 0;
+  font-size: 0;
+  visibility: hidden;
+}
+.right {
+  float: right;
+}
 header {
   width: 100%;
   height: 70px;
@@ -69,6 +83,14 @@ header .user .logout:hover {
   font-size: 0;
   visibility: hidden;
 }
+.container:after {
+  content: " ";
+  display: block;
+  clear: both;
+  height: 0;
+  font-size: 0;
+  visibility: hidden;
+}
 .container .sidebar {
   width: 210px;
   background: #fff;
@@ -104,6 +126,14 @@ header .user .logout:hover {
 .container .main {
   background: #fff;
   margin-left: 210px;
+}
+.container .main:after {
+  content: " ";
+  display: block;
+  clear: both;
+  height: 0;
+  font-size: 0;
+  visibility: hidden;
 }
 .container .main:after {
   content: " ";

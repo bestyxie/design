@@ -29,8 +29,11 @@ var new_act_page = exports.new_act_page = function new_act_page(req, res) {
     if (err) {
       res.send(err);
     }
-    res.render('admin/activity/new_activity', {
-      products: prods
+    _product2.default.count({}, function (err, count) {
+      res.render('admin/activity/new_activity', {
+        products: prods,
+        count: count
+      });
     });
   });
 };
