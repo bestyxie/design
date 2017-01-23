@@ -12,13 +12,24 @@ block content
       table
         thead
           tr
-            td 活动名称
-            td 描述
+            td 活动海报
+            td 连接
+            td 操作
         tbody.j-product-list
           each activity,index in activities
             tr.j-productItem
               td
-                a(href='javascript:;')
+                .imgbox
+                  img(src="#{activity.pic}")
               td
+                a(href="/activity/#{activity._id}")
+              td(data-id="#{activity._id}")
+                a.edit(href="javascript:void(0);") 编辑
+                a.delete.j-delete(href="javascript:void(0);") 删除
+
 
 block scripts
+  script.
+    $(function(){
+      delete_operation('/admin/activity/delet','.j-product-list');
+    })

@@ -41,4 +41,14 @@ export const new_act = (req,res) => {
 
 export const update_act = (req,res) => {}
 
-export const delet_act = (req,res) => {}
+export const delet_act = (req,res) => {
+  let _id = req.body._id;
+  console.log(_id)
+
+  Activity.findOneAndRemove({ _id: _id },err => {
+    if(err){
+      res.json({ success: false });
+    }
+    res.json({ success: true });
+  });
+}

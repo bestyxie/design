@@ -72,25 +72,6 @@ $(function(){
   (function(){
     //- validate
     $('#newproduct').on('input','.required',validate);
-    
-    //- delete product
-    function deleteProduct(){
-      var _id = $(this).parent().data('product_id');
-      var $this = $(this);
-
-      $.ajax({
-        url: 'product/delete',
-        type: 'POST',
-        dataType: 'json',
-        data: {_id: _id},
-        success: function(data){
-          if(data.success){
-            $this.parents('.j-productItem').remove();
-          }
-        }
-      })
-    }
-    $('.j-product-list').on('click','.j-delete',deleteProduct);
   })();
 
   // 编辑商品
@@ -149,6 +130,26 @@ $(function(){
     }
   })();
 })
+
+function delete_operation(url,tbody){
+  function deleteProduct(){
+    var _id = $(this).parent().data('id');
+    var $this = $(this);
+
+    $.ajax({
+      url: url,
+      type: 'POST',
+      dataType: 'json',
+      data: {_id: _id},
+      success: function(data){
+        if(data.success){
+          $this.parents('.j-productItem').remove();
+        }
+      }
+    })
+  }
+  $(tbody).on('click','.j-delete',deleteProduct);
+}
 
 
 function validate(){

@@ -30,7 +30,7 @@ block content
                 each label in product.labels
                   span #{label}
               td #{product.meta.createAt.getFullYear()}/#{product.meta.createAt.getMonth()}/#{product.meta.createAt.getDate()}
-              td(data-product_id="#{product._id}")
+              td(data-id="#{product._id}")
                 a.edit(href="javascript:void(0);") 编辑
                 a.delete.j-delete(href="javascript:void(0);") 删除
   include _new_product
@@ -74,5 +74,6 @@ block scripts
       });
 
       uploadPic();
-
+      
+      delete_operation('product/delete','.j-product-list');
     })

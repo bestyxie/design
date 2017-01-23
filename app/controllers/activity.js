@@ -53,4 +53,14 @@ var new_act = exports.new_act = function new_act(req, res) {
 
 var update_act = exports.update_act = function update_act(req, res) {};
 
-var delet_act = exports.delet_act = function delet_act(req, res) {};
+var delet_act = exports.delet_act = function delet_act(req, res) {
+  var _id = req.body._id;
+  console.log(_id);
+
+  _activity2.Activity.findOneAndRemove({ _id: _id }, function (err) {
+    if (err) {
+      res.json({ success: false });
+    }
+    res.json({ success: true });
+  });
+};
