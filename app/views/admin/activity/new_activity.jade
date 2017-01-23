@@ -1,18 +1,23 @@
 extends ../../adminLayout
 
+block style
+  link(rel="stylesheet",href="/style/pc/jquery.Jcrop.min.css")
+
 block content
   h2 新建活动
   .wrapper.new_act
-    from#new_activity(action="",method="POST",enctype="multipart/form-data")
+    form#new_activity(action="/admon/activity/new",method="POST",enctype="multipart/form-data")
       .form-group.uploadPic-form
         label 图片*
-        a.newpic(href="javascrip:void(0);")
+        .pic-wrap
+          //- .imgbox(style="display: none;")
+        label.newpic(href="javascrip:void(0);")
           i.fa.fa-plus
-        input.required.hide(type="file",name="pics",accept="image/*")
+        input#file.hide(type="file",name="pic",accept="image/*")
       .form-group
         label 折扣
         .input-box
-          input.rqrednum(type="text",name="act[discount]")
+          input(type="text",name="act[discount]")
       .productlist.j_productlist.section
         .head
           label 按类搜索
@@ -41,7 +46,7 @@ block content
             each product in products
               tr
                 td
-                  input(type="checkbox",name="products",value="act[#{product._id}]")
+                  input(type="checkbox",name="act[products]",value="act[#{product._id}]")
                 td
                   .imgbox
                     img(src="#{product.pics[0]}")
@@ -56,12 +61,15 @@ block content
             li
               a(href="#") &raquo;
   .footer
-    button.btn.btn-primary.confirm.j-confirm 确定
+    button.btn.btn-primary.confirm.j-confirm(type="submit") 确定
     a.btn.btn-default(href="/admin") 取消
+  include _clip_board
 
 
 block scripts
   script(type="text/javascript",src="/js/admin/extendPagination.js")
+  script(type="text/javascript",src="/js/admin/upload_pic.js")
+  script(type="text/javascript",src="/js/admin/jquery.Jcrop.min.js")
   script.
     $(function(){
       $('.j_pagenate_bar').extendPagination({
@@ -85,7 +93,7 @@ block scripts
           html.push(' <tabel data-page="'+curr+'" class="current"> ');
           html.push(' <thead><tr><td><input type="checkbox">全部</td><td>图片</td><td>商品名称</td></td>商品分类</td></thead><tbody>');
           for(var i=0,len=data.length;i<len;i++){
-            html.push('<tr><td><input type="checkbox" value="'+data[i]._id+'"></td>');
+            html.push('<tr><td><input type="checkbox" name="products" value="'+data[i]._id+'"></td>');
             html.push('<td><div class="imgbox"><img src="'+data[i].pics[0]+'"></div></td>');
             html.push('<td>'+data[i].name+'</td>');
             html.push('<td>'+data[i].labels.join(' ')+'</td>');
@@ -95,4 +103,34 @@ block scripts
           $('.j_product_list').append(html);
         })
       }
+
+      $('.j-confirm').on('click',function(e){
+        $('#new_activity').trigger('submit');
+      });
+
+      //- $('input[type="file"]').upload_pic({
+      //-   width: 640,
+      //-   height: 300,
+      //-   isClip: true,
+      //-   picName: "act[pics]",
+      //-   form: '#new_activity',
+      //-   url: '/admon/activity/new',
+      //-   afterSelect: function(){
+      //-     $('#clip').modal('show');
+      //-   },
+      //-   afterClip: function(canvas,img,range,select){
+      //-     $('.next').on('click',function(e){
+      //-       console.log('append image!!!');
+      //-       $('.j-preview .imgbox').append(img).append('<i class="icon j-delete">x</i>').show();
+      //-       $('#clip').modal('hide');
+      //-       $('.newpic').addClass('hide');
+      //-     })
+      //-   },
+      //-   afterDelete: function(){
+      //-     $('.imgbox').empty().hide();
+      //-     $('.newpic').removeClass('hide');
+      //-   }
+      //- });
+      uploadPic(false);
+
     })

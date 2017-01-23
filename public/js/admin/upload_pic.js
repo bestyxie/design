@@ -8,6 +8,7 @@
  * @param  {string} formData 数据发送路由
  * @param  {Object} submitbtn 表单提交按钮
  * @param  {String} form form表单选择器
+ * @param  {Function} afterSelect 用户选择好图片图片之后，预览之前
  */
 $.fn.upload_pic = function(param){
   var defaults = {
@@ -27,7 +28,8 @@ $.fn.upload_pic = function(param){
     afterDelete: function(){},
     afterDrop: function(){},
     afterPreview: function(){},
-    submit_fail: function(){}
+    submit_fail: function(){},
+    afterSelect: function(){}
   };
   this.param = $.extend(defaults,param);
   var canvas, pic_type, thisInput = this,formData;
@@ -73,7 +75,7 @@ $.fn.upload_pic = function(param){
       _previewPic();
     });
 
-    $('.j-preview .j-delete').on('click',function(){
+    $(document).on('click','.j-preview .j-delete',function(){
       thisInput.val('');
       canvas = '';
       $(thisInput.param.target).attr('src','');
@@ -107,6 +109,7 @@ $.fn.upload_pic = function(param){
     var is_legal_type = _checkType(pic_type);
 
     if(is_legal_type){
+      thisInput.param.afterSelect();
       // 注意！！！这里的thisInput[0].files,有时可能会获取不到，要尝试着
       // 用thisInput.context.files或者thisInput.files，可以通过打印thisInput来查看
       // console.log(thisInput)
@@ -152,8 +155,8 @@ $.fn.upload_pic = function(param){
       clicp = this;
 
       // 初始化选框
-      var selectH = $(".j-img-box img")[1].scrollHeight;
-      var selectW = (selectH/1136 * 640) >> 0;
+      var selectH = 640;
+      var selectW = 320;
       clicp.setSelect([0,0,selectW,selectH]);
     });
 
@@ -191,6 +194,7 @@ $.fn.upload_pic = function(param){
       var  blob = new Blob([ia],{type: 'image/png'});
 
       formData.append(thisInput.param.picName, blob);
+      console.log(formData);
     }
   }
 
@@ -200,7 +204,7 @@ $.fn.upload_pic = function(param){
       $(thisInput.param.submitbtn).addClass('disable');
     }
     formData = new FormData($(thisInput.param.form)[0]);
-    console.log(formData);
+    // console.log(formData);
     _canvas_formdata();
     // var type = thisInput.param.type,
     //     url = thisInput.param.url;

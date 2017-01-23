@@ -15,7 +15,7 @@ var Schema = _mongoose2.default.Schema;
 var ObjectId = Schema.Types.ObjectId;
 
 var activitySchema = exports.activitySchema = new Schema({
-  name: String,
   discount: Number,
+  pic: String,
   products: [ObjectId]
 });

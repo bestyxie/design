@@ -72,4 +72,5 @@ module.exports = function(app){
   // activity
   app.get('/admin/activity',Activity.list);
   app.get('/admin/activity/detail',Activity.new_act_page);
+  app.post('/admon/activity/new',upload.array('pic',1),Activity.new_act);
 }

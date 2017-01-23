@@ -26,7 +26,18 @@ export const new_act_page = (req,res) => {
   })
 }
 
-export const new_act = (req,res) => {}
+export const new_act = (req,res) => {
+  let activity = req.body;
+  let pic = 'images/upload/' + req.files[0].filename;
+  activity.pic = pic;
+  let _activity = new Activity(activity);
+  _activity.save(err => {
+    if(err){
+      res.send(err);
+    }
+    res.redirect('/admin/activity');
+  })
+}
 
 export const update_act = (req,res) => {}
 

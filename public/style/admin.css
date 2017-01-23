@@ -729,3 +729,7 @@ body {
 .new_act .pagenate_bar .pagination {
   float: right;
 }
+.new_act .pic-wrap .imgbox {
+  width: 320px;
+  height: 150px;
+}

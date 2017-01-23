@@ -1,18 +1,5 @@
 $(function(){
   
-  function validate(){
-    var isAllow = Array.prototype.slice.call($('#newproduct .required')).every(function(input){
-      if($(input).val().length>0){
-        $(input).removeClass('err');
-      }
-      return $(input).val().length > 0;
-    });
-    // console.log(isAllow);
-    if(isAllow){
-      $('.modal-footer .next').removeClass('disabled');
-    }
-  }
-  
   // dropdown
   (function(){
     function dropdown(selector){
@@ -58,63 +45,6 @@ $(function(){
       parent.siblings('input').val(val);
       parent.siblings('.dropdown-toggle').find('em').html(val);
     })
-  })();
-  
-  // 图片上传
-  (function(){
-    //- 图片上传预览
-    function uploadPic(){
-      function checkType(picPath){
-        var type = picPath.substring(picPath.lastIndexOf('.')+1,picPath.length).toLowerCase();
-        if( type != 'jpg' && type != 'bmp' && type != 'gif' && type != 'png' && type != 'jpeg'){
-         return false;
-        }
-        return true;
-      }
-      function previewPic(picURL,$this){
-        var type = checkType(picURL);
-        var prevDiv = $('.pic-wrap');
-        if(type){
-          if( $this.context.files && ($this.context.files)[0] ){
-            var reader = new FileReader();
-            reader.onload = function(evt){
-              var newImg = $('<div class="imgbox"><img src="'+evt.target.result+'" /><i class="icon">&times;</i></div>');
-              prevDiv.append(newImg);
-            }
-            reader.readAsDataURL(($this.context.files)[0]);
-          }else{
-            prevDiv.append('<div class="img" style="filter:progid:DXImagesTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src=\''+file.value+'\'"></div>');
-          }
-        }
-      }
-      $('.newpic').on('click',function(){
-        var file = $('input[type="file"]');
-        if(file.length == 1){
-          file.trigger('click');
-        }else{
-          $(file[1]).trigger('click');
-        }
-      });
-      $(document).on('change','input[type="file"]',function(){
-        var self = $(this);
-        previewPic(self.val(),self);
-        var newpic = $('<input type="file" name="picture" accept="image/*" class="hide" />')
-        self.parent().append(newpic);
-        validate();
-      });
-      $(document).on('click','.imgbox .icon',function(){
-        var self = $(this),i=0;
-        var imgboxes = $(this).parent().siblings();
-        for(i,len=imgboxes.length;i<len;i++){
-          if($(imgboxes[i]).has(self)){
-            break;
-          }
-        }
-        $($('input[type="file"]')[i]).remove();
-        $(this).parent().remove();
-      })
-    }
-    uploadPic();
   })();
 
   //- new input
@@ -218,6 +148,83 @@ $(function(){
       $('.j-deletepic').val($('.j-deletepic').val()+index+' ');
     }
   })();
-
-
 })
+
+
+function validate(){
+  var isAllow = Array.prototype.slice.call($('#newproduct .required')).every(function(input){
+    if($(input).val().length>0){
+      $(input).removeClass('err');
+    }
+    return $(input).val().length > 0;
+  });
+  // console.log(isAllow);
+  if(isAllow){
+    $('.modal-footer .next').removeClass('disabled');
+  }
+}
+
+//- 图片上传预览
+/**
+  @param {Boolean} multi  [是否可以上传多张]
+ */
+function uploadPic(multi){
+  function checkType(picPath){
+    var type = picPath.substring(picPath.lastIndexOf('.')+1,picPath.length).toLowerCase();
+    if( type != 'jpg' && type != 'bmp' && type != 'gif' && type != 'png' && type != 'jpeg'){
+     return false;
+    }
+    return true;
+  }
+  function previewPic(picURL,$this){
+    var type = checkType(picURL);
+    var prevDiv = $('.pic-wrap');
+    if(type){
+      if( $this.context.files && ($this.context.files)[0] ){
+        var reader = new FileReader();
+        reader.onload = function(evt){
+          var newImg = $('<div class="imgbox"><img src="'+evt.target.result+'" /><i class="icon">&times;</i></div>');
+          prevDiv.append(newImg);
+        }
+        reader.readAsDataURL(($this.context.files)[0]);
+      }else{
+        prevDiv.append('<div class="img" style="filter:progid:DXImagesTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src=\''+file.value+'\'"></div>');
+      }
+    }
+
+  }
+  $('.newpic').on('click',function(){
+    var file = $('input[type="file"]');
+    if(file.length == 1){
+      file.trigger('click');
+    }else{
+      $(file[1]).trigger('click');
+    }
+  });
+  $(document).on('change','input[type="file"]',function(){
+    console.log('file');
+    var self = $(this);
+    previewPic(self.val(),self);
+
+    if(!multi){
+      $('.newpic').hide();
+    }else{
+      var newpic = $('<input type="file" name="picture" accept="image/*" class="hide" />')
+      self.parent().append(newpic);
+    }
+  });
+  $(document).on('click','.imgbox .icon',function(){
+    var self = $(this),i=0;
+    var imgboxes = $(this).parent().siblings();
+    for(i,len=imgboxes.length;i<len;i++){
+      if($(imgboxes[i]).has(self)){
+        break;
+      }
+    }
+    $($('input[type="file"]')[i]).remove();
+    $(this).parent().remove();
+    if(!multi){
+      $('.newpic').show();
+    }
+  })
+}
