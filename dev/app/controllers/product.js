@@ -238,4 +238,12 @@ module.exports.query = function(req,res){
 module.exports.getProduct = function(req,res){
   let curr = req.body.curr;
   let limit = req.body.limit;
+
+  Product.find({},{_id: 1,name: 1,labels: 1,pics: 1}).skip((curr-1)*limit).limit(limit).exec((err,produts)=>{
+    if(err){
+      console.log(err);
+      return;
+    }
+    res.json(products);
+  });
 }
