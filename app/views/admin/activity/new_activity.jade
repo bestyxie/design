@@ -46,7 +46,7 @@ block content
             each product in products
               tr
                 td
-                  input(type="checkbox",name="act[products]",value="act[#{product._id}]")
+                  input(type="checkbox",name="act[products]",value="#{product._id}")
                 td
                   .imgbox
                     img(src="#{product.pics[0]}")

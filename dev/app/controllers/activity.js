@@ -1,5 +1,6 @@
 import {Activity} from '../models/activity';
 import Product from '../models/product';
+import {deletePic} from '../common/delete_file';
 
 export const list = (req,res) => {
   Activity.find({},(err,acts) => {
@@ -28,8 +29,9 @@ export const new_act_page = (req,res) => {
 
 export const new_act = (req,res) => {
   let activity = req.body;
-  let pic = 'images/upload/' + req.files[0].filename;
+  let pic = '/images/upload/' + req.files[0].filename;
   activity.pic = pic;
+  console.log(activity);
   let _activity = new Activity(activity);
   _activity.save(err => {
     if(err){
@@ -43,12 +45,12 @@ export const update_act = (req,res) => {}
 
 export const delet_act = (req,res) => {
   let _id = req.body._id;
-  console.log(_id)
 
-  Activity.findOneAndRemove({ _id: _id },err => {
+  Activity.findOneAndRemove({ _id: _id },(err,act) => {
     if(err){
       res.json({ success: false });
     }
+    deletePic(act.pic);
     res.json({ success: true });
   });
 }
