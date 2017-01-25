@@ -76,4 +76,5 @@ module.exports = function(app){
   app.post('/admin/activity/delet',Activity.delet_act);
   app.post('/admin/activity/update',Activity.update_act);
   app.get('/admin/activity/product',Activity.get_act_products);
+  app.get('/activity/:id',Product.act_prod);
 }

@@ -23,20 +23,15 @@ block content
       .banner.slide-box
         .swiper_wrap
           .wipe_img_con
-            a.swiper_wrap_a
-              img(src="/images/upload_ie4tcmbzmvrwmnjxhazdambqgqyde_750x250.jpg")
+            a.swiper_wrap_a(href="/activity/#{acts[acts.length-1]._id}")
+              img(src="#{acts[acts.length-1].pic}")
+          each act in acts
+            .wipe_img_con
+              a.swiper_wrap_a(href="/activity/#{act._id}")
+                img(src="#{act.pic}")
           .wipe_img_con
-            a.swiper_wrap_a
-              img(src="/images/upload_ie4tcmbzmvrwmnjxhazdambqgqyde_750x250.jpg")
-          .wipe_img_con
-            a.swiper_wrap_a
-              img(src="/images/upload_ie4tcmbzmvrwmnjxhazdambqgqyde_750x250.jpg")
-          .wipe_img_con
-            a.swiper_wrap_a
-              img(src="/images/upload_ie4tcmbzmvrwmnjxhazdambqgqyde_750x250.jpg")
-          .wipe_img_con
-            a.swiper_wrap_a
-              img(src="/images/upload_ie4tcmbzmvrwmnjxhazdambqgqyde_750x250.jpg")
+            a.swiper_wrap_a(href="/activity/#{acts[0]._id}")
+              img(src="#{acts[0].pic}")
       .user-nav
         ul.row
           li.col-25

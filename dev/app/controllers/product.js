@@ -3,6 +3,7 @@ import Product from '../models/product';
 import ShoppingCart from '../models/shoppingcart';
 import Category from '../models/category';
 import elasticsearch from 'elasticsearch';
+import { Activity } from '../models/activity';
 import {makebulk, indexall, create_doc} from '../search/bulkIndex';
 import {create} from '../search/createIndex';
 import {search} from '../search/search';
@@ -26,11 +27,26 @@ module.exports.list = function(req,res){
   //   snsapi_base = false;
   // }
   // console.log(weixin.auth_url);
-  Product.find({}).sort({'meta.updateAt':-1}).exec(function(err,products){
-    res.render('mobile/home/',{
-      products: products,
-      // auth_url: snsapi_base
-    });
+  let promise = new Promise((resolve,reject) => {
+    Activity.find({},(err,acts) => {
+      if(err){
+        console.log(err);
+        reject(err);
+      }
+      resolve(acts);
+    })
+  });
+
+  promise.then(acts => {
+    Product.find({}).sort({'meta.updateAt':-1}).exec(function(err,products){
+      res.render('mobile/home/',{
+        products: products,
+        acts: acts
+        // auth_url: snsapi_base
+      });
+    })
+  }, err => {
+    console.log(err);
   })
 
 }
@@ -212,9 +228,12 @@ module.exports.query = function(req,res){
       console.log(pd);
       search({'type': 'description','q':q},result => {
         result = result.concat(pd);
-        console.log('product::\n',result);
+        for(let i=0,len=result.length;i<len;i++){
+          result._source._id = result._id;
+          result._source.pics.split(' ');
+        }
         res.render('mobile/search/',{
-          result: result
+          products: result._source
         });
         // res.send(result);
       });
@@ -246,4 +265,15 @@ module.exports.getProduct = function(req,res){
     }
     res.json({prods:products});
   });
+}
+
+module.exports.act_prod = function(req,res){
+  let act_id = req.params.id;
+
+  Product.find({activity: act_id},(err,prodts) => {
+    console.log(prodts);
+    res.render('mobile/search/',{
+      products: prodts
+    })
+  })
 }

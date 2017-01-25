@@ -20,6 +20,8 @@ var _elasticsearch = require('elasticsearch');
 
 var _elasticsearch2 = _interopRequireDefault(_elasticsearch);
 
+var _activity = require('../models/activity');
+
 var _bulkIndex = require('../search/bulkIndex');
 
 var _createIndex = require('../search/createIndex');
@@ -51,10 +53,26 @@ module.exports.list = function (req, res) {
   //   snsapi_base = false;
   // }
   // console.log(weixin.auth_url);
-  _product3.default.find({}).sort({ 'meta.updateAt': -1 }).exec(function (err, products) {
-    res.render('mobile/home/', {
-      products: products
+  var promise = new Promise(function (resolve, reject) {
+    _activity.Activity.find({}, function (err, acts) {
+      if (err) {
+        console.log(err);
+        reject(err);
+      }
+      resolve(acts);
     });
+  });
+
+  promise.then(function (acts) {
+    _product3.default.find({}).sort({ 'meta.updateAt': -1 }).exec(function (err, products) {
+      res.render('mobile/home/', {
+        products: products,
+        acts: acts
+        // auth_url: snsapi_base
+      });
+    });
+  }, function (err) {
+    console.log(err);
   });
 };
 
@@ -232,9 +250,12 @@ module.exports.query = function (req, res) {
       console.log(pd);
       (0, _search.search)({ 'type': 'description', 'q': q }, function (result) {
         result = result.concat(pd);
-        console.log('product::\n', result);
+        for (var i = 0, len = result.length; i < len; i++) {
+          result._source._id = result._id;
+          result._source.pics.split(' ');
+        }
         res.render('mobile/search/', {
-          result: result
+          products: result._source
         });
         // res.send(result);
       });
@@ -265,5 +286,16 @@ module.exports.getProduct = function (req, res) {
       return;
     }
     res.json({ prods: products });
+  });
+};
+
+module.exports.act_prod = function (req, res) {
+  var act_id = req.params.id;
+
+  _product3.default.find({ activity: act_id }, function (err, prodts) {
+    console.log(prodts);
+    res.render('mobile/search/', {
+      products: prodts
+    });
   });
 };
