@@ -12,7 +12,7 @@ export const add_act = (ids,act_id) => {
 export const remove_act = (ids) => {
   Product.find({_id: {'$in': ids}},(err,prods) => {
     for(let i=0,len=prods.length;i<len;i++){
-      prods[i].activity = '';
+      delete prods[i].activity;
       prods[i].save();
     }
   })

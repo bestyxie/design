@@ -23,7 +23,7 @@ var add_act = exports.add_act = function add_act(ids, act_id) {
 var remove_act = exports.remove_act = function remove_act(ids) {
   _product2.default.find({ _id: { '$in': ids } }, function (err, prods) {
     for (var i = 0, len = prods.length; i < len; i++) {
-      prods[i].activity = '';
+      delete prods[i].activity;
       prods[i].save();
     }
   });
