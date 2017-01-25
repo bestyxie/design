@@ -259,11 +259,11 @@ module.exports.getProduct = function (req, res) {
   var curr = req.body.curr;
   var limit = req.body.limit;
 
-  _product3.default.find({}, { _id: 1, name: 1, labels: 1, pics: 1 }).skip((curr - 1) * limit).limit(limit).exec(function (err, produts) {
+  _product3.default.find({}, { _id: 1, name: 1, labels: 1, pics: 1 }).skip((curr - 1) * limit).limit(limit).exec(function (err, products) {
     if (err) {
       console.log(err);
       return;
     }
-    res.json(products);
+    res.json({ prods: products });
   });
 };

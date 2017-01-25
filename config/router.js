@@ -73,5 +73,7 @@ module.exports = function(app){
   app.get('/admin/activity',Activity.list);
   app.get('/admin/activity/detail',Activity.new_act_page);
   app.post('/admon/activity/new',upload.array('pic',1),Activity.new_act);
-  app.post('/admin/activity/delet',Activity.delet_act)
+  app.post('/admin/activity/delet',Activity.delet_act);
+  app.post('/admin/activity/update',Activity.update_act);
+  app.get('/admin/activity/product',Activity.get_act_products);
 }

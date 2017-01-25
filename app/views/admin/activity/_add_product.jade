@@ -1,0 +1,38 @@
+.modal.fade#add_product
+  .modal-wrapper.modal-dialog.modal-lg
+    .modal-header
+      h3 添加商品
+      a.close(href="javascrip:;",data-dismiss="modal")
+        i.fa.fa-close
+    .modal-content
+      .j_product_list
+        table.current(data-page="1")
+          thead
+            tr
+              td
+                input(type="checkbox")
+                | 全部
+              td 图片
+              td 商品名称
+              td 商品分类
+          tbody.j-product-list
+            each product in products
+              tr
+                td
+                  input(type="checkbox",name="products",value="#{product._id}")
+                td
+                  .imgbox
+                    img(src="#{product.pics[0]}")
+                td #{product.name}
+                td #{product.labels.join(' ')}
+      nav.j_pagenate_bar.pagenate_bar.clearfix
+          ul.pagination.right
+            li
+              a(href="#") &laquo;
+            li.active
+              a(href="#") 1
+            li
+              a(href="#") &raquo;
+    .modal-footer
+      button.next.j_confirm(type="submit",data-id="",data-type="") 确定
+      button.cancle(data-dismiss="modal") 取消

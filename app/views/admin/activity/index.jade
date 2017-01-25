@@ -1,7 +1,7 @@
 extends ../../adminLayout
 
 block content
-  h2 分类管理
+  h2 活动管理
   .wrapper
     .productlist.section
       .head
@@ -24,12 +24,98 @@ block content
               td
                 a(href="/activity/#{activity._id}")
               td(data-id="#{activity._id}")
-                a.edit(href="javascript:void(0);") 编辑
+                a.edit.j-edit(href="javascript:void(0);",data-id="#{activity._id}") 添加商品
+                a.edit.j-remove(href="javascript:void(0);",data-id="#{activity._id}") 删除商品
                 a.delete.j-delete(href="javascript:void(0);") 删除
-
+      include _add_product
 
 block scripts
+  script(type="text/javascript",src="/js/admin/extendPagination.js")
   script.
     $(function(){
       delete_operation('/admin/activity/delet','.j-product-list');
+      
+      function init_pagination(count,url,_id){
+        var data = {};
+        if(_id) {
+          data._id = _id;
+        }
+        $('.j_pagenate_bar').extendPagination({
+          totalCount: count,
+          showCount: 10,
+          limit: 20,
+          callback: function(curr,limit,totalCount){
+            data.curr = curr;
+            data.limit = limit;
+            getProduct(url,data);
+          }
+        });
+      }
+
+      init_pagination(#{count},'/admin/product');
+
+      function getProduct(url,data,checked,target,callback){
+        var current = $('.j_productlist tabel[data-page="'+data.curr+'"]');
+        if(current.length>0){
+          $('.current').addClass('hide').removeClass('current');
+          current.removeClass('hide').addClass('current');
+          return;
+        }
+        $.get(url,data,function(result){
+          var prods = result.prods;
+          var html = [];
+          html.push(' <table data-page="'+data.curr+'" class="current"> ');
+          html.push(' <thead><tr><th><input type="checkbox">全部</th><th>图片</th><th>商品名称</th><th>商品分类</th></tr></thead><tbody>');
+          for(var i=0,len=prods.length;i<len;i++){
+            html.push('<tr><td><input type="checkbox" name="products" value="'+prods[i]._id+'" '+ (checked==true? 'checked':'') +'></td>');
+            html.push('<td><div class="imgbox"><img src="'+prods[i].pics[0]+'"></div></td>');
+            html.push('<td>'+prods[i].name+'</td>');
+            html.push('<td>'+prods[i].labels.join(' ')+'</td>');
+            html.push('</tr>');
+          }
+          html.push('</tbody></table>')
+          $('.current').addClass('hide').removeClass('current');
+          $(target).append(html.join(''));
+          
+          if(typeof callback == 'function'){
+            callback(result);
+          }
+        });
+      }
+
+      $('.j-remove').on('click',function(){
+        var _id = $(this).data('id');
+
+        $('#add_product').modal('show');
+        $('#add_product').find('.j_confirm').attr({'data-id':_id,'data-type':'delete'});
+        $('.j_product_list').empty();
+        getProduct('/admin/activity/product',{_id: _id,curr: 1,limit: 20},true,'.j_product_list',function(result){
+          init_pagination(result.count,_id);
+        });
+      });
+
+      $('.productlist').on('click','.j-edit',function(){
+        var _id = $(this).data('id');
+        $('#add_product').modal('show');
+        $('#add_product').find('.j_confirm').attr({'data-id':_id,'data-type':'add'});
+        $('.j_product_list').empty();
+        getProduct('/admin/product',{curr: 1,limit: 20},false,'.j_product_list')
+      })
+
+      $('.j_confirm').on('click',function(e){
+        $('#add_product').modal('hide');
+        var checkbox, vals = [];
+        var id = $(this).data('id');
+        var type = $(this).attr('data-type');
+
+        if(type == 'delete'){
+          checkbox = $('input[name="products"]').not('input:checked');
+        }else{
+          checkbox = $('input[name="products"]:checked');
+        }
+        for(var i=0,len=checkbox.length;i<len;i++){
+          vals.push($(checkbox[i]).val());
+        }
+        $.post('/admin/activity/update',{vals: vals,_id: id,type: type});
+      })
     })

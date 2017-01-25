@@ -33,25 +33,25 @@ block content
           input.seach(type="text")
           a.submit 确定
         .j_product_list
-        table.current(data-page="1")
-          thead
-            tr
-              td
-                input(type="checkbox")
-                | 全部
-              td 图片
-              td 商品名称
-              td 商品分类
-          tbody.j-product-list
-            each product in products
+          table.current(data-page="1")
+            thead
               tr
                 td
-                  input(type="checkbox",name="act[products]",value="#{product._id}")
-                td
-                  .imgbox
-                    img(src="#{product.pics[0]}")
-                td #{product.name}
-                td #{product.labels.join(' ')}
+                  input(type="checkbox")
+                  | 全部
+                td 图片
+                td 商品名称
+                td 商品分类
+            tbody.j-product-list
+              each product in products
+                tr
+                  td
+                    input(type="checkbox",name="act[products]",value="#{product._id}")
+                  td
+                    .imgbox
+                      img(src="#{product.pics[0]}")
+                  td #{product.name}
+                  td #{product.labels.join(' ')}
         nav.j_pagenate_bar.pagenate_bar.clearfix
           ul.pagination.right
             li

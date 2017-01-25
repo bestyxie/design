@@ -15,10 +15,7 @@ var ProductSchema = new Schema({
   color: Array,
   pics: Array,
   stock: Number,
-  activity: {
-    type: ObjectId,
-    own: Schema.Types.Mixed
-  },
+  activity: ObjectId,
   sale_num: {
     type:Number,
     default: 0
