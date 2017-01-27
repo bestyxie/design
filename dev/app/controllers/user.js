@@ -87,11 +87,14 @@ module.exports.msigninRequire = (req,res,next) =>{
   if(req.session.user){
     next();
   }
-  base_set.scope="snsapi_base";
-  base_set.redirect_uri = encodeURIComponent('http://bestyxie.cn/login');
-  let snsapi_base = base_url+qs.stringify(base_set)+ANCHOR;
-  console.log(snsapi_base)
-  res.redirect(snsapi_base);
+  else {
+    res.redirect('/login');
+  }
+  // base_set.scope="snsapi_base";
+  // base_set.redirect_uri = encodeURIComponent('http://bestyxie.cn/login');
+  // let snsapi_base = base_url+qs.stringify(base_set)+ANCHOR;
+  // console.log(snsapi_base)
+  // res.redirect(snsapi_base);
 }
 
 // 必须登录 midware
