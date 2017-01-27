@@ -1,6 +1,6 @@
 let Product = require('../models/product');
 let ShoppingCart = require('../models/shoppingcart');
-let weixin  = require('./weixin');
+// let weixin  = require('./weixin');
 
 // 加入购物车
 module.exports.addToCart = (req,res) => {
@@ -106,26 +106,26 @@ module.exports.shoppingCart = (req,res) => {
 
   // if(!user){}
 
-  var promise = weixin.getAccesstoken(code);
-  promise.then((openid) => {
-    console.log(openid);
-    weixin.getUserinfo(openid);
+  // var promise = weixin.getAccesstoken(code);
+  // promise.then((openid) => {
+  //   console.log(openid);
+  //   weixin.getUserinfo(openid);
 
-  }).then((user) =>{
+  // }).then((user) =>{
     
-    // ShoppingCart.findOne({userId: user._id},function(err,goods){
-    //   var products = [];
-    //   if(err){
-    //     console.log(err);
-    //   }
-    //   if(goods){
-    //     products = goods.products;
-    //   }
-    //   res.render('mobile/shoppingcart/',{
-    //     products: products
-    //   });
-    // });
-  })
+    ShoppingCart.findOne({userId: user._id},function(err,goods){
+      var products = [];
+      if(err){
+        console.log(err);
+      }
+      if(goods){
+        products = goods.products;
+      }
+      res.render('mobile/shoppingcart/',{
+        products: products
+      });
+    });
+  // })
 
 }
 
