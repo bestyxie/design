@@ -1,0 +1,42 @@
+extends ../../layout
+
+block content
+  .page.create_order
+    header.bar.bar-nav.header
+      a.arr(href="javascript:void(history.back());")
+        i.fa.fa-angle-left
+      h1.title 购物车
+    .content.native-scroll
+      .address
+        .location_icon
+          i.fa.fa-map-marker
+        .addr_detail
+          .contact 收货人：** &nbsp;&nbsp;&nbsp;188888888
+          .detail 广东省-广州市-***
+        .edit_addr
+          i.fa.fa-angle-right
+      .product
+        ul.ui-list
+          each product in products
+            li.ui-list-item.j-list-item(data-id="#{product.productId}")
+              a.cart-goods-pic(href="/details/#{product.productId}")
+                img.fadeIn(src="#{product.pics[0]}")
+              .cart-goods-des
+                a(href="/details/#{product.productId}")
+                  h5.name.ellipsis #{product.name}
+                p.color 颜色：#{product.color}
+                p.size 尺码：#{product.size}
+              p.cart-goods-price
+                span.price ￥#{product.price}
+                span.piece x#{product.qty}
+      .total
+        p 小计：
+    .footer.cart-checkout
+      .cart-counter
+        p.pieces_count 共
+          em.count 0
+          | 件商品
+        p.total-price
+          | 合计：
+          em.sum ￥0.00
+      a.ui-btn-pink.ui-btn.j-account(href="javascript:;") 提交订单

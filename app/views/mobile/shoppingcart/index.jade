@@ -2,30 +2,32 @@ extends ../../layout
 
 block content
   .page.cart
-    header.bar.bar-nav
+    header.bar.bar-nav.header
       a.arr(href="javascript:void(history.back());")
         i.fa.fa-angle-left
       h1.title 购物车
     .content.native-scroll
-      .ui-list.cart-goods
-        each product in products
-          li.ui-list-item.j-list-item(data-id="#{product.id}")
-            a.cart-goods-pic(href="/details/#{product.productId}")
-              img.fadeIn(src="#{product.pics[0]}")
-            .cart-goods-des
-              a(href="/details/#{product.productId}")
-                h5.cart-goods-name #{product.name}
-              p.cart-goods-sku 颜色：#{product.color} 尺码：#{product.size}
-              .cart-goods-counter
-                .qty-box
-                  span.num-reduce.lf.j-reduct -
-                  em.num-input.lf.j-num 1
-                  span.num-add.lf.j-add +
-            p.cart-goods-price
-              span.price #{product.price}
-              a.cart-goods-dustbin(href="javascript:;")
-                i.icon.icon-remove.j-remove
-            input.ui-checkbox(type="checkbox")
+      form#account(action="/order/create",method="POST")
+        input(type="hidden",name="products[user_id]",value="#{userId}")
+        ul.ui-list.cart-goods
+          each product in products
+            li.ui-list-item.j-list-item(data-id="#{product.id}")
+              a.cart-goods-pic(href="/details/#{product.productId}")
+                img.fadeIn(src="#{product.pics[0]}")
+              .cart-goods-des
+                a(href="/details/#{product.productId}")
+                  h5.cart-goods-name #{product.name}
+                p.cart-goods-sku 颜色：#{product.color} 尺码：#{product.size}
+                .cart-goods-counter
+                  .qty-box
+                    span.num-reduce.lf.j-reduct -
+                    em.num-input.lf.j-num 1
+                    span.num-add.lf.j-add +
+              p.cart-goods-price
+                span.price #{product.price}
+                a.cart-goods-dustbin(href="javascript:;")
+                  i.icon.icon-remove.j-remove
+              input.ui-checkbox.j-product(type="checkbox",name="products[_id]",value="#{product.productId}")
     .footer.cart-checkout
       .cart-checkbox
         input.ui-checkbox(type="checkbox",name="c-all")
@@ -34,7 +36,7 @@ block content
         p.total-price
           | 总计：
           em.sum ￥0.00
-      a.ui-btn-pink.ui-btn(href="javascript:;") 去结算
+      a.ui-btn-pink.ui-btn.j-account(href="javascript:;") 去结算
     .ui-modal
       .modal-content
         p.content-p 确定要删除该商品吗
@@ -58,4 +60,13 @@ block scripts
         $.post('/cart/delete',{id: id},function(data){
         },'json');
       });
+
+      $('.j-account').on('click',function(e){
+        e.preventDefault();
+        var len = $('.j-product:checked').length;
+        if(len > 0){
+          console.log(len);
+          $('#account').submit();
+        }
+      })
     });

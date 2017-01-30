@@ -24,6 +24,11 @@ body.with-panel-right-reveal .page {
 .rt {
   float: right;
 }
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .content {
   overflow-x: hidden;
 }
@@ -140,4 +145,23 @@ input[type=radio] {
 .popup-overlay.modal-overlay-visible {
   visibility: hidden;
   display: none !important;
+}
+header.bar.header.bar-nav {
+  background: #fafafa;
+  border-bottom: 1px solid #c9c7c8;
+  display: -webkit-flex;
+  display: box;
+}
+header.bar.header.bar-nav .title {
+  -webkit-box-flex: 1;
+  box-flex: 1;
+  text-indent: -2rem;
+}
+header.bar.header.bar-nav .arr {
+  display: inline-block;
+  padding: 0 0.75rem;
+  height: 100%;
+  font-size: 1rem;
+  color: #5e5e5e;
+  float: left;
 }

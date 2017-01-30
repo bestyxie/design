@@ -23,6 +23,9 @@ body{
 .rt{
   float: right;
 }
+.ellipsis{
+  .ellipsis();
+}
 
 .content{
   overflow-x: hidden;
@@ -129,4 +132,24 @@ input[type=checkbox],input[type=radio]{
 .popup-overlay.modal-overlay-visible{
   visibility: hidden;
   display: none !important;
+}
+
+header.bar.header.bar-nav{
+  background: #fafafa;
+  border-bottom: 1px solid #c9c7c8;
+  display: -webkit-flex;
+  display: box;
+  .title{
+    -webkit-box-flex:1;
+    box-flex: 1;
+    text-indent: -2rem;
+  }
+  .arr{
+    display: inline-block;
+    padding: 0 0.75rem;
+    height: 100%;
+    font-size: 1rem;
+    color: #5e5e5e;
+    float: left;
+  }
 }

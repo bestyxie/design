@@ -124,7 +124,8 @@ module.exports.shoppingCart = function (req, res) {
       products = goods.products;
     }
     res.render('mobile/shoppingcart/', {
-      products: products
+      products: products,
+      userId: user._id
     });
   });
   // })

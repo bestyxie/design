@@ -5,6 +5,7 @@ var ShoppingCart = require('../app/controllers/shoppingCart');
 var Category = require('../app/controllers/category');
 var Token = require('../app/controllers/token');
 var Activity = require('../app/controllers/activity');
+var Order = require('../app/controllers/order');
 // var UploadPic = require('../app/controllers/uploadPic');
 
 
@@ -77,4 +78,7 @@ module.exports = function(app){
   app.post('/admin/activity/update',Activity.update_act);
   app.get('/admin/activity/product',Activity.get_act_products);
   app.get('/activity/:id',Product.act_prod);
+
+  // order
+  app.post('/order/create',Order.create_order);
 }

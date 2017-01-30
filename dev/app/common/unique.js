@@ -10,14 +10,23 @@ export const unique = function(arr){
 }
 
 export const remove_item = function(arr,remv){
-  let res = [], save = [];
-  for(let i=0,len=remv.length;i<len;i++){
-    res.push(remv[i].toString());
-  }
-  for(let i=0,len=arr.length;i<len;i++){
-    if(res.indexOf(arr[i].toString())<0){
+  let save = [];
+  let _arr = toString(arr);
+  let _remv = toString(remv);
+
+  for(let i=0,len=_arr.length;i<len;i++){
+    if(_remv.indexOf(_arr)<0){
       save.push(arr[i]);
     }
   }
+  
   return save;
+}
+
+export const toString = function(arr) {
+  let _arr = arr.map(function(item){
+    return item.toString();
+  });
+
+  return _arr;
 }

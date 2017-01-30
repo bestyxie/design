@@ -15,15 +15,23 @@ var unique = exports.unique = function unique(arr) {
 };
 
 var remove_item = exports.remove_item = function remove_item(arr, remv) {
-  var res = [],
-      save = [];
-  for (var i = 0, len = remv.length; i < len; i++) {
-    res.push(remv[i].toString());
-  }
-  for (var _i = 0, _len = arr.length; _i < _len; _i++) {
-    if (res.indexOf(arr[_i].toString()) < 0) {
-      save.push(arr[_i]);
+  var save = [];
+  var _arr = toString(arr);
+  var _remv = toString(remv);
+
+  for (var i = 0, len = _arr.length; i < len; i++) {
+    if (_remv.indexOf(_arr) < 0) {
+      save.push(arr[i]);
     }
   }
+
   return save;
+};
+
+var toString = exports.toString = function toString(arr) {
+  var _arr = arr.map(function (item) {
+    return item.toString();
+  });
+
+  return _arr;
 };
