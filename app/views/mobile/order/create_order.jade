@@ -29,14 +29,18 @@ block content
               p.cart-goods-price
                 span.price ￥#{product.price}
                 span.piece x#{product.qty}
+      .express
+        em 运费
+        em.right ￥0
       .total
-        p 小计：
+        em 小计：
+        em.right ￥#{sum}
     .footer.cart-checkout
       .cart-counter
         p.pieces_count 共
-          em.count 0
+          em.count #{count}
           | 件商品
         p.total-price
           | 合计：
-          em.sum ￥0.00
+          em.sum ￥#{sum}
       a.ui-btn-pink.ui-btn.j-account(href="javascript:;") 提交订单
