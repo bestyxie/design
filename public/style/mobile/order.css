@@ -1,23 +1,24 @@
 /* creat_order list */
 .create_order .address {
   background: #fff;
+}
+.create_order .inner {
   display: -webkit-box;
   display: box;
   height: 2rem;
-  padding: 0.5rem 0.2rem;
+  padding: 0.5rem;
   box-sizing: content-box;
-  margin-bottom: 0.5rem;
 }
-.create_order .address .addr_detail {
+.create_order .inner .addr_detail {
   -webkit-box-flex: 1;
   box-flex: 1;
 }
-.create_order .address .location_icon,
-.create_order .address .edit_addr {
+.create_order .inner .location_icon,
+.create_order .inner .edit_addr {
   width: 0.8rem;
   line-height: 2rem;
 }
-.create_order .address .open-popup {
+.create_order .inner .open-popup {
   display: block;
   width: 100%;
   height: 2rem;

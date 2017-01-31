@@ -3,28 +3,28 @@
     a.arr.close-popup(href="javascript:void(0);",data-popup=".popup-new")
       i.fa.fa-angle-left
     h1.title 地址管理
-    span.save.disable.j-save 保存
+    span.title_right.save.disable.close-popup.j-new-addr(data-popup=".popup-new") 保存
   .content-block
-    form.list-block
+    form.list-block.j-addr(action="",method="POST")
       ul
         li
           .item-content
             .item-inner
               .item-title.label 收货人
               .item-input
-                input(type="text",placeholder="请输入真实姓名")
+                input(type="text",name="name",placeholder="请输入真实姓名")
         li
           .item-content
             .item-inner
               .item-title.label 手机号码
               .item-input
-                input(type="text",placeholder="请输入手机号码")
+                input(type="text",name="tel",placeholder="请输入手机号码")
         li
           .item-content
             .item-inner
               .item-title.label 省市区
               .item-input
-                input(type="text",name="undetail",placeholder="省市区")
+                input(type="text",name="undetail",placeholder="省-市-区")
         li
           .item-content
             .item-inner

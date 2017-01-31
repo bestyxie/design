@@ -1,10 +1,26 @@
+.popup-address {
+  background: #f5f5f5;
+}
+.popup-address .content-block {
+  padding: 0;
+}
+.popup-address .edit_default {
+  height: 1rem;
+  padding: 0.5rem;
+  box-sizing: content-box;
+  border-top: 1px solid #e6e6e6;
+  margin-bottom: 0.5rem;
+}
+.popup-address .header.bar.bar-nav {
+  background: #fff;
+}
 .popup-address .footer {
   width: 100%;
   position: absolute;
   bottom: 0;
   border-top: 1px solid #ccc;
   height: 2rem;
-  background: #fafafa;
+  background: #fff;
 }
 .popup-address .footer .new_address {
   color: #fff;
@@ -26,8 +42,10 @@
 .popup-address .content-block {
   margin: 2.1rem 0;
 }
-.popup-new .save {
+.popup-new .title_right,
+.popup-address .title_right {
   font-size: 0.7rem;
   width: 2rem;
+  line-height: 2rem;
   margin-right: 0.5rem;
 }
