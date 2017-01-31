@@ -7,35 +7,40 @@ block content
         i.fa.fa-angle-left
       h1.title 购物车
     .content.native-scroll
-      .address
-        .location_icon
-          i.fa.fa-map-marker
-        .addr_detail
-          .contact 收货人：** &nbsp;&nbsp;&nbsp;188888888
-          .detail 广东省-广州市-***
-        .edit_addr
-          i.fa.fa-angle-right
-      .product
-        ul.ui-list
-          each product in products
-            li.ui-list-item.j-list-item(data-id="#{product.productId}")
-              a.cart-goods-pic(href="/details/#{product.productId}")
-                img.fadeIn(src="#{product.pics[0]}")
-              .cart-goods-des
-                a(href="/details/#{product.productId}")
-                  h5.name.ellipsis #{product.name}
-                p.color 颜色：#{product.color}
-                p.size 尺码：#{product.size}
-              p.cart-goods-price
-                span.price ￥#{product.price}
-                span.piece x#{product.qty}
-      .express
-        em 运费
-        em.right ￥0
-      .total
-        em 小计：
-        em.right ￥#{sum}
-    .footer.cart-checkout
+      from#order(action="",method="POST")
+        input(type="hidden",name="order[user_id]",value="#{user_id}")
+        .address
+          .location_icon
+            i.fa.fa-map-marker
+          .addr_detail
+            input(type="hidden",name="order[address]",value="")
+            .contact 收货人：** &nbsp;&nbsp;&nbsp;188888888
+            .detail 广东省-广州市-***
+          .edit_addr
+            a.fa.fa-angle-right.open-popup(href="javascript:;",data-popup=".popup-address")
+        .product
+          ul.ui-list
+            each product in products
+              li.ui-list-item.j-list-item(data-id="#{product.productId}")
+                input(type="hidden",name="order[prodts]",value="#{product.productId}")
+                a.cart-goods-pic(href="/details/#{product.productId}")
+                  img.fadeIn(src="#{product.pics[0]}")
+                .cart-goods-des
+                  a(href="/details/#{product.productId}")
+                    h5.name.ellipsis #{product.name}
+                  p.color 颜色：#{product.color}
+                  p.size 尺码：#{product.size}
+                p.cart-goods-price
+                  span.price ￥#{product.price}
+                  span.piece x#{product.qty}
+        .express
+          input(type="hidden",name="order[express]",value="0")
+          em 运费
+          em.right ￥0
+        .total
+          em 小计：
+          em.right ￥#{sum}
+    form.footer.cart-checkout(action="",method="POST")
       .cart-counter
         p.pieces_count 共
           em.count #{count}
@@ -43,4 +48,15 @@ block content
         p.total-price
           | 合计：
           em.sum ￥#{sum}
-      a.ui-btn-pink.ui-btn.j-account(href="javascript:;") 提交订单
+      button.ui-btn-pink.ui-btn.j-submit(href="javascript:;") 提交订单
+    include ./_edit_address
+    include ./_new_address
+
+block scripts
+  script.
+    $(function(){
+      $('.j-submit').on('click',function(e){
+        e.preventDefault();
+        $('#order').trigger('submit');
+      })
+    })

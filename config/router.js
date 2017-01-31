@@ -6,6 +6,7 @@ var Category = require('../app/controllers/category');
 var Token = require('../app/controllers/token');
 var Activity = require('../app/controllers/activity');
 var Order = require('../app/controllers/order');
+var Address = require('../app/controllers/address');
 // var UploadPic = require('../app/controllers/uploadPic');
 
 
@@ -54,7 +55,10 @@ module.exports = function(app){
   app.post('/user/signup',User.signup);
   app.post('/user/signin',User.signin);
   app.get('/logout',User.logout);
-  app.get('/mobile/login',User.mlogin)
+  app.get('/mobile/login',User.mlogin);
+
+  // address
+  app.post('/address/add',Address.add);
 
   // admin
   app.get('/admin',User.signinRequire, User.adminRequire, Admin.admin);
@@ -81,4 +85,5 @@ module.exports = function(app){
 
   // order
   app.post('/order/create',Order.create_order);
+  app.post('/order/submit',Order.submit_order);
 }

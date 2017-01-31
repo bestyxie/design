@@ -9,6 +9,12 @@ var UserSchema = new mongoose.Schema({
     type: String
   },
   password: String,
+  address: [{
+    recipient: String,
+    tel: String,
+    addr: String,
+    default: Boolean
+  }],
   // 0: normal user
   // 1: verified user
   // 2: professional user

@@ -1,5 +1,6 @@
 /* creat_order list */
 .create_order .address {
+  background: #fff;
   display: -webkit-box;
   display: box;
   height: 2rem;
@@ -14,6 +15,12 @@
 .create_order .address .location_icon,
 .create_order .address .edit_addr {
   width: 0.8rem;
+  line-height: 2rem;
+}
+.create_order .address .open-popup {
+  display: block;
+  width: 100%;
+  height: 2rem;
   line-height: 2rem;
 }
 .create_order .ui-list {

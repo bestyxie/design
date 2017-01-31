@@ -1,0 +1,18 @@
+.popup.popup-address
+  header.head-block.bar.bar-nav.header
+    a.arr.close-popup(href="javascript:void(0);",data-popup=".popup-address")
+      i.fa.fa-angle-left
+    h1.title 地址管理
+  .content-block
+    ul
+      li.address
+        .addr_detail
+          input(type="hidden",name="order[address]",value="")
+          .contact
+            em.default 默认
+            | 收货人：** &nbsp;&nbsp;&nbsp;188888888
+          .detail 广东省-广州市-***
+        .edit_addr
+          input.ui-checkbox.j-product(type="checkbox",value="",checked)
+  .footer.cart-counter
+    a.new_address.open-popup(href="javascript:;",data-popup=".popup-new") 新增地址
