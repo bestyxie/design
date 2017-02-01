@@ -21,7 +21,7 @@
                 input.ui-checkbox.j-select-status(type="radio",value="",name="defaultbtn",checked)
                 i.hide.fa.fa-pencil-square-o.j-edit-status
             .edit_default.hide.j-edit-status
-              input.ui-checkbox.j-edit-default(type="checkbox",name="defaultchange",value="#{addr._id}",checked)
+              input.ui-checkbox.j-edit-default(type="radio",name="defaultchange",value="#{addr._id}",checked)
               label 默认地址
         else
           li.address
@@ -36,7 +36,7 @@
                 input.ui-checkbox.j-select-status(type="radio",value="",name="defaultbtn")
                 i.hide.fa.fa-pencil-square-o.j-edit-status
             .edit_default.hide.j-edit-status
-              input.ui-checkbox.j-edit-default(type="checkbox",name="defaultchange",value="#{addr._id}")
+              input.ui-checkbox.j-edit-default(type="radio",name="defaultchange",value="#{addr._id}")
               label 设为默认地址
 
   .footer.cart-counter

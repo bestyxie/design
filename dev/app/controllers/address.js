@@ -6,19 +6,14 @@ export const add = (req,res) => {
   let userid = addr.user;
 
   let _address = new Address(addr);
+  
   if(addr.default){
-    Address.findOne({user: userid,default: true},(err,address) => {
+    Address.findOneAndUpdate({user: userid,default: true},{default: false},(err,address) => {
       if(err){
         console.log(err);
         return;
       }
-      if(address && address.length>0){
-        address.default = false;
-        console.log(address);
-        address.update();
-      }
-
-    })
+    });
   }
   _address.save((err,address) => {
     if(err){
@@ -32,14 +27,32 @@ export const add = (req,res) => {
 export const update = (req,res) => {
   let _id = req.body._id;
   let _addr = req.body._addr;
-  console.log(_addr);
+  let userid = req.body.userid;
 
-  Address.findOneAndUpdate({_id: _id},_addr,null,(err,addr) => {
-    if(err){
-      console.log(err);
-      res.json({success: false});
-      return;
+  let promise = new Promise((resolve,reject) => {
+    if(_addr.default){
+      Address.findOneAndUpdate({user: userid,default: true},{default: false},null,(err,addr) => {
+        if(err){
+          console.log(err);
+          reject(err);
+        }
+        resolve();
+      })
+    }else{
+      resolve();
     }
-    res.json({success:true});
+  })
+
+  promise.then(() =>{
+    Address.findOneAndUpdate({_id: _id},_addr,null,(err,addr) => {
+      if(err){
+        console.log(err);
+        res.json({success: false});
+        return;
+      }
+      res.json({success:true});
+    })
+  },err => {
+    console.log(err);
   })
 }

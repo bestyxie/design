@@ -124,12 +124,22 @@ block scripts
       });
 
       $(document).on('click','.j-edit-default',function(e){
-        console.log('click');
         var data = {};
         data._addr = {};
         data._id = $(this).val();
+        data.userid = $('#userid').val();
         data._addr.default = $(this).is(':checked');
-
+        
+        if( data._addr.default ){
+          var siblings = $(this).parents('.address').siblings('.address')
+          siblings.removeClass('default').find('input[type="checkbox"]').removeAttr('checked');
+          siblings.find('input[type="radio"]').removeAttr('checked');
+          $(this).parents('.address').addClass('default').find('input[type="checkbox"]').attr('checked',true);
+          $(this).parents('.address').find('input[type="radio"]').attr('checked',true);
+        }else{
+          $(this).parents('.address').removeClass('default').find('input[type="checkbox"]').removeAttr('checked');
+          $(this).parents('.address').find('input[type="radio"]').removeAttr('checked',true);
+        }
         $.post('/address/update',data,function(result){
           console.log(result);
         })

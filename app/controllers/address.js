@@ -14,16 +14,12 @@ var add = exports.add = function add(req, res) {
   var userid = addr.user;
 
   var _address = new _address2.Address(addr);
+
   if (addr.default) {
-    _address2.Address.findOne({ user: userid, default: true }, function (err, address) {
+    _address2.Address.findOneAndUpdate({ user: userid, default: true }, { default: false }, function (err, address) {
       if (err) {
         console.log(err);
         return;
-      }
-      if (address && address.length > 0) {
-        address.default = false;
-        console.log(address);
-        address.update();
       }
     });
   }
@@ -39,14 +35,32 @@ var add = exports.add = function add(req, res) {
 var update = exports.update = function update(req, res) {
   var _id = req.body._id;
   var _addr = req.body._addr;
-  console.log(_addr);
+  var userid = req.body.userid;
 
-  _address2.Address.findOneAndUpdate({ _id: _id }, _addr, null, function (err, addr) {
-    if (err) {
-      console.log(err);
-      res.json({ success: false });
-      return;
+  var promise = new Promise(function (resolve, reject) {
+    if (_addr.default) {
+      _address2.Address.findOneAndUpdate({ user: userid, default: true }, { default: false }, null, function (err, addr) {
+        if (err) {
+          console.log(err);
+          reject(err);
+        }
+        resolve();
+      });
+    } else {
+      resolve();
     }
-    res.json({ success: true });
+  });
+
+  promise.then(function () {
+    _address2.Address.findOneAndUpdate({ _id: _id }, _addr, null, function (err, addr) {
+      if (err) {
+        console.log(err);
+        res.json({ success: false });
+        return;
+      }
+      res.json({ success: true });
+    });
+  }, function (err) {
+    console.log(err);
   });
 };
