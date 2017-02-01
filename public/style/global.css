@@ -1059,6 +1059,13 @@ header.bar.bar-nav form .search-btn {
 .popup-address .content-block {
   padding: 0;
 }
+.popup-address .default-label {
+  color: #fff;
+  font-size: 0.6rem;
+  padding: 0.1rem 0.2rem;
+  border-radius: 3px;
+  background: #fe406e;
+}
 .popup-address .edit_default {
   height: 1rem;
   padding: 0.5rem;

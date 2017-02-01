@@ -59,5 +59,60 @@ block scripts
       $('.j-submit').on('click',function(e){
         e.preventDefault();
         $('#order').trigger('submit');
-      })
+      });
+
+      // new address
+      $('.j-new-addr').on('click',function(e){
+        // if($(this).hasClass('disable')){
+        //   return;
+        // }
+        var addrData = {};
+        addrData.address = {};
+        addrData.address.name = $('input[name="name"]').val();
+        addrData.address.tel = $('input[name="tel"]').val();
+        addrData.address.address = $('input[name="undetail"]').val()+ '-'+$('input[name="detail"]').val();
+        addrData.address.default = $('input[name="default"]').is(':checked');
+        addrData.userid = $('#userid').val();
+
+        $.post('/address/add',addrData,function(result){
+          if(result.success) {
+            var html = [];
+            if(addrData.address.default){
+              $('.popup-address li').removeClass('default');
+              html.push('<li class="address default">');
+            }else{
+              html.push('<li class="address"><div class="inner">');
+            }
+            html.push('<div class="addr_detail">');
+            html.push('<input type="hidden" name="order[address]" value="">');
+            html.push('<div class="contact">');
+            html.push('<em class="default-label">默认</em>');
+            html.push('收货人：'+addrData.address.name+'&nbsp;&nbsp;&nbsp;'+addrData.address.tel);
+            html.push('<div class="detail">'+addrData.address.address+'</div>');
+            html.push('</div></div>');
+            html.push('<div class="edit_addr">');
+            html.push('<input type="radio" class="ui-checkbox" value="'+result.addr_id+'">');
+            html.push('<i class="fa fa-pencil-square-o"></i></div></div>')
+            html.push('<div class="edit_default j-edit-default hide">');
+            html.push('<input type="radio" value="'+result.addr_id+'" class="ui-checkbox" checked>');
+            if(addrData.address.default){
+              html.push('<label>默认地址</label></div>');
+            }else{
+              html.push('<label>设为默认地址</label></div>');
+            }
+            html.push('</li>');
+
+            $('.j-addr_list').append(html.join(''));
+          }
+        },'json');
+      });
+
+      $('.j-edit').on('click',function(e){
+        $('.j-select-status').addClass('hide');
+        $('.j-edit-status').removeClass('hide');
+      });
+      $('.j-save').on('click',function(e){
+        $('.j-select-status').removeClass('hide');
+        $('.j-edit-status').addClass('hide');
+      });
     })

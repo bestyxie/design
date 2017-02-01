@@ -349,40 +349,5 @@ $(function(){
   //   }
   // },false);
 
-  // new address
-  $('.j-new-addr').on('click',function(e){
-    // if($(this).hasClass('disable')){
-    //   return;
-    // }
-    var addrData = {};
-    addrData.address = {};
-    addrData.address.name = $('input[name="name"]').val();
-    addrData.address.tel = $('input[name="tel"]').val();
-    addrData.address.address = $('input[name="undetail"]').val()+ '-'+$('input[name="detail"]').val();
-    addrData.address.default = $('input[name="default"]').is(':checked');
-    addrData.userid = $('#userid').val();
-
-    $.post('/address/add',addrData,function(result){
-      if(result.success) {
-        var html = [];
-        if(addrData.address.default){
-          $('.popup-address li').removeClass('default');
-          html.push('<li class="address default">');
-        }else{
-          html.push('<li class="address">');
-        }
-        html.push('<div class="addr_detail">');
-        html.push('<input type="hidden" name="order[address]" value="">');
-        html.push('<div class="contact">');
-        html.push('<em class="default-label">默认</em>');
-        html.push('收货人：'+addrData.address.name+'&nbsp;&nbsp;&nbsp;'+addrData.address.tel);
-        html.push('<div class="detail">'+addrData.address.address+'</div>')
-        html.push('</div></div>');
-        html.push('<div class="edit_addr"><input type="radio" class="ui-checkbox j-product" value=" "></div>')
-        html.push('</li>');
-
-        $('.j-addr_list').append(html.join(''));
-      }
-    },'json');
-  })
+  
 })(Zepto);

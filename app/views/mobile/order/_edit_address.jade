@@ -3,8 +3,8 @@
     a.arr.close-popup(href="javascript:void(0);",data-popup=".popup-address")
       i.fa.fa-angle-left
     h1.title 地址管理
-    span.title_right.j-edit 编辑
-    span.title_right.hide.j-save 完成
+    span.title_right.j-edit.j-select-status 编辑
+    span.title_right.hide.j-save.j-edit-status 完成
   .content-block
     ul.j-addr_list
       li.address.default
@@ -12,14 +12,14 @@
           .addr_detail
             input(type="hidden",name="order[address]",value="")
             .contact
-              em.default-label 默认
+              em.default-label.j-default-label 默认
               | 收货人：** &nbsp;&nbsp;&nbsp;188888888
             .detail 广东省-广州市-***
           .edit_addr
-            input.hide.ui-checkbox.j-product(type="radio",value="",checked)
-            i.fa.fa-pencil-square-o
-        .edit_default
-          input.ui-checkbox.j-product(type="checkbox",value="",checked)
+            input.ui-checkbox.j-select-status(type="radio",value="",checked)
+            i.hide.fa.fa-pencil-square-o.j-edit-status
+        .edit_default.hide.j-edit-status
+          input.ui-checkbox(type="checkbox",value="",checked)
           label 设为默认地址
   .footer.cart-counter
     a.new_address.open-popup(href="javascript:;",data-popup=".popup-new") 新增地址

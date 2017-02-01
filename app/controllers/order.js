@@ -26,7 +26,6 @@ var create_order = exports.create_order = function create_order(req, res) {
   _ShoppingCart2.default.findOne({ userId: user_id }, { products: 1 }, function (err, prodts) {
     var _prodts = [],
         _prod_msg = [];
-    console.log(prodts);
 
     if (Array.isArray(prod_msg._id)) {
       _prod_msg = (0, _unique.toString)(prod_msg._id);

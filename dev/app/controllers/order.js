@@ -9,7 +9,6 @@ export const create_order = (req,res) => {
 
   ShoppingCart.findOne({userId: user_id},{products: 1},(err,prodts) => {
     let _prodts = [], _prod_msg = [];
-    console.log(prodts);
     
     if ( Array.isArray(prod_msg._id) ){
       _prod_msg = toString(prod_msg._id);
