@@ -68,7 +68,7 @@ block scripts
         // }
         var addrData = {};
         addrData.address = {};
-        addrData.address.name = $('input[name="name"]').val();
+        addrData.address.name = $('input[name="recipient"]').val();
         addrData.address.tel = $('input[name="tel"]').val();
         addrData.address.address = $('input[name="undetail"]').val()+ '-'+$('input[name="detail"]').val();
         addrData.address.default = $('input[name="default"]').is(':checked');
@@ -81,8 +81,9 @@ block scripts
               $('.popup-address li').removeClass('default');
               html.push('<li class="address default">');
             }else{
-              html.push('<li class="address"><div class="inner">');
+              html.push('<li class="address">');
             }
+            html.push('<div class="inner">');
             html.push('<div class="addr_detail">');
             html.push('<input type="hidden" name="order[address]" value="">');
             html.push('<div class="contact">');
@@ -91,13 +92,18 @@ block scripts
             html.push('<div class="detail">'+addrData.address.address+'</div>');
             html.push('</div></div>');
             html.push('<div class="edit_addr">');
-            html.push('<input type="radio" class="ui-checkbox" value="'+result.addr_id+'">');
-            html.push('<i class="fa fa-pencil-square-o"></i></div></div>')
-            html.push('<div class="edit_default j-edit-default hide">');
-            html.push('<input type="radio" value="'+result.addr_id+'" class="ui-checkbox" checked>');
             if(addrData.address.default){
+              html.push('<input type="radio" class="ui-checkbox" value="'+result.addr_id+'" checked>');
+            }else{
+              html.push('<input type="radio" class="ui-checkbox" value="'+result.addr_id+'">');
+            }
+            html.push('<i class="fa fa-pencil-square-o"></i>')
+            html.push('</div></div><div class="edit_default j-edit-default hide">');
+            if(addrData.address.default){
+              html.push('<input type="radio" value="'+result.addr_id+'" class="ui-checkbox" checked>');
               html.push('<label>默认地址</label></div>');
             }else{
+              html.push('<input type="radio" value="'+result.addr_id+'" class="ui-checkbox">');
               html.push('<label>设为默认地址</label></div>');
             }
             html.push('</li>');

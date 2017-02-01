@@ -6,6 +6,6 @@ export const addressSchema = new Schema({
   user: ObjectId,
   recipient: String,
   tel: String,
-  addr: String,
+  address: String,
   default: Boolean
 })
