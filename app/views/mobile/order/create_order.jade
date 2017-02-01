@@ -72,7 +72,7 @@ block scripts
         addrData.address.tel = $('input[name="tel"]').val();
         addrData.address.address = $('input[name="undetail"]').val()+ '-'+$('input[name="detail"]').val();
         addrData.address.default = $('input[name="default"]').is(':checked');
-        addrData.userid = $('#userid').val();
+        addrData.address.user = $('#userid').val();
 
         $.post('/address/add',addrData,function(result){
           if(result.success) {
@@ -93,17 +93,17 @@ block scripts
             html.push('</div></div>');
             html.push('<div class="edit_addr">');
             if(addrData.address.default){
-              html.push('<input type="radio" class="ui-checkbox" value="'+result.addr_id+'" checked>');
+              html.push('<input type="radio" name="defaultbtn" class="ui-checkbox j-select-status" value="'+result.addr_id+'" checked>');
             }else{
-              html.push('<input type="radio" class="ui-checkbox" value="'+result.addr_id+'">');
+              html.push('<input type="radio" name="defaultbtn" class="ui-checkbox j-select-status" value="'+result.addr_id+'">');
             }
-            html.push('<i class="fa fa-pencil-square-o"></i>')
-            html.push('</div></div><div class="edit_default j-edit-default hide">');
+            html.push('<i class="fa fa-pencil-square-o j-edit-status hide"></i>')
+            html.push('</div></div><div class="edit_default j-edit-default j-edit-status hide">');
             if(addrData.address.default){
               html.push('<input type="radio" value="'+result.addr_id+'" class="ui-checkbox" checked>');
               html.push('<label>默认地址</label></div>');
             }else{
-              html.push('<input type="radio" value="'+result.addr_id+'" class="ui-checkbox">');
+              html.push('<input type="radio" value="'+result.addr_id+'" class="ui-checkbox j-edit-default">');
               html.push('<label>设为默认地址</label></div>');
             }
             html.push('</li>');
@@ -112,7 +112,8 @@ block scripts
           }
         },'json');
       });
-
+      
+      //- 编辑地址模式切换
       $('.j-edit').on('click',function(e){
         $('.j-select-status').addClass('hide');
         $('.j-edit-status').removeClass('hide');
@@ -121,4 +122,16 @@ block scripts
         $('.j-select-status').removeClass('hide');
         $('.j-edit-status').addClass('hide');
       });
+
+      $(document).on('click','.j-edit-default',function(e){
+        console.log('click');
+        var data = {};
+        data._addr = {};
+        data._id = $(this).val();
+        data._addr.default = $(this).is(':checked');
+
+        $.post('/address/update',data,function(result){
+          console.log(result);
+        })
+      })
     })

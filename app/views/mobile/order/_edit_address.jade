@@ -7,19 +7,37 @@
     span.title_right.hide.j-save.j-edit-status 完成
   .content-block
     ul.j-addr_list
-      li.address.default
-        .inner
-          .addr_detail
-            input(type="hidden",name="order[address]",value="")
-            .contact
-              em.default-label.j-default-label 默认
-              | 收货人：** &nbsp;&nbsp;&nbsp;188888888
-            .detail 广东省-广州市-***
-          .edit_addr
-            input.ui-checkbox.j-select-status(type="radio",value="",checked)
-            i.hide.fa.fa-pencil-square-o.j-edit-status
-        .edit_default.hide.j-edit-status
-          input.ui-checkbox(type="checkbox",value="",checked)
-          label 设为默认地址
+      each addr in addrs
+        if addr.default
+          li.address.default
+            .inner
+              .addr_detail
+                input(type="hidden",name="order[address]",value="#{addr._id}")
+                .contact
+                  em.default-label.j-default-label 默认
+                  | 收货人：#{addr.recipient} &nbsp;&nbsp;&nbsp;#{addr.tel}
+                .detail #{addr.address}
+              .edit_addr
+                input.ui-checkbox.j-select-status(type="radio",value="",name="defaultbtn",checked)
+                i.hide.fa.fa-pencil-square-o.j-edit-status
+            .edit_default.hide.j-edit-status
+              input.ui-checkbox.j-edit-default(type="checkbox",name="defaultchange",value="#{addr._id}",checked)
+              label 默认地址
+        else
+          li.address
+            .inner
+              .addr_detail
+                input(type="hidden",name="order[address]",value="#{addr._id}")
+                .contact
+                  em.default-label.j-default-label 默认
+                  | 收货人：#{addr.recipient} &nbsp;&nbsp;&nbsp;#{addr.tel}
+                .detail #{addr.address}
+              .edit_addr
+                input.ui-checkbox.j-select-status(type="radio",value="",name="defaultbtn")
+                i.hide.fa.fa-pencil-square-o.j-edit-status
+            .edit_default.hide.j-edit-status
+              input.ui-checkbox.j-edit-default(type="checkbox",name="defaultchange",value="#{addr._id}")
+              label 设为默认地址
+
   .footer.cart-counter
     a.new_address.open-popup(href="javascript:;",data-popup=".popup-new") 新增地址

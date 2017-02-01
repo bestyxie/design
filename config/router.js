@@ -59,6 +59,7 @@ module.exports = function(app){
 
   // address
   app.post('/address/add',Address.add);
+  app.post('/address/update',Address.update);
 
   // admin
   app.get('/admin',User.signinRequire, User.adminRequire, Admin.admin);

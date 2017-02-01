@@ -4,7 +4,11 @@
 .popup-address .content-block {
   padding: 0;
 }
+.popup-address .address.default .default-label {
+  display: inline;
+}
 .popup-address .default-label {
+  display: none;
   color: #fff;
   font-size: 0.6rem;
   padding: 0.1rem 0.2rem;
