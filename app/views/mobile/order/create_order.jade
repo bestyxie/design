@@ -60,58 +60,84 @@ block scripts
         e.preventDefault();
         $('#order').trigger('submit');
       });
+      
+      function getAddrData(){
+        var addrData = {};
+        addrData.address = {};
+        addrData.address.recipient = $('.popup-new input[name="recipient"]').val();
+        addrData.address.tel = $('.popup-new input[name="tel"]').val();
+        addrData.address.address = $('.popup-new input[name="undetail"]').val()+ '-'+$('.popup-new input[name="detail"]').val();
+        addrData.address.default = $('.popup-new input[name="default"]').is(':checked');
+        addrData.address.user = $('#userid').val();
 
+        return addrData;
+      }
       // new address
       $('.j-new-addr').on('click',function(e){
         // if($(this).hasClass('disable')){
         //   return;
         // }
-        var addrData = {};
-        addrData.address = {};
-        addrData.address.name = $('input[name="recipient"]').val();
-        addrData.address.tel = $('input[name="tel"]').val();
-        addrData.address.address = $('input[name="undetail"]').val()+ '-'+$('input[name="detail"]').val();
-        addrData.address.default = $('input[name="default"]').is(':checked');
-        addrData.address.user = $('#userid').val();
-
-        $.post('/address/add',addrData,function(result){
-          if(result.success) {
-            var html = [];
-            if(addrData.address.default){
-              $('.popup-address li').removeClass('default');
-              html.push('<li class="address default">');
-            }else{
-              html.push('<li class="address">');
+        var _this = this;
+        var update = $(this).attr('data-status');
+        var addrData = getAddrData();
+        if(update == 'update'){
+          $('.j-delete').addClass('hide');
+          $(_this).attr('data-status','');
+          var addrid = $('.popup-new input[name="addrid"]').val();
+          var list = $('.j-addr_list');
+          var parent = $('.popup-address .j-edit-default[value="'+addrid+'"]').parents('.address');
+          var html = create_html(data,addrid);
+          list.insertBefore(html,parent);
+          parent.remove();
+          $('.popup-new input').val('');
+          $('.popup-new input[type="checkbox"]').removeAttr('checked');
+          $.post('/address/update',addrData,function(result){})
+        }else{
+          $.post('/address/add',addrData,function(result){
+            if(result.success) {
+              var address = addrData.address
+              var html = create_html(address,result.addr_id);
+              $('.j-addr_list').append(html.join(''));
             }
-            html.push('<div class="inner">');
-            html.push('<div class="addr_detail">');
-            html.push('<input type="hidden" name="order[address]" value="">');
-            html.push('<div class="contact">');
-            html.push('<em class="default-label">默认</em>');
-            html.push('收货人：'+addrData.address.name+'&nbsp;&nbsp;&nbsp;'+addrData.address.tel);
-            html.push('<div class="detail">'+addrData.address.address+'</div>');
-            html.push('</div></div>');
-            html.push('<div class="edit_addr">');
-            if(addrData.address.default){
-              html.push('<input type="radio" name="defaultbtn" class="ui-checkbox j-select-status" value="'+result.addr_id+'" checked>');
-            }else{
-              html.push('<input type="radio" name="defaultbtn" class="ui-checkbox j-select-status" value="'+result.addr_id+'">');
-            }
-            html.push('<i class="fa fa-pencil-square-o j-edit-status hide"></i>')
-            html.push('</div></div><div class="edit_default j-edit-default j-edit-status hide">');
-            if(addrData.address.default){
-              html.push('<input type="radio" value="'+result.addr_id+'" class="ui-checkbox" checked>');
-              html.push('<label>默认地址</label></div>');
-            }else{
-              html.push('<input type="radio" value="'+result.addr_id+'" class="ui-checkbox j-edit-default">');
-              html.push('<label>设为默认地址</label></div>');
-            }
-            html.push('</li>');
-
-            $('.j-addr_list').append(html.join(''));
-          }
-        },'json');
+          },'json');
+        }
       });
+
+      function create_html(data,addr_id){
+        var html = [];
+        if(data.default){
+          $('.popup-address li').removeClass('default');
+          html.push('<li class="address default">');
+        }else{
+          html.push('<li class="address">');
+        }
+        html.push('<div class="inner">');
+        html.push('<div class="addr_detail">');
+        html.push('<input type="hidden" name="order[address]" value="">');
+        html.push('<div class="contact">');
+        html.push('<em class="default-label">默认</em>');
+        html.push('收货人：'+data.recipient+'&nbsp;&nbsp;&nbsp;'+data.tel);
+        html.push('<div class="detail">'+data.address+'</div>');
+        html.push('</div></div>');
+        html.push('<div class="edit_addr">');
+        if(data.default){
+          html.push('<input type="radio" name="defaultbtn" class="ui-checkbox j-select-status" value="'+addr_id+'" checked>');
+        }else{
+          html.push('<input type="radio" name="defaultbtn" class="ui-checkbox j-select-status" value="'+addr_id+'">');
+        }
+        html.push('<i class="fa fa-pencil-square-o j-edit-status hide open-popup j-edit-addr" data-popup=".popup-new"></i>')
+        html.push('</div></div><div class="edit_default j-edit-default j-edit-status hide">');
+        if(data.default){
+          html.push('<input type="radio" value="'+addr_id+'" class="ui-checkbox" checked>');
+          html.push('<label>默认地址</label></div>');
+        }else{
+          html.push('<input type="radio" value="'+addr_id+'" class="ui-checkbox j-edit-default">');
+          html.push('<label>设为默认地址</label></div>');
+        }
+        html.push('</li>');
+
+        return html;
+      }
       
       //- 编辑地址模式切换
       $('.j-edit').on('click',function(e){
@@ -125,12 +151,12 @@ block scripts
 
       $(document).on('click','.j-edit-default',function(e){
         var data = {};
-        data._addr = {};
+        data.address = {};
         data._id = $(this).val();
         data.userid = $('#userid').val();
-        data._addr.default = $(this).is(':checked');
+        data.address.default = $(this).is(':checked');
         
-        if( data._addr.default ){
+        if( data.address.default ){
           var siblings = $(this).parents('.address').siblings('.address')
           siblings.removeClass('default').find('input[type="checkbox"]').removeAttr('checked');
           siblings.find('input[type="radio"]').removeAttr('checked');
@@ -143,5 +169,43 @@ block scripts
         $.post('/address/update',data,function(result){
           console.log(result);
         })
+      });
+
+      $(document).on('click','.j-edit-addr',function(e){
+        var addr_id = $(this).parents('.address').find('input[name="defaultchange"]').val();
+        $('.popup-new .j-new-addr').attr('data-status','update');
+        $('.j-delete').removeClass('hide');
+        $.get('/address/get',{_id: addr_id},function(result){
+          console.log(result);
+          var address = result.address;
+          var addr = address.address.split('-');
+          var detail = addr[addr.length-1];
+          var undetail = addr[0]+'-'+addr[1]+'-'+addr[2];
+          $('.popup-new input[name="addrid"]').val(addr_id);
+          $('.popup-new input[name="recipient"]').val(address.recipient);
+          $('.popup-new input[name="tel"]').val(address.tel);
+          $('.popup-new input[name="undetail"]').val(undetail);
+          $('.popup-new input[name="detail"]').val(detail);
+          if(address.default){
+            $('.popup-new input[name="default"]').attr('checked',true);
+          }
+        });
+      });
+
+      $('.j-close-new').on('click',function(e){
+        if($('.popup-new .j-new-addr').attr('data-status') == 'update'){
+          $('.popup-new input').val('');
+          $('.popup-new input[type="checkbox"]').removeAttr('checked');
+          $('.j-delete').addClass('hide');
+        }
+      });
+
+      $('.j-delete').on('click',function(e){
+        var addrid = $('.popup-new input[name="addrid"]').val();
+        $(this).addClass('hide');
+        $('.popup-address .j-edit-default[value="'+addrid+'"]').parents('.address').remove();
+        $.get('/address/delete',{_id: addrid},function(result){
+         console.log(result);
+        });
       })
     })

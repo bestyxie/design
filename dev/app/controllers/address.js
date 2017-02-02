@@ -4,6 +4,7 @@ let User = require('../models/user');
 export const add = (req,res) => {
   let addr = req.body.address;
   let userid = addr.user;
+  console.log(addr);
 
   let _address = new Address(addr);
   
@@ -26,8 +27,9 @@ export const add = (req,res) => {
 
 export const update = (req,res) => {
   let _id = req.body._id;
-  let _addr = req.body._addr;
+  let _addr = req.body.address;
   let userid = req.body.userid;
+  console.log(_addr);
 
   let promise = new Promise((resolve,reject) => {
     if(_addr.default){
@@ -55,4 +57,29 @@ export const update = (req,res) => {
   },err => {
     console.log(err);
   })
+}
+
+export const getAddr = (req,res) => {
+  let _id = req.query._id;
+
+  Address.findOne({_id: _id},(err,addr) => {
+    if(err){
+      console.log(err);
+      res.json({success: false});
+    }
+    res.json({success: true,address: addr});
+  })
+}
+
+export const remove = (req,res) =>{
+  let _id = req.query._id;
+
+  Address.findOneAndRemove({_id: _id},(err) => {
+    if(err){
+      console.log(err);
+      res.json({success: false});
+      return;
+    }
+    res.json({success: true});
+  });
 }

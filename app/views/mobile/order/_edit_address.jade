@@ -19,7 +19,7 @@
                 .detail #{addr.address}
               .edit_addr
                 input.ui-checkbox.j-select-status(type="radio",value="",name="defaultbtn",checked)
-                i.hide.fa.fa-pencil-square-o.j-edit-status
+                i.hide.fa.fa-pencil-square-o.open-popup.j-edit-addr.j-edit-status(data-popup=".popup-new")
             .edit_default.hide.j-edit-status
               input.ui-checkbox.j-edit-default(type="radio",name="defaultchange",value="#{addr._id}",checked)
               label 默认地址
@@ -34,7 +34,7 @@
                 .detail #{addr.address}
               .edit_addr
                 input.ui-checkbox.j-select-status(type="radio",value="",name="defaultbtn")
-                i.hide.fa.fa-pencil-square-o.j-edit-status
+                i.hide.fa.fa-pencil-square-o.open-popup.j-edit-addr.j-edit-status(data-popup=".popup-new")
             .edit_default.hide.j-edit-status
               input.ui-checkbox.j-edit-default(type="radio",name="defaultchange",value="#{addr._id}")
               label 设为默认地址

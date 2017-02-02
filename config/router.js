@@ -60,6 +60,8 @@ module.exports = function(app){
   // address
   app.post('/address/add',Address.add);
   app.post('/address/update',Address.update);
+  app.get('/address/get',Address.getAddr);
+  app.get('/address/delete',Address.remove);
 
   // admin
   app.get('/admin',User.signinRequire, User.adminRequire, Admin.admin);

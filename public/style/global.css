@@ -1053,12 +1053,6 @@ header.bar.bar-nav form .search-btn {
 .create_order .footer .pieces_count {
   line-height: 1;
 }
-.popup-address {
-  background: #f5f5f5;
-}
-.popup-address .content-block {
-  padding: 0;
-}
 .popup-address .address.default .default-label {
   display: inline;
 }
@@ -1099,6 +1093,10 @@ header.bar.bar-nav form .search-btn {
   background: #fe406e;
   margin: 0.25rem auto 0;
 }
+.popup-new,
+.popup-address {
+  background: #f5f5f5;
+}
 .popup-new .header .title,
 .popup-address .header .title {
   margin: auto;
@@ -1106,6 +1104,7 @@ header.bar.bar-nav form .search-btn {
 }
 .popup-new .content-block,
 .popup-address .content-block {
+  padding: 0;
   margin: 2.1rem 0;
 }
 .popup-new .title_right,
@@ -1114,4 +1113,14 @@ header.bar.bar-nav form .search-btn {
   width: 2rem;
   line-height: 2rem;
   margin-right: 0.5rem;
+}
+.popup-new .delete-btn {
+  width: 6rem;
+  height: 1.5rem;
+  line-height: 1.5rem;
+  text-align: center;
+  background: #fff;
+  border-radius: 0.75rem;
+  border: 1px solid #e5e5e5;
+  margin: 1rem auto;
 }

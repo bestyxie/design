@@ -1,11 +1,12 @@
 .popup.popup-new
   header.head-block.bar.bar-nav.header
-    a.arr.close-popup(href="javascript:void(0);",data-popup=".popup-new")
+    a.arr.close-popup.j-close-new(href="javascript:void(0);",data-popup=".popup-new")
       i.fa.fa-angle-left
     h1.title 地址管理
-    span.title_right.save.disable.close-popup.j-new-addr(data-popup=".popup-new") 保存
+    span.title_right.save.disable.close-popup.j-new-addr(data-popup=".popup-new",data-status="") 保存
   .content-block
     form.list-block.j-addr(action="",method="POST")
+      input(type="hidden",name="addrid")
       ul
         li
           .item-content
@@ -39,3 +40,4 @@
                 label.label-switch
                   input(type="checkbox",name="default")
                   .checkbox
+      .delete-btn.j-delete.close-popup.hide(data-popup=".popup-new") 删除地址
