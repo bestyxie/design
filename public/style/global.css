@@ -979,6 +979,17 @@ header.bar.bar-nav form .search-btn {
   padding-top: 2.2rem;
 }
 /* creat_order list */
+.create_order .address.default .default-label {
+  display: inline;
+}
+.create_order .default-label {
+  display: none;
+  color: #fff;
+  font-size: 0.6rem;
+  padding: 0.1rem 0.2rem;
+  border-radius: 3px;
+  background: #fe406e;
+}
 .create_order .address {
   background: #fff;
 }
@@ -1052,17 +1063,6 @@ header.bar.bar-nav form .search-btn {
 }
 .create_order .footer .pieces_count {
   line-height: 1;
-}
-.popup-address .address.default .default-label {
-  display: inline;
-}
-.popup-address .default-label {
-  display: none;
-  color: #fff;
-  font-size: 0.6rem;
-  padding: 0.1rem 0.2rem;
-  border-radius: 3px;
-  background: #fe406e;
 }
 .popup-address .edit_default {
   height: 1rem;

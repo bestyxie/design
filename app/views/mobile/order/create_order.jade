@@ -9,14 +9,16 @@ block content
     .content.native-scroll
       from#order(action="",method="POST")
         input#userid(type="hidden",name="order[user_id]",value="#{user_id}")
-        .address
+        .address.default
           .inner
             .location_icon
               i.fa.fa-map-marker
             .addr_detail
               input(type="hidden",name="order[address]",value="")
-              .contact 收货人：** &nbsp;&nbsp;&nbsp;188888888
-              .detail 广东省-广州市-***
+              .contact
+                em.default-label.j-default-label 默认
+                | 收货人：#{default_addr.recipient} &nbsp;&nbsp;&nbsp;#{default_addr.tel}
+              .detail #{default_addr.address}
             .edit_addr
               a.fa.fa-angle-right.open-popup(href="javascript:;",data-popup=".popup-address")
         .product
@@ -166,9 +168,7 @@ block scripts
           $(this).parents('.address').removeClass('default').find('input[type="checkbox"]').removeAttr('checked');
           $(this).parents('.address').find('input[type="radio"]').removeAttr('checked',true);
         }
-        $.post('/address/update',data,function(result){
-          console.log(result);
-        })
+        $.post('/address/update',data);
       });
 
       $(document).on('click','.j-edit-addr',function(e){
@@ -207,5 +207,16 @@ block scripts
         $.get('/address/delete',{_id: addrid},function(result){
          console.log(result);
         });
+      });
+
+      $(document).on('click','.j-select-addr',function(e){
+        var addr = $(this).parents('.address');
+        if($(addr).hasClass('default')){
+          $('#order .address').addClass('default');
+        }else{
+          $('#order .address').removeClass('default');
+        }
+        var detail = $(this).parents('.address').find('.addr_detail').html();
+        $('#order .addr_detail').empty().html(detail);
       })
     })

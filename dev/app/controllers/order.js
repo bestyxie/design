@@ -36,12 +36,20 @@ export const create_order = (req,res) => {
         }
       }
 
+      let default_addr = addrs.filter(function(addr) {
+        if(addr.default){
+          return addr;
+        }
+      });
+      console.log('default_addr:::',default_addr)
+
       res.render('mobile/order/create_order',{
         products: _prodts,
         user_id: user_id,
         count: count,
         sum: sum,
-        addrs: addrs
+        addrs: addrs,
+        default_addr: default_addr[0]
       });
     });
   })

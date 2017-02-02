@@ -68,9 +68,14 @@ var update = exports.update = function update(req, res) {
 };
 
 var getAddr = exports.getAddr = function getAddr(req, res) {
-  var _id = req.query._id;
+  var condiction = {};
+  condiction._id = req.query._id;
+  var isdefault = req.query.default;
+  if (isdefault != undefined) {
+    condiction.default = isdefault;
+  }
 
-  _address2.Address.findOne({ _id: _id }, function (err, addr) {
+  _address2.Address.findOne(condiction, function (err, addr) {
     if (err) {
       console.log(err);
       res.json({ success: false });

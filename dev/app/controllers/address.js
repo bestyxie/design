@@ -60,9 +60,14 @@ export const update = (req,res) => {
 }
 
 export const getAddr = (req,res) => {
-  let _id = req.query._id;
+  let condiction = {};
+  condiction._id = req.query._id;
+  let isdefault = req.query.default;
+  if(isdefault != undefined){
+    condiction.default = isdefault;
+  }
 
-  Address.findOne({_id: _id},(err,addr) => {
+  Address.findOne(condiction,(err,addr) => {
     if(err){
       console.log(err);
       res.json({success: false});

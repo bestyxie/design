@@ -18,7 +18,7 @@
                   | 收货人：#{addr.recipient} &nbsp;&nbsp;&nbsp;#{addr.tel}
                 .detail #{addr.address}
               .edit_addr
-                input.ui-checkbox.j-select-status(type="radio",value="",name="defaultbtn",checked)
+                input.ui-checkbox.close-popup.j-select-addr.j-select-status(type="radio",value="",name="defaultbtn",data-popup=".popup-address",checked)
                 i.hide.fa.fa-pencil-square-o.open-popup.j-edit-addr.j-edit-status(data-popup=".popup-new")
             .edit_default.hide.j-edit-status
               input.ui-checkbox.j-edit-default(type="radio",name="defaultchange",value="#{addr._id}",checked)
@@ -33,7 +33,7 @@
                   | 收货人：#{addr.recipient} &nbsp;&nbsp;&nbsp;#{addr.tel}
                 .detail #{addr.address}
               .edit_addr
-                input.ui-checkbox.j-select-status(type="radio",value="",name="defaultbtn")
+                input.ui-checkbox.close-popup.j-select-addr.j-select-status(type="radio",value="",name="defaultbtn",data-popup=".popup-address")
                 i.hide.fa.fa-pencil-square-o.open-popup.j-edit-addr.j-edit-status(data-popup=".popup-new")
             .edit_default.hide.j-edit-status
               input.ui-checkbox.j-edit-default(type="radio",name="defaultchange",value="#{addr._id}")
