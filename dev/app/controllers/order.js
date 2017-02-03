@@ -113,8 +113,14 @@ export const submit_order = (req,res) => {
 
 export const order_list = (req,res) => {
   let user_id = req.session.user._id;
+  let status = req.query.status;
+  let condiction = {}
+  condiction.user_id = user_id;
+  if(status) {
+    condiction.status = status;
+  }
 
-  Order.find({user_id: user_id},(err,orders) => {
+  Order.find(condiction,(err,orders) => {
     res.render('mobile/order/',{
       orders: orders
     })

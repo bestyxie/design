@@ -132,8 +132,14 @@ var submit_order = exports.submit_order = function submit_order(req, res) {
 
 var order_list = exports.order_list = function order_list(req, res) {
   var user_id = req.session.user._id;
+  var status = req.query.status;
+  var condiction = {};
+  condiction.user_id = user_id;
+  if (status) {
+    condiction.status = status;
+  }
 
-  _order3.default.find({ user_id: user_id }, function (err, orders) {
+  _order3.default.find(condiction, function (err, orders) {
     res.render('mobile/order/', {
       orders: orders
     });

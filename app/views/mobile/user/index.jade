@@ -9,19 +9,19 @@ block content
     .application
       ul
         li.line
-          a.block.paying
+          a.block.paying(href="/order?status=待付款")
             i.fa.fa-credit-card
             p 待付款
             .tips 10
-          a.block.delivery
+          a.block.delivery(href="/order?status=待发货")
             i.fa.fa-archive
             p 待发货
-          a.block.receiving
+          a.block.receiving(href="/order?status=待收款")
             i.fa.fa-archive
             p 待收货
             .tips 10
         li.line
-          a.block.evaluate
+          a.block.evaluate(href="/order?status=待评价")
             i.fa.fa-commenting-o
             p 待评价
             .tips 10
