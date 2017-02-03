@@ -88,3 +88,18 @@ export const remove = (req,res) =>{
     res.json({success: true});
   });
 }
+
+export const addr_list = (req,res) => {
+  var userid = req.session.user._id;
+  console.log(userid);
+
+  Address.find({user: userid},(err,addrs) => {
+    if(err){
+      console.log(err);
+      res.send(err);
+    }
+    res.render('mobile/order/order_list',{
+      addrs: addrs
+    })
+  })
+}

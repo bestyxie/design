@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.remove = exports.getAddr = exports.update = exports.add = undefined;
+exports.addr_list = exports.remove = exports.getAddr = exports.update = exports.add = undefined;
 
 var _address2 = require('../models/address');
 
@@ -94,5 +94,20 @@ var remove = exports.remove = function remove(req, res) {
       return;
     }
     res.json({ success: true });
+  });
+};
+
+var addr_list = exports.addr_list = function addr_list(req, res) {
+  var userid = req.session.user._id;
+  console.log(userid);
+
+  _address2.Address.find({ user: userid }, function (err, addrs) {
+    if (err) {
+      console.log(err);
+      res.send(err);
+    }
+    res.render('mobile/order/order_list', {
+      addrs: addrs
+    });
   });
 };

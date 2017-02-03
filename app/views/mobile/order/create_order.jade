@@ -158,13 +158,11 @@ block scripts
         data.address.default = $(this).is(':checked');
         
         if( data.address.default ){
-          var siblings = $(this).parents('.address').siblings('.address')
+          var siblings = $(this).parents('.address').addClass('default').siblings('.address')
           siblings.removeClass('default').find('input[type="checkbox"]').removeAttr('checked');
           siblings.find('input[type="radio"]').removeAttr('checked');
-          $(this).parents('.address').addClass('default').find('input[type="checkbox"]').attr('checked',true);
           $(this).parents('.address').find('input[type="radio"]').attr('checked',true);
         }else{
-          $(this).parents('.address').removeClass('default').find('input[type="checkbox"]').removeAttr('checked');
           $(this).parents('.address').find('input[type="radio"]').removeAttr('checked',true);
         }
         $.post('/address/update',data);

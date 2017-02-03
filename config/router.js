@@ -62,6 +62,7 @@ module.exports = function(app){
   app.post('/address/update',Address.update);
   app.get('/address/get',Address.getAddr);
   app.get('/address/delete',Address.remove);
+  app.get('/order/list',Address.addr_list);
 
   // admin
   app.get('/admin',User.signinRequire, User.adminRequire, Admin.admin);
