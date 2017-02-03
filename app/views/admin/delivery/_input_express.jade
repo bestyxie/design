@@ -1,0 +1,19 @@
+.modal.fade#express
+  .modal-wrapper.modal-dialog
+    .modal-header
+      h3 发货处理
+      a.close(href="javascrip:;",data-dismiss="modal")
+        i.fa.fa-close
+    .modal-content
+      form
+        .form-group
+          label(for="name") 快递名称*
+          .input-box
+            input#exporess_name.required(type="text")
+        .form-group
+          label(for="name") 快递单号*
+          .input-box
+            input#exporess_number.required(type="text")
+    .modal-footer
+      button.next.j-next.disabled(type="submit") 确定
+      button.cancle 取消

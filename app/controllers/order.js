@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.paying = exports.order_list = exports.submit_order = exports.create_order = undefined;
+exports.update = exports.getAll_paid = exports.paying = exports.order_list = exports.submit_order = exports.create_order = undefined;
 
 var _order2 = require('../models/order');
 
@@ -126,7 +126,6 @@ var submit_order = exports.submit_order = function submit_order(req, res) {
       }
       delete order.address;
       order.address = addr;
-      console.log(order);
       var _order = new _order3.default(order);
       _order.save(function (err) {
         if (err) {
@@ -156,3 +155,36 @@ var order_list = exports.order_list = function order_list(req, res) {
 };
 
 var paying = exports.paying = function paying(req, res) {};
+
+var getAll_paid = exports.getAll_paid = function getAll_paid(req, res) {
+  // {status: '待发货'}
+  _order3.default.find({}, function (err, orders) {
+    if (err) {
+      console.log(err);
+      res.send(err);
+    }
+    res.render('admin/delivery/', {
+      orders: orders
+    });
+  });
+};
+
+var update = exports.update = function update(req, res) {
+  var orderid = req.body.orderid;
+  var express_msg = req.body.express_msg;
+
+  _order3.default.findOne({ _id: orderid }, function (err, order) {
+    if (err) {
+      console.log(err);
+      res.json({ success: false });
+    }
+    order.express_msg = express_msg;
+    order.save(function (err) {
+      if (err) {
+        console.log(err);
+        res.json({ success: false });
+      }
+      res.json({ success: true });
+    });
+  });
+};

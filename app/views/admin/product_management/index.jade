@@ -21,11 +21,12 @@ block content
         tbody.j-product-list
           each product,index in products
             tr.j-productItem
-              td
+              td.img-column
                 .imgbox
                   img(src="#{product.pics[0]}")
-              td
-                a(href='admin/product/#{product._id}') #{product.name}
+              td.name-column
+                p
+                  a(href='admin/product/#{product._id}') #{product.name}
               td
                 each label in product.labels
                   span #{label}

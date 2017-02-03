@@ -2,7 +2,7 @@ extends ../../adminLayout
 
 block content
   h2 待发货订单处理
-  .wrapper
+  .wrapper.delivery
     .productlist.section
       each order in orders
         - var count = 0;
@@ -10,52 +10,54 @@ block content
           thead
             tr
               td 商品图片
+              td 名称
               td 尺寸
               td 颜色
               td 数量
               td 金额
               td 操作
           tbody.j-product-list
-            each product in order.products
+            each product,index in order.products
               - count += product.qty
               tr.j-productItem
-                td
+                td.img-column
                   .imgbox
                     img(src="#{product.pics[0]}")
+                td.name-column 
+                  p #{product.name}
                 td #{product.size}
                 td #{product.color}
                 td #{product.qty}
-                td(data-id="#{order._id}")
-                  a.edit.j-edit(href="javascript:void(0);",data-id="#{order._id}") 发货
-                  span.form-wrapper.js-form-wrapper(data-order="",style="display: none;")
-                    label(for="user_id") 订单号
-                    input.user_id.form-control(typ="text")
-                    button.btn.btn-default(data-order="#{order._id}") 确定
-                    button.btn.btn-default.j-closePanel 取消
+                td #{product.price}
+                if index == 0
+                  td(data-id="#{order._id}",rowspan="#{order.products.length}")
+                    a.edit.j-edit(href="javascript:void(0);",data-order="#{order._id}",data-toggle="modal",data-target="#express") 发货
             tr
               td 地址：
-              td(colspan="5") order.address
+              td(colspan="6")
+                p 收货人： #{order.recipient}
+                p 手机： #{order.address.tel}
+                p 地址： #{order.address.address}
+  include _input_express
 
 block scripts
   script.
     $(document).ready(function(){
-      // show edit role pannel
-      function showEditpannel(order_id){
-        var tr = $('span[data-order="'+order_id+'"]');
-        console.log(tr.css('display') === 'none');
-        if(tr.css('display') === "none"){
-          tr.fadeIn('fast');
-        }else{
-          tr.fadeOut('fast');
-        }
-      }
 
       $('.j-edit').on('click',function(){
         var id = $(this).data('order');
-        showEditpannel(id);
+        $('#express').attr('data-order',id);
       });
 
-      $('.j-closePanel').on('click',function(){
-        $(this).parents('td').find('.j-edit').trigger('click');
-      })
-    })
+      $('.j-next').on('click',function(e){
+        var data = {};
+        data.express_msg = {};
+        data.express_msg.name = $('#exporess_name').val();
+        data.express_msg.number = $('#exporess_number').val();
+        data.orderid = $('#express').attr('data-order');
+
+        $.post('/admin/order/update',data,function(result){
+          console.log(result);
+        })
+      });
+    });

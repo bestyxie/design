@@ -91,5 +91,7 @@ module.exports = function(app){
   // order
   app.post('/order/create',Order.create_order);
   app.post('/order/submit',Order.submit_order);
-  app.get('/order',Order.order_list)
+  app.get('/order',Order.order_list);
+  app.get('/admin/delivery',Order.getAll_paid);
+  app.post('/admin/order/update',Order.update);
 }

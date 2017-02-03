@@ -212,6 +212,9 @@ header .user .logout:hover {
   padding: 15px 0;
   vertical-align: top;
 }
+.wrapper .section.productlist table tbody tr .img-column {
+  width: 90px;
+}
 .wrapper .section.productlist table tbody tr .name-column p {
   width: 230px;
 }

@@ -107,7 +107,6 @@ export const submit_order = (req,res) => {
       }
       delete order.address;
       order.address = addr;
-      console.log(order);
       let _order = new Order(order);
       _order.save((err) => {
         if(err){
@@ -138,4 +137,37 @@ export const order_list = (req,res) => {
 }
 
 export const paying = (req,res) => {
+}
+
+export const getAll_paid = (req,res) => {
+  // {status: '待发货'}
+  Order.find({},(err,orders) => {
+    if(err){
+      console.log(err);
+      res.send(err);
+    }
+    res.render('admin/delivery/',{
+      orders: orders
+    });
+  });
+}
+
+export const update = (req,res) => {
+  let orderid = req.body.orderid;
+  let express_msg = req.body.express_msg;
+
+  Order.findOne({_id: orderid},(err,order) => {
+    if(err){
+      console.log(err);
+      res.json({success: false});
+    }
+    order.express_msg = express_msg;
+    order.save(err => {
+      if(err) {
+        console.log(err);
+        res.json({success: false});
+      }
+      res.json({success: true});
+    })
+  })
 }

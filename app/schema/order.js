@@ -18,6 +18,10 @@ var OrderSchema = new Schema({
     tel: String,
     address: String
   },
+  express_msg: {
+    name: String,
+    number: String
+  },
   products: [{
     productId: ObjectId,
     qty: Number,
