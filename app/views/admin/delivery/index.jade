@@ -6,7 +6,7 @@ block content
     .productlist.section
       each order in orders
         - var count = 0;
-        table
+        table(data-order="#{order._id}")
           thead
             tr
               td 商品图片
@@ -50,14 +50,14 @@ block scripts
       });
 
       $('.j-next').on('click',function(e){
+        var orderid = $('#express').attr('data-order');
         var data = {};
         data.express_msg = {};
         data.express_msg.name = $('#exporess_name').val();
         data.express_msg.number = $('#exporess_number').val();
-        data.orderid = $('#express').attr('data-order');
+        data.orderid = orderid;
+        $('table[data-order="'+orderid+'"]').remove();
 
-        $.post('/admin/order/update',data,function(result){
-          console.log(result);
-        })
+        $.post('/admin/order/update',data);
       });
     });
