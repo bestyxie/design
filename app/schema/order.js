@@ -6,7 +6,6 @@ var ObjectId = Schema.Types.ObjectId;
 
 var OrderSchema = new Schema({
   user_id: ObjectId,
-  address: ObjectId,
   express: Number,
   status: String,
   // 待付款
@@ -14,6 +13,11 @@ var OrderSchema = new Schema({
   // 待收货
   // 待评价
   // 交易完成
+  address: {
+    recipient: String,
+    tel: String,
+    address: String
+  },
   products: [{
     productId: ObjectId,
     qty: Number,

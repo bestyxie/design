@@ -89,7 +89,7 @@ export const submit_order = (req,res) => {
       delete order_msg.prodts;
       carts.products = rest;
       order_msg.products = _prodts;
-      order_msg.status = false;
+      order_msg.status = "待付款";
       carts.save((err,result) => {
         if(err){
           console.log(err);
@@ -100,14 +100,24 @@ export const submit_order = (req,res) => {
     })
   });
   promise.then((order) => {
-    let _order = new Order(order);
-    _order.save((err) => {
+    Address.findOne({_id: order.address},{recipient: 1,tel: 1,address: 1},(err,addr) => {
       if(err){
         console.log(err);
-        return;
+        res.send(err);
       }
-      res.redirect('/');
+      delete order.address;
+      order.address = addr;
+      console.log(order);
+      let _order = new Order(order);
+      _order.save((err) => {
+        if(err){
+          console.log(err);
+          return;
+        }
+        res.redirect('/');
+      })
     })
+
   })
 }
 

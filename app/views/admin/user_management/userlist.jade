@@ -42,7 +42,7 @@ block scripts
         showEditpannel(id);
       });
       $('.j-closePanel').on('click',function(){
-        $(this).parent().parent().find('.j-edit').trigger('click');
+        $(this).parent('td').find('.j-edit').trigger('click');
       })
 
       // 修改用户角色

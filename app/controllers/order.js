@@ -108,7 +108,7 @@ var submit_order = exports.submit_order = function submit_order(req, res) {
       delete order_msg.prodts;
       carts.products = rest;
       order_msg.products = _prodts;
-      order_msg.status = false;
+      order_msg.status = "待付款";
       carts.save(function (err, result) {
         if (err) {
           console.log(err);
@@ -119,13 +119,22 @@ var submit_order = exports.submit_order = function submit_order(req, res) {
     });
   });
   promise.then(function (order) {
-    var _order = new _order3.default(order);
-    _order.save(function (err) {
+    _address.Address.findOne({ _id: order.address }, { recipient: 1, tel: 1, address: 1 }, function (err, addr) {
       if (err) {
         console.log(err);
-        return;
+        res.send(err);
       }
-      res.redirect('/');
+      delete order.address;
+      order.address = addr;
+      console.log(order);
+      var _order = new _order3.default(order);
+      _order.save(function (err) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        res.redirect('/');
+      });
     });
   });
 };
