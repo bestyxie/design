@@ -1,0 +1,37 @@
+extends ../../layout
+
+block content
+  .page.order_list
+    header.head-block.bar.bar-nav.header
+      a.arr(href="javascript:history.back();")
+        i.fa.fa-angle-left
+      h1.title 我的订单
+    .content.native-scroll.wrapper
+      ul.all-order
+        each order in orders
+          li.orders-item
+            - var count = 0
+            .item-head
+              .order-id 订单号 #{order._id}
+              .order-status #{order.status}
+            ul.item-content
+              each product in order.products
+                - count += product.qty
+                li.order
+                  .order-img
+                    img(src="#{product.pics[0]}")
+                  .order-desc
+                    p.name.ellipsis #{product.name}
+                    p.size #{product.size}
+                    p.color #{product.color}
+                  .msg
+                    .price ￥ #{product.price}
+                    .count x#{product.qty}
+            .item-footer.clearfix
+              .sum 共#{count}件 合计
+                em ￥88
+              .operate
+                a.red-btn(href="#") 收货评价
+                a.red-btn.hide(href="") 确认收货
+
+block scripts

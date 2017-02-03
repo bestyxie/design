@@ -8,7 +8,12 @@ var OrderSchema = new Schema({
   user_id: ObjectId,
   address: ObjectId,
   express: Number,
-  status: Boolean,
+  status: String,
+  // 待付款
+  // 待发货
+  // 待收货
+  // 待评价
+  // 交易完成
   products: [{
     productId: ObjectId,
     qty: Number,

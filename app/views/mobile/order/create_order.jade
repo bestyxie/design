@@ -5,7 +5,7 @@ block content
     header.bar.bar-nav.header
       a.arr(href="javascript:void(history.back());")
         i.fa.fa-angle-left
-      h1.title 购物车
+      h1.title 生成订单
     .content.native-scroll
       form#order(action="/order/submit",method="POST")
         input#userid(type="hidden",name="order[user_id]",value="#{user_id}")

@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.submit_order = exports.create_order = undefined;
+exports.paying = exports.order_list = exports.submit_order = exports.create_order = undefined;
 
 var _order2 = require('../models/order');
 
@@ -129,3 +129,15 @@ var submit_order = exports.submit_order = function submit_order(req, res) {
     });
   });
 };
+
+var order_list = exports.order_list = function order_list(req, res) {
+  var user_id = req.session.user._id;
+
+  _order3.default.find({ user_id: user_id }, function (err, orders) {
+    res.render('mobile/order/', {
+      orders: orders
+    });
+  });
+};
+
+var paying = exports.paying = function paying(req, res) {};

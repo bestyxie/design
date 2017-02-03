@@ -110,3 +110,16 @@ export const submit_order = (req,res) => {
     })
   })
 }
+
+export const order_list = (req,res) => {
+  let user_id = req.session.user._id;
+
+  Order.find({user_id: user_id},(err,orders) => {
+    res.render('mobile/order/',{
+      orders: orders
+    })
+  })
+}
+
+export const paying = (req,res) => {
+}

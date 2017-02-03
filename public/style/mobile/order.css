@@ -84,3 +84,76 @@
 .create_order .footer .pieces_count {
   line-height: 1;
 }
+.order_list .all-order {
+  padding-top: 2rem;
+}
+.order_list .orders-item {
+  font-size: 0.6rem;
+  margin-top: 0.5rem;
+  background: #fff;
+}
+.order_list .item-head {
+  border-bottom: 1px solid #e5e5e5;
+  height: 1.5rem;
+  line-height: 1.5rem;
+  padding: 0 0.5rem;
+}
+.order_list .order-id {
+  color: #9a9a9a;
+  float: left;
+}
+.order_list .order-status {
+  float: right;
+}
+.order_list .order {
+  padding: 0.5rem;
+  padding-left: 3.5rem;
+  border-bottom: 1px solid #e5e5e5;
+  position: relative;
+  display: -webkit-flex;
+  display: -moz-box;
+  /* Firefox */
+  display: -webkit-box;
+  /* Safari and Chrome */
+  display: box;
+}
+.order_list .order .msg {
+  width: 2rem;
+}
+.order_list .order-img {
+  position: absolute;
+  left: 0.5rem;
+  top: 0.5rem;
+  width: 2.7rem;
+  height: 2.7rem;
+  overflow: hidden;
+}
+.order_list .order-img img {
+  width: 100%;
+}
+.order_list .order-desc {
+  -webkit-box-flex: 1;
+  box-flex: 1;
+}
+.order_list .item-footer {
+  padding: 0.75rem 0.5rem ;
+}
+.order_list .item-footer .sum {
+  text-align: right;
+}
+.order_list .item-footer em {
+  color: #383838;
+  font-size: 0.7rem;
+}
+.order_list .item-footer .operate {
+  float: right;
+  height: 1.3rem;
+  margin-top: 0.5rem;
+}
+.order_list .item-footer .red-btn {
+  color: #e94e7a;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  border: 1px solid #e94e7a;
+  margin: 0 0.25rem;
+}

@@ -56,6 +56,7 @@ module.exports = function(app){
   app.post('/user/signin',User.signin);
   app.get('/logout',User.logout);
   app.get('/mobile/login',User.mlogin);
+  app.get('/user/home',User.signinRequire,User.homepage);
 
   // address
   app.post('/address/add',Address.add);
@@ -90,4 +91,5 @@ module.exports = function(app){
   // order
   app.post('/order/create',Order.create_order);
   app.post('/order/submit',Order.submit_order);
+  app.get('/order',Order.order_list)
 }

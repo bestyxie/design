@@ -155,3 +155,18 @@ module.exports.change = function(req,res){
     res.json({success: 1,role: _user.role});
   });
 }
+
+// 用户主页
+module.exports.homepage = function(req,res){
+  let user_id = req.session.user._id;
+  User.findOne({_id: user_id},(err,user) => {
+    if(err){
+      console.log(err);
+      res.send(err);
+    }
+
+    res.render('mobile/user/',{
+      user: user
+    });
+  })
+}

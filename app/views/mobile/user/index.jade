@@ -1,0 +1,35 @@
+extends ../../layout
+
+block content
+  .page.homepage
+    .home-header
+      .portrait
+        img(src="")
+      p.name.ellipise #{user.name}
+    .application
+      ul
+        li.line
+          a.block.paying
+            i.fa.fa-credit-card
+            p 待付款
+            .tips 10
+          a.block.delivery
+            i.fa.fa-archive
+            p 待发货
+          a.block.receiving
+            i.fa.fa-archive
+            p 待收货
+            .tips 10
+        li.line
+          a.block.evaluate
+            i.fa.fa-commenting-o
+            p 待评价
+            .tips 10
+          a.block.return
+            i.fa.fa-retweet
+            p 退货退款
+            .tips 10
+          a.block.order(href="/order")
+            i.fa.fa-gift
+            p 全部订单
+            .tips 10
