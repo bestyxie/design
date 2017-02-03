@@ -7,14 +7,14 @@ block content
         i.fa.fa-angle-left
       h1.title 购物车
     .content.native-scroll
-      from#order(action="",method="POST")
+      form#order(action="/order/submit",method="POST")
         input#userid(type="hidden",name="order[user_id]",value="#{user_id}")
         .address.default
           .inner
             .location_icon
               i.fa.fa-map-marker
             .addr_detail
-              input(type="hidden",name="order[address]",value="")
+              input(type="hidden",name="order[address]",value="#{default_addr._id}")
               .contact
                 em.default-label.j-default-label 默认
                 | 收货人：#{default_addr.recipient} &nbsp;&nbsp;&nbsp;#{default_addr.tel}
@@ -25,7 +25,7 @@ block content
           ul.ui-list
             each product in products
               li.ui-list-item.j-list-item(data-id="#{product.productId}")
-                input(type="hidden",name="order[prodts]",value="#{product.productId}")
+                input(type="hidden",name="order[productId]",value="#{product.productId}")
                 a.cart-goods-pic(href="/details/#{product.productId}")
                   img.fadeIn(src="#{product.pics[0]}")
                 .cart-goods-des
@@ -43,7 +43,7 @@ block content
         .total
           em 小计：
           em.right ￥#{sum}
-    form.footer.cart-checkout(action="",method="POST")
+    .footer.cart-checkout(action="",method="POST")
       .cart-counter
         p.pieces_count 共
           em.count #{count}
@@ -51,7 +51,7 @@ block content
         p.total-price
           | 合计：
           em.sum ￥#{sum}
-      button.ui-btn-pink.ui-btn.j-submit(href="javascript:;") 提交订单
+      button.ui-btn-pink.ui-btn.j-submit 提交订单
     include ./_edit_address
     include ./_new_address
 
@@ -59,8 +59,7 @@ block scripts
   script.
     $(function(){
       $('.j-submit').on('click',function(e){
-        e.preventDefault();
-        $('#order').trigger('submit');
+        $('#order').submit();
       });
       
       function getAddrData(){
@@ -218,5 +217,5 @@ block scripts
         }
         var detail = $(this).parents('.address').find('.addr_detail').html();
         $('#order .addr_detail').empty().html(detail);
-      })
+      });
     })

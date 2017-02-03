@@ -58,7 +58,6 @@ var create_order = exports.create_order = function create_order(req, res) {
           return addr;
         }
       });
-      console.log('default_addr:::', default_addr);
 
       res.render('mobile/order/create_order', {
         products: _prodts,
@@ -69,42 +68,63 @@ var create_order = exports.create_order = function create_order(req, res) {
         default_addr: default_addr[0]
       });
     });
+  }, function () {
+    res.redirect('/cart');
   });
 };
 
 var submit_order = exports.submit_order = function submit_order(req, res) {
   var order_msg = req.body.order;
-  var userId = order_msg.user;
+  var userId = order_msg.user_id;
 
   var promise = new Promise(function (resolve, reject) {
-    _ShoppingCart2.default.findOne({ userId: userId }, { products: 1 }, function (err, prodts) {
+    _ShoppingCart2.default.findOne({ userId: userId }, function (err, carts) {
+      if (err) {
+        console.log(err);
+        reject();
+      }
+      var prodts = carts.products;
       var _prodts = [],
-          _prod_msg = [];
-      console.log(prodts);
-
-      if (Array.isArray(order_msg._id)) {
-        _prod_msg = (0, _unique.toString)(order_msg._id);
+          _prod_msg = [],
+          rest = [];
+      var count = 0,
+          sum = 0;
+      if (Array.isArray(order_msg.productId)) {
+        _prod_msg = (0, _unique.toString)(order_msg.productId);
       } else {
-        _prod_msg.push(order_msg._id.toString());
+        _prod_msg.push(order_msg.productId.toString());
       }
 
-      for (var i = 0, len = prodts.products.length; i < len; i++) {
-        if (_prod_msg.indexOf(prodts.products[i].productId.toString()) > -1) {
-          _prodts.push(prodts.products[i]);
-          count += prodts.products[i].qty;
-          sum += prodts.products[i].qty * prodts.products[i].price;
+      for (var i = 0, len = prodts.length; i < len; i++) {
+        if (_prod_msg.indexOf(prodts[i].productId.toString()) > -1) {
+          _prodts.push(prodts[i]);
+          count += prodts[i].qty;
+          sum += prodts[i].qty * prodts[i].price;
+        } else {
+          rest.push(prodts[i]);
         }
       }
+      delete carts.products;
       delete order_msg.prodts;
+      carts.products = rest;
       order_msg.products = _prodts;
       order_msg.status = false;
-      console.log(order_msg);
+      carts.save(function (err, result) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+      });
       resolve(order_msg);
     });
   });
   promise.then(function (order) {
     var _order = new _order3.default(order);
-    _order.save(function () {
+    _order.save(function (err) {
+      if (err) {
+        console.log(err);
+        return;
+      }
       res.redirect('/');
     });
   });
