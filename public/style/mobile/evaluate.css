@@ -52,6 +52,16 @@
   height: 6rem;
   border: none;
 }
+.evaluate .uploadpic {
+  font-size: 1.5rem;
+  position: relative;
+}
+.evaluate .uploadpic input {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
 .evaluate .satisfied {
   display: -webkit-flex;
   display: -moz-box;
@@ -66,30 +76,38 @@
   height: 3rem;
   -webkit-box-flex: 1;
   box-flex: 1;
+  position: relative;
+  padding-top: 2rem;
 }
 .evaluate .satisfied .icon {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  top: -5px;
+  left: 50%;
   display: inline-block;
   width: 50px;
   height: 50px;
   background: url(../images/icon/flower-icon.png) no-repeat;
   background-position: 0 -2px;
-  transform: scale(0.5, 0.5);
+  -webkit-transform: scale(0.5, 0.5) translateX(-50%);
+  transform: scale(0.5, 0.5) translateX(-100%);
 }
-.evaluate .praise .icon {
+.evaluate .satisfied .praise .icon {
   background-position: 0 -158px;
 }
-.evaluate .praise.on .icon {
+.evaluate .satisfied .praise .icon:checked {
   background-position: 0 -2px;
 }
-.evaluate .neutral .icon {
+.evaluate .satisfied .neutral .icon {
   background-position: 0 -211px;
 }
-.evaluate .neutral.on .icon {
+.evaluate .satisfied .neutral .icon:checked {
   background-position: 0 -58px;
 }
-.evaluate .negative .icon {
+.evaluate .satisfied .negative .icon {
   background-position: 0 -264px;
 }
-.evaluate .negative.on .icon {
+.evaluate .satisfied .negative .icon:checked {
   background-position: 0 -108px;
 }

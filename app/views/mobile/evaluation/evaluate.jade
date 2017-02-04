@@ -7,23 +7,36 @@ block content
         i.fa.fa-angle-left
       h1.title 收货评价
     .content.native-scroll.wrapper
-      form.product_list
-        .product
-          .product-head
-            .img-box
-              img(src="")
-            p.name.ellipsis lsdifj;adfjasld
-          textarea.evlue-content 建议您多说说使用后的效果感受，对其他小伙伴帮助很大哦~
-          .uploadpic
-          .satisfied
-            .praise.on
-              i.icon
-              p 好评
-            .neutral
-              i.icon
-              p 中评
-            .negative
-              i.icon
-              p 差评
+      form.product_list(action="",method="POST",enctype="multipart/form-data")
+        input(type="hidden",name="user_id",value="#{order.user_id}")
+        each product,index in order.products
+          .product
+            input(type="hidden",name="evl[#{index}[product_id]]",value="#{product.productId}")
+            .product-head
+              .img-box
+                img(src="#{product.pics[0]}")
+              p.name.ellipsis #{product.name}
+            textarea(name="evl[#{index}[content]]").evlue-content 建议您多说说使用后的效果感受，对其他小伙伴帮助很大哦~
+            .uploadpic
+              i.fa.fa-camera-retro
+              input(type="file",name="evl[#{index}[imgs]]")
+            .satisfied
+              .praise.on
+                input.icon(type="radio",name="evl[#{index}[grade]]",val="好评",checked)
+                p 好评
+              .neutral
+                input.icon(type="radio",name="evl[#{index}[grade]]",val="中评")
+                p 中评
+              .negative
+                input.icon(type="radio",name="evl[#{index}[grade]]",val="差评")
+                p 差评
     .footer
-      a.new_address(href="javascript:;") 提交评论
+      a.new_address.j-submit(href="javascript:;") 提交评论
+
+block scripts
+  script.
+    $(function(){
+      $('.j-submit').on('click',function(e){
+        $('.product_list').submit();
+      })
+    })

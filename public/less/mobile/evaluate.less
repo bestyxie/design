@@ -54,6 +54,16 @@
     height: 6rem;
     border: none;
   }
+  .uploadpic{
+    font-size: 1.5rem;
+    position: relative;
+    input{
+      position: absolute;
+      left: 0;
+      top: 0;
+      opacity: 0;
+    }
+  }
   .satisfied{
     display: -webkit-flex;
     display:-moz-box; /* Firefox */
@@ -65,32 +75,40 @@
       height: 3rem;
       -webkit-box-flex: 1;
       box-flex: 1;
+      position: relative;
+      padding-top: 2rem;
     }
     .icon{
+      position: absolute;
+      width: 25px;
+      height: 25px;
+      top: -5px;
+      left: 50%;
       display: inline-block;
       width: 50px;
       height: 50px;
       background: url(../images/icon/flower-icon.png) no-repeat;
       background-position: 0 -2px;
-      transform: scale(0.5,0.5);
+      -webkit-transform: scale(0.5,0.5) translateX(-50%);
+      transform: scale(0.5,0.5) translateX(-100%);
     }
-  }
-  .praise .icon{
-    background-position: 0 -158px;
-  }
-  .praise.on .icon{
-    background-position: 0 -2px;
-  }
-  .neutral .icon{
-    background-position: 0 -211px;
-  }
-  .neutral.on .icon{
-    background-position: 0 -58px;
-  }
-  .negative .icon{
-    background-position: 0 -264px;
-  }
-  .negative.on .icon{
-    background-position: 0 -108px;
+    .praise .icon{
+      background-position: 0 -158px;
+    }
+    .praise .icon:checked{
+      background-position: 0 -2px;
+    }
+    .neutral .icon{
+      background-position: 0 -211px;
+    }
+    .neutral .icon:checked{
+      background-position: 0 -58px;
+    }
+    .negative .icon{
+      background-position: 0 -264px;
+    }
+    .negative .icon:checked{
+      background-position: 0 -108px;
+    }
   }
 }

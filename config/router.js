@@ -97,5 +97,5 @@ module.exports = function(app){
   app.post('/admin/order/update',Order.update);
 
   // evaluation
-  app.get('/evaluate/submit',Evaluation.submit);
+  app.get('/evaluate/evaluate',Evaluation.submit);
 }

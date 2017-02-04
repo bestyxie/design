@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.submit = undefined;
+exports.subimit = exports.evaluate = undefined;
 
 var _evaluation = require('../models/evaluation');
 
@@ -15,6 +15,21 @@ var _order2 = _interopRequireDefault(_order);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var submit = exports.submit = function submit(req, res) {
-  res.render('mobile/evaluation/evaluate');
+var evaluate = exports.evaluate = function evaluate(req, res) {
+  var orderid = req.query._id;
+
+  _order2.default.findOne({ _id: orderid }, function (err, order) {
+    if (err) {
+      console.log(err);
+      res.send(err);
+    }
+    res.render('mobile/evaluation/evaluate', { user_id: 1, products: 1 }, {
+      order: order
+    });
+  });
+};
+
+var subimit = exports.subimit = function subimit(req, res) {
+  console.log(req.body.order);
+  res.redirect('/order');
 };
