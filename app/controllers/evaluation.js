@@ -31,14 +31,20 @@ var evaluate = exports.evaluate = function evaluate(req, res) {
 };
 
 var subimit = exports.subimit = function subimit(req, res) {
-  var prod_id = req.body.prod.product_id;
+  var prodts = req.body.prod;
   var user_id = req.body.user_id;
   var files = req.files;
   var comments = {};
 
-  function save_evl(prod_id, index) {
-    console.log(index);
+  files = files.map(function (item) {
+    return '/images/upload/' + item.filename;
+  });
+
+  function save_evl(prodt, index) {
+    var prod_id = prodt.product_id;
     var msg = req.body[prod_id];
+    comments.size = prodt.size;
+    comments.color = prodt.color;
     comments.product_id = prod_id;
     comments.user_id = user_id;
     comments.content = msg.content;
@@ -52,14 +58,14 @@ var subimit = exports.subimit = function subimit(req, res) {
       }
     });
   }
-  if (Array.isArray(prod_id)) {
-    for (var i = 0; i < prod_id.length; i++) {
-      (function (prod_id, index) {
-        save_evl(prod_id, index);
-      })(prod_id[i], i);
+  if (Array.isArray(prodts)) {
+    for (var i = 0; i < prodts.length; i++) {
+      (function (prodts, index) {
+        save_evl(prodts, index);
+      })(prodts[i], i);
     }
   } else {
-    save_evl(prod_id, 0);
+    save_evl(prodts, 0);
   }
   res.redirect('/order');
 };

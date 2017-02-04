@@ -36,23 +36,23 @@ block content
             span.item 销量 #{product.sale_num}
       .detail-rates
         .rates-head
-          a.title(href="") 累计评价 9
+          a.title(href="") 累计评价 #{count}
             span.more 更多
               i.fa.fa-angle-right
         .rates-list
-          .rate-item
-            .rate-user
-              img.avatar(src="/images/d1.jpg")
-              span.name 空间规划2016
-            .rate-cont 衣服很漂亮和图片一样的，海域就是好便宜呀，店家很好，准备再买几件
-            .rate-attr
-              span.time 2016-05-18
-              span.sku 颜色：白色（两面可穿宽） 尺码：均码
-            .show-img
-              ul.clearfix
-                each pic in product.pics
+          each evl in evls
+            .rate-item
+              .rate-user
+                img.avatar(src="/images/d1.jpg")
+                span.name 空间规划2016
+              .rate-cont #{evl.content}
+              .rate-attr
+                span.time #{evl.createAt.getYear()}-#{evl.createAt.getMonth()}-#{evl.createAt.getDay()}
+                span.sku 颜色：#{evl.color} 尺码：#{evl.size}
+              .show-img
+                ul.clearfix
                   li.small-img
-                    img(src="#{pic}")
+                    img(src="#{evl.imgs}")
       .detail-tabpanel
         .buttons-row.row
           a.col-50.tab-link.actve(href="#graphic")

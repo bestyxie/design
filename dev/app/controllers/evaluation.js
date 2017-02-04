@@ -17,14 +17,20 @@ export const evaluate = (req,res) => {
 }
 
 export const subimit = (req,res) => {
-  let prod_id = req.body.prod.product_id;
+  let prodts = req.body.prod;
   let user_id = req.body.user_id;
   let files = req.files;
   let comments = {};
 
-  function save_evl(prod_id,index){
-    console.log(index);
+  files = files.map(function(item){
+    return '/images/upload/'+item.filename
+  });
+
+  function save_evl(prodt,index){
+    let prod_id = prodt.product_id;
     let msg = req.body[prod_id];
+    comments.size = prodt.size;
+    comments.color = prodt.color;
     comments.product_id = prod_id;
     comments.user_id = user_id;
     comments.content = msg.content;
@@ -39,14 +45,14 @@ export const subimit = (req,res) => {
     })
     
   }
-  if(Array.isArray(prod_id)){
-    for(let i=0;i<prod_id.length;i++){
-      (function(prod_id,index){
-        save_evl(prod_id,index)
-      })(prod_id[i],i)
+  if(Array.isArray(prodts)){
+    for(let i=0;i<prodts.length;i++){
+      (function(prodts,index){
+        save_evl(prodts,index)
+      })(prodts[i],i)
     }
   }else{
-    save_evl(prod_id,0)
+    save_evl(prodts,0)
   }
   res.redirect('/order');
 }

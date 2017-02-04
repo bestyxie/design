@@ -36,6 +36,10 @@ var _update_document = require('../search/update_document');
 
 var _delete_file = require('../common/delete_file');
 
+var _evaluation = require('../models/evaluation');
+
+var _evaluation2 = _interopRequireDefault(_evaluation);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // let qs = require('querystring');
@@ -79,13 +83,33 @@ module.exports.list = function (req, res) {
 // 商品详情页
 module.exports.detail = function (req, res) {
   var product_id = req.params.id;
-  _product3.default.findOne({ _id: product_id }, function (err, product) {
-    if (err) {
-      console.log(err);
-      res.redirect('/');
-    }
-    res.render('mobile/product_details/', {
-      product: product
+  var promise = new Promise(function (resolve, reject) {
+    _evaluation2.default.find({ product_id: product_id }).sort({ createAt: -1 }).limit(2).exec(function (err, evls) {
+      if (err) {
+        console.log(err);
+        reject(err);
+      }
+      console.log(evls);
+      _evaluation2.default.count({ product_id: product_id }, function (err, count) {
+        if (err) {
+          console.log(err);
+          reject(err);
+        }
+        resolve(evls, count);
+      });
+    });
+  });
+  promise.then(function (evls, count) {
+    _product3.default.findOne({ _id: product_id }, function (err, product) {
+      if (err) {
+        console.log(err);
+        res.redirect('/');
+      }
+      res.render('mobile/product_details/', {
+        product: product,
+        evls: evls,
+        count: count
+      });
     });
   });
 };

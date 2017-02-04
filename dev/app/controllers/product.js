@@ -11,6 +11,7 @@ import {esClient} from '../search/client';
 import {delete_doc} from '../search/delete_document';
 import {update_doc} from '../search/update_document';
 import {deletePic} from '../common/delete_file';
+import Evaluation from '../models/evaluation';
 
 // let qs = require('querystring');
 // import {base_set,ANCHOR,base_url} from './weixin';
@@ -54,15 +55,35 @@ module.exports.list = function(req,res){
 // 商品详情页
 module.exports.detail = function(req,res){
   var product_id = req.params.id;
-  Product.findOne({_id: product_id},function(err,product){
-    if(err){
-      console.log(err);
-      res.redirect('/');
-    }
-    res.render('mobile/product_details/',{
-      product: product
-    });
+  let promise = new Promise((resolve,reject) => {
+    Evaluation.find({product_id: product_id}).sort({createAt: -1}).limit(2).exec((err,evls) => {
+      if(err){
+        console.log(err);
+        reject(err);
+      }
+      console.log(evls);
+      Evaluation.count({product_id: product_id},(err,count) => {
+        if(err){
+          console.log(err);
+          reject(err);
+        }
+        resolve(evls,count);
+      })
+    })
   });
+  promise.then((evls,count) => {
+    Product.findOne({_id: product_id},function(err,product){
+      if(err){
+        console.log(err);
+        res.redirect('/');
+      }
+      res.render('mobile/product_details/',{
+        product: product,
+        evls: evls,
+        count: count
+      });
+    });
+  })
 }
 
 // 新增商品

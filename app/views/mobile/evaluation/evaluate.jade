@@ -12,6 +12,8 @@ block content
         each product,index in order.products
           .product
             input(type="hidden",name="prod[product_id]",value="#{product.productId}")
+            input(type="hidden",name="prod[size]",value="#{product.size}")
+            input(type="hidden",name="prod[color]",value="#{product.color}")
             .product-head
               .img-box
                 img(src="#{product.pics[0]}")
