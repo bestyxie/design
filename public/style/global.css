@@ -731,6 +731,15 @@ header.bar.bar-nav form .search-btn {
   color: #fff;
   background: #ec312d;
 }
+.evaluate-list {
+  margin-top: 2rem;
+}
+.evaluate-list .rates-list {
+  background: #fff;
+}
+.evaluate-list .rate-item {
+  border-bottom: 1px solid #e5e5e5;
+}
 .mask {
   display: none;
   width: 100%;

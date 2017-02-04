@@ -56,3 +56,17 @@ export const subimit = (req,res) => {
   }
   res.redirect('/order');
 }
+
+export const list = (req,res) => {
+  let product_id = req.query.id;
+
+  Evaluation.find({product_id: product_id},(err,evls) => {
+    if(err){
+      console.log(err);
+      res.send(err);
+    }
+    res.render('mobile/evaluation/',{
+      evls: evls
+    });
+  })
+}

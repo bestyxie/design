@@ -99,4 +99,5 @@ module.exports = function(app){
   // evaluation
   app.get('/evaluate/evaluate',Evaluation.evaluate);
   app.post('/evaluate/submit',upload.array('evl[imgs]',8),Evaluation.subimit);
+  app.get('/evaluate/list',Evaluation.list);
 }

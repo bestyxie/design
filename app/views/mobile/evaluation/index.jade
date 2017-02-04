@@ -1,0 +1,23 @@
+extends ../../layout
+
+block content
+  .page.detail
+    header.head-block.bar.bar-nav.header
+      a.arr(href="javascript:history.back();")
+        i.fa.fa-angle-left
+      h1.title 所以评价
+    .content.native-scroll.wrapper.evaluate-list
+      .rates-list
+        each evl in evls
+          .rate-item
+            .rate-user
+              img.avatar(src="/images/d1.jpg")
+              span.name 空间规划2016
+            .rate-cont #{evl.content}
+            .rate-attr
+              span.time #{evl.createAt.getYear()}-#{evl.createAt.getMonth()}-#{evl.createAt.getDay()}
+              span.sku 颜色：#{evl.color} 尺码：#{evl.size}
+            .show-img
+              ul.clearfix
+                li.small-img
+                  img(src="#{evl.imgs}")

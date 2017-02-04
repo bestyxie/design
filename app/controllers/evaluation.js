@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.subimit = exports.evaluate = undefined;
+exports.list = exports.subimit = exports.evaluate = undefined;
 
 var _evaluation2 = require('../models/evaluation');
 
@@ -68,4 +68,18 @@ var subimit = exports.subimit = function subimit(req, res) {
     save_evl(prodts, 0);
   }
   res.redirect('/order');
+};
+
+var list = exports.list = function list(req, res) {
+  var product_id = req.query.id;
+
+  _evaluation3.default.find({ product_id: product_id }, function (err, evls) {
+    if (err) {
+      console.log(err);
+      res.send(err);
+    }
+    res.render('mobile/evaluation/', {
+      evls: evls
+    });
+  });
 };
