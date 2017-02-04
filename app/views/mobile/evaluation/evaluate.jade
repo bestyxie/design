@@ -1,0 +1,29 @@
+extends ../../layout
+
+block content
+  .home.page.evaluate
+    header.head-block.bar.bar-nav.header
+      a.arr(href="javascript:history.back();")
+        i.fa.fa-angle-left
+      h1.title 收货评价
+    .content.native-scroll.wrapper
+      form.product_list
+        .product
+          .product-head
+            .img-box
+              img(src="")
+            p.name.ellipsis lsdifj;adfjasld
+          textarea.evlue-content 建议您多说说使用后的效果感受，对其他小伙伴帮助很大哦~
+          .uploadpic
+          .satisfied
+            .praise.on
+              i.icon
+              p 好评
+            .neutral
+              i.icon
+              p 中评
+            .negative
+              i.icon
+              p 差评
+    .footer
+      a.new_address(href="javascript:;") 提交评论

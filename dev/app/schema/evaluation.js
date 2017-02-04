@@ -6,5 +6,7 @@ var EvaluationSchema = new Schema({
   product_id: ObjectId,
   user_id: ObjectId,
   content: String,
+  grade: String,
+  // 好评，中评，差评
   imgs: [String]
 })

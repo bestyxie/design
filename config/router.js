@@ -7,6 +7,7 @@ var Token = require('../app/controllers/token');
 var Activity = require('../app/controllers/activity');
 var Order = require('../app/controllers/order');
 var Address = require('../app/controllers/address');
+var Evaluation = require('../app/controllers/evaluation');
 // var UploadPic = require('../app/controllers/uploadPic');
 
 
@@ -94,4 +95,7 @@ module.exports = function(app){
   app.get('/order',Order.order_list);
   app.get('/admin/delivery',Order.getAll_paid);
   app.post('/admin/order/update',Order.update);
+
+  // evaluation
+  app.get('/evaluate/submit',Evaluation.submit);
 }

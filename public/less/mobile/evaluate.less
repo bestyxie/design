@@ -1,0 +1,96 @@
+.popup-address,.evaluate{
+  .footer{
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    border-top: 1px solid #ccc;
+    height: 2rem;
+    background: #fff;
+    .new_address{
+      color: #fff;
+      text-align: center;
+      display: block;
+      width: 6rem;
+      height: 1.5rem;
+      line-height: 1.5rem;
+      border-radius: 0.75rem;
+      background: #fe406e;
+      margin: 0.25rem auto 0;
+    }
+  }
+}
+
+.evaluate{
+  .content{
+    padding-top: 2rem;
+  }
+  .product{
+    padding: 0.5rem;
+    background: #fff;
+    margin-bottom: 0.5rem;
+  }
+  .product-head{
+    background: #fafafa;
+    height: 3.2rem;
+    padding: 0.2rem 0.2rem 0.2rem 3.2rem;
+    line-height: 3rem;
+    position: relative;
+    margin-bottom: 0.5rem;
+    .img-box{
+      position: absolute;
+      left: 0.2rem;
+      width: 3rem;
+      height: 3rem;
+      overflow: hidden;
+      img{
+        width: 100%;
+      }
+    }
+  }
+  .evlue-content{
+    color: #ababab;
+    resize: none;
+    width: 100%;
+    height: 6rem;
+    border: none;
+  }
+  .satisfied{
+    display: -webkit-flex;
+    display:-moz-box; /* Firefox */
+    display:-webkit-box; /* Safari and Chrome */
+    display:box;
+    border-top: 1px solid #e5e5e5;
+    div{
+      text-align: center;
+      height: 3rem;
+      -webkit-box-flex: 1;
+      box-flex: 1;
+    }
+    .icon{
+      display: inline-block;
+      width: 50px;
+      height: 50px;
+      background: url(../images/icon/flower-icon.png) no-repeat;
+      background-position: 0 -2px;
+      transform: scale(0.5,0.5);
+    }
+  }
+  .praise .icon{
+    background-position: 0 -158px;
+  }
+  .praise.on .icon{
+    background-position: 0 -2px;
+  }
+  .neutral .icon{
+    background-position: 0 -211px;
+  }
+  .neutral.on .icon{
+    background-position: 0 -58px;
+  }
+  .negative .icon{
+    background-position: 0 -264px;
+  }
+  .negative.on .icon{
+    background-position: 0 -108px;
+  }
+}
