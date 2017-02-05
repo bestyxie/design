@@ -17,9 +17,9 @@ export const goods = (req,res) => {
 }
 
 export const reply = (req,res) => {
-  let _order = req.body.order;
+  let _order = req.body.ret;
   let orderid = req.body.orderid;
-  let file = req.files
+  let file = req.files[0];
   file = '/images/upload/'+file.filename
 
   Order.findOne({_id: orderid},(err,order) => {
@@ -30,7 +30,7 @@ export const reply = (req,res) => {
     _order.status = '1';
     _order.products = order.products;
     _order.pics = file;
-    console.log(_order);
+
     let ret_order = new Returns(_order);
     ret_order.save((err) => {
       if(err){

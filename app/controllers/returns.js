@@ -31,7 +31,6 @@ var reply = exports.reply = function reply(req, res) {
   var _order = req.body.ret;
   var orderid = req.body.orderid;
   var file = req.files[0];
-  console.log(file);
   file = '/images/upload/' + file.filename;
 
   _order3.default.findOne({ _id: orderid }, function (err, order) {
@@ -42,7 +41,7 @@ var reply = exports.reply = function reply(req, res) {
     _order.status = '1';
     _order.products = order.products;
     _order.pics = file;
-    console.log(_order);
+
     var ret_order = new _returns.Returns(_order);
     ret_order.save(function (err) {
       if (err) {
