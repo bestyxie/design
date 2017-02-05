@@ -3,7 +3,6 @@ import Order from '../models/order';
 
 export const evaluate = (req,res) => {
   let orderid = req.query._id;
-  console.log(orderid);
 
   Order.findOne({_id: orderid},{user_id: 1,products: 1},(err,order) => {
     if(err){

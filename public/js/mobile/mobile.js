@@ -349,5 +349,8 @@ $(function(){
   //   }
   // },false);
 
+  $(document).on('click','.j-submit-return',function(e){
+    $('#return').submit();
+  })
   
 })(Zepto);

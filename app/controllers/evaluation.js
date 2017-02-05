@@ -17,7 +17,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var evaluate = exports.evaluate = function evaluate(req, res) {
   var orderid = req.query._id;
-  console.log(orderid);
 
   _order2.default.findOne({ _id: orderid }, { user_id: 1, products: 1 }, function (err, order) {
     if (err) {

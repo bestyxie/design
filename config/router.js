@@ -8,6 +8,7 @@ var Activity = require('../app/controllers/activity');
 var Order = require('../app/controllers/order');
 var Address = require('../app/controllers/address');
 var Evaluation = require('../app/controllers/evaluation');
+var Returns = require('../app/controllers/returns');
 // var UploadPic = require('../app/controllers/uploadPic');
 
 
@@ -102,4 +103,8 @@ module.exports = function(app){
   app.get('/evaluate/evaluate',Evaluation.evaluate);
   app.post('/evaluate/submit',upload.array('evl[imgs]',8),Evaluation.subimit);
   app.get('/evaluate/list',Evaluation.list);
+
+  // return
+  app.get('/returns/goods',Returns.goods);
+  app.post('/returns/apply',upload.array('pics',8),Returns.reply);
 }

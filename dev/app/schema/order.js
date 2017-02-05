@@ -10,6 +10,7 @@ var OrderSchema = new Schema({
   // 待发货
   // 待收货
   // 待评价
+  // 退款退货
   // 交易完成
   address: {
     recipient: String,

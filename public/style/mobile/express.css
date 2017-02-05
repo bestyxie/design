@@ -1,24 +1,30 @@
-.express .content {
+.express .content,
+.returns .content {
   margin-top: 2.1rem;
 }
-.express .content .section {
+.express .content .section,
+.returns .content .section {
   background: #fff;
   margin-bottom: 0.5rem;
   padding: 0.5rem;
 }
-.express .express-context {
+.express .express-context,
+.returns .express-context {
   padding-left: 2rem;
   position: relative;
   font-size: 0.7rem;
 }
-.express .express-context .on {
+.express .express-context .on,
+.returns .express-context .on {
   color: #ff5e7a;
 }
-.express .express-context .block {
+.express .express-context .block,
+.returns .express-context .block {
   padding: 0.5rem;
   border-bottom: 1px solid #e5e5e5;
 }
-.express .express-context .line {
+.express .express-context .line,
+.returns .express-context .line {
   position: absolute;
   top: 0.5rem;
   left: 1.5rem;
@@ -26,7 +32,8 @@
   width: 2px;
   background: #ededed;
 }
-.express .express-context .line:after {
+.express .express-context .line:after,
+.returns .express-context .line:after {
   content: '';
   display: block;
   width: 0.5rem;
@@ -36,6 +43,7 @@
   position: absolute;
   left: -0.2rem;
 }
-.express .express-context .on.line:after {
+.express .express-context .on.line:after,
+.returns .express-context .on.line:after {
   background: #ff5e7a;
 }
