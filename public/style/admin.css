@@ -736,3 +736,29 @@ body {
   width: 320px;
   height: 150px;
 }
+#express .dropdown {
+  width: 160px;
+}
+#express .dropdown button {
+  width: 100%;
+  border: 1px solid #e5e5e5;
+  background: #fff;
+  text-align: left;
+  text-indent: 1em;
+  outline: none;
+}
+#express .dropdown button .caret {
+  top: 15px;
+  right: 10px;
+}
+#express .dropdown .dropdown-menu {
+  height: auto !important;
+}
+#express .dropdown .dropdown-menu li {
+  padding: 5px 10px;
+  border-bottom: 1px solid #e5e5e5;
+  cursor: pointer;
+}
+#express .dropdown .dropdown-menu li:hover {
+  background: #e5e5e5;
+}

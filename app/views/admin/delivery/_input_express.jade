@@ -9,7 +9,20 @@
         .form-group
           label(for="name") 快递名称*
           .input-box
-            input#exporess_name.required(type="text")
+            input#exporess_name.required(type="hidden")
+            .dropdown.j-dropdown
+              button(type="button",data-toggle="dropdown",aria-haspopup="true",aria-expanded="false")
+                | 选择快递
+                span.caret
+              ul.dropdown-menu
+                li(data-express="shentong") 申通快递
+                li(data-express="ems") EMS
+                li(data-express="shunfeng") 顺丰速运
+                li(data-express="yunda") 韵达快递
+                li(data-express="yuantong") 圆通快递
+                li(data-express="zhongtong") 中通快递
+                li(data-express="huitongkuaidi") 百世快递
+                li(data-express="tiantian") 天天快递
         .form-group
           label(for="name") 快递单号*
           .input-box

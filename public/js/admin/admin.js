@@ -94,7 +94,7 @@ $(function(){
       var labels = $('.j-label-group .j-labels.selected');
       var fragment = '';
       for(var i=0; i<labels.length; i++){
-        fragment += '<span class="labels j-selected_lb"><span>'+$(labels[i]).html()+'</span><i class=""></i></span>'
+        fragment += '<span class="labels j-selected_lb"><span>'+$(labels[i]).html()+'</span><i class="fa fa-times-circle"></i></span>'
       }
       $('.j-label-group').append(fragment);
     }

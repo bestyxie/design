@@ -1,6 +1,31 @@
 @import '../variable.less';
 @import '../mixin.less';
 
-.delivery{
-  
+#express{
+  .dropdown{
+    width: 160px;
+    button{
+      width: 100%;
+      border: 1px solid #e5e5e5;
+      background: #fff;
+      text-align: left;
+      text-indent: 1em;
+      outline: none;
+      .caret{
+        top: 15px;
+        right: 10px;
+      }
+    }
+    .dropdown-menu{
+      height: auto !important;
+      li{
+        padding: 5px 10px;
+        border-bottom: 1px solid #e5e5e5;
+        cursor: pointer;
+        &:hover{
+          background: #e5e5e5;
+        }
+      }
+    }
+  }
 }
