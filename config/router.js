@@ -96,6 +96,8 @@ module.exports = function(app){
   app.get('/admin/delivery',Order.getAll_paid);
   app.post('/admin/order/update',Order.update);
 
+  app.get('/express',Order.express_msg);
+
   // evaluation
   app.get('/evaluate/evaluate',Evaluation.evaluate);
   app.post('/evaluate/submit',upload.array('evl[imgs]',8),Evaluation.subimit);

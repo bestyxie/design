@@ -2,6 +2,7 @@ import Order from '../models/order';
 import ShoppingCart from '../models/ShoppingCart';
 import { toString } from '../common/unique';
 import { Address } from '../models/address';
+import xto from 'xto';
 
 export const create_order = (req,res) => {
   let prod_msg = req.body.products;
@@ -169,5 +170,42 @@ export const update = (req,res) => {
       }
       res.json({success: true});
     })
+  })
+}
+
+export const express_msg = (req,res) => {
+  let orderid = req.query.orderid;
+  let name = req.query.name;
+  let number = req.query.number;
+
+
+  xto.query(number,name,(err,express) => {
+    if(err){
+      console.log(err);
+      res.send(err);
+    }
+    switch(name){
+      case 'ems': express.com="EMS" 
+        break;
+      case 'shunfeng': express.com="顺丰速运" 
+        break;
+      case 'shentong': express.com='申通快递' 
+        break;
+      case 'yunda': express.com='韵达快递' 
+        break;
+      case 'yuantong': express.com='圆通快递' 
+        break;
+      case 'zhongtong': express.com='中通快递' 
+        break;
+      case 'huitongkuaidi': express.com='百世快递' 
+        break;
+      case 'tiantian': express.com='天天快递' 
+        break;
+    }
+    let _data = [];
+    for(let i=express.data.length-1;i>=0;i--){
+      _data.push(express.data[i]);
+    }
+    res.render('mobile/express/',{express: express,orderid: orderid});
   })
 }

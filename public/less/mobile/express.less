@@ -1,0 +1,44 @@
+.express{
+  .content{
+    margin-top: 2.1rem;
+    .section{
+      background: #fff;
+      margin-bottom: 0.5rem;
+      padding: 0.5rem;
+    }
+  }
+  .express-context{
+    padding-left: 2rem;
+    position: relative;
+    font-size: 0.7rem;
+    .on{
+      color: #ff5e7a;
+    }
+    .block{
+      padding: 0.5rem;
+      border-bottom: 1px solid #e5e5e5;
+    }
+    .line{
+      position: absolute;
+      top: 0.5rem;
+      left: 1.5rem;
+      height: 100%;
+      width: 2px;
+      background: #ededed;
+      &:after{
+        content: '';
+        display: block;
+        display: block;
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 0.5rem;
+        background: #ededed;
+        position: absolute;
+        left: -0.2rem;
+      }
+    }
+    .on.line:after{
+      background: #ff5e7a;
+    }
+  }
+}

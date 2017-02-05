@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.update = exports.getAll_paid = exports.paying = exports.order_list = exports.submit_order = exports.create_order = undefined;
+exports.express_msg = exports.update = exports.getAll_paid = exports.paying = exports.order_list = exports.submit_order = exports.create_order = undefined;
 
 var _order2 = require('../models/order');
 
@@ -16,6 +16,10 @@ var _ShoppingCart2 = _interopRequireDefault(_ShoppingCart);
 var _unique = require('../common/unique');
 
 var _address = require('../models/address');
+
+var _xto = require('xto');
+
+var _xto2 = _interopRequireDefault(_xto);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -186,5 +190,49 @@ var update = exports.update = function update(req, res) {
       }
       res.json({ success: true });
     });
+  });
+};
+
+var express_msg = exports.express_msg = function express_msg(req, res) {
+  var orderid = req.query.orderid;
+  var name = req.query.name;
+  var number = req.query.number;
+
+  _xto2.default.query(number, name, function (err, express) {
+    if (err) {
+      console.log(err);
+      res.send(err);
+    }
+    switch (name) {
+      case 'ems':
+        express.com = "EMS";
+        break;
+      case 'shunfeng':
+        express.com = "顺丰速运";
+        break;
+      case 'shentong':
+        express.com = '申通快递';
+        break;
+      case 'yunda':
+        express.com = '韵达快递';
+        break;
+      case 'yuantong':
+        express.com = '圆通快递';
+        break;
+      case 'zhongtong':
+        express.com = '中通快递';
+        break;
+      case 'huitongkuaidi':
+        express.com = '百世快递';
+        break;
+      case 'tiantian':
+        express.com = '天天快递';
+        break;
+    }
+    var _data = [];
+    for (var i = express.data.length - 1; i >= 0; i--) {
+      _data.push(express.data[i]);
+    }
+    res.render('mobile/express/', { express: express, orderid: orderid });
   });
 };
