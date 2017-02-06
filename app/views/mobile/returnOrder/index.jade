@@ -1,74 +1,40 @@
 extends ../../layout
 
 block content
-  .page.order_list.returns
+  .page.order_list
     header.head-block.bar.bar-nav.header
       a.arr(href="javascript:history.back();")
         i.fa.fa-angle-left
-      h1.title 申请退货
+      h1.title 我的订单
     .content.native-scroll.wrapper
-      .section.step-box
-        .steps
-          .step.pass 填写申请
-          .step 寄回商品
-          .step 卖家收货
-          .step 退款完成
-        p 请按照要求填写退货申请。订单需要全部退货，商家收到寄回的商品后，会将货款全额退回，但不包括邮费，寄回商品的邮费需要买家自行承担。
-      .section
-        .block.orderid 订单号：#{order._id}
-        .block
-          ul.item-content
-            each product in order.products
-              - count += product.qty
-              li.order
-                .order-img
-                  img(src="#{product.pics[0]}")
-                .order-desc
-                  p.name.ellipsis #{product.name}
-                  p.size #{product.size}
-                  p.color #{product.color}
-                .msg
-                  .price ￥ #{product.price}
-                  .count x#{product.qty}
-      form#return.section(action="/returns/apply",method="POST",enctype="multipart/form-data")
-        input(type="hidden",name="ret[orderid]",value="#{order._id}")
-        label
-          em *
-          | 退货原因
-        input#picker(type="text",name="ret[reason]")
-        label 描述说明
-        textarea.desc(type="text",name="ret[desc]",placeholder="请描述您想退货的原因")
-        label 上传照片
-        p.comments 支持JPG、GIF、PNG，只能上传一张
-        .file
-          label(for="file")
-            i.fa.fa-camera-retro
-          input#file(type="file",name="pics")
-        .box
-          label
-            em *
-            | 联系人
-          input(type="text",name="ret[contact]",value="#{order.address.recipient}")
-        .box
-          label
-            em *
-            | 联系电话
-          input(type="text",name="ret[tel]",value="#{order.address.tel}")
-    .footer.cart-checkout
-      a.submit-return.j-submit-return(href="javascript:;",data-popup=".popup-new") 提交退货申请
-
-block scripts
-  script.
-    $(function(){
-      $('#picker').picker({
-        toolbarTemplate: '<header class="bar bar-nav">\
-          <button class="button button-link pull-left">按钮</button>\
-          <button class="button button-link pull-right close-picker">确定</button>\
-          <h1 class="title">标题</h1>\
-          </header>',
-        cols: [{
-          textAlign: 'center',
-          values: ['包装问题','快递原因','库房发错','重复购买','质量问题','买错了','不喜欢','商品破损','漏发','没有理由']
-        }]
-      })
-    })
+      ul.all-order
+        each order in orders
+          li.orders-item
+            - var count = 0
+            .item-head
+              .order-id 订单号 #{order._id}
+              .order-status 退货
+            ul.item-content
+              each product in order.products
+                - count += product.qty
+                li.order
+                  .order-img
+                    img(src="#{product.pics[0]}")
+                  .order-desc
+                    p.name.ellipsis #{product.name}
+                    p.size #{product.size}
+                    p.color #{product.color}
+                  .msg
+                    .price ￥ #{product.price}
+                    .count x#{product.qty}
+            .item-footer.clearfix
+              .sum 共#{count}件 合计
+                em ￥88
+            .address-msg
+              if order.status == 1
+                p 等待商家确认
+              else if order.status == 2
+                p 收件人：#{order.address.recipient}
+                p 电话：#{order.address.tel}
+                p 电话：#{order.address.addr}
+                p 备注：请在快递里留张纸条，说明订单号，用户名!!!

@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.get_express = exports.adopt = exports.admin_retlist = exports.reply = exports.goods = undefined;
+exports.get_return = exports.get_express = exports.adopt = exports.admin_retlist = exports.reply = exports.goods = undefined;
 
 var _order2 = require('../models/order');
 
@@ -33,7 +33,7 @@ var goods = exports.goods = function goods(req, res) {
         }
       });
     }
-    res.render('mobile/returnOrder/', {
+    res.render('mobile/returnOrder/reply', {
       order: order
     });
   });
@@ -50,9 +50,10 @@ var reply = exports.reply = function reply(req, res) {
       console.log(err);
       res.send(err);
     }
-    _order.status = '1';
+    _order.status = 1;
     _order.products = order.products;
     _order.pics = file;
+    _order.user_id = req.session.user._id;
 
     var ret_order = new _returns.Returns(_order);
     ret_order.save(function (err) {
@@ -110,5 +111,19 @@ var get_express = exports.get_express = function get_express(req, res) {
     }
 
     res.json(express);
+  });
+};
+
+var get_return = exports.get_return = function get_return(req, res) {
+  var userid = req.session.user._id;
+
+  _returns.Returns.find({ user_id: userid, status: { '$lte': 2 } }, function (err, returns) {
+    if (err) {
+      console.log(err);
+      res.send(err);
+    }
+    res.render('mobile/returnOrder/', {
+      orders: returns
+    });
   });
 };

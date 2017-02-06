@@ -35,8 +35,6 @@ block content
                     if order.status == 1
                       a.edit.j-edit(href="javascript:void(0);",data-ret="#{order._id}",data-toggle="modal",data-target="#agree") 同意
                     else if order.status == 2
-                      a.edit(href="javascript:void(0);") 等待客户发货
-                    else if order.status == 3
                       a#express-msg.edit(href="javascript:void(0);") 等待收货，退款
                     else
                       a.edit(href="javascript:void(0);") 完成退款
@@ -71,7 +69,7 @@ block scripts
         data.address.recipient = $('#exporess_name').val();
         data.address.tel = $('#exporess_tel').val();
         data.address.addr = $('#exporess_addr').val();
-        data.status = '2';
+        data.status = 2;
         data.returnid = returnid;
         $('.j-edit').html('等待客户发货');
         console.log(data);

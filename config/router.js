@@ -107,6 +107,7 @@ module.exports = function(app){
   // return
   app.get('/returns/goods',Returns.goods);
   app.post('/returns/apply',upload.array('pics',8),Returns.reply);
+  app.get('/returns/list',Returns.get_return);
   app.get('/admin/returns',Returns.admin_retlist);
   app.post('/admin/returns/adopt',Returns.adopt);
 }

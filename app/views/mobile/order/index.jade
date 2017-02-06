@@ -34,6 +34,6 @@ block content
                 a.red-btn(href="/evaluate/evaluate?_id=#{order._id}",external) 收货评价
                 a.red-btn.hide(href="") 确认收货
                 a.red-btn(href="/express?name=#{order.express_msg.name}&number=#{order.express_msg.number}&orderid=#{order._id}") 订单跟踪
-                a.red-btn(href="/returns/goods?orderid=#{order._id}") 申请退货
+                a.red-btn(href="/returns/goods?orderid=#{order._id}",external) 申请退货
 
 block scripts
