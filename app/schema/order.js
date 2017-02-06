@@ -14,6 +14,7 @@ var OrderSchema = new Schema({
   // 待评价
   // 退款退货
   // 交易完成
+  // 交易关闭
   address: {
     recipient: String,
     tel: String,

@@ -110,4 +110,5 @@ module.exports = function(app){
   app.get('/returns/list',Returns.get_return);
   app.get('/admin/returns',Returns.admin_retlist);
   app.post('/admin/returns/adopt',Returns.adopt);
+  app.get('/admin/returns/complete',Returns.complete);
 }

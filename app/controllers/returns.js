@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.get_return = exports.get_express = exports.adopt = exports.admin_retlist = exports.reply = exports.goods = undefined;
+exports.complete = exports.get_return = exports.adopt = exports.admin_retlist = exports.reply = exports.goods = undefined;
 
 var _order2 = require('../models/order');
 
@@ -25,14 +25,7 @@ var goods = exports.goods = function goods(req, res) {
       console.log(err);
       res.send(err);
     }
-    if (order.status == 3) {
-      _xto2.default.query(number, name, function (err, express) {
-        if (err) {
-          console.log(err);
-          res.send(err);
-        }
-      });
-    }
+
     res.render('mobile/returnOrder/reply', {
       order: order
     });
@@ -61,6 +54,7 @@ var reply = exports.reply = function reply(req, res) {
         console.log(err);
         res.send(err);
       }
+      _order3.default.findOneAndUpdate({ _id: orderid }, { status: '退款退货' });
       res.render('mobile/returnOrder/success', {
         p: '申请成功！请耐心等待审核'
       });
@@ -100,20 +94,6 @@ var adopt = exports.adopt = function adopt(req, res) {
   });
 };
 
-var get_express = exports.get_express = function get_express(req, res) {
-  var name = req.query.name;
-  var number = req.query.number;
-
-  _xto2.default.query(number, name, function (err, express) {
-    if (err) {
-      console.log(err);
-      res.json({ success: false });
-    }
-
-    res.json(express);
-  });
-};
-
 var get_return = exports.get_return = function get_return(req, res) {
   var userid = req.session.user._id;
 
@@ -125,5 +105,25 @@ var get_return = exports.get_return = function get_return(req, res) {
     res.render('mobile/returnOrder/', {
       orders: returns
     });
+  });
+};
+
+var complete = exports.complete = function complete(req, res) {
+  var _id = req.query._id;
+
+  _returns.Returns.findOneAndUpdate({ _id: _id }, { status: 3 }, function (err, ret) {
+    if (err) {
+      console.log(err);
+      res.json({ success: false });
+    }
+
+    _order3.default.findOneAndUpdate({ _id: ret.orderid }, { status: '交易关闭' }, function (err, order) {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      console.log(order);
+    });
+    res.json({ success: true });
   });
 };

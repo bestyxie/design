@@ -35,21 +35,22 @@ block content
                     if order.status == 1
                       a.edit.j-edit(href="javascript:void(0);",data-ret="#{order._id}",data-toggle="modal",data-target="#agree") 同意
                     else if order.status == 2
-                      a#express-msg.edit(href="javascript:void(0);") 等待收货，退款
+                      a.edit.j-return(href="javascript:void(0);",data-id="#{order._id}") 等待收货，退款
+                      a.edit.hide.j-complete(href="javascript:void(0);") 完成退款
                     else
                       a.edit(href="javascript:void(0);") 完成退款
             tr
               td 退货
               td.costom(colspan="6")
                 .imgbox
-                  img(src="")
+                  img(src="#{order.pics}")
                 .reason
-                  p 原因： #{order.recipient}
-                  p 描述： #{order.tel}
+                  p 原因： #{order.reason}
+                  p 描述： #{order.desc}
             tr
               td 备注：
               td(colspan="6")
-                p 联系人： #{order.recipient}
+                p 联系人： #{order.contact}
                 p 手机： #{order.tel}
   include _agree
 
@@ -77,26 +78,20 @@ block scripts
         $.post('/admin/returns/adopt',data);
       });
 
-      $('#express-msg').popover({
-        content: function(){
-          var html = [];
-          var name = $('#express-msg').data('name');
-          var number = $('#express-msg').data('number');
+      $('.j-return').on('click',function(e){
+        var _id = $(this).data('id');
+        $(this).addClass('hide');
+        $('.j-complete').removeClass('hide');
 
-          $.get('/admin/getexpress',{name: name,number: number},function(express){
-            if(express.success == false){
-              return;
-            }
-            var data = express.data;
-            html.push('<ul>');
-            for(var i=0,len=data;i<len;i++){
-              html.push('<li class="express-item"><p class="ellipsis">'+data[i].context+'</p><p class="ellipsis">'+data[i].time+'</p></li>')
-            }
-            html.push('</ul>');
-          });
-
-          return html.join('');
-        }
+        $.get('/admin/returns/complete',{_id: _id},function(result){
+          console.log(result);
+          if(result.success){
+            alert('退款成功!');
+          }
+          else{
+            alert('操作失败，请重试！');
+          }
+        })
       })
 
     });

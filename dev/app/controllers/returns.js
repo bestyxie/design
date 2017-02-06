@@ -11,15 +11,7 @@ export const goods = (req,res) => {
       console.log(err);
       res.send(err);
     }
-    if(order.status == 3){
-      xto.query(number,name,(err,express) => {
-        if(err){
-          console.log(err);
-          res.send(err);
-        }
-        
-      })
-    }
+
     res.render('mobile/returnOrder/reply',{
       order: order
     })
@@ -48,6 +40,7 @@ export const reply = (req,res) => {
         console.log(err);
         res.send(err);
       }
+      Order.findOneAndUpdate({_id: orderid},{status: '退款退货'});
       res.render('mobile/returnOrder/success',{
         p: '申请成功！请耐心等待审核'
       })
@@ -89,20 +82,6 @@ export const adopt = (req,res) => {
   })
 }
 
-export const get_express = (req,res) => {
-  let name = req.query.name;
-  let number = req.query.number;
-
-  xto.query(number,name,(err,express) => {
-    if(err){
-      console.log(err);
-      res.json({success: false});
-    }
-
-    res.json(express);
-  })
-}
-
 export const get_return = (req,res) => {
   let userid = req.session.user._id;
 
@@ -114,5 +93,25 @@ export const get_return = (req,res) => {
     res.render('mobile/returnOrder/',{
       orders: returns
     })
+  })
+}
+
+export const complete = (req,res) => {
+  let _id = req.query._id;
+
+  Returns.findOneAndUpdate({_id: _id},{status: 3},(err,ret) => {
+    if(err){
+      console.log(err);
+      res.json({success: false});
+    }
+
+    Order.findOneAndUpdate({_id: ret.orderid},{status: '交易关闭'},(err,order) => {
+      if(err){
+        console.log(err);
+        return;
+      }
+      console.log(order);
+    });
+    res.json({success: true});
   })
 }
