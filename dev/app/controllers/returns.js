@@ -1,5 +1,6 @@
 import Order from '../models/order';
 import { Returns } from '../models/returns';
+import xto from 'xto';
 
 
 export const goods = (req,res) => {
@@ -10,6 +11,15 @@ export const goods = (req,res) => {
       console.log(err);
       res.send(err);
     }
+    if(order.status == 3){
+      xto.query(number,name,(err,express) => {
+        if(err){
+          console.log(err);
+          res.send(err);
+        }
+        
+      })
+    }
     res.render('mobile/returnOrder/',{
       order: order
     })
@@ -18,7 +28,7 @@ export const goods = (req,res) => {
 
 export const reply = (req,res) => {
   let _order = req.body.ret;
-  let orderid = req.body.orderid;
+  let orderid = _order.orderid;
   let file = req.files[0];
   file = '/images/upload/'+file.filename
 
@@ -44,4 +54,50 @@ export const reply = (req,res) => {
     
   })
 
+}
+
+export const admin_retlist = (req,res) => {
+
+  Returns.find({},(err,orders) => {
+    if(err){
+      console.log(err);
+      res.send(err);
+    }
+    res.render('admin/returns/',{
+      orders: orders
+    })
+  })
+}
+
+export const adopt = (req,res) => {
+  let retid = req.body.returnid;
+  let address = req.body.address;
+  let status = req.body.status;
+  let data = {
+    address: address,
+    status: status
+  }
+
+  Returns.findOneAndUpdate({_id: retid},data,(err) => {
+    if(err){
+      console.log(err);
+      res.json({success: false});
+    }
+
+    res.json({success: false});
+  })
+}
+
+export const get_express = (req,res) => {
+  let name = req.query.name;
+  let number = req.query.number;
+
+  xto.query(number,name,(err,express) => {
+    if(err){
+      console.log(err);
+      res.json({success: false});
+    }
+
+    res.json(express);
+  })
 }

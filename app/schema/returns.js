@@ -16,6 +16,7 @@ var ObjectId = Schema.Types.ObjectId;
 
 var ReturnSchema = exports.ReturnSchema = new Schema({
   user_id: ObjectId,
+  orderid: ObjectId,
   status: String,
   // 1 申请阶段
   // 2 申请通过，买家发货并填写快递信息
@@ -26,6 +27,11 @@ var ReturnSchema = exports.ReturnSchema = new Schema({
   contact: String,
   tel: String,
   pics: String,
+  address: {
+    recipient: String,
+    tel: String,
+    addr: String
+  },
   express_msg: {
     name: String,
     number: String

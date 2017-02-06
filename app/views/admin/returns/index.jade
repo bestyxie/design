@@ -1,0 +1,104 @@
+extends ../../adminLayout
+
+block content
+  //- .header
+  h2 退货/退款商品管理
+  .wrapper.delivery.returns
+    .productlist.section
+      each order in orders
+        - var count = 0;
+        table(data-order="#{order._id}")
+          thead
+            tr
+              td 商品图片
+              td 名称
+              td 尺寸
+              td 颜色
+              td 数量
+              td 金额
+              td 操作
+          tbody.j-product-list
+            each product,index in order.products
+              - count += product.qty
+              tr.j-productItem
+                td.img-column
+                  .imgbox
+                    img(src="#{product.pics[0]}")
+                td.name-column 
+                  p #{product.name}
+                td #{product.size}
+                td #{product.color}
+                td #{product.qty}
+                td #{product.price}
+                if index == 0
+                  td(data-id="#{order._id}",rowspan="#{order.products.length}")
+                    if order.status == 1
+                      a.edit.j-edit(href="javascript:void(0);",data-ret="#{order._id}",data-toggle="modal",data-target="#agree") 同意
+                    else if order.status == 2
+                      a.edit(href="javascript:void(0);") 等待客户发货
+                    else if order.status == 3
+                      a#express-msg.edit(href="javascript:void(0);") 等待收货，退款
+                    else
+                      a.edit(href="javascript:void(0);") 完成退款
+            tr
+              td 退货
+              td.costom(colspan="6")
+                .imgbox
+                  img(src="")
+                .reason
+                  p 原因： #{order.recipient}
+                  p 描述： #{order.tel}
+            tr
+              td 备注：
+              td(colspan="6")
+                p 联系人： #{order.recipient}
+                p 手机： #{order.tel}
+  include _agree
+
+block scripts
+  script.
+    $(document).ready(function(){
+
+      $('.j-edit').on('click',function(){
+        var id = $(this).data('ret');
+        $('#agree').attr('data-ret',id);
+      });
+
+      $('.j-next').on('click',function(e){
+        var returnid = $('#agree').attr('data-ret');
+        var data = {};
+        data.address = {};
+        data.address.recipient = $('#exporess_name').val();
+        data.address.tel = $('#exporess_tel').val();
+        data.address.addr = $('#exporess_addr').val();
+        data.status = '2';
+        data.returnid = returnid;
+        $('.j-edit').html('等待客户发货');
+        console.log(data);
+
+        $.post('/admin/returns/adopt',data);
+      });
+
+      $('#express-msg').popover({
+        content: function(){
+          var html = [];
+          var name = $('#express-msg').data('name');
+          var number = $('#express-msg').data('number');
+
+          $.get('/admin/getexpress',{name: name,number: number},function(express){
+            if(express.success == false){
+              return;
+            }
+            var data = express.data;
+            html.push('<ul>');
+            for(var i=0,len=data;i<len;i++){
+              html.push('<li class="express-item"><p class="ellipsis">'+data[i].context+'</p><p class="ellipsis">'+data[i].time+'</p></li>')
+            }
+            html.push('</ul>');
+          });
+
+          return html.join('');
+        }
+      })
+
+    });

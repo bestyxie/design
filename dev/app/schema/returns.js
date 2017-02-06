@@ -4,6 +4,7 @@ const ObjectId = Schema.Types.ObjectId;
 
 export const ReturnSchema = new Schema({
   user_id: ObjectId,
+  orderid: ObjectId,
   status: String,
   // 1 申请阶段
   // 2 申请通过，买家发货并填写快递信息
@@ -14,6 +15,11 @@ export const ReturnSchema = new Schema({
   contact: String,
   tel: String,
   pics: String,
+  address: {
+    recipient: String,
+    tel: String,
+    addr: String
+  },
   express_msg: {
     name: String,
     number: String

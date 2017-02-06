@@ -1,0 +1,23 @@
+.modal.fade#agree
+  .modal-wrapper.modal-dialog
+    .modal-header
+      h3 发货处理
+      a.close(href="javascrip:;",data-dismiss="modal")
+        i.fa.fa-close
+    .modal-content
+      form
+        .form-group
+          label(for="name") 收件人*
+          .input-box
+            input#exporess_name.required(type="text",name="recipient",value="张先生")
+        .form-group
+          label(for="name") 电话*
+          .input-box
+            input#exporess_tel.required(type="text",name="tel",value="18888888")
+        .form-group
+          label(for="name") 地址*
+          .input-box
+            input#exporess_addr.required(type="text",name="addr",value="广东省广州市****")
+    .modal-footer
+      button.next.j-next.disabled(type="submit",data-dismiss="modal") 确定
+      button.cancle(data-dismiss="modal") 取消

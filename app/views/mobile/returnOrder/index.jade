@@ -31,7 +31,7 @@ block content
                   .price ￥ #{product.price}
                   .count x#{product.qty}
       form#return.section(action="/returns/apply",method="POST",enctype="multipart/form-data")
-        input(type="hidden",name="orderid",value="#{order._id}")
+        input(type="hidden",name="ret[orderid]",value="#{order._id}")
         label
           em *
           | 退货原因
