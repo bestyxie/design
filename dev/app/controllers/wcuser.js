@@ -8,7 +8,7 @@ import request from 'request';
 module.exports.msigninRequire = (req,res,next) =>{
   let code = req.query.code;
   let openid = req.query.openid;
-  console.log('code::',openid);
+  console.log('openid::',req.query);
   console.log('session::',req.session);
   if(openid) {
     Wcuser.find({openid: openid},(err,user) => {

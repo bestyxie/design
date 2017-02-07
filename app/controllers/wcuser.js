@@ -18,7 +18,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 module.exports.msigninRequire = function (req, res, next) {
   var code = req.query.code;
   var openid = req.query.openid;
-  console.log('code::', openid);
+  console.log('openid::', req.query);
   console.log('session::', req.session);
   if (openid) {
     _wcuser.Wcuser.find({ openid: openid }, function (err, user) {
