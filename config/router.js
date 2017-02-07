@@ -9,6 +9,7 @@ var Order = require('../app/controllers/order');
 var Address = require('../app/controllers/address');
 var Evaluation = require('../app/controllers/evaluation');
 var Returns = require('../app/controllers/returns');
+var Wcuser = require('../app/controllers/wcuser');
 // var UploadPic = require('../app/controllers/uploadPic');
 
 
@@ -47,7 +48,7 @@ module.exports = function(app){
 
   // shopping cart management
   app.post('/product/addtocart',ShoppingCart.addToCart);
-  app.get('/cart',User.msigninRequire, ShoppingCart.shoppingCart);
+  app.get('/cart',Wcuser.msigninRequire, ShoppingCart.shoppingCart);
   // app.get('/cart',ShoppingCart.shoppingCart);
   app.post('/cart/delete',ShoppingCart.deleteCart);
 

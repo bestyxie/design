@@ -41,6 +41,7 @@ let getAccesstoken = (code) =>{
     // });
     request.get(tokenUrl,req);//request
     function req(err,res,body){
+      console.log("body::",body);
       if(!err && res.statusCode == 200) {
         if(!body.errcode){
           let data = JSON.parse(body);
@@ -56,10 +57,10 @@ let getAccesstoken = (code) =>{
               new_access.save((err) => {})
             });
           }
-          resolve(openid);
+          resolve(openid,access_token);
         }else{
           tokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid="+APPID+"&secret="+APP_SECRET+"&code="+code+"&grant_type=authorization_code ";
-          console.log('refresh_token 过期！！！');
+          console.log('access_token 过期！！！');
           request.get(tokenUrl,req);
           // reject();
         }

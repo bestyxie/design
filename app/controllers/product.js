@@ -42,21 +42,12 @@ var _evaluation2 = _interopRequireDefault(_evaluation);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// let qs = require('querystring');
-// import {base_set,ANCHOR,base_url} from './weixin';
-
-
 // product list || home
 module.exports.list = function (req, res) {
-  // base_set.scope="snsapi_base";
-  // base_set.redirect_uri = encodeURIComponent('http://bestyxie.cn');
-  // let snsapi_base = base_url+qs.stringify(base_set)+ANCHOR;
-  // console.log(snsapi_base)
-
-  // if(req.session.user){
-  //   snsapi_base = false;
-  // }
-  // console.log(weixin.auth_url);
+  var login = false;
+  if (req.session.user) {
+    login = true;
+  }
   var promise = new Promise(function (resolve, reject) {
     _activity.Activity.find({}, function (err, acts) {
       if (err) {
@@ -71,8 +62,8 @@ module.exports.list = function (req, res) {
     _product3.default.find({}).sort({ 'meta.updateAt': -1 }).exec(function (err, products) {
       res.render('mobile/home/', {
         products: products,
-        acts: acts
-        // auth_url: snsapi_base
+        acts: acts,
+        login: login
       });
     });
   }, function (err) {

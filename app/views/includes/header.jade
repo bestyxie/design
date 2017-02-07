@@ -1,7 +1,13 @@
 header.bar.bar-nav.j-bar
-  a.logo.fa.fa-user-o(href="/user/home")
+  if !login
+    a.logo.fa.fa-user-o(href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe751fb0e3060d859&redirect_uri=http%3A%2F%2Fbestyxie.cn%2Fhome&response_type=code&scope=snsapi_base&state=base#wechat_redirect")
+  else
+    a.logo.fa.fa-user-o(href="/user/home")
   form#search_form
     .search
       input.open-popup(type="text",name="keywords",placeholder="请输入搜索关键字：")
       a.fa.fa-search.search-btn(href="javascript:;")
-  a.fa.fa-shopping-cart.badget(href="/cart",external)
+  if login
+    a.fa.fa-shopping-cart.badget(href="/cart",external)
+  else
+    a.fa.fa-shopping-cart.badget(href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe751fb0e3060d859&redirect_uri=http%3A%2F%2Fbestyxie.cn%2Fcart&response_type=code&scope=snsapi_userinfo&state=userinfo#wechat_redirect",external)

@@ -13,21 +13,13 @@ import {update_doc} from '../search/update_document';
 import {deletePic} from '../common/delete_file';
 import Evaluation from '../models/evaluation';
 
-// let qs = require('querystring');
-// import {base_set,ANCHOR,base_url} from './weixin';
-
 
 // product list || home
 module.exports.list = function(req,res){
-  // base_set.scope="snsapi_base";
-  // base_set.redirect_uri = encodeURIComponent('http://bestyxie.cn');
-  // let snsapi_base = base_url+qs.stringify(base_set)+ANCHOR;
-  // console.log(snsapi_base)
-
-  // if(req.session.user){
-  //   snsapi_base = false;
-  // }
-  // console.log(weixin.auth_url);
+  let login = false;
+  if(req.session.user){
+    login = true;
+  }
   let promise = new Promise((resolve,reject) => {
     Activity.find({},(err,acts) => {
       if(err){
@@ -42,8 +34,8 @@ module.exports.list = function(req,res){
     Product.find({}).sort({'meta.updateAt':-1}).exec(function(err,products){
       res.render('mobile/home/',{
         products: products,
-        acts: acts
-        // auth_url: snsapi_base
+        acts: acts,
+        login: login
       });
     })
   }, err => {

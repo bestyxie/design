@@ -1,0 +1,72 @@
+'use strict';
+
+var _wcuser = require('../models/wcuser');
+
+var _weixin = require('./weixin');
+
+var _querystring = require('querystring');
+
+var _querystring2 = _interopRequireDefault(_querystring);
+
+var _request = require('request');
+
+var _request2 = _interopRequireDefault(_request);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// mobile端必须登录midware
+module.exports.msigninRequire = function (req, res, next) {
+
+  var code = req.query.code;
+  console.log(code);
+  if (code && !req.session.user) {
+    var promise = (0, _weixin.getAccesstoken)(code);
+    promise.then(function (openid) {
+      console.log('openid::', openid);
+      if (req.query.state == 'base') {
+        _wcuser.Wcuser.find({ openid: openid }, function (err, user) {
+          if (err) {
+            console.log(err);
+            res.redirect('/');
+          }
+          if (user.length == 0) {
+            authorize();
+          } else {
+            req.session.user = {};
+            req.session.user._id = user._id;
+            next();
+          }
+        });
+      } else {
+        var _promise = (0, _weixin.getAccesstoken)(code);
+        _promise.then(function (user) {
+          var new_user = {};
+          new_user.openid = user.openid;
+          new_user.nickname = user.nickname;
+          new_user.headimgurl = user.headimgurl;
+
+          var _user = new _wcuser.Wcuser(new_user);
+          _user.save(function (err, wc) {
+            if (err) {
+              console.log(err);
+              res.redirect('/');
+            }
+            req.session.user = {};
+            req.session.user._id = wc._id;
+            next();
+          });
+        });
+      }
+    });
+  } else if (req.session.user) {
+    next();
+  }
+  function authorize() {
+    _weixin.base_set.scope = "snsapi_userinfo";
+    _weixin.base_set.redirect_uri = encodeURI('http://bestyxie.cn/cart');
+    console.log('1::', _querystring2.default.stringify(_weixin.base_set));
+    var snsapi_base = _weixin.base_url + _querystring2.default.stringify(_weixin.base_set) + _weixin.ANCHOR;
+    console.log('2::', snsapi_base);
+    res.redirect(snsapi_base);
+  }
+};

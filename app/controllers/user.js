@@ -1,10 +1,7 @@
 'use strict';
 
-var _weixin = require('./weixin');
-
 var User = require('../models/user');
 var qs = require('querystring');
-
 
 // 注册
 module.exports.signup = function (req, res) {
@@ -82,46 +79,6 @@ module.exports.logout = function (req, res) {
   req.session.user = null;
 
   res.redirect('/login');
-};
-
-// mobile端必须登录midware
-module.exports.msigninRequire = function (req, res, next) {
-  var code = req.query.code;
-  console.log(code);
-  if (code) {
-    var promise = (0, _weixin.getAccesstoken)(code);
-    promise.then(function (openid) {
-      console.log('openid::', openid);
-      return (0, _weixin.getUserinfo)(openid);
-    }).then(function (user) {
-      console.log(user);
-      next();
-      // ShoppingCart.findOne({userId: user._id},function(err,goods){
-      //   var products = [];
-      //   if(err){
-      //     console.log(err);
-      //   }
-      //   if(goods){
-      //     products = goods.products;
-      //   }
-      //   res.render('mobile/shoppingcart/',{
-      //     products: products,
-      //     userId: user._id
-      //   });
-      // });
-    });
-  }
-  // else if(req.session.user){
-  //   next();
-  // }
-  else {
-      _weixin.base_set.scope = "snsapi_userinfo";
-      _weixin.base_set.redirect_uri = encodeURI('http://bestyxie.cn/cart');
-      console.log('1::', qs.stringify(_weixin.base_set));
-      var snsapi_base = _weixin.base_url + qs.stringify(_weixin.base_set) + _weixin.ANCHOR;
-      console.log('2::', snsapi_base);
-      res.redirect(snsapi_base);
-    }
 };
 
 // 必须登录 midware

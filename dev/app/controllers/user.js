@@ -1,6 +1,5 @@
 let User = require('../models/user');
 let qs = require('querystring');
-import {base_set,ANCHOR,base_url,getAccesstoken,getUserinfo} from './weixin';
 
 // 注册
 module.exports.signup = function(req,res){
@@ -82,46 +81,6 @@ module.exports.logout = function(req,res){
   res.redirect('/login');
 }
 
-// mobile端必须登录midware
-module.exports.msigninRequire = (req,res,next) =>{
-  var code = req.query.code;
-  console.log(code);
-  if(code) {
-    let promise = getAccesstoken(code);
-    promise.then((openid) => {
-      console.log('openid::',openid);
-      return getUserinfo(openid);
-
-    }).then((user) =>{
-      console.log(user);
-      next();
-      // ShoppingCart.findOne({userId: user._id},function(err,goods){
-      //   var products = [];
-      //   if(err){
-      //     console.log(err);
-      //   }
-      //   if(goods){
-      //     products = goods.products;
-      //   }
-      //   res.render('mobile/shoppingcart/',{
-      //     products: products,
-      //     userId: user._id
-      //   });
-      // });
-    })
-  }
-  // else if(req.session.user){
-  //   next();
-  // }
-  else {
-    base_set.scope="snsapi_userinfo";
-    base_set.redirect_uri = encodeURI('http://bestyxie.cn/cart');
-    console.log('1::',qs.stringify(base_set));
-    let snsapi_base = base_url+qs.stringify(base_set)+ANCHOR;
-    console.log('2::',snsapi_base)
-    res.redirect(snsapi_base);
-  }
-}
 
 // 必须登录 midware
 module.exports.signinRequire = function(req,res,next){
