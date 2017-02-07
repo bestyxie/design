@@ -87,6 +87,7 @@ module.exports.logout = function (req, res) {
 // mobile端必须登录midware
 module.exports.msigninRequire = function (req, res, next) {
   var code = req.query.code;
+  console.log(code);
   if (code) {
     var promise = weixin.getAccesstoken(code);
     promise.then(function (openid) {
@@ -109,8 +110,7 @@ module.exports.msigninRequire = function (req, res, next) {
       //   });
       // });
     });
-  }
-  if (req.session.user) {
+  } else if (req.session.user) {
     next();
   } else {
     _weixin.base_set.scope = "snsapi_userinfo";

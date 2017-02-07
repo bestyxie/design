@@ -85,6 +85,7 @@ module.exports.logout = function(req,res){
 // mobile端必须登录midware
 module.exports.msigninRequire = (req,res,next) =>{
   var code = req.query.code;
+  console.log(code);
   if(code) {
     let promise = weixin.getAccesstoken(code);
     promise.then((openid) => {
@@ -109,7 +110,7 @@ module.exports.msigninRequire = (req,res,next) =>{
       // });
     })
   }
-  if(req.session.user){
+  else if(req.session.user){
     next();
   }
   else {
