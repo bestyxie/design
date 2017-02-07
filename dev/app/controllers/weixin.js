@@ -27,43 +27,44 @@ let getAccesstoken = (code) =>{
   let tokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid="+APPID+"&secret="+APP_SECRET+"&code="+code+"&grant_type=authorization_code ";
 
   return new Promise((resolve,reject)=> {
-    AccessToken.find({},(err,access)=>{
-      if(err){
-        console.log(err);
-        return;
-      }
-      if(access.length>0){
-        let refresh_token = access.refresh_token;
-        tokenUrl = 'https://api.weixin.qq.com/sns/oauth2/refresh_token?appid='+APPID+'&grant_type=refresh_token&refresh_token='+refresh_token;
-      }
+    // AccessToken.find({},(err,access)=>{
+    //   if(err){
+    //     console.log(err);
+    //     return;
+    //   }
+    //   if(access.length>0){
+    //     let refresh_token = access.refresh_token;
+    //     tokenUrl = 'https://api.weixin.qq.com/sns/oauth2/refresh_token?appid='+APPID+'&grant_type=refresh_token&refresh_token='+refresh_token;
+    //   }
 
-      request.get(tokenUrl,req);//request
-      function req(err,res,body){
-        if(!err && res.statusCode == 200) {
-          if(!body.errcode){
-            let data = JSON.parse(body);
-            let access_token = data.access_token;
-            let refresh_token = data.refresh_token;
-            let openid = data.openid;
+    //   // console.log(tokenUrl);
+    // });
+    request.get(tokenUrl,req);//request
+    function req(err,res,body){
+      if(!err && res.statusCode == 200) {
+        if(!body.errcode){
+          let data = JSON.parse(body);
+          let access_token = data.access_token;
+          let refresh_token = data.refresh_token;
+          let openid = data.openid;
 
-            if(tokenUrl.indexOf('code')>=0){
-              AccessToken.remove({},() =>{
-                var new_access = new AccessToken({
-                  refresh_token: refresh_token
-                });
-                new_access.save((err) => {})
+          if(tokenUrl.indexOf('code')>=0){
+            AccessToken.remove({},() =>{
+              var new_access = new AccessToken({
+                refresh_token: refresh_token
               });
-            }
-            resolve(openid);
-          }else{
-            tokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid="+APPID+"&secret="+APP_SECRET+"&code="+code+"&grant_type=authorization_code ";
-            console.log('refresh_token 过期！！！');
-            request.get(tokenUrl,req);
-            // reject();
+              new_access.save((err) => {})
+            });
           }
+          resolve(openid);
+        }else{
+          tokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid="+APPID+"&secret="+APP_SECRET+"&code="+code+"&grant_type=authorization_code ";
+          console.log('refresh_token 过期！！！');
+          request.get(tokenUrl,req);
+          // reject();
         }
       }
-    });
+    }
   });
 }
 
