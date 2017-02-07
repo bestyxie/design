@@ -46,7 +46,6 @@ var getAccesstoken = function getAccesstoken(code) {
     // });
     request.get(tokenUrl, req); //request
     function req(err, res, body) {
-      console.log("body::", body);
       if (!err && res.statusCode == 200) {
         if (!body.errcode) {
           (function () {
