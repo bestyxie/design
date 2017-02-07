@@ -85,7 +85,7 @@ module.exports.logout = function(req,res){
 // mobile端必须登录midware
 module.exports.msigninRequire = (req,res,next) =>{
   var code = req.query.code;
-  console.log(rq.session);
+  console.log(req.session);
   if(code) {
     let promise = weixin.getAccesstoken(code);
     promise.then((openid) => {
@@ -110,9 +110,9 @@ module.exports.msigninRequire = (req,res,next) =>{
       // });
     })
   }
-  else if(req.session.user){
-    next();
-  }
+  // else if(req.session.user){
+  //   next();
+  // }
   else {
     base_set.scope="snsapi_userinfo";
     base_set.redirect_uri = encodeURI('http://bestyxie.cn/cart');
