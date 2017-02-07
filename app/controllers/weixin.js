@@ -11,7 +11,7 @@ var config = require('../../config/default.json');
 
 var wx = config.wx;
 var APP_ID = wx.app_id,
-    REDIRECT_URI = encodeURIComponent('http://bestyxie.cn/cart');
+    REDIRECT_URI = encodeURI('http://bestyxie.cn/cart');
 var ANCHOR = '#wechat_redirect';
 
 var base_set = {

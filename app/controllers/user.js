@@ -93,7 +93,7 @@ module.exports.msigninRequire = function (req, res, next) {
   //   res.redirect('/mobile/login');
   // }
   _weixin.base_set.scope = "snsapi_userinfo";
-  _weixin.base_set.redirect_uri = encodeURI('http://bestyxie.cn/mobile/login');
+  _weixin.base_set.redirect_uri = encodeURI('http://bestyxie.cn/cart');
   console.log('1::', qs.stringify(_weixin.base_set));
   var snsapi_base = _weixin.base_url + qs.stringify(_weixin.base_set) + _weixin.ANCHOR;
   console.log('2::', snsapi_base);

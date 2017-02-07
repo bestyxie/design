@@ -113,7 +113,7 @@ module.exports.shoppingCart = function (req, res) {
     console.log('openid::', openid);
     return weixin.getUserinfo(openid);
   }).then(function (user) {
-
+    console.log(user);
     ShoppingCart.findOne({ userId: user._id }, function (err, goods) {
       var products = [];
       if (err) {

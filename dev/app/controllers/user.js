@@ -91,7 +91,7 @@ module.exports.msigninRequire = (req,res,next) =>{
   //   res.redirect('/mobile/login');
   // }
   base_set.scope="snsapi_userinfo";
-  base_set.redirect_uri = encodeURI('http://bestyxie.cn/mobile/login');
+  base_set.redirect_uri = encodeURI('http://bestyxie.cn/cart');
   console.log('1::',qs.stringify(base_set));
   let snsapi_base = base_url+qs.stringify(base_set)+ANCHOR;
   console.log('2::',snsapi_base)

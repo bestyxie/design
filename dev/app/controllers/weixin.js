@@ -6,7 +6,7 @@ let config = require('../../config/default.json');
 
 let wx = config.wx;
 const APP_ID = wx.app_id,
-    REDIRECT_URI = encodeURIComponent('http://bestyxie.cn/cart');
+    REDIRECT_URI = encodeURI('http://bestyxie.cn/cart');
 const ANCHOR = '#wechat_redirect';
 
 let base_set = {
