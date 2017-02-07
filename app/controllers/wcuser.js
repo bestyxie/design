@@ -18,8 +18,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 module.exports.msigninRequire = function (req, res, next) {
   var code = req.query.code;
   var state = req.query.state;
-  console.log('code::', code);
-  console.log('session::', req.session);
+
   if (code && state == 'base') {
     var promise = (0, _weixin.getAccesstoken)(code);
     promise.then(function (openid) {
@@ -39,6 +38,7 @@ module.exports.msigninRequire = function (req, res, next) {
       });
     });
   } else if (state !== 'base') {
+    console.log('state !== base');
     var _promise = (0, _weixin.getAccesstoken)(code);
     _promise.then(function (user) {
       var new_user = {};
@@ -63,9 +63,8 @@ module.exports.msigninRequire = function (req, res, next) {
   function authorize() {
     _weixin.base_set.scope = "snsapi_userinfo";
     _weixin.base_set.redirect_uri = encodeURI('http://bestyxie.cn/cart');
-    console.log('1::', _querystring2.default.stringify(_weixin.base_set));
     var snsapi_base = _weixin.base_url + _querystring2.default.stringify(_weixin.base_set) + _weixin.ANCHOR;
-    console.log('2::', snsapi_base);
+
     res.redirect(snsapi_base);
   }
 };

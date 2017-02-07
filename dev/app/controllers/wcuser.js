@@ -8,8 +8,7 @@ import request from 'request';
 module.exports.msigninRequire = (req,res,next) =>{
   let code = req.query.code;
   let state = req.query.state;
-  console.log('code::',code);
-  console.log('session::',req.session);
+  
   if(code && state == 'base') {
     let promise = getAccesstoken(code);
     promise.then(openid => {
@@ -30,6 +29,7 @@ module.exports.msigninRequire = (req,res,next) =>{
     })
   }
   else if(state !== 'base'){
+    console.log('state !== base')
     let promise = getAccesstoken(code);
     promise.then(user => {
       let new_user = {};
@@ -55,9 +55,8 @@ module.exports.msigninRequire = (req,res,next) =>{
   function authorize(){
     base_set.scope="snsapi_userinfo";
     base_set.redirect_uri = encodeURI('http://bestyxie.cn/cart');
-    console.log('1::',qs.stringify(base_set));
     let snsapi_base = base_url+qs.stringify(base_set)+ANCHOR;
-    console.log('2::',snsapi_base)
+
     res.redirect(snsapi_base);
   }
 }
