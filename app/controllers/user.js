@@ -92,7 +92,7 @@ module.exports.msigninRequire = function (req, res, next) {
   // else {
   //   res.redirect('/mobile/login');
   // }
-  _weixin.base_set.scope = "snsapi_base";
+  _weixin.base_set.scope = "snsapi_userinfo";
   _weixin.base_set.redirect_uri = encodeURIComponent('http://bestyxie.cn/mobile/login');
   var snsapi_base = _weixin.base_url + qs.stringify(_weixin.base_set) + _weixin.ANCHOR;
   console.log(snsapi_base);
