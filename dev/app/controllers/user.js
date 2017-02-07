@@ -87,10 +87,10 @@ module.exports.msigninRequire = (req,res,next) =>{
   var code = req.query.code;
   console.log(req.session);
   if(code) {
-    let promise = weixin.getAccesstoken(code);
+    let promise = getAccesstoken(code);
     promise.then((openid) => {
       console.log('openid::',openid);
-      return weixin.getUserinfo(openid);
+      return getUserinfo(openid);
 
     }).then((user) =>{
       console.log(user);
