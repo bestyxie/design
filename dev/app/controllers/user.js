@@ -87,9 +87,9 @@ module.exports.msigninRequire = (req,res,next) =>{
   if(req.session.user){
     next();
   }
-  else {
-    res.redirect('/mobile/login');
-  }
+  // else {
+  //   res.redirect('/mobile/login');
+  // }
   base_set.scope="snsapi_base";
   base_set.redirect_uri = encodeURIComponent('http://bestyxie.cn/mobile/login');
   let snsapi_base = base_url+qs.stringify(base_set)+ANCHOR;
