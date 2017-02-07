@@ -17,26 +17,30 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // mobile端必须登录midware
 module.exports.msigninRequire = function (req, res, next) {
   var code = req.query.code;
-  var openid = req.query.openid;
-  console.log('openid::', req.query);
+  var state = req.query.state;
+  console.log('code::', code);
   console.log('session::', req.session);
-  if (openid) {
-    _wcuser.Wcuser.find({ openid: openid }, function (err, user) {
-      if (err) {
-        console.log(err);
-        res.redirect('/');
-      }
-      if (user.length == 0) {
-        authorize();
-      } else {
-        req.session.user = {};
-        req.session.user._id = user._id;
-        next();
-      }
-    });
-  } else if (code) {
+  if (code && state == 'base') {
     var promise = (0, _weixin.getAccesstoken)(code);
-    promise.then(function (user) {
+    promise.then(function (openid) {
+      console.log(openid);
+      _wcuser.Wcuser.find({ openid: openid }, function (err, user) {
+        if (err) {
+          console.log(err);
+          res.redirect('/');
+        }
+        if (user.length == 0) {
+          authorize();
+        } else {
+          req.session.user = {};
+          req.session.user._id = user._id;
+          next();
+        }
+      });
+    });
+  } else if (state !== 'base') {
+    var _promise = (0, _weixin.getAccesstoken)(code);
+    _promise.then(function (user) {
       var new_user = {};
       new_user.openid = user.openid;
       new_user.nickname = user.nickname;

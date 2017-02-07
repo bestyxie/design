@@ -44,6 +44,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // product list || home
 module.exports.list = function (req, res) {
+  delete req.session.user;
   var login = false;
   if (req.session.user) {
     login = true;

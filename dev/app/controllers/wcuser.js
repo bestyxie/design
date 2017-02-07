@@ -7,25 +7,29 @@ import request from 'request';
 // mobile端必须登录midware
 module.exports.msigninRequire = (req,res,next) =>{
   let code = req.query.code;
-  let openid = req.query.openid;
-  console.log('openid::',req.query);
+  let state = req.query.state;
+  console.log('code::',code);
   console.log('session::',req.session);
-  if(openid) {
-    Wcuser.find({openid: openid},(err,user) => {
-      if(err){
-        console.log(err);
-        res.redirect('/');
-      }
-      if(user.length == 0){
-        authorize();
-      }else{
-        req.session.user = {};
-        req.session.user._id = user._id;
-        next();
-      }
-    });
+  if(code && state == 'base') {
+    let promise = getAccesstoken(code);
+    promise.then(openid => {
+      console.log(openid);
+      Wcuser.find({openid: openid},(err,user) => {
+        if(err){
+          console.log(err);
+          res.redirect('/');
+        }
+        if(user.length == 0){
+          authorize();
+        }else{
+          req.session.user = {};
+          req.session.user._id = user._id;
+          next();
+        }
+      });
+    })
   }
-  else if(code){
+  else if(state !== 'base'){
     let promise = getAccesstoken(code);
     promise.then(user => {
       let new_user = {};

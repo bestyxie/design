@@ -16,6 +16,7 @@ import Evaluation from '../models/evaluation';
 
 // product list || home
 module.exports.list = function(req,res){
+  delete req.session.user;
   let login = false;
   if(req.session.user){
     login = true;
