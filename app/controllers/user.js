@@ -87,7 +87,7 @@ module.exports.logout = function (req, res) {
 // mobile端必须登录midware
 module.exports.msigninRequire = function (req, res, next) {
   var code = req.query.code;
-  console.log(code);
+  console.log(rq.session);
   if (code) {
     var promise = weixin.getAccesstoken(code);
     promise.then(function (openid) {
