@@ -6,49 +6,43 @@ import request from 'request';
 
 // mobile端必须登录midware
 module.exports.msigninRequire = (req,res,next) =>{
-
-  var code = req.query.code;
-  console.log(code);
-  if(code && !req.session.user) {
+  let code = req.query.code;
+  let openid = req.query.openid;
+  console.log('code::',openid);
+  console.log('session::',req.session);
+  if(openid) {
+    Wcuser.find({openid: openid},(err,user) => {
+      if(err){
+        console.log(err);
+        res.redirect('/');
+      }
+      if(user.length == 0){
+        authorize();
+      }else{
+        req.session.user = {};
+        req.session.user._id = user._id;
+        next();
+      }
+    });
+  }
+  else if(code){
     let promise = getAccesstoken(code);
-    promise.then((openid) => {
-      console.log('openid::',openid);
-      if(req.query.state == 'base'){
-        Wcuser.find({openid: openid},(err,user) => {
-          if(err){
-            console.log(err);
-            res.redirect('/');
-          }
-          if(user.length == 0){
-            authorize();
-          }else{
-            req.session.user = {};
-            req.session.user._id = user._id;
-            next();
-          }
-        });
-      }
-      else{
-        let promise = getAccesstoken(code);
-        promise.then(user => {
-          let new_user = {};
-          new_user.openid = user.openid;
-          new_user.nickname = user.nickname;
-          new_user.headimgurl = user.headimgurl;
+    promise.then(user => {
+      let new_user = {};
+      new_user.openid = user.openid;
+      new_user.nickname = user.nickname;
+      new_user.headimgurl = user.headimgurl;
 
-          let _user = new Wcuser(new_user);
-          _user.save((err,wc) => {
-            if(err){
-              console.log(err);
-              res.redirect('/')
-            }
-            req.session.user = {};
-            req.session.user._id = wc._id;
-            next();
-          })
-        })
-      }
-
+      let _user = new Wcuser(new_user);
+      _user.save((err,wc) => {
+        if(err){
+          console.log(err);
+          res.redirect('/')
+        }
+        req.session.user = {};
+        req.session.user._id = wc._id;
+        next();
+      })
     })
   }
   else if(req.session.user){
