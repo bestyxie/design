@@ -89,13 +89,13 @@ module.exports.msigninRequire = function (req, res, next) {
   if (req.session.user) {
     next();
   } else {
-    res.redirect('/login');
+    res.redirect('/mobile/login');
   }
-  // base_set.scope="snsapi_base";
-  // base_set.redirect_uri = encodeURIComponent('http://bestyxie.cn/login');
-  // let snsapi_base = base_url+qs.stringify(base_set)+ANCHOR;
-  // console.log(snsapi_base)
-  // res.redirect(snsapi_base);
+  _weixin.base_set.scope = "snsapi_base";
+  _weixin.base_set.redirect_uri = encodeURIComponent('http://bestyxie.cn/mobile/login');
+  var snsapi_base = _weixin.base_url + qs.stringify(_weixin.base_set) + _weixin.ANCHOR;
+  console.log(snsapi_base);
+  res.redirect(snsapi_base);
 };
 
 // 必须登录 midware
