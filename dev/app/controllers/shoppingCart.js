@@ -1,6 +1,6 @@
 let Product = require('../models/product');
 let ShoppingCart = require('../models/shoppingcart');
-// let weixin  = require('./weixin');
+let weixin  = require('./weixin');
 
 // 加入购物车
 module.exports.addToCart = (req,res) => {
@@ -106,12 +106,12 @@ module.exports.shoppingCart = (req,res) => {
 
   // if(!user){}
 
-  // var promise = weixin.getAccesstoken(code);
-  // promise.then((openid) => {
-  //   console.log(openid);
-  //   weixin.getUserinfo(openid);
+  let promise = weixin.getAccesstoken(code);
+  promise.then((openid) => {
+    console.log(openid);
+    return weixin.getUserinfo(openid);
 
-  // }).then((user) =>{
+  }).then((user) =>{
     
     ShoppingCart.findOne({userId: user._id},function(err,goods){
       var products = [];
@@ -126,7 +126,7 @@ module.exports.shoppingCart = (req,res) => {
         userId: user._id
       });
     });
-  // })
+  })
 
 }
 

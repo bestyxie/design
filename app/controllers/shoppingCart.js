@@ -2,7 +2,7 @@
 
 var Product = require('../models/product');
 var ShoppingCart = require('../models/shoppingcart');
-// let weixin  = require('./weixin');
+var weixin = require('./weixin');
 
 // 加入购物车
 module.exports.addToCart = function (req, res) {
@@ -108,27 +108,26 @@ module.exports.shoppingCart = function (req, res) {
 
   // if(!user){}
 
-  // var promise = weixin.getAccesstoken(code);
-  // promise.then((openid) => {
-  //   console.log(openid);
-  //   weixin.getUserinfo(openid);
+  var promise = weixin.getAccesstoken(code);
+  promise.then(function (openid) {
+    console.log(openid);
+    return weixin.getUserinfo(openid);
+  }).then(function (user) {
 
-  // }).then((user) =>{
-
-  ShoppingCart.findOne({ userId: user._id }, function (err, goods) {
-    var products = [];
-    if (err) {
-      console.log(err);
-    }
-    if (goods) {
-      products = goods.products;
-    }
-    res.render('mobile/shoppingcart/', {
-      products: products,
-      userId: user._id
+    ShoppingCart.findOne({ userId: user._id }, function (err, goods) {
+      var products = [];
+      if (err) {
+        console.log(err);
+      }
+      if (goods) {
+        products = goods.products;
+      }
+      res.render('mobile/shoppingcart/', {
+        products: products,
+        userId: user._id
+      });
     });
   });
-  // })
 };
 
 // 删除购物车商品
