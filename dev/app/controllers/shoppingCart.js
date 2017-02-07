@@ -106,27 +106,29 @@ module.exports.shoppingCart = (req,res) => {
 
   // if(!user){}
 
-  let promise = weixin.getAccesstoken(code);
-  promise.then((openid) => {
-    console.log('openid::',openid);
-    return weixin.getUserinfo(openid);
+  // let promise = weixin.getAccesstoken(code);
+  // promise.then((openid) => {
+  //   console.log('openid::',openid);
+  //   return weixin.getUserinfo(openid);
 
-  }).then((user) =>{
-    console.log(user);
-    ShoppingCart.findOne({userId: user._id},function(err,goods){
-      var products = [];
-      if(err){
-        console.log(err);
-      }
-      if(goods){
-        products = goods.products;
-      }
-      res.render('mobile/shoppingcart/',{
-        products: products,
-        userId: user._id
-      });
-    });
-  })
+  // }).then((user) =>{
+  //   console.log(user);
+  //   ShoppingCart.findOne({userId: user._id},function(err,goods){
+  //     var products = [];
+  //     if(err){
+  //       console.log(err);
+  //     }
+  //     if(goods){
+  //       products = goods.products;
+  //     }
+  //     res.render('mobile/shoppingcart/',{
+  //       products: products,
+  //       userId: user._id
+  //     });
+  //   });
+  // })
+
+  res.send('success');
 
 }
 
