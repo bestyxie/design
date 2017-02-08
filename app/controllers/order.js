@@ -35,6 +35,7 @@ var create_order = exports.create_order = function create_order(req, res) {
         console.log(err);
         reject();
       }
+      console.log(addrs);
       resolve(addrs);
     });
   });
@@ -62,6 +63,7 @@ var create_order = exports.create_order = function create_order(req, res) {
           return addr;
         }
       });
+      console.log("default_addr::", default_addr);
 
       res.render('mobile/order/create_order', {
         products: _prodts,

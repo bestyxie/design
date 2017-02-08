@@ -15,6 +15,7 @@ export const create_order = (req,res) => {
         console.log(err);
         reject();
       }
+      console.log(addrs)
       resolve(addrs);
     })
   })
@@ -42,6 +43,7 @@ export const create_order = (req,res) => {
           return addr;
         }
       });
+      console.log("default_addr::",default_addr);
 
       res.render('mobile/order/create_order',{
         products: _prodts,

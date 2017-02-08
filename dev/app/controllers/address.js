@@ -1,5 +1,4 @@
 import { Address } from '../models/address';
-let User = require('../models/user');
 
 export const add = (req,res) => {
   let addr = req.body.address;

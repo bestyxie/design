@@ -7,8 +7,6 @@ exports.addr_list = exports.remove = exports.getAddr = exports.update = exports.
 
 var _address2 = require('../models/address');
 
-var User = require('../models/user');
-
 var add = exports.add = function add(req, res) {
   var addr = req.body.address;
   var userid = addr.user;
