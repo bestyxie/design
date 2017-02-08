@@ -30,14 +30,14 @@ module.exports.msigninRequire = (req,res,next) =>{
   else if(state !== 'base'){
     let promise = getAccesstoken(code);
     promise.then((result) => {
-      console.log('2::access_token::',result.access_token);
       return getUserinfo(result.openid,result.access_token);
     }).then(user => {
-      console.log('user::',user);
       let new_user = {};
       new_user.openid = user.openid;
       new_user.nickname = user.nickname;
       new_user.headimgurl = user.headimgurl;
+      console.log('user::',user)
+      console.log('new_user::',new_user);
 
       let _user = new Wcuser(new_user);
       _user.save((err,wc) => {

@@ -39,14 +39,14 @@ module.exports.msigninRequire = function (req, res, next) {
   } else if (state !== 'base') {
     var _promise = (0, _weixin.getAccesstoken)(code);
     _promise.then(function (result) {
-      console.log('2::access_token::', result.access_token);
       return (0, _weixin.getUserinfo)(result.openid, result.access_token);
     }).then(function (user) {
-      console.log('user::', user);
       var new_user = {};
       new_user.openid = user.openid;
       new_user.nickname = user.nickname;
       new_user.headimgurl = user.headimgurl;
+      console.log('user::', user);
+      console.log('new_user::', new_user);
 
       var _user = new _wcuser.Wcuser(new_user);
       _user.save(function (err, wc) {

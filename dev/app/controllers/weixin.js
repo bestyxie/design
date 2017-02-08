@@ -47,8 +47,6 @@ let getAccesstoken = (code) =>{
           let access_token = data.access_token;
           let refresh_token = data.refresh_token;
           let openid = data.openid;
-          console.log('data::',data);
-          console.log('getAccesstoken->access_token::',access_token);
 
           // if(tokenUrl.indexOf('code')>=0){
           //   AccessToken.remove({},() =>{
@@ -78,9 +76,7 @@ let getUserinfo = (openid,access_token) => {
       // }
       // access_token = access.access_token;
       let infoUrl = 'https://api.weixin.qq.com/sns/userinfo?access_token='+access_token+'&openid='+openid;
-      console.log('infoUrl::',infoUrl);
       request.get(infoUrl,function(err,res,body){
-        console.log('body::',body);
         resolve(body);
       })
     // });
