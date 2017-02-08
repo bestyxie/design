@@ -28,9 +28,9 @@ module.exports.msigninRequire = (req,res,next) =>{
     })
   }
   else if(state !== 'base'){
-    console.log('state !== base')
     let promise = getAccesstoken(code);
     promise.then((openid,access_token) => {
+      console.log('2::access_token::',access_token);
       return getUserinfo(openid,access_token);
     }).then(user => {
       console.log('user::',user);

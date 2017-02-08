@@ -47,15 +47,17 @@ let getAccesstoken = (code) =>{
           let access_token = data.access_token;
           let refresh_token = data.refresh_token;
           let openid = data.openid;
+          console.log('data::',data);
+          console.log('getAccesstoken->access_token::',access_token);
 
-          if(tokenUrl.indexOf('code')>=0){
-            AccessToken.remove({},() =>{
-              var new_access = new AccessToken({
-                refresh_token: refresh_token
-              });
-              new_access.save((err) => {})
-            });
-          }
+          // if(tokenUrl.indexOf('code')>=0){
+          //   AccessToken.remove({},() =>{
+          //     var new_access = new AccessToken({
+          //       refresh_token: refresh_token
+          //     });
+          //     new_access.save((err) => {})
+          //   });
+          // }
           resolve(openid,access_token);
         }else{
           tokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid="+APPID+"&secret="+APP_SECRET+"&code="+code+"&grant_type=authorization_code ";
@@ -69,7 +71,7 @@ let getAccesstoken = (code) =>{
 }
 
 let getUserinfo = (openid,access_token) => {
-
+  console.log('1::access_token',access_token);
   let promise = new Promise((resolve,reject) => {
     // AccessToken.find({},(err,access) => {
       // if(err){

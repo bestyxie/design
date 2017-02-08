@@ -48,22 +48,22 @@ var getAccesstoken = function getAccesstoken(code) {
     function req(err, res, body) {
       if (!err && res.statusCode == 200) {
         if (!body.errcode) {
-          (function () {
-            var data = JSON.parse(body);
-            var access_token = data.access_token;
-            var refresh_token = data.refresh_token;
-            var openid = data.openid;
+          var data = JSON.parse(body);
+          var access_token = data.access_token;
+          var refresh_token = data.refresh_token;
+          var openid = data.openid;
+          console.log('data::', data);
+          console.log('getAccesstoken->access_token::', access_token);
 
-            if (tokenUrl.indexOf('code') >= 0) {
-              AccessToken.remove({}, function () {
-                var new_access = new AccessToken({
-                  refresh_token: refresh_token
-                });
-                new_access.save(function (err) {});
-              });
-            }
-            resolve(openid, access_token);
-          })();
+          // if(tokenUrl.indexOf('code')>=0){
+          //   AccessToken.remove({},() =>{
+          //     var new_access = new AccessToken({
+          //       refresh_token: refresh_token
+          //     });
+          //     new_access.save((err) => {})
+          //   });
+          // }
+          resolve(openid, access_token);
         } else {
           tokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + APPID + "&secret=" + APP_SECRET + "&code=" + code + "&grant_type=authorization_code ";
           console.log('access_token 过期！！！');
@@ -76,7 +76,7 @@ var getAccesstoken = function getAccesstoken(code) {
 };
 
 var getUserinfo = function getUserinfo(openid, access_token) {
-
+  console.log('1::access_token', access_token);
   var promise = new Promise(function (resolve, reject) {
     // AccessToken.find({},(err,access) => {
     // if(err){

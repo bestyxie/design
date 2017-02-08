@@ -37,9 +37,9 @@ module.exports.msigninRequire = function (req, res, next) {
       });
     });
   } else if (state !== 'base') {
-    console.log('state !== base');
     var _promise = (0, _weixin.getAccesstoken)(code);
     _promise.then(function (openid, access_token) {
+      console.log('2::access_token::', access_token);
       return (0, _weixin.getUserinfo)(openid, access_token);
     }).then(function (user) {
       console.log('user::', user);
