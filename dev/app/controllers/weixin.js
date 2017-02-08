@@ -68,20 +68,19 @@ let getAccesstoken = (code) =>{
   });
 }
 
-let getUserinfo = (openid) => {
-  let access_token = '';
+let getUserinfo = (openid,access_token) => {
 
   let promise = new Promise((resolve,reject) => {
-    AccessToken.find({},(err,access) => {
-      if(err){
-        reject();
-      }
-      access_token = access.access_token;
+    // AccessToken.find({},(err,access) => {
+      // if(err){
+      //   reject();
+      // }
+      // access_token = access.access_token;
       let infoUrl = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token='+access_token+'&openid='+openid;
       request.get(infoUrl,function(err,res,body){
         resolve(body);
       })
-    });
+    // });
   });
   return promise;
 }

@@ -75,20 +75,19 @@ var getAccesstoken = function getAccesstoken(code) {
   });
 };
 
-var getUserinfo = function getUserinfo(openid) {
-  var access_token = '';
+var getUserinfo = function getUserinfo(openid, access_token) {
 
   var promise = new Promise(function (resolve, reject) {
-    AccessToken.find({}, function (err, access) {
-      if (err) {
-        reject();
-      }
-      access_token = access.access_token;
-      var infoUrl = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token=' + access_token + '&openid=' + openid;
-      request.get(infoUrl, function (err, res, body) {
-        resolve(body);
-      });
+    // AccessToken.find({},(err,access) => {
+    // if(err){
+    //   reject();
+    // }
+    // access_token = access.access_token;
+    var infoUrl = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token=' + access_token + '&openid=' + openid;
+    request.get(infoUrl, function (err, res, body) {
+      resolve(body);
     });
+    // });
   });
   return promise;
 };
