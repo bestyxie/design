@@ -22,7 +22,6 @@ module.exports.msigninRequire = function (req, res, next) {
   if (code && state == 'base') {
     var promise = (0, _weixin.getAccesstoken)(code);
     promise.then(function (openid) {
-      console.log(openid);
       _wcuser.Wcuser.find({ openid: openid }, function (err, user) {
         if (err) {
           console.log(err);
@@ -41,13 +40,11 @@ module.exports.msigninRequire = function (req, res, next) {
     console.log('state !== base');
     var _promise = (0, _weixin.getAccesstoken)(code);
     _promise.then(function (user) {
-      console.log(user);
+      console.log('user::', user);
       var new_user = {};
       new_user.openid = user.openid;
       new_user.nickname = user.nickname;
       new_user.headimgurl = user.headimgurl;
-
-      console.log(new_user);
 
       var _user = new _wcuser.Wcuser(new_user);
       _user.save(function (err, wc) {

@@ -12,7 +12,6 @@ module.exports.msigninRequire = (req,res,next) =>{
   if(code && state == 'base') {
     let promise = getAccesstoken(code);
     promise.then(openid => {
-      console.log(openid);
       Wcuser.find({openid: openid},(err,user) => {
         if(err){
           console.log(err);
@@ -32,13 +31,11 @@ module.exports.msigninRequire = (req,res,next) =>{
     console.log('state !== base')
     let promise = getAccesstoken(code);
     promise.then(user => {
-      console.log(user);
+      console.log('user::',user);
       let new_user = {};
       new_user.openid = user.openid;
       new_user.nickname = user.nickname;
       new_user.headimgurl = user.headimgurl;
-
-      console.log(new_user)
 
       let _user = new Wcuser(new_user);
       _user.save((err,wc) => {
