@@ -9,7 +9,7 @@ module.exports.msigninRequire = (req,res,next) =>{
   let code = req.query.code;
   let state = req.query.state;
   
-  if(code && state == 'base') {
+  if(code && state == 'base'&& !req.session.user) {
     let promise = getAccesstoken(code);
     promise.then(result => {
       Wcuser.find({openid: result.openid},(err,user) => {
@@ -22,12 +22,13 @@ module.exports.msigninRequire = (req,res,next) =>{
         }else{
           req.session.user = {};
           req.session.user._id = user._id;
+          req.session.openid = user.openid;
           next();
         }
       });
     })
   }
-  else if(state !== 'base'){
+  else if(state !== 'base'&& !req.session.user){
     let promise = getAccesstoken(code);
     promise.then((result) => {
       return getUserinfo(result.openid,result.access_token);
@@ -45,6 +46,7 @@ module.exports.msigninRequire = (req,res,next) =>{
         }
         req.session.user = {};
         req.session.user._id = wc._id;
+        req.session.openid = wc.openid;
         next();
       })
     })

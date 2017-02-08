@@ -12,14 +12,22 @@ import {delete_doc} from '../search/delete_document';
 import {update_doc} from '../search/update_document';
 import {deletePic} from '../common/delete_file';
 import Evaluation from '../models/evaluation';
+import {Wcuser} from '../models/wcuser';
 
 
 // product list || home
 module.exports.list = function(req,res){
-  delete req.session.user;
+  // delete req.session.user;
   let login = false;
-  if(req.session.user){
+  if(req.cookie.openid){
     login = true;
+    Wcuser.findOne({openid: req.cookie.openid},{_id: 1,openid: 1},(err,user) => {
+      if(err){
+        console.log(err);
+        return;
+      }
+      res.session.user = user;
+    })
   }
   let promise = new Promise((resolve,reject) => {
     Activity.find({},(err,acts) => {

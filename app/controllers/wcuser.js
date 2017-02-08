@@ -19,7 +19,7 @@ module.exports.msigninRequire = function (req, res, next) {
   var code = req.query.code;
   var state = req.query.state;
 
-  if (code && state == 'base') {
+  if (code && state == 'base' && !req.session.user) {
     var promise = (0, _weixin.getAccesstoken)(code);
     promise.then(function (result) {
       _wcuser.Wcuser.find({ openid: result.openid }, function (err, user) {
@@ -32,11 +32,12 @@ module.exports.msigninRequire = function (req, res, next) {
         } else {
           req.session.user = {};
           req.session.user._id = user._id;
+          req.session.openid = user.openid;
           next();
         }
       });
     });
-  } else if (state !== 'base') {
+  } else if (state !== 'base' && !req.session.user) {
     var _promise = (0, _weixin.getAccesstoken)(code);
     _promise.then(function (result) {
       return (0, _weixin.getUserinfo)(result.openid, result.access_token);
@@ -54,6 +55,7 @@ module.exports.msigninRequire = function (req, res, next) {
         }
         req.session.user = {};
         req.session.user._id = wc._id;
+        req.session.openid = wc.openid;
         next();
       });
     });

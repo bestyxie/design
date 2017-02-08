@@ -40,14 +40,23 @@ var _evaluation = require('../models/evaluation');
 
 var _evaluation2 = _interopRequireDefault(_evaluation);
 
+var _wcuser = require('../models/wcuser');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // product list || home
 module.exports.list = function (req, res) {
-  delete req.session.user;
+  // delete req.session.user;
   var login = false;
-  if (req.session.user) {
+  if (req.cookie.openid) {
     login = true;
+    _wcuser.Wcuser.findOne({ openid: req.cookie.openid }, { _id: 1, openid: 1 }, function (err, user) {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      res.session.user = user;
+    });
   }
   var promise = new Promise(function (resolve, reject) {
     _activity.Activity.find({}, function (err, acts) {
