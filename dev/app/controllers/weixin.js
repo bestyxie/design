@@ -27,18 +27,6 @@ let getAccesstoken = (code) =>{
   let tokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid="+APPID+"&secret="+APP_SECRET+"&code="+code+"&grant_type=authorization_code ";
 
   return new Promise((resolve,reject)=> {
-    // AccessToken.find({},(err,access)=>{
-    //   if(err){
-    //     console.log(err);
-    //     return;
-    //   }
-    //   if(access.length>0){
-    //     let refresh_token = access.refresh_token;
-    //     tokenUrl = 'https://api.weixin.qq.com/sns/oauth2/refresh_token?appid='+APPID+'&grant_type=refresh_token&refresh_token='+refresh_token;
-    //   }
-
-    //   // console.log(tokenUrl);
-    // });
     request.get(tokenUrl,req);//request
     function req(err,res,body){
       if(!err && res.statusCode == 200) {
@@ -48,14 +36,6 @@ let getAccesstoken = (code) =>{
           let refresh_token = data.refresh_token;
           let openid = data.openid;
 
-          // if(tokenUrl.indexOf('code')>=0){
-          //   AccessToken.remove({},() =>{
-          //     var new_access = new AccessToken({
-          //       refresh_token: refresh_token
-          //     });
-          //     new_access.save((err) => {})
-          //   });
-          // }
           resolve({openid: openid,access_token: access_token});
         }else{
           tokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid="+APPID+"&secret="+APP_SECRET+"&code="+code+"&grant_type=authorization_code ";
@@ -70,16 +50,10 @@ let getAccesstoken = (code) =>{
 
 let getUserinfo = (openid,access_token) => {
   let promise = new Promise((resolve,reject) => {
-    // AccessToken.find({},(err,access) => {
-      // if(err){
-      //   reject();
-      // }
-      // access_token = access.access_token;
-      let infoUrl = 'https://api.weixin.qq.com/sns/userinfo?access_token='+access_token+'&openid='+openid;
-      request.get(infoUrl,function(err,res,body){
-        resolve(JSON.parse(body));
-      })
-    // });
+    let infoUrl = 'https://api.weixin.qq.com/sns/userinfo?access_token='+access_token+'&openid='+openid;
+    request.get(infoUrl,function(err,res,body){
+      resolve(JSON.parse(body));
+    });
   });
   return promise;
 }
