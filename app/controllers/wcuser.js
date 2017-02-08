@@ -21,8 +21,8 @@ module.exports.msigninRequire = function (req, res, next) {
 
   if (code && state == 'base') {
     var promise = (0, _weixin.getAccesstoken)(code);
-    promise.then(function (openid) {
-      _wcuser.Wcuser.find({ openid: openid }, function (err, user) {
+    promise.then(function (result) {
+      _wcuser.Wcuser.find({ openid: result.openid }, function (err, user) {
         if (err) {
           console.log(err);
           res.redirect('/');
@@ -38,9 +38,9 @@ module.exports.msigninRequire = function (req, res, next) {
     });
   } else if (state !== 'base') {
     var _promise = (0, _weixin.getAccesstoken)(code);
-    _promise.then(function (openid, access_token) {
-      console.log('2::access_token::', access_token);
-      return (0, _weixin.getUserinfo)(openid, access_token);
+    _promise.then(function (result) {
+      console.log('2::access_token::', result.access_token);
+      return (0, _weixin.getUserinfo)(result.openid, result.access_token);
     }).then(function (user) {
       console.log('user::', user);
       var new_user = {};

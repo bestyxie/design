@@ -11,8 +11,8 @@ module.exports.msigninRequire = (req,res,next) =>{
   
   if(code && state == 'base') {
     let promise = getAccesstoken(code);
-    promise.then(openid => {
-      Wcuser.find({openid: openid},(err,user) => {
+    promise.then(result => {
+      Wcuser.find({openid: result.openid},(err,user) => {
         if(err){
           console.log(err);
           res.redirect('/');
@@ -29,9 +29,9 @@ module.exports.msigninRequire = (req,res,next) =>{
   }
   else if(state !== 'base'){
     let promise = getAccesstoken(code);
-    promise.then((openid,access_token) => {
-      console.log('2::access_token::',access_token);
-      return getUserinfo(openid,access_token);
+    promise.then((result) => {
+      console.log('2::access_token::',result.access_token);
+      return getUserinfo(result.openid,result.access_token);
     }).then(user => {
       console.log('user::',user);
       let new_user = {};
