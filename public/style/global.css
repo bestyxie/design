@@ -1001,23 +1001,27 @@ header.bar.bar-nav form .search-btn {
 }
 .create_order .address {
   background: #fff;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid #e5e5e5;
 }
 .create_order .no-default {
-  display: block;
+  width: 100%;
   text-align: center;
 }
 .create_order .no-default .fa-map-marker {
   font-size: 1rem;
 }
+.create_order .no-default p {
+  line-height: 1;
+}
 .create_order .no-default .open-popup,
 .create_order .no-default .fa-map-marker {
   color: #ff5e7a;
-  display: inline;
+  display: inline !important;
 }
 .create_order .inner {
   display: -webkit-box;
   display: box;
-  height: 2rem;
   padding: 0.5rem;
   box-sizing: content-box;
 }
