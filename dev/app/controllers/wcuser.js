@@ -23,6 +23,8 @@ module.exports.msigninRequire = (req,res,next) =>{
           req.session.user = {};
           req.session.user._id = user._id;
           req.session.openid = user.openid;
+          // cookie
+          req.cookie('openid',user.openid,{ expires: new Date(Date.now()+60*60*24*365),httpOnly: true});
           next();
         }
       });
@@ -47,6 +49,9 @@ module.exports.msigninRequire = (req,res,next) =>{
         req.session.user = {};
         req.session.user._id = wc._id;
         req.session.openid = wc.openid;
+        // cookie
+        req.cookie('openid',user.openid,{ expires: new Date(Date.now()+60*60*24*365),httpOnly: true});
+
         next();
       })
     })
