@@ -18,6 +18,7 @@ export const evaluate = (req,res) => {
 export const subimit = (req,res) => {
   let prodts = req.body.prod;
   let user_id = req.body.user_id;
+  let orderid = req.body.order_id;
   let files = req.files;
   let comments = {};
 
@@ -53,6 +54,7 @@ export const subimit = (req,res) => {
   }else{
     save_evl(prodts,0)
   }
+  Order.findOneAndUpdate({_id: orderid},{evaluate: true});
   res.redirect('/order');
 }
 

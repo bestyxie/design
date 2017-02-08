@@ -32,6 +32,7 @@ var evaluate = exports.evaluate = function evaluate(req, res) {
 var subimit = exports.subimit = function subimit(req, res) {
   var prodts = req.body.prod;
   var user_id = req.body.user_id;
+  var orderid = req.body.order_id;
   var files = req.files;
   var comments = {};
 
@@ -66,6 +67,7 @@ var subimit = exports.subimit = function subimit(req, res) {
   } else {
     save_evl(prodts, 0);
   }
+  _order2.default.findOneAndUpdate({ _id: orderid }, { evaluate: true });
   res.redirect('/order');
 };
 

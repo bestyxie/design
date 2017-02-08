@@ -9,6 +9,7 @@ block content
     .content.native-scroll.wrapper
       form#form.product_list(action="/evaluate/submit",method="POST",enctype="multipart/form-data")
         input(type="hidden",name="user_id",value="#{order.user_id}")
+        input(type="hidden",name="order_id",value="#{order._id}")
         each product,index in order.products
           .product
             input(type="hidden",name="prod[product_id]",value="#{product.productId}")
