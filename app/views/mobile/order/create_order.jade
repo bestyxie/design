@@ -11,16 +11,19 @@ block content
         input#userid(type="hidden",name="order[user_id]",value="#{user_id}")
         .address.default
           .inner
-            .location_icon
-              i.fa.fa-map-marker
-            .addr_detail
-              input(type="hidden",name="order[address]",value="#{default_addr._id}")
-              .contact
-                em.default-label.j-default-label 默认
-                | 收货人：#{default_addr.recipient} &nbsp;&nbsp;&nbsp;#{default_addr.tel}
-              .detail #{default_addr.address}
-            .edit_addr
-              a.fa.fa-angle-right.open-popup(href="javascript:;",data-popup=".popup-address")
+            if default_addr
+              .location_icon
+                i.fa.fa-map-marker
+              .addr_detail
+                input(type="hidden",name="order[address]",value="#{default_addr._id}")
+                .contact
+                  em.default-label.j-default-label 默认
+                  | 收货人：#{default_addr.recipient} &nbsp;&nbsp;&nbsp;#{default_addr.tel}
+                .detail #{default_addr.address}
+              .edit_addr
+                a.fa.fa-angle-right.open-popup(href="javascript:;",data-popup=".popup-address")
+            else
+              a.open-popup(href="javascript:;",data-popup=".popup-new") 添加收货地址
         .product
           ul.ui-list
             each product in products
