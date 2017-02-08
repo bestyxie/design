@@ -59,7 +59,7 @@ module.exports = function(app){
   app.post('/user/signin',User.signin);
   app.get('/logout',User.logout);
   app.get('/mobile/login',User.mlogin);
-  app.get('/user/home',User.signinRequire,User.homepage);
+  app.get('/user/home',Wcuser.msigninRequire,User.signinRequire,User.homepage);
 
   // address
   app.post('/address/add',Address.add);

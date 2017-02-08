@@ -36,8 +36,6 @@ module.exports.msigninRequire = (req,res,next) =>{
       new_user.openid = user.openid;
       new_user.nickname = user.nickname;
       new_user.headimgurl = user.headimgurl;
-      console.log('user::',user)
-      console.log('new_user::',new_user);
 
       let _user = new Wcuser(new_user);
       _user.save((err,wc) => {
@@ -55,8 +53,9 @@ module.exports.msigninRequire = (req,res,next) =>{
     next();
   }
   function authorize(){
+    let path = req.path;
     base_set.scope="snsapi_userinfo";
-    base_set.redirect_uri = encodeURI('http://bestyxie.cn/cart');
+    base_set.redirect_uri = encodeURI('http://bestyxie.cn'+path);
     let snsapi_base = base_url+qs.stringify(base_set)+ANCHOR;
 
     res.redirect(snsapi_base);

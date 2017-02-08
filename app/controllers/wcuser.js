@@ -45,8 +45,6 @@ module.exports.msigninRequire = function (req, res, next) {
       new_user.openid = user.openid;
       new_user.nickname = user.nickname;
       new_user.headimgurl = user.headimgurl;
-      console.log('user::', user);
-      console.log('new_user::', new_user);
 
       var _user = new _wcuser.Wcuser(new_user);
       _user.save(function (err, wc) {
@@ -63,8 +61,9 @@ module.exports.msigninRequire = function (req, res, next) {
     next();
   }
   function authorize() {
+    var path = req.path;
     _weixin.base_set.scope = "snsapi_userinfo";
-    _weixin.base_set.redirect_uri = encodeURI('http://bestyxie.cn/cart');
+    _weixin.base_set.redirect_uri = encodeURI('http://bestyxie.cn' + path);
     var snsapi_base = _weixin.base_url + _querystring2.default.stringify(_weixin.base_set) + _weixin.ANCHOR;
 
     res.redirect(snsapi_base);
