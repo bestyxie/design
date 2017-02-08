@@ -76,7 +76,6 @@ var getAccesstoken = function getAccesstoken(code) {
 };
 
 var getUserinfo = function getUserinfo(openid, access_token) {
-  console.log('1::access_token', access_token);
   var promise = new Promise(function (resolve, reject) {
     // AccessToken.find({},(err,access) => {
     // if(err){
@@ -84,7 +83,9 @@ var getUserinfo = function getUserinfo(openid, access_token) {
     // }
     // access_token = access.access_token;
     var infoUrl = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token=' + access_token + '&openid=' + openid;
+    console.log('infoUrl::', infoUrl);
     request.get(infoUrl, function (err, res, body) {
+      console.log('body::', body);
       resolve(body);
     });
     // });
