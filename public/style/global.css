@@ -1003,6 +1003,7 @@ header.bar.bar-nav form .search-btn {
   background: #fff;
 }
 .create_order .no-default {
+  display: block;
   text-align: center;
 }
 .create_order .no-default .fa-map-marker {
@@ -1011,6 +1012,7 @@ header.bar.bar-nav form .search-btn {
 .create_order .no-default .open-popup,
 .create_order .no-default .fa-map-marker {
   color: #ff5e7a;
+  display: inline;
 }
 .create_order .inner {
   display: -webkit-box;
