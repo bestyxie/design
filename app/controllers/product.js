@@ -46,9 +46,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // product list || home
 module.exports.list = function (req, res) {
-  // delete req.session.user;
   var login = false;
-  if (req.cookie.openid) {
+  if (req.cookie && req.cookie.openid && !req.session.user) {
     login = true;
     _wcuser.Wcuser.findOne({ openid: req.cookie.openid }, { _id: 1, openid: 1 }, function (err, user) {
       if (err) {

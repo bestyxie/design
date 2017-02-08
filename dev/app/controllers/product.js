@@ -17,9 +17,8 @@ import {Wcuser} from '../models/wcuser';
 
 // product list || home
 module.exports.list = function(req,res){
-  // delete req.session.user;
   let login = false;
-  if(req.cookie.openid){
+  if(req.cookie && req.cookie.openid && !req.session.user){
     login = true;
     Wcuser.findOne({openid: req.cookie.openid},{_id: 1,openid: 1},(err,user) => {
       if(err){

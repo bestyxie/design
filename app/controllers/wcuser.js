@@ -22,7 +22,7 @@ module.exports.msigninRequire = function (req, res, next) {
   if (code && state == 'base' && !req.session.user) {
     var promise = (0, _weixin.getAccesstoken)(code);
     promise.then(function (result) {
-      _wcuser.Wcuser.find({ openid: result.openid }, function (err, user) {
+      _wcuser.Wcuser.findOne({ openid: result.openid }, function (err, user) {
         if (err) {
           console.log(err);
           res.redirect('/');
@@ -32,9 +32,9 @@ module.exports.msigninRequire = function (req, res, next) {
         } else {
           req.session.user = {};
           req.session.user._id = user._id;
-          req.session.openid = user.openid;
+          req.session.user.openid = user.openid;
           // cookie
-          req.cookie('openid', user.openid, { expires: new Date(Date.now() + 60 * 60 * 24 * 365), httpOnly: true });
+          res.cookie('openid', user.openid, { expires: new Date(Date.now() + 60 * 60 * 24 * 365), httpOnly: true });
           next();
         }
       });
@@ -57,9 +57,9 @@ module.exports.msigninRequire = function (req, res, next) {
         }
         req.session.user = {};
         req.session.user._id = wc._id;
-        req.session.openid = wc.openid;
+        req.session.user.openid = wc.openid;
         // cookie
-        req.cookie('openid', wc.openid, { expires: new Date(Date.now() + 60 * 60 * 24 * 365), httpOnly: true });
+        res.cookie('openid', wc.openid, { expires: new Date(Date.now() + 60 * 60 * 24 * 365), httpOnly: true });
 
         next();
       });
@@ -75,4 +75,20 @@ module.exports.msigninRequire = function (req, res, next) {
 
     res.redirect(snsapi_base);
   }
+};
+
+// 用户主页
+module.exports.homepage = function (req, res) {
+  var user_id = req.session.user._id;
+  console.log(req.session);
+  _wcuser.Wcuser.findOne({ _id: user_id }, function (err, user) {
+    if (err) {
+      console.log(err);
+      res.send(err);
+    }
+    console.log(user);
+    res.render('mobile/user/', {
+      user: user
+    });
+  });
 };
