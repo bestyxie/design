@@ -72,13 +72,11 @@ module.exports.msigninRequire = (req,res,next) =>{
 // 用户主页
 module.exports.homepage = function(req,res){
   let user_id = req.session.user._id;
-  console.log(req.session);
   Wcuser.findOne({_id: user_id},(err,user) => {
     if(err){
       console.log(err);
       res.send(err);
     }
-    console.log(user);
     res.render('mobile/user/',{
       user: user
     });
