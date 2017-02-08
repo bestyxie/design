@@ -29,6 +29,11 @@ block content
                   a.open-popup(href="javascript:;",data-popup=".popup-new") 去添加
             else
               .default-addr.hide
+                .location_icon
+                  i.fa.fa-map-marker
+                .addr_detail
+                .edit_addr
+                  a.fa.fa-angle-right.open-popup(href="javascript:;",data-popup=".popup-address")
               .no-default
                 i.fa.fa-map-marker
                 p 还没有收货地址,
@@ -99,7 +104,7 @@ block scripts
           var addrid = $('.popup-new input[name="addrid"]').val();
           var list = $('.j-addr_list');
           var parent = $('.popup-address .j-edit-default[value="'+addrid+'"]').parents('.address');
-          var html = create_html(data,addrid);
+          var html = create_html(addrData,addrid);
           list.insertBefore(html,parent);
           parent.remove();
           $('.popup-new input').val('');
@@ -110,8 +115,15 @@ block scripts
             if(result.success) {
               var address = addrData.address
               var html = create_html(address,result.addr_id);
-              if($('.address').length == 0){
-                $('.j-select-addr').trigger('click');
+              if($('j-addr_list .address').length == 0){
+                var _html = [];
+                _html.push('<input type="hidden" name="order[address]" value="'+result.addr_id+'">');
+                _html.push('<div class="contack"><em class="default-label j-default-label">默认</em>收货人：'+addrData.address.recipient+' &nbsp;&nbsp;&nbsp;'+addrData.address.tel+'</div>');
+                html.push('<div class="detail">'+addrData.address.address+'</div>')
+                $('#order .addr_detail').empty();
+                $('#order .addr_detail').html(_html.join(""));
+                $('#order .default-addr').removeClass('hide');
+                $('#order .no-default').addClass('hide');
               }
               $('.j-addr_list').append(html.join(''));
             }
@@ -240,8 +252,4 @@ block scripts
         var detail = $(this).parents('.address').find('.addr_detail').html();
         $('#order .addr_detail').empty().html(detail);
       });
-
-      $(document).on('click','.j-to-newaddr',function(e){
-        $('.popup-new .j-new-addr').attr('data-status','update');
-      })
     })

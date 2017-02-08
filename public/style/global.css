@@ -1091,6 +1091,10 @@ header.bar.bar-nav form .search-btn {
 .create_order .footer .pieces_count {
   line-height: 1;
 }
+.popup-address .inner {
+  display: -webkit-box;
+  display: box;
+}
 .order_list .all-order {
   padding-top: 2rem;
 }
