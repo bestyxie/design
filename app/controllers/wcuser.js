@@ -59,7 +59,7 @@ module.exports.msigninRequire = function (req, res, next) {
         req.session.user._id = wc._id;
         req.session.openid = wc.openid;
         // cookie
-        req.cookie('openid', user.openid, { expires: new Date(Date.now() + 60 * 60 * 24 * 365), httpOnly: true });
+        req.cookie('openid', wc.openid, { expires: new Date(Date.now() + 60 * 60 * 24 * 365), httpOnly: true });
 
         next();
       });
