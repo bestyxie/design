@@ -39,7 +39,9 @@ module.exports.msigninRequire = function (req, res, next) {
   } else if (state !== 'base') {
     console.log('state !== base');
     var _promise = (0, _weixin.getAccesstoken)(code);
-    _promise.then(function (user) {
+    _promise.then(function (openid) {
+      return (0, _weixin.getUserinfo)(openid);
+    }).then(function (user) {
       console.log('user::', user);
       var new_user = {};
       new_user.openid = user.openid;
