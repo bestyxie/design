@@ -32,7 +32,7 @@ block content
               .no-default
                 i.fa.fa-map-marker
                 p 还没有收货地址,
-                  a.open-popup(href="javascript:;",data-popup=".popup-new") 去添加
+                  a.open-popup.j-to-newaddr(href="javascript:;",data-popup=".popup-new") 去添加
         .product
           ul.ui-list
             each product in products
@@ -188,7 +188,6 @@ block scripts
         $('.popup-new .j-new-addr').attr('data-status','update');
         $('.j-delete').removeClass('hide');
         $.get('/address/get',{_id: addr_id},function(result){
-          console.log(result);
           var address = result.address;
           var addr = address.address.split('-');
           var detail = addr[addr.length-1];
@@ -240,4 +239,8 @@ block scripts
         var detail = $(this).parents('.address').find('.addr_detail').html();
         $('#order .addr_detail').empty().html(detail);
       });
+
+      $(document).on('click','.j-to-newaddr',function(e){
+        $('.popup-new .j-new-addr').attr('data-status','update');
+      })
     })

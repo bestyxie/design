@@ -1020,10 +1020,12 @@ header.bar.bar-nav form .search-btn {
   display: inline !important;
 }
 .create_order .inner {
-  display: -webkit-box;
-  display: box;
   padding: 0.5rem;
   box-sizing: content-box;
+}
+.create_order .inner .default-addr {
+  display: -webkit-box;
+  display: box;
 }
 .create_order .inner .addr_detail {
   -webkit-box-flex: 1;
