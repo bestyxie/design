@@ -20,6 +20,7 @@ var add = exports.add = function add(req, res) {
         console.log(err);
         return;
       }
+      console.log('update address::', address);
     });
   }
   _address.save(function (err, address) {

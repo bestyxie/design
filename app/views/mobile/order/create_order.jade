@@ -104,6 +104,9 @@ block scripts
             if(result.success) {
               var address = addrData.address
               var html = create_html(address,result.addr_id);
+              if($('.address').length == 0){
+                $('.j-select-addr').trigger('click');
+              }
               $('.j-addr_list').append(html.join(''));
             }
           },'json');

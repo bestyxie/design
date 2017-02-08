@@ -13,6 +13,7 @@ export const add = (req,res) => {
         console.log(err);
         return;
       }
+      console.log('update address::',address);
     });
   }
   _address.save((err,address) => {
