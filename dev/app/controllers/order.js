@@ -211,3 +211,17 @@ export const express_msg = (req,res) => {
     res.render('mobile/express/',{express: express,orderid: orderid});
   })
 }
+
+export const receipt = (req,res) => {
+  let orderid = req.query._id;
+
+  Order.findOneAndUpdate({_id: orderid},{status: '交易完成'},(err) => {
+    if(err){
+      console.log(err);
+      res.send(err);
+    }
+    res.render('mobile/order/receipt',{
+      _id: orderid
+    });
+  })
+}

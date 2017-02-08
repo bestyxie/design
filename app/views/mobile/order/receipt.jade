@@ -1,0 +1,11 @@
+extends ../../layout
+
+block content
+  .page.order_list
+    header.head-block.bar.bar-nav.header
+      a.arr(href="/")
+        i.fa.fa-angle-left
+      h1.title 确认收货
+    .content.native-scroll.wrapper
+      p 订单已完成
+        a(href="/evaluate/evaluate?_id=#{_id}") 去评价

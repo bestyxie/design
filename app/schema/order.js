@@ -11,10 +11,10 @@ var OrderSchema = new Schema({
   // 待付款
   // 待发货
   // 待收货
-  // 待评价
   // 退款退货
   // 交易完成
   // 交易关闭
+  evaluate: { type: Boolean, default: false }, //fasle 为待评价
   address: {
     recipient: String,
     tel: String,

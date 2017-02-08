@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.express_msg = exports.update = exports.getAll_paid = exports.paying = exports.order_list = exports.submit_order = exports.create_order = undefined;
+exports.receipt = exports.express_msg = exports.update = exports.getAll_paid = exports.paying = exports.order_list = exports.submit_order = exports.create_order = undefined;
 
 var _order2 = require('../models/order');
 
@@ -236,5 +236,19 @@ var express_msg = exports.express_msg = function express_msg(req, res) {
       _data.push(express.data[i]);
     }
     res.render('mobile/express/', { express: express, orderid: orderid });
+  });
+};
+
+var receipt = exports.receipt = function receipt(req, res) {
+  var orderid = req.query._id;
+
+  _order3.default.findOneAndUpdate({ _id: orderid }, { status: '交易完成' }, function (err) {
+    if (err) {
+      console.log(err);
+      res.send(err);
+    }
+    res.render('mobile/order/receipt', {
+      _id: orderid
+    });
   });
 };
