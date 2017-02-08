@@ -226,6 +226,7 @@ block scripts
       });
 
       $(document).on('click','.j-select-addr',function(e){
+        console.log('click');
         var addr = $(this).parents('.address');
         if($(addr).hasClass('default')){
           $('#order .address').addClass('default');
