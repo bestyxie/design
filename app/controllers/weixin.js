@@ -82,7 +82,7 @@ var getUserinfo = function getUserinfo(openid, access_token) {
     // access_token = access.access_token;
     var infoUrl = 'https://api.weixin.qq.com/sns/userinfo?access_token=' + access_token + '&openid=' + openid;
     request.get(infoUrl, function (err, res, body) {
-      resolve(body);
+      resolve(JSON.parse(body));
     });
     // });
   });
