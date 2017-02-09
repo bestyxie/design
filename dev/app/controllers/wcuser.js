@@ -24,7 +24,7 @@ module.exports.msigninRequire = (req,res,next) =>{
           req.session.user._id = user._id;
           req.session.user.openid = user.openid;
           // cookie
-          res.cookie('openid',user.openid,{ expires: new Date(Date.now()+60*60*24*365),httpOnly: true});
+          res.cookie('openid',user.openid,{ expires: new Date(Date.now()+1000*60*60*24*365),httpOnly: true});
           next();
         }
       });
