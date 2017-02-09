@@ -13,7 +13,7 @@ var crypto = require('crypto');
 var request = require('request');
 var xml2jsparseString = require('xml2js').parseString;
 // 引入项目的配置信息
-var config = require('../../config/index.js');
+var config = require('../../config/config.json').wx;
 
 // wechat 支付类 (使用 es6 的语法)
 class WechatPay {
@@ -174,9 +174,8 @@ class WechatPay {
     /**
      * 获取微信用户的openid
      */
-    getOpenid(obj,openid,cb){
+    getOpenid(obj,cb){
       var that = this;
-      that.userInfo.openid = openid;
       that.getBrandWCPayParams(obj, function (error, responseData) {
         if (error) {
             cb(error);

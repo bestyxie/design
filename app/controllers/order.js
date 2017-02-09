@@ -267,17 +267,11 @@ var receipt = exports.receipt = function receipt(req, res) {
 var getsign = exports.getsign = function getsign(req, res) {
   var data = req.body;
   var openid = req.cookie.user.openid;
-  data.spbill_create_ip = req.ip;
   console.log(openid);
   var wxpay = new WechatPay();
-  wxpay.getOpenid({
-    attach: '',
-    body: '',
-    notify_url: '',
-    out_trade_no: '',
-    spbill_create_ip: req.ip,
-    total_fee: ''
-  }, openid, function (err, responseData) {
+  data.spbill_create_ip = req.ip;
+  data.openid = openid;
+  wxpay.getOpenid(data, function (err, responseData) {
     res.json(responseData);
   });
 };
