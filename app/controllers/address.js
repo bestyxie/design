@@ -105,7 +105,7 @@ var addr_list = exports.addr_list = function addr_list(req, res) {
       console.log(err);
       res.send(err);
     }
-    res.render('mobile/order/order_list', {
+    res.render('mobile/order/address_list', {
       addrs: addrs
     });
   });
