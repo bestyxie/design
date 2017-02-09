@@ -117,21 +117,22 @@ module.exports = function(app){
   app.post('/admin/returns/adopt',Returns.adopt);
   app.get('/admin/returns/complete',Returns.complete);
 
-  app.get('/test',function(res,req){
+  app.get('/test',function(req,res){
     res.render('mobile/test')
   });
-  app.post('/wechat',function(res,req){
+  app.post('/wechat',function(req,res){
     var param = {
       debug: false,
       jsApiList: ['chooseWXPay','uploadImage','onMenuShareTimeline', 'onMenuShareAppMessage'],
       url: req.body.url
     };
-    // api.getTicket(function(err,result){
-    //   console.log(err);
-    //   console.log(result);
-    // });
-    api.getJsConfig(param,function(err,result){
-      res.send(result);
-    })
+    console.log('url',req.body.url);
+    api.getTicket(function(err,result){
+      param.ticket = result.ticket;
+      api.getJsConfig(param,function(err,result){
+        console.log(result);
+        res.send(result);
+      })
+    });
   })
 }
