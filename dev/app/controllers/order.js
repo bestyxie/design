@@ -30,13 +30,11 @@ export const create_order = (req,res) => {
         _prod_msg.push(prod_msg._id.toString());
       }
 
-      // for(let i = 0,len = prodts.products.length;i<len;i++) {
-      //   if( _prod_msg.indexOf(prodts.products[i].productId.toString()) > -1 ) {
-      //     _prodts.push(prodts.products[i]);
-      //     count += prodts.products[i].qty;
-      //     sum += prodts.products[i].qty*prodts.products[i].price;
-      //   }
-      // }
+      for(let i = 0,len = prodts.products.length;i<len;i++) {
+        if( _prod_msg.indexOf(prodts.products[i].productId.toString()) > -1 ) {
+          _prodts.push(prodts.products[i]);
+        }
+      }
 
       let default_addr = addrs.filter(function(addr) {
         if(addr.default){
@@ -111,12 +109,12 @@ export const submit_order = (req,res) => {
       delete order.address;
       order.address = addr;
       let _order = new Order(order);
-      _order.save((err) => {
+      _order.save((err,order) => {
         if(err){
           console.log(err);
           return;
         }
-        res.redirect('/');
+        res.redirect('/order/pay?_id='+order._id);
       })
     })
 
@@ -238,7 +236,8 @@ export const receipt = (req,res) => {
 
 export const getsign = (req,res) => {
   let data = req.body;
-  let openid = req.cookie.user.openid;
+  console.log('openid::',req.cookie.openid)
+  let openid = req.cookie.openid;
   console.log(openid);
   let wxpay = new WechatPay();
   data.spbill_create_ip = req.ip;

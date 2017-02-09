@@ -34,6 +34,7 @@ block content
                 if order.status == '待发货'
                   p 等待发货
                 else if order.status == '待付款'
+                  a.red-btn.j-cancle-order(href="javascript:;",data-id="#{order._id}") 取消订单
                   a.red-btn(href="") 去付款
                 else if order.status == '待收货'
                   a.red-btn.hide(href="") 确认收货
@@ -43,3 +44,12 @@ block content
                   a.red-btn(href="/evaluate/evaluate?_id=#{order._id}",external) 收货评价
 
 block scripts
+  script.
+    $(function(){
+      $(document).on('click','.j-cancle-order',function(){
+        var orderid = $(this).data('id');
+        $.get('',{orderid: order},function(result){
+          
+        })
+      })
+    })

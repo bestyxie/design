@@ -50,13 +50,11 @@ var create_order = exports.create_order = function create_order(req, res) {
         _prod_msg.push(prod_msg._id.toString());
       }
 
-      // for(let i = 0,len = prodts.products.length;i<len;i++) {
-      //   if( _prod_msg.indexOf(prodts.products[i].productId.toString()) > -1 ) {
-      //     _prodts.push(prodts.products[i]);
-      //     count += prodts.products[i].qty;
-      //     sum += prodts.products[i].qty*prodts.products[i].price;
-      //   }
-      // }
+      for (var i = 0, len = prodts.products.length; i < len; i++) {
+        if (_prod_msg.indexOf(prodts.products[i].productId.toString()) > -1) {
+          _prodts.push(prodts.products[i]);
+        }
+      }
 
       var default_addr = addrs.filter(function (addr) {
         if (addr.default) {
@@ -133,12 +131,12 @@ var submit_order = exports.submit_order = function submit_order(req, res) {
       delete order.address;
       order.address = addr;
       var _order = new _order3.default(order);
-      _order.save(function (err) {
+      _order.save(function (err, order) {
         if (err) {
           console.log(err);
           return;
         }
-        res.redirect('/');
+        res.redirect('/order/pay?_id=' + order._id);
       });
     });
   });
@@ -266,7 +264,8 @@ var receipt = exports.receipt = function receipt(req, res) {
 
 var getsign = exports.getsign = function getsign(req, res) {
   var data = req.body;
-  var openid = req.cookie.user.openid;
+  console.log('openid::', req.cookie.openid);
+  var openid = req.cookie.openid;
   console.log(openid);
   var wxpay = new WechatPay();
   data.spbill_create_ip = req.ip;
