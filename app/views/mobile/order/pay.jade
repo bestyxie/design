@@ -1,0 +1,56 @@
+extends ../../layout
+
+block content
+  .page.create_order
+    header.bar.bar-nav.header
+      a.arr(href="javascript:void(history.back());")
+        i.fa.fa-angle-left
+      h1.title 支付订单
+    .content.native-scroll
+      .section
+        p 订单金额
+        em ￥#{order.total+order.express}
+      a.pay#j-pay(href="",data-id="#{order._id}") 去支付
+
+block scripts
+  script.
+    $(function(){
+      //- function onBridgeReady(){
+      //-   WeixinJSBridge.invoke(
+      //-     "getBrandWCPayRequest",
+      //-     {
+      //-       "appId": "wxe751fb0e3060d859",
+      //-       "timeStamp": Date.now(),
+      //-       "nonceStr": "xxxx",
+      //-       "package": "prepay_id=xxxx",
+      //-       "signType": "MD5",
+      //-       "paySign": 'xxxxx'
+      //-     },
+      //-     function(res){
+      //-       if(res.err_msg == 'get_brand_wcpay_request：ok'){
+      //-       //- 使用以上方式判断前端返回,微信团队郑重提示：
+      //-       //- res.err_msg将在用户支付成功后返回 ok，但并不保证它绝对可靠。
+      //-       }
+      //-     }
+      //-   );
+      //- }
+      //- if(typeof WeixinJSBridge == 'undefined'){
+      //-   $(document).on('WeixinJSBridgeReady',onBridgeReady,false);
+      //- }else{
+      //-   onBridgeReady()
+      //- }
+
+      $('#j-pay').on('click',function(e){
+        $(this).html('正在提交订单...');
+        var data = {};
+        data.attach = '';
+        data.body = 'SHOPIN-服装';
+        data.notify_url = 'http://bestyxie.cn/pay/complete';
+        data.out_trade_no = $(this).data('id');
+        data.total_fee = #{order.total+order.express};
+        $.post('/getsign',data,function(result){
+          console.log(result);
+        })
+      })
+
+    })

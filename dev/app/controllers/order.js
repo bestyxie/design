@@ -30,13 +30,13 @@ export const create_order = (req,res) => {
         _prod_msg.push(prod_msg._id.toString());
       }
 
-      for(let i = 0,len = prodts.products.length;i<len;i++) {
-        if( _prod_msg.indexOf(prodts.products[i].productId.toString()) > -1 ) {
-          _prodts.push(prodts.products[i]);
-          count += prodts.products[i].qty;
-          sum += prodts.products[i].qty*prodts.products[i].price;
-        }
-      }
+      // for(let i = 0,len = prodts.products.length;i<len;i++) {
+      //   if( _prod_msg.indexOf(prodts.products[i].productId.toString()) > -1 ) {
+      //     _prodts.push(prodts.products[i]);
+      //     count += prodts.products[i].qty;
+      //     sum += prodts.products[i].qty*prodts.products[i].price;
+      //   }
+      // }
 
       let default_addr = addrs.filter(function(addr) {
         if(addr.default){
@@ -48,8 +48,8 @@ export const create_order = (req,res) => {
       res.render('mobile/order/create_order',{
         products: _prodts,
         user_id: user_id,
-        count: count,
-        sum: sum,
+        // count: count,
+        // sum: sum,
         addrs: addrs,
         default_addr: default_addr[0]
       });
@@ -123,6 +123,15 @@ export const submit_order = (req,res) => {
   })
 }
 
+export const pay = (req,res) => {
+  let orderid = req.query._id;
+  Order.findOne({_id: orderid},{_id: 1,total: 1,express: 1},function(err,order) {
+    res.render('mobile/order/pay',{
+      order: order
+    })
+  })
+}
+
 export const order_list = (req,res) => {
   let user_id = req.session.user._id;
   let status = req.query.status;
@@ -139,7 +148,8 @@ export const order_list = (req,res) => {
   })
 }
 
-export const paying = (req,res) => {
+export const paid = (req,res) => {
+  res.render('mobile/order/pay_complete');
 }
 
 export const getAll_paid = (req,res) => {
@@ -223,5 +233,23 @@ export const receipt = (req,res) => {
     res.render('mobile/order/receipt',{
       _id: orderid
     });
+  })
+}
+
+export const getsign = (req,res) => {
+  let data = req.body;
+  let openid = req.cookie.user.openid;
+  data.spbill_create_ip = req.ip;
+  console.log(openid);
+  let wxpay = new WechatPay();
+  wxpay.getOpenid({
+    attach: '',
+    body: '',
+    notify_url: '',
+    out_trade_no: '',
+    spbill_create_ip: req.ip,
+    total_fee: ''
+  },openid,function(err,responseData){
+    res.json(responseData);
   })
 }

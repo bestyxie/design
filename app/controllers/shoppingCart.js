@@ -3,6 +3,7 @@
 var Product = require('../models/product');
 var ShoppingCart = require('../models/shoppingcart');
 var weixin = require('./weixin');
+var WechatPay = require('./wxpay');
 
 // 加入购物车
 module.exports.addToCart = function (req, res) {

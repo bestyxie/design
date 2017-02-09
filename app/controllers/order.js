@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.receipt = exports.express_msg = exports.update = exports.getAll_paid = exports.paying = exports.order_list = exports.submit_order = exports.create_order = undefined;
+exports.getsign = exports.receipt = exports.express_msg = exports.update = exports.getAll_paid = exports.paid = exports.order_list = exports.pay = exports.submit_order = exports.create_order = undefined;
 
 var _order2 = require('../models/order');
 
@@ -50,13 +50,13 @@ var create_order = exports.create_order = function create_order(req, res) {
         _prod_msg.push(prod_msg._id.toString());
       }
 
-      for (var i = 0, len = prodts.products.length; i < len; i++) {
-        if (_prod_msg.indexOf(prodts.products[i].productId.toString()) > -1) {
-          _prodts.push(prodts.products[i]);
-          count += prodts.products[i].qty;
-          sum += prodts.products[i].qty * prodts.products[i].price;
-        }
-      }
+      // for(let i = 0,len = prodts.products.length;i<len;i++) {
+      //   if( _prod_msg.indexOf(prodts.products[i].productId.toString()) > -1 ) {
+      //     _prodts.push(prodts.products[i]);
+      //     count += prodts.products[i].qty;
+      //     sum += prodts.products[i].qty*prodts.products[i].price;
+      //   }
+      // }
 
       var default_addr = addrs.filter(function (addr) {
         if (addr.default) {
@@ -68,8 +68,8 @@ var create_order = exports.create_order = function create_order(req, res) {
       res.render('mobile/order/create_order', {
         products: _prodts,
         user_id: user_id,
-        count: count,
-        sum: sum,
+        // count: count,
+        // sum: sum,
         addrs: addrs,
         default_addr: default_addr[0]
       });
@@ -144,6 +144,15 @@ var submit_order = exports.submit_order = function submit_order(req, res) {
   });
 };
 
+var pay = exports.pay = function pay(req, res) {
+  var orderid = req.query._id;
+  _order3.default.findOne({ _id: orderid }, { _id: 1, total: 1, express: 1 }, function (err, order) {
+    res.render('mobile/order/pay', {
+      order: order
+    });
+  });
+};
+
 var order_list = exports.order_list = function order_list(req, res) {
   var user_id = req.session.user._id;
   var status = req.query.status;
@@ -160,7 +169,9 @@ var order_list = exports.order_list = function order_list(req, res) {
   });
 };
 
-var paying = exports.paying = function paying(req, res) {};
+var paid = exports.paid = function paid(req, res) {
+  res.render('mobile/order/pay_complete');
+};
 
 var getAll_paid = exports.getAll_paid = function getAll_paid(req, res) {
   // {status: '待发货'}
@@ -250,5 +261,23 @@ var receipt = exports.receipt = function receipt(req, res) {
     res.render('mobile/order/receipt', {
       _id: orderid
     });
+  });
+};
+
+var getsign = exports.getsign = function getsign(req, res) {
+  var data = req.body;
+  var openid = req.cookie.user.openid;
+  data.spbill_create_ip = req.ip;
+  console.log(openid);
+  var wxpay = new WechatPay();
+  wxpay.getOpenid({
+    attach: '',
+    body: '',
+    notify_url: '',
+    out_trade_no: '',
+    spbill_create_ip: req.ip,
+    total_fee: ''
+  }, openid, function (err, responseData) {
+    res.json(responseData);
   });
 };

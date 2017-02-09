@@ -101,6 +101,9 @@ module.exports = function(app){
   app.get('/order',Order.order_list);
   app.get('/admin/delivery',Order.getAll_paid);
   app.post('/admin/order/update',Order.update);
+  app.get('/pay/complete',Order.paid);
+  // wxpay
+  app.post('/getsign',Order.getsign);
 
   app.get('/express',Order.express_msg);
 
@@ -116,6 +119,7 @@ module.exports = function(app){
   app.get('/admin/returns',Returns.admin_retlist);
   app.post('/admin/returns/adopt',Returns.adopt);
   app.get('/admin/returns/complete',Returns.complete);
+
 
   app.get('/test',function(req,res){
     res.render('mobile/test')

@@ -13,7 +13,9 @@
   "wx":{
     "app_id": "wxe751fb0e3060d859",
     "app_secret": "0f663e0e4e72724d814988ca68552ccb",
-    "token": "shopin"
+    "token": "shopin",
+    "mch_id": 1230000109,
+    "wxpaykey": "xxxx"
   },
   "sdk": {
     "grant_type": "client_credential",

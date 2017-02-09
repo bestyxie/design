@@ -1,6 +1,7 @@
 let Product = require('../models/product');
 let ShoppingCart = require('../models/shoppingcart');
 let weixin  = require('./weixin');
+let WechatPay = require('./wxpay');
 
 // 加入购物车
 module.exports.addToCart = (req,res) => {

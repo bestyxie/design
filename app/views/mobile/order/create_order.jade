@@ -40,6 +40,7 @@ block content
                   a.open-popup.j-to-newaddr(href="javascript:;",data-popup=".popup-new") 去添加
         .product
           ul.ui-list
+            - var total = 0,count = 0;
             each product in products
               li.ui-list-item.j-list-item(data-id="#{product.productId}")
                 input(type="hidden",name="order[productId]",value="#{product.productId}")
@@ -52,6 +53,8 @@ block content
                   p.size 尺码：#{product.size}
                 p.cart-goods-price
                   span.price ￥#{product.price}
+                  - total += product.price*product.qty;
+                  - count += prodct.qty;
                   span.piece x#{product.qty}
         .express
           input(type="hidden",name="order[express]",value="0")
@@ -59,7 +62,8 @@ block content
           em.right ￥0
         .total
           em 小计：
-          em.right ￥#{sum}
+          em.right ￥#{total}
+          input(type="hidden",name="order[total]",value="#{total}")
     .footer.cart-checkout
       .cart-counter
         p.pieces_count 共
@@ -75,10 +79,11 @@ block content
 block scripts
   script.
     $(function(){
+      
       $('.j-submit').on('click',function(e){
         $('#order').submit();
       });
-      
+
       function getAddrData(){
         var addrData = {};
         addrData.address = {};
@@ -252,4 +257,4 @@ block scripts
         var detail = $(this).parents('.address').find('.addr_detail').html();
         $('#order .addr_detail').empty().html(detail);
       });
-    })
+    });

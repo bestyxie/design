@@ -43,6 +43,7 @@
     "request": "^2.79.0",
     "wechat-api": "^1.27.1",
     "wechat-oauth": "^1.1.1",
+    "xml2js": "^0.4.17",
     "xto": "^1.1.7"
   },
   "eslintConfig": {
