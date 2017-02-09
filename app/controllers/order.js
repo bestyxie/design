@@ -264,7 +264,6 @@ var receipt = exports.receipt = function receipt(req, res) {
 
 var cancle = exports.cancle = function cancle(req, res) {
   var orderid = req.query.orderid;
-  console.log(req.cookie.openid);
 
   _order3.default.findOneAndUpdate({ _id: orderid }, { status: '交易关闭' }, function (err) {
     if (err) {

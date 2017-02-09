@@ -236,7 +236,6 @@ export const receipt = (req,res) => {
 
 export const cancle = (req,res) => {
   let orderid = req.query.orderid;
-  console.log(req.cookie.openid);
 
   Order.findOneAndUpdate({_id: orderid},{status: '交易关闭'},function(err){
     if(err){
