@@ -12,6 +12,10 @@ var Returns = require('../app/controllers/returns');
 var Wcuser = require('../app/controllers/wcuser');
 // var UploadPic = require('../app/controllers/uploadPic');
 
+var API = require('wechat-api');
+var config = require('./default.json').wx;
+var api = new API(config.app_id,config.app_secret);
+
 
 var multer = require('multer');
 
@@ -115,5 +119,19 @@ module.exports = function(app){
 
   app.get('/test',function(res,req){
     res.render('mobile/test')
+  });
+  app.post('/wechat',function(res,req){
+    var param = {
+      debug: false,
+      jsApiList: ['chooseWXPay','uploadImage','onMenuShareTimeline', 'onMenuShareAppMessage'],
+      url: req.body.url
+    };
+    // api.getTicket(function(err,result){
+    //   console.log(err);
+    //   console.log(result);
+    // });
+    api.getJsConfig(param,function(err,result){
+      res.send(result);
+    })
   })
 }
