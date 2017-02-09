@@ -101,6 +101,7 @@ module.exports = function(app){
   app.get('/order',Order.order_list);
   app.get('/admin/delivery',Order.getAll_paid);
   app.post('/admin/order/update',Order.update);
+  app.get('/order/cancle',Order.cancle)
   app.get('/order/pay',Order.pay);
   app.get('/pay/complete',Order.paid);
   // wxpay

@@ -48,8 +48,9 @@ block scripts
     $(function(){
       $(document).on('click','.j-cancle-order',function(){
         var orderid = $(this).data('id');
-        $.get('',{orderid: order},function(result){
-          
+        $(this).parent('.operate').empty();
+        $.get('/order/cancle',{orderid: order},function(result){
+          console.log(result);
         })
       })
     })

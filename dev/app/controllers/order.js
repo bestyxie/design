@@ -234,6 +234,19 @@ export const receipt = (req,res) => {
   })
 }
 
+export const cancle = (req,res) => {
+  let orderid = req.query.orderid;
+  console.log(req.cookie.openid);
+
+  Order.findOneAndUpdate({_id: orderid},{status: '交易关闭'},function(err){
+    if(err){
+      console.log(err);
+      res.json({success: false});
+    }
+    res.json({success: true});
+  })
+}
+
 export const getsign = (req,res) => {
   let data = req.body;
   console.log('openid::',req.cookie.openid)
