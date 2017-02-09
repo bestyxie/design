@@ -27,7 +27,7 @@ module.exports.msigninRequire = function (req, res, next) {
           console.log(err);
           res.redirect('/');
         }
-        if (user.length == 0) {
+        if (user == null || user.length == 0) {
           authorize();
         } else {
           req.session.user = {};
