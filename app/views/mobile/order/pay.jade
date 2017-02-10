@@ -17,30 +17,25 @@ block scripts
     $(function(){
       var param_get_js_config = {'cmd':'get_js_config','url':'http://bestyxie.cn/test'};  
       hander_data_from_wechat_api(param_get_js_config,hander_js_config);
-      //- function onBridgeReady(){
-      //-   WeixinJSBridge.invoke(
-      //-     "getBrandWCPayRequest",
-      //-     {
-      //-       "appId": "wxe751fb0e3060d859",
-      //-       "timeStamp": Date.now(),
-      //-       "nonceStr": "xxxx",
-      //-       "package": "prepay_id=xxxx",
-      //-       "signType": "MD5",
-      //-       "paySign": 'xxxxx'
-      //-     },
-      //-     function(res){
-      //-       if(res.err_msg == 'get_brand_wcpay_request：ok'){
-      //-       //- 使用以上方式判断前端返回,微信团队郑重提示：
-      //-       //- res.err_msg将在用户支付成功后返回 ok，但并不保证它绝对可靠。
-      //-       }
-      //-     }
-      //-   );
-      //- }
-      //- if(typeof WeixinJSBridge == 'undefined'){
-      //-   $(document).on('WeixinJSBridgeReady',onBridgeReady,false);
-      //- }else{
-      //-   onBridgeReady()
-      //- }
+      function onBridgeReady(){
+        WeixinJSBridge.invoke(
+          "getBrandWCPayRequest",
+          {
+            "appId": "wxe751fb0e3060d859",
+            "timeStamp": Date.now(),
+            "nonceStr": "xxxx",
+            "package": "prepay_id=xxxx",
+            "signType": "MD5",
+            "paySign": 'xxxxx'
+          },
+          function(res){
+            if(res.err_msg == 'get_brand_wcpay_request：ok'){
+            //- 使用以上方式判断前端返回,微信团队郑重提示：
+            //- res.err_msg将在用户支付成功后返回 ok，但并不保证它绝对可靠。
+            }
+          }
+        );
+      }
 
       $('#j-pay').on('click',function(e){
         $(this).html('正在提交订单...');
@@ -53,6 +48,11 @@ block scripts
         $.post('/getsign',data,function(result){
           console.log(result);
         })
+        //- if(typeof WeixinJSBridge == 'undefined'){
+        //-   $(document).on('WeixinJSBridgeReady',onBridgeReady,false);
+        //- }else{
+        //-   onBridgeReady()
+        //- }
       })
 
     })

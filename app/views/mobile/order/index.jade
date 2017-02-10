@@ -35,7 +35,7 @@ block content
                   p 等待发货
                 else if order.status == '待付款'
                   a.red-btn.j-cancle-order(href="javascript:;",data-id="#{order._id}") 取消订单
-                  a.red-btn(href="") 去付款
+                  a.red-btn(href="/order/pay?_id=#{order._id}") 去付款
                 else if order.status == '待收货'
                   a.red-btn.hide(href="") 确认收货
                   a.red-btn(href="/express?name=#{order.express_msg.name}&number=#{order.express_msg.number}&orderid=#{order._id}") 订单跟踪
