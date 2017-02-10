@@ -12,7 +12,7 @@ function WechatPay(userInfo) {
     keys = keys.sort();
     let newObj = {};
     let str2 = '';
-    keys.forEach((key){
+    keys.forEach((key) => {
         newObj[key] = obj[key];
     });
     return newObj;
@@ -30,7 +30,7 @@ function WechatPay(userInfo) {
     }
     str = str+'#'+config.partner
     let signValue = crypto.createHash('md5').update(str).digest("hex").toUpperCase();
-    return str2+'&sign=' signValue;
+    return str2+'&sign=' + signValue;
   }
 
   /**
@@ -38,10 +38,10 @@ function WechatPay(userInfo) {
      * @param payParams
      */
   this.getSign = function(signParams){
-    let signParams = sort(signParams);
+    let obj = sort(signParams);
     let str = '';
     for(let k in signParams) {
-      str += '&' + k.toLowerCase() + '=' + signParams[k];
+      str += '&' + k.toLowerCase() + '=' + obj[k];
     }
 
     return crypto.createHash('sha1').update(str).digest('hex');

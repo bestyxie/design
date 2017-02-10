@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.wechat = exports.getsign = exports.cancle = exports.receipt = exports.express_msg = exports.update = exports.getAll_paid = exports.paid = exports.order_list = exports.pay = exports.submit_order = exports.create_order = undefined;
+exports.wechat = exports.getsign = exports.cancle = exports.receipt = exports.express_msg = exports.update = exports.getAll_paid = exports.complete = exports.order_list = exports.pay = exports.submit_order = exports.create_order = undefined;
 
 var _order2 = require('../models/order');
 
@@ -27,6 +27,7 @@ var _wxpay2 = _interopRequireDefault(_wxpay);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var xml2jsparseString = require('xml2js').parseString;
 var API = require('wechat-api');
 var config = require('../../config/default.json').wx;
 var api = new API(config.app_id, config.app_secret);
@@ -175,10 +176,28 @@ var order_list = exports.order_list = function order_list(req, res) {
   });
 };
 
-var paid = exports.paid = function paid(req, res) {
+var complete = exports.complete = function complete(req, res) {
   var body = req.body;
-  res.render('mobile/order/pay_complete');
+  var orderid = void 0;
+  xml2jsparseString(body, { async: true }, function (error, result) {
+    if (result.xml.result_code == 'SUCCESS') {
+      orderid = result.xml.transaction_id;
+      _order3.default.findOneAndUpdate({ _id: orderid }, { status: '待发货' }, function (err) {
+        if (err) {
+          console.log(err);
+        }
+      });
+    }
+  });
+  res.render('mobile/order/pay_complete', {
+    return_code: 'SUCCESS',
+    return_msg: 'OK'
+  });
 };
+
+// export const complete = (req,res) => {
+//   res.render('mobile/order/pay_complete');
+// }
 
 var getAll_paid = exports.getAll_paid = function getAll_paid(req, res) {
   // {status: '待发货'}
@@ -285,14 +304,9 @@ var cancle = exports.cancle = function cancle(req, res) {
 
 var getsign = exports.getsign = function getsign(req, res) {
   var data = req.body;
-  console.log('openid::', req.cookies.openid);
-  var openid = req.cookies.openid;
-  console.log(openid);
   var wxpay = new _wxpay2.default();
   data.spbill_create_ip = req.ip;
-  data.openid = openid;
-  console.log(wxpay.getOpenid);
-  wxpay.getOpenid(data, function (err, responseData) {
+  wxpay.getBrandWCPayParams(data, function (err, responseData) {
     console.log('err::', err);
     console.log('responseData::', responseData);
     res.json(responseData);
