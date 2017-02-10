@@ -55,7 +55,7 @@ module.exports.list = function (req, res) {
         return;
       }
       if (user) {
-        res.session.user = user;
+        req.session.user = user;
       }
     });
   }

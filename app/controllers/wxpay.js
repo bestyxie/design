@@ -60,9 +60,9 @@ var WechatPay = function () {
                 attach: obj.attach,
                 body: obj.body,
                 mch_id: config.mch_id,
-                nonce_str: this.createNonceStr(),
+                nonce_str: that.createNonceStr(),
                 notify_url: obj.notify_url, // 微信付款后的回调地址
-                openid: this.userInfo.openid,
+                openid: that.userInfo.openid,
                 out_trade_no: obj.out_trade_no, //new Date().getTime(), //订单号
                 spbill_create_ip: obj.spbill_create_ip,
                 total_fee: obj.total_fee,

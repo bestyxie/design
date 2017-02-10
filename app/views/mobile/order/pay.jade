@@ -15,7 +15,7 @@ block content
 block scripts
   script.
     $(function(){
-      var param_get_js_config = {'cmd':'get_js_config','url':'http://bestyxie.cn/test'};  
+      var param_get_js_config = {'cmd':'get_js_config','url':window.location.href};
       hander_data_from_wechat_api(param_get_js_config,hander_js_config);
       function onBridgeReady(){
         WeixinJSBridge.invoke(
@@ -38,12 +38,13 @@ block scripts
       }
 
       $('#j-pay').on('click',function(e){
+        console.log('click')
         $(this).html('正在提交订单...');
         var data = {};
         data.attach = '';
         data.body = 'SHOPIN-服装';
         data.notify_url = 'http://bestyxie.cn/pay/complete';
-        data.out_trade_no = #{order._id};
+        data.out_trade_no = $(this).data('id');
         data.total_fee = #{order.total+order.express};
         $.post('/getsign',data,function(result){
           console.log(result);
