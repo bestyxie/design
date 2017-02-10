@@ -248,8 +248,8 @@ export const cancle = (req,res) => {
 
 export const getsign = (req,res) => {
   let data = req.body;
-  console.log('openid::',req.cookie.openid)
-  let openid = req.cookie.openid;
+  console.log('openid::',req.cookies.openid)
+  let openid = req.cookies.openid;
   console.log(openid);
   let wxpay = new WechatPay();
   data.spbill_create_ip = req.ip;

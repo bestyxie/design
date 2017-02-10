@@ -16,6 +16,7 @@ app.set('views','./app/views');
 app.set('view engine', 'jade');
 app.use(express.static(path.join(__dirname,'public')));
 app.use(bodyParser());
+app.use(cookieParser());
 app.use(cookieSession({
   secret: 'shop',
   store: new mongoStore({

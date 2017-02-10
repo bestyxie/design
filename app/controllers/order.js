@@ -276,8 +276,8 @@ var cancle = exports.cancle = function cancle(req, res) {
 
 var getsign = exports.getsign = function getsign(req, res) {
   var data = req.body;
-  console.log('openid::', req.cookie.openid);
-  var openid = req.cookie.openid;
+  console.log('openid::', req.cookies.openid);
+  var openid = req.cookies.openid;
   console.log(openid);
   var wxpay = new WechatPay();
   data.spbill_create_ip = req.ip;
