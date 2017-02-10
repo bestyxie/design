@@ -15,6 +15,8 @@ block content
 block scripts
   script.
     $(function(){
+      var param_get_js_config = {'cmd':'get_js_config','url':'http://bestyxie.cn/test'};  
+      hander_data_from_wechat_api(param_get_js_config,hander_js_config);
       //- function onBridgeReady(){
       //-   WeixinJSBridge.invoke(
       //-     "getBrandWCPayRequest",
@@ -54,3 +56,40 @@ block scripts
       })
 
     })
+    function hander_js_config(data){
+      wx.config(data);
+      wx.ready(function(){
+        wx.checkJsApi({
+          jsApiList: ['onMenuShareTimeline','chooseWXPay'],
+          success: function(res){
+            console.log('checkJsApi'+JSON.stringify(res));
+          }
+        })
+      });
+      wx.onMenuShareTimeline({
+        title: '分享的标题',
+        link: 'www.baidu.com',//分享链接
+        imgUrl: '',//分享图片
+        success: function(res) {
+          console.log(res);
+        },
+        cancel: function(res){
+          console.log(res);
+        }
+      });
+      wx.error(function(res){
+        console.log('error:'+JSON.stringify(res));
+      });
+    }
+    function hander_data_from_wechat_api(param,fn){
+      //发送请求获取wx_js_config
+      $.ajax({
+        url: 'http://bestyxie.cn/wechat',
+        type: 'POST',
+        data: param,
+        datatype: 'json',
+        success: function(data){
+          fn(data);
+        }
+      })
+    }

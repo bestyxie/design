@@ -14,7 +14,7 @@ block scripts
       wx.config(data);
       wx.ready(function(){
         wx.checkJsApi({
-          jsApiList: ['onMenuShareTimeline'],
+          jsApiList: ['onMenuShareTimeline','chooseWXPay'],
           success: function(res){
             console.log('checkJsApi'+JSON.stringify(res));
           }
