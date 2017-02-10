@@ -59,7 +59,7 @@ class WechatPay {
             mch_id : config.mch_id,
             nonce_str: that.createNonceStr(),
             notify_url : obj.notify_url,// 微信付款后的回调地址
-            openid : that.userInfo.openid,
+            openid : obj.openid,
             out_trade_no : obj.out_trade_no,//new Date().getTime(), //订单号
             spbill_create_ip : obj.spbill_create_ip,
             total_fee : obj.total_fee,
