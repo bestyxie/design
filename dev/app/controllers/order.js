@@ -4,6 +4,7 @@ import { toString } from '../common/unique';
 import { Address } from '../models/address';
 import xto from 'xto';
 import WechatPay from './wxpay';
+var xml2jsparseString = require('xml2js').parseString;
 const API = require('wechat-api');
 const config = require('../../config/default.json').wx;
 const api = new API(config.app_id,config.app_secret);
@@ -150,7 +151,27 @@ export const order_list = (req,res) => {
   })
 }
 
-export const paid = (req,res) => {
+export const complete = (req,res) => {
+  let body = req.body;
+  let orderid;
+  xml2jsparseString(body, {async:true}, function (error, result) {
+    if(result.xml.result_code =='SUCCESS'){
+      orderid = result.xml.transaction_id;
+      Order.findOneAndUpdate({_id: orderid},{status: '待发货'},(err) => {
+        if(err){
+          console.log(err);
+        }
+      })
+    }
+  });
+  res.send('<xml>'+
+  '<return_code><![CDATA[SUCCESS]]></return_code>'+
+  '<return_msg><![CDATA[OK]]></return_msg>'+
+  '</xml>');
+  // res.render('mobile/order/pay_complete');
+}
+
+export const complete = (req,res) => {
   res.render('mobile/order/pay_complete');
 }
 

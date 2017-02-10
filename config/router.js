@@ -99,7 +99,8 @@ module.exports = function(app){
   app.post('/admin/order/update',Order.update);
   app.get('/order/cancle',Order.cancle)
   app.get('/order/pay',Order.pay);
-  app.get('/pay/complete',Order.paid);
+  app.post('/pay/complete',Order.complete);
+  app.get('/pay/paid',Order.paid)
   // wxpay
   app.post('/getsign',Order.getsign);
   app.post('/wechat',Order.wechat)

@@ -176,6 +176,7 @@ var order_list = exports.order_list = function order_list(req, res) {
 };
 
 var paid = exports.paid = function paid(req, res) {
+  var body = req.body;
   res.render('mobile/order/pay_complete');
 };
 
