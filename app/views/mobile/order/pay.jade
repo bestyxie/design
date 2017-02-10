@@ -17,17 +17,9 @@ block scripts
     $(function(){
       var param_get_js_config = {'cmd':'get_js_config','url':window.location.href};
       hander_data_from_wechat_api(param_get_js_config,hander_js_config);
-      function onBridgeReady(){
+      function onBridgeReady(data){
         WeixinJSBridge.invoke(
-          "getBrandWCPayRequest",
-          {
-            "appId": "wxe751fb0e3060d859",
-            "timeStamp": Date.now(),
-            "nonceStr": "xxxx",
-            "package": "prepay_id=xxxx",
-            "signType": "MD5",
-            "paySign": 'xxxxx'
-          },
+          "getBrandWCPayRequest",data,
           function(res){
             if(res.err_msg == 'get_brand_wcpay_request：ok'){
             //- 使用以上方式判断前端返回,微信团队郑重提示：
@@ -48,12 +40,12 @@ block scripts
         data.total_fee = #{order.total+order.express};
         $.post('/getsign',data,function(result){
           console.log(result);
+          if(typeof WeixinJSBridge == 'undefined'){
+            $(document).on('WeixinJSBridgeReady',function(){onBridgeReady(result)},false);
+          }else{
+            onBridgeReady(result)
+          }
         })
-        //- if(typeof WeixinJSBridge == 'undefined'){
-        //-   $(document).on('WeixinJSBridgeReady',onBridgeReady,false);
-        //- }else{
-        //-   onBridgeReady()
-        //- }
       })
 
     })

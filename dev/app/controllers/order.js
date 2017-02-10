@@ -258,7 +258,10 @@ export const getsign = (req,res) => {
   let wxpay = new WechatPay();
   data.spbill_create_ip = req.ip;
   data.openid = openid;
+  console.log(wxpay.getOpenid);
   wxpay.getOpenid(data,function(err,responseData){
+    console.log('err::',err);
+    console.log('responseData::',responseData);
     res.json(responseData);
   })
 }

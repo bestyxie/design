@@ -290,7 +290,10 @@ var getsign = exports.getsign = function getsign(req, res) {
   var wxpay = new _wxpay2.default();
   data.spbill_create_ip = req.ip;
   data.openid = openid;
+  console.log(wxpay.getOpenid);
   wxpay.getOpenid(data, function (err, responseData) {
+    console.log('err::', err);
+    console.log('responseData::', responseData);
     res.json(responseData);
   });
 };

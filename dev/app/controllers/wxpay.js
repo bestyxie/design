@@ -16,19 +16,20 @@ var xml2jsparseString = require('xml2js').parseString;
 var config = require('../../config/default.json').wx;
 
 // wechat 支付类 (使用 es6 的语法)
-class WechatPay {
+function WechatPay(userInfo) {
     /**
      * 构造函数
      * @param params 传递进来的方法
      */
-    constructor( userInfo ){
-        this.userInfo = userInfo;
-    }
+    this.userInfo = userInfo;
+    // constructor( userInfo ){
+    // }
 
     /**
      * 获取微信统一下单参数
      */
-    getUnifiedorderXmlParams(obj){
+    this.getUnifiedorderXmlParams = function(obj){
+        console.log('getUnifiedorderXmlParams start!!');
         var body = '<xml> ' +
             '<appid>'+config.app_id+'</appid> ' +
             '<attach>'+obj.attach+'</attach> ' +
@@ -43,13 +44,15 @@ class WechatPay {
             '<trade_type>'+obj.trade_type+'</trade_type> ' +
             '<sign>'+obj.sign+'</sign> ' +
             '</xml>';
+        console.log('getUnifiedorderXmlParams end!!');
         return body;
     }
 
     /**
      * 获取微信统一下单的接口数据
      */
-    getPrepayId(obj){
+    this.getPrepayId = function(obj){
+        console.log('getPrepayId');
         var that = this;
         // 生成统一下单接口参数
         var UnifiedorderParams = {
@@ -73,15 +76,30 @@ class WechatPay {
             var url = 'https://api.mch.weixin.qq.com/pay/unifiedorder';
             request.post({url : url, body:JSON.stringify(that.getUnifiedorderXmlParams(UnifiedorderParams))}, function (error, response, body) {
                 var prepay_id = '';
-                if (!error && response.statusCode == 200) {
-                    // 微信返回的数据为 xml 格式， 需要装换为 json 数据， 便于使用
-                    xml2jsparseString(body, {async:true}, function (error, result) {
-                        prepay_id = result.xml.prepay_id[0];
-                        // 放回数组的第一个元素
-                        resolve(prepay_id);
-                    });
-                } else {
-                    reject(body);
+                console.log('getPrepayId request')
+                try{
+                    console.log(err,response);
+                    if (!error && response.statusCode == 200) {
+                        console.log('getPrepayId request success');
+                        // 微信返回的数据为 xml 格式， 需要装换为 json 数据， 便于使用
+                        xml2jsparseString(body, {async:true}, function (error, result) {
+                            try{
+                                prepay_id = result.xml.prepay_id[0];
+                                
+                            }catch(err){
+                                console.log('getPrepayId request err::',err);
+                            }
+                            // 放回数组的第一个元素
+                            console.log(prepay_id);
+                            resolve(prepay_id);
+                        });
+                    } else {
+                        console.log('getPrepayId request fail')
+                        reject(body);
+                    }
+                    
+                }catch(err){
+                    console.log(err);
                 }
             });
         })
@@ -91,7 +109,8 @@ class WechatPay {
      * 获取微信支付的签名
      * @param payParams
      */
-    getSign(signParams){
+    this.getSign = function(signParams){
+        console.log('getSign start');
         // 按 key 值的ascll 排序
         var keys = Object.keys(signParams);
         keys = keys.sort();
@@ -103,7 +122,13 @@ class WechatPay {
         })
         var string = queryString.stringify(newArgs)+'&key='+config.wxpaykey;
         // 生成签名
-        return crypto.createHash('md5').update(queryString.unescape(string), 'utf8').digest("hex").toUpperCase();
+        console.log('getSign end');
+        try{
+
+            return crypto.createHash('md5').update(queryString.unescape(string), 'utf8').digest("hex").toUpperCase();
+        }catch(err){
+            console.log('getSign err::',err);
+        }
     }
 
     /**
@@ -111,7 +136,8 @@ class WechatPay {
      * @param req 请求的资源, 获取必要的数据
      * @returns {{appId: string, timeStamp: Number, nonceStr: *, package: string, signType: string, paySign: *}}
      */
-    getBrandWCPayParams( obj, callback ){
+    this.getBrandWCPayParams = function( obj, callback ){
+        console.log('getBrandWCPayParams');
         var that = this;
         var prepay_id_promise = that.getPrepayId(obj);
         prepay_id_promise.then(function (prepay_id) {
@@ -124,9 +150,11 @@ class WechatPay {
                 "package" : "prepay_id="+prepay_id,
                 "signType" : "MD5",         //微信签名方式：
             };
+            console.log('getPrepayId success');
             wcPayParams.paySign = that.getSign(wcPayParams); //微信支付签名
             callback(null, wcPayParams);
         },function (error) {
+            console.log('getPrepayId fail');
             callback(error);
         });
     }
@@ -134,14 +162,14 @@ class WechatPay {
     /**
      * 获取随机的NonceStr
      */
-    createNonceStr() {
+    this.createNonceStr = function() {
         return Math.random().toString(36).substr(2, 15);
     };
 
     /**
      * 获取微信的 AccessToken
      */
-    getAccessToken(obj, cb){
+    this.getAccessToken = function(obj, cb){
         var that = this;
         var getAccessTokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid="+config.app_id+"&secret="+config.app_secret+"&code="+that.userInfo.code+"&grant_type=authorization_code";
         request.post({url : getAccessTokenUrl}, function (error, response, body) {
@@ -174,7 +202,7 @@ class WechatPay {
     /**
      * 获取微信用户的openid
      */
-    getOpenid(obj,cb){
+    this.getOpenid = function(obj,cb){
       var that = this;
       that.getBrandWCPayParams(obj, function (error, responseData) {
         if (error) {
