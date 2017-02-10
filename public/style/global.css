@@ -1168,6 +1168,33 @@ header.bar.bar-nav form .search-btn {
   border: 1px solid #e94e7a;
   margin: 0 0.25rem;
 }
+.order_list .section {
+  background: #fff;
+  display: -webkit-flex;
+  display: -moz-box;
+  /* Firefox */
+  display: -webkit-box;
+  /* Safari and Chrome */
+  display: box;
+}
+.order_list .section p {
+  -webkit-box-flex: 1;
+  box-flex: 1;
+}
+.order_list .pay {
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  background: #ff5e7a;
+}
+.pay_complete p {
+  background: #fff;
+  height: 6rem;
+  padding: 2rem 1rem;
+}
+.pay_complete a {
+  color: #ff5e7a;
+}
 .popup-address .edit_default {
   height: 1rem;
   padding: 0.5rem;
