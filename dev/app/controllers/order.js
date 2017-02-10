@@ -4,6 +4,9 @@ import { toString } from '../common/unique';
 import { Address } from '../models/address';
 import xto from 'xto';
 import WechatPay from './wxpay';
+const API = require('wechat-api');
+const config = require('../../config/default.json').wx;
+const api = new API(config.app_id,config.app_secret);
 
 export const create_order = (req,res) => {
   let prod_msg = req.body.products;
@@ -258,4 +261,20 @@ export const getsign = (req,res) => {
   wxpay.getOpenid(data,function(err,responseData){
     res.json(responseData);
   })
+}
+
+export const wechat = (req,res) => {
+  var param = {
+    debug: false,
+    jsApiList: ['chooseWXPay','uploadImage','onMenuShareTimeline', 'onMenuShareAppMessage'],
+    url: req.body.url
+  };
+  console.log('url',req.body.url);
+  api.getTicket(function(err,result){
+    param.ticket = result.ticket;
+    api.getJsConfig(param,function(err,result){
+      console.log(result);
+      res.send(result);
+    })
+  });
 }

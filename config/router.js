@@ -12,10 +12,6 @@ var Returns = require('../app/controllers/returns');
 var Wcuser = require('../app/controllers/wcuser');
 // var UploadPic = require('../app/controllers/uploadPic');
 
-var API = require('wechat-api');
-var config = require('./default.json').wx;
-var api = new API(config.app_id,config.app_secret);
-
 
 var multer = require('multer');
 
@@ -106,6 +102,7 @@ module.exports = function(app){
   app.get('/pay/complete',Order.paid);
   // wxpay
   app.post('/getsign',Order.getsign);
+  app.post('/wechat',Order.wechat)
 
   app.get('/express',Order.express_msg);
 
@@ -126,19 +123,4 @@ module.exports = function(app){
   app.get('/test',function(req,res){
     res.render('mobile/test')
   });
-  app.post('/wechat',function(req,res){
-    var param = {
-      debug: false,
-      jsApiList: ['chooseWXPay','uploadImage','onMenuShareTimeline', 'onMenuShareAppMessage'],
-      url: req.body.url
-    };
-    console.log('url',req.body.url);
-    api.getTicket(function(err,result){
-      param.ticket = result.ticket;
-      api.getJsConfig(param,function(err,result){
-        console.log(result);
-        res.send(result);
-      })
-    });
-  })
 }

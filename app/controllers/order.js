@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getsign = exports.cancle = exports.receipt = exports.express_msg = exports.update = exports.getAll_paid = exports.paid = exports.order_list = exports.pay = exports.submit_order = exports.create_order = undefined;
+exports.wechat = exports.getsign = exports.cancle = exports.receipt = exports.express_msg = exports.update = exports.getAll_paid = exports.paid = exports.order_list = exports.pay = exports.submit_order = exports.create_order = undefined;
 
 var _order2 = require('../models/order');
 
@@ -26,6 +26,10 @@ var _wxpay = require('./wxpay');
 var _wxpay2 = _interopRequireDefault(_wxpay);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var API = require('wechat-api');
+var config = require('../../config/default.json').wx;
+var api = new API(config.app_id, config.app_secret);
 
 var create_order = exports.create_order = function create_order(req, res) {
   var prod_msg = req.body.products;
@@ -288,5 +292,21 @@ var getsign = exports.getsign = function getsign(req, res) {
   data.openid = openid;
   wxpay.getOpenid(data, function (err, responseData) {
     res.json(responseData);
+  });
+};
+
+var wechat = exports.wechat = function wechat(req, res) {
+  var param = {
+    debug: false,
+    jsApiList: ['chooseWXPay', 'uploadImage', 'onMenuShareTimeline', 'onMenuShareAppMessage'],
+    url: req.body.url
+  };
+  console.log('url', req.body.url);
+  api.getTicket(function (err, result) {
+    param.ticket = result.ticket;
+    api.getJsConfig(param, function (err, result) {
+      console.log(result);
+      res.send(result);
+    });
   });
 };
