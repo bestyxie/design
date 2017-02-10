@@ -49,12 +49,14 @@ module.exports.list = function (req, res) {
   var login = false;
   if (req.cookies && req.cookies.openid) {
     login = true;
-    _wcuser.Wcuser.findOne({ openid: req.cookie.openid }, { _id: 1, openid: 1 }, function (err, user) {
+    _wcuser.Wcuser.findOne({ openid: req.cookies.openid }, { _id: 1, openid: 1 }, function (err, user) {
       if (err) {
         console.log(err);
         return;
       }
-      res.session.user = user;
+      if (user) {
+        res.session.user = user;
+      }
     });
   }
   var promise = new Promise(function (resolve, reject) {

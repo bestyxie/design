@@ -58,6 +58,8 @@ module.exports.msigninRequire = (req,res,next) =>{
   }
   else if(req.session.user){
     next();
+  }else if(!req.session.user){
+    authorize();
   }
   function authorize(){
     let path = req.path;

@@ -20,12 +20,14 @@ module.exports.list = function(req,res){
   let login = false;
   if(req.cookies && req.cookies.openid){
     login = true;
-    Wcuser.findOne({openid: req.cookie.openid},{_id: 1,openid: 1},(err,user) => {
+    Wcuser.findOne({openid: req.cookies.openid},{_id: 1,openid: 1},(err,user) => {
       if(err){
         console.log(err);
         return;
       }
-      res.session.user = user;
+      if(user){
+        res.session.user = user;
+      }
     })
   }
   let promise = new Promise((resolve,reject) => {

@@ -66,6 +66,8 @@ module.exports.msigninRequire = function (req, res, next) {
     });
   } else if (req.session.user) {
     next();
+  } else if (!req.session.user) {
+    authorize();
   }
   function authorize() {
     var path = req.path;
