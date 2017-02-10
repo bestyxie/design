@@ -5,6 +5,7 @@ var mongoose = require('mongoose');
 var port = process.env.PORT || 80;
 var app = express();
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
 var cookieSession = require('cookie-session');
 var session = require('express-session');
 var mongoStore = require('connect-mongo')(session);
