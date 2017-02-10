@@ -3,6 +3,7 @@ import ShoppingCart from '../models/ShoppingCart';
 import { toString } from '../common/unique';
 import { Address } from '../models/address';
 import xto from 'xto';
+import WechatPay from './wxpay';
 
 export const create_order = (req,res) => {
   let prod_msg = req.body.products;

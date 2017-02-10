@@ -21,6 +21,10 @@ var _xto = require('xto');
 
 var _xto2 = _interopRequireDefault(_xto);
 
+var _wxpay = require('./wxpay');
+
+var _wxpay2 = _interopRequireDefault(_wxpay);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var create_order = exports.create_order = function create_order(req, res) {
@@ -279,7 +283,7 @@ var getsign = exports.getsign = function getsign(req, res) {
   console.log('openid::', req.cookies.openid);
   var openid = req.cookies.openid;
   console.log(openid);
-  var wxpay = new WechatPay();
+  var wxpay = new _wxpay2.default();
   data.spbill_create_ip = req.ip;
   data.openid = openid;
   wxpay.getOpenid(data, function (err, responseData) {
