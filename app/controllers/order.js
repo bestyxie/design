@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.wechat = exports.getsign = exports.cancle = exports.receipt = exports.express_msg = exports.update = exports.getAll_paid = exports.complete = exports.order_list = exports.pay = exports.submit_order = exports.create_order = undefined;
+exports.wechat = exports.getsign = exports.cancle = exports.receipt = exports.express_msg = exports.update = exports.getAll_paid = exports.paid = exports.complete = exports.order_list = exports.pay = exports.submit_order = exports.create_order = undefined;
 
 var _order2 = require('../models/order');
 
@@ -195,9 +195,9 @@ var complete = exports.complete = function complete(req, res) {
   });
 };
 
-// export const complete = (req,res) => {
-//   res.render('mobile/order/pay_complete');
-// }
+var paid = exports.paid = function paid(req, res) {
+  res.render('mobile/order/pay_complete');
+};
 
 var getAll_paid = exports.getAll_paid = function getAll_paid(req, res) {
   // {status: '待发货'}

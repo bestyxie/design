@@ -170,9 +170,9 @@ export const complete = (req,res) => {
   });
 }
 
-// export const complete = (req,res) => {
-//   res.render('mobile/order/pay_complete');
-// }
+export const paid = (req,res) => {
+  res.render('mobile/order/pay_complete');
+}
 
 export const getAll_paid = (req,res) => {
   // {status: '待发货'}
