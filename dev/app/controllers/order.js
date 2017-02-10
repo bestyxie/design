@@ -164,16 +164,15 @@ export const complete = (req,res) => {
       })
     }
   });
-  res.send('<xml>'+
-  '<return_code><![CDATA[SUCCESS]]></return_code>'+
-  '<return_msg><![CDATA[OK]]></return_msg>'+
-  '</xml>');
-  // res.render('mobile/order/pay_complete');
+  res.render('mobile/order/pay_complete',{
+    return_code: 'SUCCESS',
+    return_msg: 'OK'
+  });
 }
 
-export const complete = (req,res) => {
-  res.render('mobile/order/pay_complete');
-}
+// export const complete = (req,res) => {
+//   res.render('mobile/order/pay_complete');
+// }
 
 export const getAll_paid = (req,res) => {
   // {status: '待发货'}
@@ -273,14 +272,9 @@ export const cancle = (req,res) => {
 
 export const getsign = (req,res) => {
   let data = req.body;
-  console.log('openid::',req.cookies.openid)
-  let openid = req.cookies.openid;
-  console.log(openid);
   let wxpay = new WechatPay();
   data.spbill_create_ip = req.ip;
-  data.openid = openid;
-  console.log(wxpay.getOpenid);
-  wxpay.getOpenid(data,function(err,responseData){
+  wxpay.getBrandWCPayParams(data,function(err,responseData){
     console.log('err::',err);
     console.log('responseData::',responseData);
     res.json(responseData);

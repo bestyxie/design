@@ -1,12 +1,3 @@
-/*
-* @Author: anziguoer
-* @Email: anziguoer@sina.com
-* @Date:   2016-09-14 11:40:12
-* @Last Modified by:   anziguoer
-* @Last Modified time: 2016-09-14 11:40:31
-* @Descrition : wechat 微信支付功能
-*/
-
 var url = require('url');
 var queryString = require('querystring');
 var crypto = require('crypto');
@@ -15,203 +6,82 @@ var xml2jsparseString = require('xml2js').parseString;
 // 引入项目的配置信息
 var config = require('../../config/default.json').wx;
 
-// wechat 支付类 (使用 es6 的语法)
 function WechatPay(userInfo) {
-    /**
-     * 构造函数
-     * @param params 传递进来的方法
-     */
-    this.userInfo = userInfo;
-    // constructor( userInfo ){
-    // }
-
-    /**
-     * 获取微信统一下单参数
-     */
-    this.getUnifiedorderXmlParams = function(obj){
-        console.log('getUnifiedorderXmlParams start!!');
-        var body = '<xml> ' +
-            '<appid>'+config.app_id+'</appid> ' +
-            '<attach>'+obj.attach+'</attach> ' +
-            '<body>'+obj.body+'</body> ' +
-            '<mch_id>'+config.mch_id+'</mch_id> ' +
-            '<nonce_str>'+obj.nonce_str+'</nonce_str> ' +
-            '<notify_url>'+obj.notify_url+'</notify_url>' +
-            '<openid>'+obj.openid+'</openid> ' +
-            '<out_trade_no>'+obj.out_trade_no+'</out_trade_no>'+
-            '<spbill_create_ip>'+obj.spbill_create_ip+'</spbill_create_ip> ' +
-            '<total_fee>'+obj.total_fee+'</total_fee> ' +
-            '<trade_type>'+obj.trade_type+'</trade_type> ' +
-            '<sign>'+obj.sign+'</sign> ' +
-            '</xml>';
-        console.log('getUnifiedorderXmlParams end!!');
-        return body;
+  this.sort = function(obj){
+    let keys = Object.keys(obj);
+    keys = keys.sort();
+    let newObj = {};
+    let str2 = '';
+    keys.forEach((key){
+        newObj[key] = obj[key];
+    });
+    return newObj;
+  }
+  /**
+   * 获取微信统一下单的接口数据
+   */
+  this.getPackage = function(obj){
+    let that = this;
+    let newObj = that.sort(obj);
+    let str = '';
+    for(let k in newObj) {
+      str += '&' + k + '=' + newObj[k];
+      str2 += '&'+ k + '='+ newObj[k].encodeURIComponent()
     }
+    str = str+'#'+config.partner
+    let signValue = crypto.createHash('md5').update(str).digest("hex").toUpperCase();
+    return str2+'&sign=' signValue;
+  }
 
-    /**
-     * 获取微信统一下单的接口数据
-     */
-    this.getPrepayId = function(obj){
-        console.log('getPrepayId');
-        var that = this;
-        // 生成统一下单接口参数
-        var UnifiedorderParams = {
-            appid : config.app_id,
-            attach : obj.attach,
-            body : obj.body,
-            mch_id : config.mch_id,
-            nonce_str: that.createNonceStr(),
-            notify_url : obj.notify_url,// 微信付款后的回调地址
-            openid : obj.openid,
-            out_trade_no : obj.out_trade_no,//new Date().getTime(), //订单号
-            spbill_create_ip : obj.spbill_create_ip,
-            total_fee : obj.total_fee,
-            trade_type : 'JSAPI',
-            // sign : getSign(),
-        };
-        // 返回 promise 对象
-        return  new Promise(function (resolve, reject) {
-            // 获取 sign 参数
-            UnifiedorderParams.sign = that.getSign(UnifiedorderParams);
-            var url = 'https://api.mch.weixin.qq.com/pay/unifiedorder';
-            request.post({url : url, body:JSON.stringify(that.getUnifiedorderXmlParams(UnifiedorderParams))}, function (error, response, body) {
-                var prepay_id = '';
-                console.log('getPrepayId request')
-                try{
-                    console.log(err,response);
-                    if (!error && response.statusCode == 200) {
-                        console.log('getPrepayId request success');
-                        // 微信返回的数据为 xml 格式， 需要装换为 json 数据， 便于使用
-                        xml2jsparseString(body, {async:true}, function (error, result) {
-                            try{
-                                prepay_id = result.xml.prepay_id[0];
-                                
-                            }catch(err){
-                                console.log('getPrepayId request err::',err);
-                            }
-                            // 放回数组的第一个元素
-                            console.log(prepay_id);
-                            resolve(prepay_id);
-                        });
-                    } else {
-                        console.log('getPrepayId request fail')
-                        reject(body);
-                    }
-                    
-                }catch(err){
-                    console.log(err);
-                }
-            });
-        })
-    }
-
-    /**
+  /**
      * 获取微信支付的签名
      * @param payParams
      */
-    this.getSign = function(signParams){
-        console.log('getSign start');
-        // 按 key 值的ascll 排序
-        var keys = Object.keys(signParams);
-        keys = keys.sort();
-        var newArgs = {};
-        keys.forEach(function (val, key) {
-            if (signParams[val]){
-                newArgs[val] = signParams[val];
-            }
-        })
-        var string = queryString.stringify(newArgs)+'&key='+config.wxpaykey;
-        // 生成签名
-        console.log('getSign end');
-        try{
-
-            return crypto.createHash('md5').update(queryString.unescape(string), 'utf8').digest("hex").toUpperCase();
-        }catch(err){
-            console.log('getSign err::',err);
-        }
+  this.getSign = function(signParams){
+    let signParams = sort(signParams);
+    let str = '';
+    for(let k in signParams) {
+      str += '&' + k.toLowerCase() + '=' + signParams[k];
     }
 
-    /**
+    return crypto.createHash('sha1').update(str).digest('hex');
+  }
+
+  /**
      * 微信支付的所有参数
      * @param req 请求的资源, 获取必要的数据
      * @returns {{appId: string, timeStamp: Number, nonceStr: *, package: string, signType: string, paySign: *}}
      */
-    this.getBrandWCPayParams = function( obj, callback ){
-        console.log('getBrandWCPayParams');
-        var that = this;
-        var prepay_id_promise = that.getPrepayId(obj);
-        prepay_id_promise.then(function (prepay_id) {
-            var prepay_id = prepay_id;
-            var wcPayParams = {
-                "appId" : config.app_id,     //公众号名称，由商户传入
-                "timeStamp" : parseInt(new Date().getTime() / 1000).toString(),         //时间戳，自1970年以来的秒数
-                "nonceStr" : that.createNonceStr(), //随机串
-                // 通过统一下单接口获取
-                "package" : "prepay_id="+prepay_id,
-                "signType" : "MD5",         //微信签名方式：
-            };
-            console.log('getPrepayId success');
-            wcPayParams.paySign = that.getSign(wcPayParams); //微信支付签名
-            callback(null, wcPayParams);
-        },function (error) {
-            console.log('getPrepayId fail');
-            callback(error);
-        });
-    }
-
-    /**
-     * 获取随机的NonceStr
-     */
-    this.createNonceStr = function() {
-        return Math.random().toString(36).substr(2, 15);
+  this.getBrandWCPayParams = function( obj, callback ){
+    console.log('getBrandWCPayParams');
+    var that = this;
+    // 生成统一下单接口参数
+    var UnifiedorderParams = {
+      bank_type: 'WX',
+      body : obj.body,
+      attach : obj.attach,
+      partner : config.partner,
+      out_trade_no : obj.out_trade_no, //订单号
+      total_fee : obj.total_fee,
+      fee_type: 1, //支付币种
+      notify_url : obj.notify_url,// 微信付款后的回调地址
+      spbill_create_ip : obj.spbill_create_ip,
+      input_charset: 'UTF-8'
     };
+    var prepay_id = that.getPackage(obj);
 
-    /**
-     * 获取微信的 AccessToken
-     */
-    this.getAccessToken = function(obj, cb){
-        var that = this;
-        var getAccessTokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid="+config.app_id+"&secret="+config.app_secret+"&code="+that.userInfo.code+"&grant_type=authorization_code";
-        request.post({url : getAccessTokenUrl}, function (error, response, body) {
-            if (!error && response.statusCode == 200){
-                if (40029 == body.errcode) {
-                    cb(error, body);
-                } else {
-                    body = JSON.parse(body);
-                    that.userInfo.access_token = body.access_token;
-                    that.userInfo.expires_in = body.expires_in;
-                    that.userInfo.refresh_token = body.refresh_token;
-                    that.userInfo.openid = body.openid;
-                    that.userInfo.scope = body.scope;
-                    // console.log(that.userInfo);
-                    // 拼接微信的支付的参数
-                    that.getBrandWCPayParams(obj, function (error, responseData) {
-                        if (error) {
-                            cb(error);
-                        } else {
-                            cb(null, responseData);
-                        }
-                    });
-                }
-            } else {
-                cb(error);
-            }
-        });
-    }
-
-    /**
-     * 获取微信用户的openid
-     */
-    this.getOpenid = function(obj,cb){
-      var that = this;
-      that.getBrandWCPayParams(obj, function (error, responseData) {
-        if (error) {
-            cb(error);
-        } else {
-            cb(null, responseData);
-        }
-      });
-    }
+    var wcPayParams = {
+      "appId" : config.app_id,     //公众号名称，由商户传入
+      "timeStamp" : parseInt(new Date().getTime() / 1000).toString(),         //时间戳，自1970年以来的秒数
+      "nonceStr" : that.createNonceStr(), //随机串
+      // 通过统一下单接口获取
+      "package" : prepay_id,
+      "appkey" : config.wxpaykey,
+    };
+    wcPayParams.paySign = that.getSign(wcPayParams); //微信支付签名
+    wcPayParams.Type = 'SHA';
+    callback(null, wcPayParams);
+  }
 }
 
 module.exports = WechatPay;
