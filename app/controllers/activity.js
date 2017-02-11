@@ -76,6 +76,7 @@ var new_act = exports.new_act = function new_act(req, res) {
     if (err) {
       res.send(err);
     }
+    _product2.default.where({ _id: { '$in': activity.products } }).update({ discount: activity.discount });
     res.redirect('/admin/activity');
   });
 };

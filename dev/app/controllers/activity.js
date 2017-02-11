@@ -61,6 +61,7 @@ export const new_act = (req,res) => {
     if(err){
       res.send(err);
     }
+    Product.where({_id: {'$in': activity.products}}).update({discount: activity.discount})
     res.redirect('/admin/activity');
   })
 }
