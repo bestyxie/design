@@ -23,10 +23,10 @@ function WechatPay(userInfo) {
   this.getPackage = function(obj){
     let that = this;
     let newObj = that.sort(obj);
-    let str = '';
+    let str = '',str2='';
     for(let k in newObj) {
       str += '&' + k + '=' + newObj[k];
-      str2 += '&'+ k + '='+ newObj[k].encodeURIComponent()
+      str2 += '&'+ k + '='+ encodeURIComponent(newObj[k])
     }
     str = str+'#'+config.partner
     let signValue = crypto.createHash('md5').update(str).digest("hex").toUpperCase();
@@ -38,7 +38,8 @@ function WechatPay(userInfo) {
      * @param payParams
      */
   this.getSign = function(signParams){
-    let obj = sort(signParams);
+    let that = this;
+    let obj = that.sort(signParams);
     let str = '';
     for(let k in signParams) {
       str += '&' + k.toLowerCase() + '=' + obj[k];
@@ -46,6 +47,11 @@ function WechatPay(userInfo) {
 
     return crypto.createHash('sha1').update(str).digest('hex');
   }
+
+  // 随机字符串产生函数 
+  this.createNonceStr = function() {  
+    return Math.random().toString(36).substr(2, 15);  
+  },
 
   /**
      * 微信支付的所有参数
