@@ -6,6 +6,7 @@ var ObjectId = Schema.Types.ObjectId;
 
 var OrderSchema = new Schema({
   user_id: ObjectId,
+  openid: String,
   express: Number,
   status: String,
   // 待付款

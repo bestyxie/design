@@ -1,9 +1,12 @@
 import Order from '../models/order';
 import { Returns } from '../models/returns';
 import xto from 'xto';
+const API = require('wechat-api');
+const config = require('../../config/default.json').wx;
+const api = new API(config.app_id,config.app_secret);
 
 
-export const goods = (req,res) => {
+export const _return = (req,res) => {
   let orderid = req.query.orderid;
 
   Order.findOne({_id: orderid},(err,order) => {

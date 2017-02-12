@@ -222,6 +222,7 @@ var update = exports.update = function update(req, res) {
       res.json({ success: false });
     }
     order.express_msg = express_msg;
+    order.status = '待收货';
     order.save(function (err) {
       if (err) {
         console.log(err);

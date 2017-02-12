@@ -41,7 +41,7 @@ block scripts
         data.body = 'SHOPIN-服装';
         data.notify_url = 'http://bestyxie.cn/pay/complete';
         data.out_trade_no = $(this).data('id');
-        data.total_fee = #{order.total+order.express};
+        data.total_fee = #{(order.total+order.express)*100};
         $.post('/getsign',data,function(result){
           if(typeof WeixinJSBridge == 'undefined'){
             $(document).on('WeixinJSBridgeReady',function(){onBridgeReady(result)},false);

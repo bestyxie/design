@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.complete = exports.get_return = exports.adopt = exports.admin_retlist = exports.reply = exports.goods = undefined;
+exports.complete = exports.get_return = exports.adopt = exports.admin_retlist = exports.reply = exports._return = undefined;
 
 var _order2 = require('../models/order');
 
@@ -17,7 +17,11 @@ var _xto2 = _interopRequireDefault(_xto);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var goods = exports.goods = function goods(req, res) {
+var API = require('wechat-api');
+var config = require('../../config/default.json').wx;
+var api = new API(config.app_id, config.app_secret);
+
+var _return = exports._return = function _return(req, res) {
   var orderid = req.query.orderid;
 
   _order3.default.findOne({ _id: orderid }, function (err, order) {

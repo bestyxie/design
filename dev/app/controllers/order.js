@@ -14,6 +14,8 @@ export const create_order = (req,res) => {
   let user_id = prod_msg.user_id;
   let count = 0, sum = 0;
 
+  prod_msg.openid = req.session.user.openid;
+
   let promise = new Promise((resolve,reject) => {
     Address.find({user: user_id},(err,addrs) => {
       if(err){
@@ -157,7 +159,7 @@ export const complete = (req,res) => {
   xml2jsparseString(body, {async:true}, function (error, result) {
     if(result.xml.result_code =='SUCCESS'){
       orderid = result.xml.transaction_id;
-      Order.findOneAndUpdate({_id: orderid},{status: '待发货'},(err) => {
+      Order.findOneAndUpdate({_id: orderid},{status: '待发货',transaction_id: req.query.transaction_id},(err) => {
         if(err){
           console.log(err);
         }
@@ -197,11 +199,36 @@ export const update = (req,res) => {
       res.json({success: false});
     }
     order.express_msg = express_msg;
+    order.status = '待收货';
     order.save(err => {
       if(err) {
         console.log(err);
         res.json({success: false});
       }
+      /* 发货通知 start */
+      let data = {
+        appid: config.app_id,
+        openid: order.openid,
+        transid : order.transaction_id,
+        out_trade_no : order._id,
+        deliver_timestamp : Date.now()/1000,
+        deliver_status : "1",
+        deliver_msg : "ok",
+        sign_method : "sha1" 
+      };
+      let wxpay = new WechatPay();
+      data.app_signature = wxpay.getSign({
+        appid: config.app_id,     //公众号名称，由商户传入
+        appkey: config.wxpaykey,
+        openid: order.openid,
+        transid : order.transaction_id,
+        out_trade_no : order._id,
+        deliver_timestamp: data.deliver_timestamp,         //时间戳，自1970年以来的秒数
+        deliver_status : "1",
+        deliver_msg : "ok",
+      });
+      api.deliverNotify(data,(err,result)=>{});
+      /* 发货通知 end */
       res.json({success: true});
     })
   })
