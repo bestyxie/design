@@ -3,7 +3,6 @@
 var url = require('url');
 var queryString = require('querystring');
 var crypto = require('crypto');
-var request = require('request');
 var xml2jsparseString = require('xml2js').parseString;
 // 引入项目的配置信息
 var config = require('../../config/default.json').wx;

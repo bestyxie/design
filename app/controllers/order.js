@@ -38,6 +38,8 @@ var create_order = exports.create_order = function create_order(req, res) {
   var count = 0,
       sum = 0;
 
+  prod_msg.openid = req.session.user.openid;
+
   var promise = new Promise(function (resolve, reject) {
     _address.Address.find({ user: user_id }, function (err, addrs) {
       if (err) {
@@ -182,7 +184,7 @@ var complete = exports.complete = function complete(req, res) {
   xml2jsparseString(body, { async: true }, function (error, result) {
     if (result.xml.result_code == 'SUCCESS') {
       orderid = result.xml.transaction_id;
-      _order3.default.findOneAndUpdate({ _id: orderid }, { status: '待发货' }, function (err) {
+      _order3.default.findOneAndUpdate({ _id: orderid }, { status: '待发货', transaction_id: req.query.transaction_id }, function (err) {
         if (err) {
           console.log(err);
         }
@@ -228,6 +230,30 @@ var update = exports.update = function update(req, res) {
         console.log(err);
         res.json({ success: false });
       }
+      /* 发货通知 start */
+      var data = {
+        appid: config.app_id,
+        openid: order.openid,
+        transid: order.transaction_id,
+        out_trade_no: order._id,
+        deliver_timestamp: Date.now() / 1000,
+        deliver_status: "1",
+        deliver_msg: "ok",
+        sign_method: "sha1"
+      };
+      var wxpay = new _wxpay2.default();
+      data.app_signature = wxpay.getSign({
+        appid: config.app_id, //公众号名称，由商户传入
+        appkey: config.wxpaykey,
+        openid: order.openid,
+        transid: order.transaction_id,
+        out_trade_no: order._id,
+        deliver_timestamp: data.deliver_timestamp, //时间戳，自1970年以来的秒数
+        deliver_status: "1",
+        deliver_msg: "ok"
+      });
+      api.deliverNotify(data, function (err, result) {});
+      /* 发货通知 end */
       res.json({ success: true });
     });
   });

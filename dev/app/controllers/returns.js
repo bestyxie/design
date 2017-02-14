@@ -1,6 +1,8 @@
 import Order from '../models/order';
 import { Returns } from '../models/returns';
 import xto from 'xto';
+import request from 'request';
+import WechatPay from './WechatPay'
 const API = require('wechat-api');
 const config = require('../../config/default.json').wx;
 const api = new API(config.app_id,config.app_secret);
@@ -113,6 +115,30 @@ export const complete = (req,res) => {
         console.log(err);
         return;
       }
+      let pay = new WechatPay();
+      let data = {
+        appid: config.app_id,
+        mch_id: config.partner,
+        nonce_str: pay.createNonceStr,
+        sign: 'xxx',
+        transaction_id: order.transaction_id,
+        total_fee: order.total*100,
+        refund_fee: order.total*100,
+        op_user_id: req.session.user._id,
+        out_refund_no: ret._id
+      }
+      data.sign = pay.getSign({
+        appid: config.app_id,
+        mch_id: config.partner,
+        nonce_str: pay.createNonceStr,
+        timestamp: Date.now()
+      });
+      request.post('https://api.mch.weixin.qq.com/secapi/pay/refund',data,(err,res,body) => {
+        let result = JSON.parse(body);
+        if(result.return_code == 'SUCCESS'){
+          // do something
+        }
+      })
       console.log(order);
     });
     res.json({success: true});

@@ -15,6 +15,14 @@ var _xto = require('xto');
 
 var _xto2 = _interopRequireDefault(_xto);
 
+var _request = require('request');
+
+var _request2 = _interopRequireDefault(_request);
+
+var _WechatPay = require('./WechatPay');
+
+var _WechatPay2 = _interopRequireDefault(_WechatPay);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var API = require('wechat-api');
@@ -126,6 +134,30 @@ var complete = exports.complete = function complete(req, res) {
         console.log(err);
         return;
       }
+      var pay = new _WechatPay2.default();
+      var data = {
+        appid: config.app_id,
+        mch_id: config.partner,
+        nonce_str: pay.createNonceStr,
+        sign: 'xxx',
+        transaction_id: order.transaction_id,
+        total_fee: order.total * 100,
+        refund_fee: order.total * 100,
+        op_user_id: req.session.user._id,
+        out_refund_no: ret._id
+      };
+      data.sign = pay.getSign({
+        appid: config.app_id,
+        mch_id: config.partner,
+        nonce_str: pay.createNonceStr,
+        timestamp: Date.now()
+      });
+      _request2.default.post('https://api.mch.weixin.qq.com/secapi/pay/refund', data, function (err, res, body) {
+        var result = JSON.parse(body);
+        if (result.return_code == 'SUCCESS') {
+          // do something
+        }
+      });
       console.log(order);
     });
     res.json({ success: true });
