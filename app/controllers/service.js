@@ -26,12 +26,23 @@ var _crypto2 = _interopRequireDefault(_crypto);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var list = exports.list = function list(req, res) {
+  _access_token2.default.findOne({}, function (err, token) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    if (token && token.length > 0) {
+
+      if (new Date() - token.create_at < 1000 * 60 * 60 * 2) {
+        _request2.default.get('https://api.weixin.qq.com/cgi-bin/customservice/getkflist?access_token=' + token.access_token);
+      }
+    }
+  });
   res.render('admin/service/');
 };
 
 var _new = exports._new = function _new(req, res) {
   var service = req.body.service;
-  console.log(service);
   service.password = _crypto2.default.createHash('md5').update(service.password).digest('hex');
 
   var _server = new _service.Service(service);
@@ -43,18 +54,18 @@ var _new = exports._new = function _new(req, res) {
     }
     if (token && token.length > 0) {
 
-      // if((new Date()) - token.create_at < 1000*60*60*2){
-      //   new_server(token.access_token);
-      // }else{
-      _request2.default.get('https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' + _default2.default.wx.app_id + '&secret=' + _default2.default.wx.app_secret, function (err, response, body) {
-        token.create_at = new Date();
-        var _body = JSON.parse(body);
-        var access_token = _body.access_token;
-        token.access_token = access_token;
-        token.save();
-        new_server(access_token);
-      });
-      // }
+      if (new Date() - token.create_at < 1000 * 60 * 60 * 2) {
+        new_server(token.access_token);
+      } else {
+        _request2.default.get('https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' + _default2.default.wx.app_id + '&secret=' + _default2.default.wx.app_secret, function (err, response, body) {
+          token.create_at = new Date();
+          var _body = JSON.parse(body);
+          var access_token = _body.access_token;
+          token.access_token = access_token;
+          token.save();
+          new_server(access_token);
+        });
+      }
     } else {
       _request2.default.get('https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' + _default2.default.wx.app_id + '&secret=' + _default2.default.wx.app_secret, function (err, response, body) {
         var _token = {};

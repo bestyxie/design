@@ -5,12 +5,26 @@ import config from '../../config/default.json';
 import crypto from 'crypto';
 
 export const list = (req,res) => {
-  res.render('admin/service/');
+  AccessToken.findOne({},(err,token) => {
+    if(err){
+      console.log(err);
+      return;
+    }
+    if(token && token.length>0){
+
+      if((new Date()) - token.create_at < 1000*60*60*2){
+        request.get('https://api.weixin.qq.com/cgi-bin/customservice/getkflist?access_token='+token.access_token,function(err,response,body){
+          let _body = JSON.parse(body);
+          console.log('body::',body);
+          res.render('admin/service/');
+        })
+      }
+    }
+  })
 }
 
 export const _new = (req,res) => {
   let service = req.body.service;
-  console.log(service);
   service.password = crypto.createHash('md5').update(service.password).digest('hex');
 
   let _server = new Service(service);
@@ -22,9 +36,9 @@ export const _new = (req,res) => {
     }
     if(token && token.length>0){
 
-      // if((new Date()) - token.create_at < 1000*60*60*2){
-      //   new_server(token.access_token);
-      // }else{
+      if((new Date()) - token.create_at < 1000*60*60*2){
+        new_server(token.access_token);
+      }else{
         request.get('https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='+config.wx.app_id+'&secret='+config.wx.app_secret,function(err,response,body){
           token.create_at = new Date();
           let _body = JSON.parse(body);
@@ -33,7 +47,7 @@ export const _new = (req,res) => {
           token.save();
           new_server(access_token);
         })
-      // }
+      }
     }else{
       request.get('https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='+config.wx.app_id+'&secret='+config.wx.app_secret,function(err,response,body){
         let _token = {}
