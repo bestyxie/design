@@ -25,22 +25,33 @@ var _crypto2 = _interopRequireDefault(_crypto);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var API = require('wechat-api');
+var api = new API(_default2.default.app_id, _default2.default.app_secret);
+
 var list = exports.list = function list(req, res) {
-  _access_token2.default.findOne({}, function (err, token) {
+  // AccessToken.findOne({},(err,token) => {
+  //   if(err){
+  //     console.log(err);
+  //     return;
+  //   }
+  //   if(token && token.length>0){
+
+  //     if((new Date()) - token.create_at < 1000*60*60*2){
+  //       request.get('https://api.weixin.qq.com/cgi-bin/customservice/getkflist?access_token='+token.access_token,function(err,response,body){
+  //         let _body = JSON.parse(body);
+  //         console.log('body::',body);
+  //       })
+  //     }
+  //   }
+  // })
+  api.getCustomServiceList(function (err, result) {
     if (err) {
       console.log(err);
-      return;
+      res.send(err);
     }
-    if (token && token.length > 0) {
-
-      if (new Date() - token.create_at < 1000 * 60 * 60 * 2) {
-        _request2.default.get('https://api.weixin.qq.com/cgi-bin/customservice/getkflist?access_token=' + token.access_token, function (err, response, body) {
-          var _body = JSON.parse(body);
-          console.log('body::', body);
-          res.render('admin/service/');
-        });
-      }
-    }
+    res.render('admin/service/', {
+      kf_list: result.kf_list
+    });
   });
 };
 
@@ -50,45 +61,48 @@ var _new = exports._new = function _new(req, res) {
 
   var _server = new _service.Service(service);
 
-  _access_token2.default.findOne({}, function (err, token) {
-    if (err) {
-      console.log(err);
-      return;
-    }
-    if (token && token.length > 0) {
+  // AccessToken.findOne({},(err,token) => {
+  //   if(err){
+  //     console.log(err);
+  //     return;
+  //   }
+  //   if(token && token.length>0){
 
-      if (new Date() - token.create_at < 1000 * 60 * 60 * 2) {
-        new_server(token.access_token);
-      } else {
-        _request2.default.get('https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' + _default2.default.wx.app_id + '&secret=' + _default2.default.wx.app_secret, function (err, response, body) {
-          token.create_at = new Date();
-          var _body = JSON.parse(body);
-          var access_token = _body.access_token;
-          token.access_token = access_token;
-          token.save();
-          new_server(access_token);
-        });
-      }
-    } else {
-      _request2.default.get('https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' + _default2.default.wx.app_id + '&secret=' + _default2.default.wx.app_secret, function (err, response, body) {
-        var _token = {};
-        _token.create_at = new Date();
-        var _body = JSON.parse(body);
-        console.log(_body);
-        var access_token = _body.access_token;
-        _token.access_token = access_token;
-        _token = new _access_token2.default(_token);
-        _token.save();
-        new_server(access_token);
-      });
-    }
+  //     if((new Date()) - token.create_at < 1000*60*60*2){
+  //       new_server(token.access_token);
+  //     }else{
+  //       request.get('https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='+config.wx.app_id+'&secret='+config.wx.app_secret,function(err,response,body){
+  //         token.create_at = new Date();
+  //         let _body = JSON.parse(body);
+  //         let access_token = _body.access_token;
+  //         token.access_token = access_token;
+  //         token.save();
+  //         new_server(access_token);
+  //       })
+  //     }
+  //   }else{
+  //     request.get('https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='+config.wx.app_id+'&secret='+config.wx.app_secret,function(err,response,body){
+  //       let _token = {}
+  //       _token.create_at = new Date();
+  //       let _body = JSON.parse(body);
+  //       console.log(_body);
+  //       let access_token = _body.access_token;
+  //       _token.access_token = access_token;
+  //       _token = new AccessToken(_token);
+  //       _token.save();
+  //       new_server(access_token);
+  //     })
+  //   }
 
-    function new_server(access_token) {
-      _request2.default.post('https://api.weixin.qq.com/customservice/kfaccount/add?access_token=' + access_token, service, function (result) {
-        console.log(result);
-      });
-    }
-  });
+  //   function new_server(access_token){
+  //     request.post('https://api.weixin.qq.com/customservice/kfaccount/add?access_token='+access_token,service,function(result){
+  //       console.log(result);
+  //     });
+
+  //   }
+
+  // })
+  api.addKfAccount(service.kf_account + "@gh_c2f1e87fd5ab", service.nickname, service.password, function (err, result) {});
   _server.save(function (err) {
     if (err) {
       console.log(err);
