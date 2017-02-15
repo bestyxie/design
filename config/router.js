@@ -10,6 +10,7 @@ var Address = require('../app/controllers/address');
 var Evaluation = require('../app/controllers/evaluation');
 var Returns = require('../app/controllers/returns');
 var Wcuser = require('../app/controllers/wcuser');
+var Service = require('../app/controllers/service');
 // var UploadPic = require('../app/controllers/uploadPic');
 
 
@@ -119,6 +120,9 @@ module.exports = function(app){
   app.get('/admin/returns',Returns.admin_retlist);
   app.post('/admin/returns/adopt',Returns.adopt);
   app.get('/admin/returns/complete',Returns.complete);
+
+  // service
+  app.get('/service',Service.list);
 
 
   app.get('/test',function(req,res){

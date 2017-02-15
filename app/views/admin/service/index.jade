@@ -1,0 +1,37 @@
+extends ../../adminLayout
+
+block content
+  //- .header
+  h2 商品管理
+  .wrapper
+    .productlist.section
+      .head
+        a.newpdt(href="javascript:void(0);",data-toggle="modal",data-target="#new")
+          i.fa.fa-plus
+          | 添加客服
+      table
+        thead
+          tr
+            td 账号
+            td 昵称
+            td 操作
+        tbody.j-product-list
+  include _new_server
+
+block scripts
+  script.
+    $(function(){
+      //- 确定新增商品
+      $('.next').on('click',function(){
+        if($(this).hasClass('disabled')){
+          var ipts = Array.prototype.slice.call($('#newproduct .required'));
+          ipts.forEach(function(ipt){
+            if($(ipt).val().length == 0){
+              $(ipt).addClass('err');
+            }
+          });
+        }else{
+          $('#newproduct').trigger('submit');
+        }
+      });
+    })

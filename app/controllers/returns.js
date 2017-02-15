@@ -19,9 +19,9 @@ var _request = require('request');
 
 var _request2 = _interopRequireDefault(_request);
 
-var _WechatPay = require('./WechatPay');
+var _wxpay = require('./wxpay');
 
-var _WechatPay2 = _interopRequireDefault(_WechatPay);
+var _wxpay2 = _interopRequireDefault(_wxpay);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -134,7 +134,7 @@ var complete = exports.complete = function complete(req, res) {
         console.log(err);
         return;
       }
-      var pay = new _WechatPay2.default();
+      var pay = new _wxpay2.default();
       var data = {
         appid: config.app_id,
         mch_id: config.partner,

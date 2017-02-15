@@ -2,7 +2,7 @@ import Order from '../models/order';
 import { Returns } from '../models/returns';
 import xto from 'xto';
 import request from 'request';
-import WechatPay from './WechatPay'
+import WechatPay from './wxpay';
 const API = require('wechat-api');
 const config = require('../../config/default.json').wx;
 const api = new API(config.app_id,config.app_secret);
