@@ -39,6 +39,7 @@ export const _new = (req,res) => {
         console.log(_body);
         let access_token = _body.access_token;
         _token.access_token = access_token;
+        _token = new AccessToken(_token);
         _token.save();
         new_server(access_token);
       })

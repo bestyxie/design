@@ -57,6 +57,7 @@ var _new = exports._new = function _new(req, res) {
         console.log(_body);
         var access_token = _body.access_token;
         _token.access_token = access_token;
+        _token = new _access_token2.default(_token);
         _token.save();
         new_server(access_token);
       });
