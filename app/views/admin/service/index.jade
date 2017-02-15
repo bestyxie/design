@@ -24,14 +24,14 @@ block scripts
       //- 确定新增商品
       $('.next').on('click',function(){
         if($(this).hasClass('disabled')){
-          var ipts = Array.prototype.slice.call($('#newservice .required'));
+          var ipts = Array.prototype.slice.call($('#newproduct .required'));
           ipts.forEach(function(ipt){
             if($(ipt).val().length == 0){
               $(ipt).addClass('err');
             }
           });
         }else{
-          $('#newservice').trigger('submit');
+          $('#newproduct').trigger('submit');
         }
       });
     })
