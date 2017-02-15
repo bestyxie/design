@@ -2,6 +2,7 @@ import {Service} from '../models/service';
 import AccessToken from '../models/access_token';
 import request from 'request';
 import config from '../../config/default.json';
+import crypto from 'crypto';
 
 export const list = (req,res) => {
   res.render('admin/service/');
@@ -9,6 +10,8 @@ export const list = (req,res) => {
 
 export const _new = (req,res) => {
   let server = req.body;
+
+  server.password = crypto.createHash('md5').update(server.password).digest('hex');
 
   let _server = new Service(server);
 
@@ -46,7 +49,7 @@ export const _new = (req,res) => {
     }
 
     function new_server(access_token){
-      request.post('https://api.weixin.qq.com/customservice/kfaccount/add?access_token='+token.access_token,server,function(result){
+      request.post('https://api.weixin.qq.com/customservice/kfaccount/add?access_token='+access_token,server,function(result){
         console.log(result);
       });
 

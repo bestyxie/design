@@ -19,6 +19,10 @@ var _default = require('../../config/default.json');
 
 var _default2 = _interopRequireDefault(_default);
 
+var _crypto = require('crypto');
+
+var _crypto2 = _interopRequireDefault(_crypto);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var list = exports.list = function list(req, res) {
@@ -27,6 +31,8 @@ var list = exports.list = function list(req, res) {
 
 var _new = exports._new = function _new(req, res) {
   var server = req.body;
+
+  server.password = _crypto2.default.createHash('md5').update(server.password).digest('hex');
 
   var _server = new _service.Service(server);
 
@@ -64,7 +70,7 @@ var _new = exports._new = function _new(req, res) {
     }
 
     function new_server(access_token) {
-      _request2.default.post('https://api.weixin.qq.com/customservice/kfaccount/add?access_token=' + token.access_token, server, function (result) {
+      _request2.default.post('https://api.weixin.qq.com/customservice/kfaccount/add?access_token=' + access_token, server, function (result) {
         console.log(result);
       });
     }
