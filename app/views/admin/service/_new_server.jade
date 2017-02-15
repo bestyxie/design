@@ -5,19 +5,19 @@
       a.close(href="javascrip:;",data-dismiss="modal")
         i.fa.fa-close
     .modal-content
-      form#newproduct(action="/service/new",method="POST",enctype="multipart/form-data")
+      form#newservice(action="/service/new",method="POST",enctype="multipart/form-data")
         .form-group
           label(for="name") 登录账号*
           .input-box
-            input#name.required(type="text",name="server[kf_account]",placeholder="test@test.com")
+            input#name.required(type="text",name="service[kf_account]",placeholder="test@test.com")
         .form-group
           label(for="price") 昵称*
           .input-box
-            input#price.required.rqrednum(type="text",name="server[nickname]")
+            input#price.required.rqrednum(type="text",name="service[nickname]")
         .form-group
           label(for="discount") 密码*
           .input-box
-            input#discount.required(type="text",name="server[password]",placeholder="1-10")
+            input#discount.required(type="text",name="service[password]",placeholder="1-10")
     .modal-footer
       button.next.disabled(type="submit") 确定
       button.cancle 取消

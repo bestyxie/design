@@ -30,11 +30,11 @@ var list = exports.list = function list(req, res) {
 };
 
 var _new = exports._new = function _new(req, res) {
-  var server = req.body;
+  var service = req.body.service;
+  console.log(service);
+  service.password = _crypto2.default.createHash('md5').update(service.password).digest('hex');
 
-  server.password = _crypto2.default.createHash('md5').update(server.password).digest('hex');
-
-  var _server = new _service.Service(server);
+  var _server = new _service.Service(service);
 
   _access_token2.default.findOne({}, function (err, token) {
     if (err) {

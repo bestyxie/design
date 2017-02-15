@@ -9,11 +9,11 @@ export const list = (req,res) => {
 }
 
 export const _new = (req,res) => {
-  let server = req.body;
+  let service = req.body.service;
+  console.log(service);
+  service.password = crypto.createHash('md5').update(service.password).digest('hex');
 
-  server.password = crypto.createHash('md5').update(server.password).digest('hex');
-
-  let _server = new Service(server);
+  let _server = new Service(service);
 
   AccessToken.findOne({},(err,token) => {
     if(err){
