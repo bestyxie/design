@@ -18,9 +18,9 @@ export const _new = (req,res) => {
       return;
     }
     
-    if((new Date()) - token.create_at < 1000*60*60*2){
-      new_server(token.access_token);
-    }else{
+    // if((new Date()) - token.create_at < 1000*60*60*2){
+    //   new_server(token.access_token);
+    // }else{
       request.get('https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='+config.wx.app_id+'&secret='+config.wx.app_secret,function(err,response,body){
         token.create_at = new Date();
         let _body = JSON.parse(body);
@@ -29,7 +29,7 @@ export const _new = (req,res) => {
         token.save();
         new_server(access_token);
       })
-    }
+    // }
 
     function new_server(access_token){
       request.post('https://api.weixin.qq.com/customservice/kfaccount/add?access_token='+token.access_token,server,function(result){
