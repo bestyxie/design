@@ -10,7 +10,7 @@ var Address = require('../app/controllers/address');
 var Evaluation = require('../app/controllers/evaluation');
 var Returns = require('../app/controllers/returns');
 var Wcuser = require('../app/controllers/wcuser');
-var Service = require('../app/controllers/service');
+// var Service = require('../app/controllers/service');
 // var UploadPic = require('../app/controllers/uploadPic');
 
 
@@ -122,8 +122,8 @@ module.exports = function(app){
   app.get('/admin/returns/complete',Returns.complete);
 
   // service
-  app.get('/service',Service.list);
-  app.post('/service/new',Service._new);
+  // app.get('/service',Service.list);
+  // app.post('/service/new',Service._new);
 
 
   app.get('/test',function(req,res){
