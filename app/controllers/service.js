@@ -70,7 +70,7 @@ var _new = exports._new = function _new(req, res) {
     }
 
     function new_server(access_token) {
-      _request2.default.post('https://api.weixin.qq.com/customservice/kfaccount/add?access_token=' + access_token, server, function (result) {
+      _request2.default.post('https://api.weixin.qq.com/customservice/kfaccount/add?access_token=' + access_token, service, function (result) {
         console.log(result);
       });
     }
