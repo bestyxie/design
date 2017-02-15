@@ -34,11 +34,14 @@ var list = exports.list = function list(req, res) {
     if (token && token.length > 0) {
 
       if (new Date() - token.create_at < 1000 * 60 * 60 * 2) {
-        _request2.default.get('https://api.weixin.qq.com/cgi-bin/customservice/getkflist?access_token=' + token.access_token);
+        _request2.default.get('https://api.weixin.qq.com/cgi-bin/customservice/getkflist?access_token=' + token.access_token, function (err, response, body) {
+          var _body = JSON.parse(body);
+          console.log('body::', body);
+          res.render('admin/service/');
+        });
       }
     }
   });
-  res.render('admin/service/');
 };
 
 var _new = exports._new = function _new(req, res) {
