@@ -26,7 +26,7 @@ var _crypto2 = _interopRequireDefault(_crypto);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var API = require('wechat-api');
-var api = new API(_default2.default.app_id, _default2.default.app_secret);
+var api = new API(_default2.default.wx.app_id, _default2.default.wx.app_secret);
 
 var list = exports.list = function list(req, res) {
   // AccessToken.findOne({},(err,token) => {
@@ -44,15 +44,14 @@ var list = exports.list = function list(req, res) {
   //     }
   //   }
   // })
-  api.getCustomServiceList(function (err, result) {
-    if (err) {
-      console.log(err);
-      res.send(err);
-    }
-    res.render('admin/service/', {
-      kf_list: result.kf_list
-    });
-  });
+  // api.getCustomServiceList((err,result) => {
+  //   if(err){
+  //     console.log(err);
+  //     res.send(err);
+  //   }
+
+  // });
+  res.render('admin/service/');
 };
 
 var _new = exports._new = function _new(req, res) {
@@ -102,7 +101,13 @@ var _new = exports._new = function _new(req, res) {
   //   }
 
   // })
-  api.addKfAccount(service.kf_account + "@gh_c2f1e87fd5ab", service.nickname, service.password, function (err, result) {});
+  api.addKfAccount(service.kf_account + "@gh_c2f1e87fd5ab", service.nickname, service.password, function (err, result) {
+    if (err) {
+      console.log('err::', err);
+      return;
+    }
+    console.log(result);
+  });
   _server.save(function (err) {
     if (err) {
       console.log(err);
