@@ -36,18 +36,18 @@ var _new = exports._new = function _new(req, res) {
       return;
     }
 
-    if (new Date() - token.create_at < 1000 * 60 * 60 * 2) {
-      new_server(token.access_token);
-    } else {
-      _request2.default.get('https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' + _default2.default.wx.app_id + '&secret=' + _default2.default.wx.app_secret, function (err, response, body) {
-        token.create_at = new Date();
-        var _body = JSON.parse(body);
-        var access_token = _body.access_token;
-        token.access_token = access_token;
-        token.save();
-        new_server(access_token);
-      });
-    }
+    // if((new Date()) - token.create_at < 1000*60*60*2){
+    //   new_server(token.access_token);
+    // }else{
+    _request2.default.get('https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' + _default2.default.wx.app_id + '&secret=' + _default2.default.wx.app_secret, function (err, response, body) {
+      token.create_at = new Date();
+      var _body = JSON.parse(body);
+      var access_token = _body.access_token;
+      token.access_token = access_token;
+      token.save();
+      new_server(access_token);
+    });
+    // }
 
     function new_server(access_token) {
       _request2.default.post('https://api.weixin.qq.com/customservice/kfaccount/add?access_token=' + token.access_token, server, function (result) {
