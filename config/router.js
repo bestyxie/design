@@ -123,6 +123,7 @@ module.exports = function(app){
 
   // service
   app.get('/service',Service.list);
+  app.post('/service/new',Service._new);
 
 
   app.get('/test',function(req,res){
