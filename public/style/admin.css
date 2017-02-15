@@ -769,3 +769,6 @@ body {
 .costom .reason {
   display: inline-block;
 }
+.service #name {
+  width: 300px;
+}
