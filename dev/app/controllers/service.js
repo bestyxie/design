@@ -4,7 +4,7 @@ import request from 'request';
 import config from '../../config/default.json';
 import crypto from 'crypto';
 const API = require('wechat-api');
-const api = new API(config.app_id,config.app_secret);
+const api = new API(config.wx.app_id,config.wx.app_secret);
 
 export const list = (req,res) => {
   // AccessToken.findOne({},(err,token) => {
@@ -22,16 +22,14 @@ export const list = (req,res) => {
   //     }
   //   }
   // })
-  api.getCustomServiceList((err,result) => {
-    if(err){
-      console.log(err);
-      res.send(err);
-    }
-    res.render('admin/service/',{
-      kf_list: result.kf_list
-    });
+  // api.getCustomServiceList((err,result) => {
+  //   if(err){
+  //     console.log(err);
+  //     res.send(err);
+  //   }
     
-  });
+  // });
+  res.render('admin/service/');
 }
 
 export const _new = (req,res) => {
@@ -82,7 +80,11 @@ export const _new = (req,res) => {
     
   // })
   api.addKfAccount(service.kf_account+"@gh_c2f1e87fd5ab", service.nickname, service.password, (err,result) => {
-
+    if(err){
+      console.log('err::',err);
+      return;
+    }
+    console.log(result)
   });
   _server.save((err) => {
     if(err){
