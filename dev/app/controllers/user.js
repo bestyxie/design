@@ -3,7 +3,7 @@ let qs = require('querystring');
 
 // 注册
 module.exports.signup = function(req,res){
-  var _user = req.body.user;
+  var _user = req.body;
   User.findOne({name: _user.name}, function(err,user){
     if(err){
       console.log(err);
@@ -19,22 +19,24 @@ module.exports.signup = function(req,res){
       });
     }
     else if(user.length>0){
-      res.redirect('/login');
+      res.json({errcode: 422,msg: '用户已存在，请直接登录!'});
     }
   });
 }
 
 // 登录
 module.exports.signin = function(req,res){
-  var _user = req.body.user;
-
+  var _user = req.body;
   User.findOne({name: _user.name},function(err,user){
     if(err){
       return console.log(err);
     }
     console.log(user);
     if(!user){
-      res.redirect('/');
+      res.json({
+        errcode: 422,
+        msg: '用户不存在，请注册！'
+      });
       return;
     }
     user.comparePassword(_user.password,function(isMatch){
@@ -44,17 +46,13 @@ module.exports.signin = function(req,res){
         res.redirect('/admin');
       }
       else{
-        res.redirect('/login');
+        res.json({
+          errcode: 422,
+          msg: '用户名或密码错误!'
+        });
       }
-    })
-    // else if(user.name === _user.name && user.password === _user.password){
-    //   req.session.user = user;
-    //   res.redirect('/admin');
-    // }else{
-    //   console.log("password is not matched!");
-    //   res.redirect('/login');
-    // }
-  })
+    });
+  });
 }
 // 手机登陆
 module.exports.mlogin = function(req,res){

@@ -16,14 +16,5 @@
     "token": "shopin",
     "partner": 1230000109,
     "wxpaykey": "xxxx"
-  },
-  "sdk": {
-    "grant_type": "client_credential",
-    "appid": "wxe751fb0e3060d859",
-    "secret": "0f663e0e4e72724d814988ca68552ccb",
-    "noncestr": "Wm3WZYTPz0wzccnW",
-    "accessTokenUrl": "https://api.weixin.qq.com/cgi-bin/token",
-    "ticketUrl": "https://api.weixin.qq.com/cgi-bin/ticket/getticket",
-    "cache_duration": "1000*60*60*24"
   }
 }

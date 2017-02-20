@@ -9,6 +9,9 @@ body {
   background: #f7db56;
   position: relative;
 }
+.login .msg {
+  color: red;
+}
 .login .login-panel {
   width: 300px;
   height: 400px;
