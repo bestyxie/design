@@ -17,10 +17,13 @@ module.exports.signup = function (req, res) {
           console.log(err);
         }
         req.session.user = user;
-        res.redirect("/admin");
+        res.json({
+          errcode: 200,
+          msg: '注册成功'
+        });
       });
-    } else if (user.length > 0) {
-      res.json({ errcode: 422, msg: '用户已存在，请直接登录!' });
+    } else if (user) {
+      res.json({ errcode: 422, msg: '用户已经存在' });
     }
   });
 };
@@ -30,25 +33,28 @@ module.exports.signin = function (req, res) {
   var _user = req.body;
   User.findOne({ name: _user.name }, function (err, user) {
     if (err) {
-      return console.log(err);
+      console.log(err);
+      return;
     }
-    console.log(user);
     if (!user) {
       res.json({
         errcode: 422,
-        msg: '用户不存在，请注册！'
+        msg: '用户不存在'
       });
       return;
     }
     user.comparePassword(_user.password, function (isMatch) {
-      console.log(isMatch);
+      // console.log(isMatch);
       if (isMatch) {
         req.session.user = user;
-        res.redirect('/admin');
+        res.json({
+          errcode: 200,
+          msg: '登录成功'
+        });
       } else {
         res.json({
           errcode: 422,
-          msg: '用户名或密码错误!'
+          msg: '用户密码错误'
         });
       }
     });

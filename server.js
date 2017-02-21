@@ -29,3 +29,5 @@ app.use(cookieSession({
 require('./config/router.js')(app);
 
 app.listen(port);
+
+module.exports = app;
