@@ -3,7 +3,7 @@ let qs = require('querystring');
 
 // 注册
 module.exports.signup = function(req,res){
-  var _user = req.body.user;
+  var _user = req.body;
   User.findOne({name: _user.name}, function(err,user){
     if(err){
       console.log(err);
@@ -15,46 +15,50 @@ module.exports.signup = function(req,res){
           console.log(err);
         }
         req.session.user = user;
-        res.redirect("/admin");
+        res.json({
+          errcode: 200,
+          msg: '注册成功'
+        });
       });
     }
-    else if(user.length>0){
-      res.redirect('/login');
+    else if(user){
+      res.json({errcode: 422,msg: '用户已经存在'});
     }
   });
 }
 
 // 登录
 module.exports.signin = function(req,res){
-  var _user = req.body.user;
-
+  var _user = req.body;
   User.findOne({name: _user.name},function(err,user){
     if(err){
-      return console.log(err);
+      console.log(err);
+      return ;
     }
-    console.log(user);
     if(!user){
-      res.redirect('/');
+      res.json({
+        errcode: 422,
+        msg: '用户不存在'
+      });
       return;
     }
     user.comparePassword(_user.password,function(isMatch){
-      console.log(isMatch);
+      // console.log(isMatch);
       if(isMatch){
         req.session.user = user;
-        res.redirect('/admin');
+        res.json({
+          errcode: 200,
+          msg: '登录成功'
+        });
       }
       else{
-        res.redirect('/login');
+        res.json({
+          errcode: 422,
+          msg: '用户密码错误'
+        });
       }
-    })
-    // else if(user.name === _user.name && user.password === _user.password){
-    //   req.session.user = user;
-    //   res.redirect('/admin');
-    // }else{
-    //   console.log("password is not matched!");
-    //   res.redirect('/login');
-    // }
-  })
+    });
+  });
 }
 // 手机登陆
 module.exports.mlogin = function(req,res){

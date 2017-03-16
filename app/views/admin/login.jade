@@ -17,51 +17,111 @@ html
             .login-wrap.wrap
               h2 登录
               form(method="POST",action="/user/signin")
-                input.username(name="user[name]",type="text",placeholder="登录邮箱",autofocus)
-                input.pwd(name="user[password]",type="password",placeholder="密码")
-                button(type="submit") 登录
-                a.forgetpwd(href="") 忘记密码
+                input.username.required(name="name",type="text",placeholder="登录邮箱",autofocus)
+                input.pwd.required(name="password",type="password",placeholder="密码")
+                p.j-msg.msg
+                button.j-submit(type="submit") 登录
+                //- a.forgetpwd(href="") 忘记密码
                 a#newuser.newuser(href="javacript:;") 注册
             .signup-wrap.wrap.rotate
               h2 注册
               form(method="POST",action="/user/signup")
-                input.username(name="user[name]",type="text",placeholder="注册邮箱")
-                input.pwd(name="user[password]",type="password",placeholder="密码")
-                input.repwd(type="password",placeholder="重复密码")
-                button(type="submit") 注册
+                input.username(name="name",type="text",placeholder="注册邮箱")
+                input.pwd(name="password",type="password",placeholder="密码")
+                //- input.repwd(type="password",placeholder="重复密码")
+                p.j-msg.msg
+                button.j-signup(type="submit") 注册
                 a#login.newuser(href="javacript:;") 登录
           else
             .login-wrap.wrap.rotate
               h2 登录
               form(method="POST",action="/user/signin")
-                input.username(name="user[name]",type="text",placeholder="登录邮箱")
-                input.pwd(name="user[password]",type="password",placeholder="密码")
-                button(type="submit") 登录
-                a.forgetpwd(href="") 忘记密码
+                input.username(name="name",type="text",placeholder="登录邮箱")
+                input.pwd(name="password]",type="password",placeholder="密码")
+                p.j-msg.msg
+                button.j-submit(type="submit") 登录
+                //- a.forgetpwd(href="") 忘记密码
                 a#newuser.newuser(href="javacript:;") 注册
             .signup-wrap.wrap
               h2 注册
               form(method="POST",action="/user/signup")
-                input.username(name="user[name]",type="text",placeholder="注册邮箱")
-                input.pwd(name="user[password]",type="password",placeholder="密码")
-                input.repwd(type="password",placeholder="重复密码")
-                button(type="submit") 注册
+                input.username(name="name",type="text",placeholder="注册邮箱")
+                input.pwd(name="password",type="password",placeholder="密码")
+                //- input.repwd(type="password",placeholder="重复密码")
+                p.j-msg.msg
+                button.j-signup(type="submit") 注册
                 a#login.newuser(href="javacript:;") 登录
     include ../includes/admin-footer
     script.
       $(function(){
         $('#newuser').on('click',function(e){
           e.preventDefault();
-          console.log('hahha');
+          //- console.log('hahha');
           $('.login-wrap').addClass('rotate');
           $('.signup-wrap').removeClass('rotate');
         });
         $('#login').on('click',function(e){
           e.preventDefault();
-          console.log('hahha');
+          //- console.log('hahha');
           $('.login-wrap').removeClass('rotate');
           $('.signup-wrap').addClass('rotate');
         });
 
+        $(document).on('change input','.required',function(e){
+          if($(this).val().length > 0){
+          $(this).removeClass('error');
+          }
+        })
+
         //- validate
+        function validate(wrapper){
+          var req = $(wrapper).find('.required');
+          var isEmpty = false;
+          for(var i=0;i<req.length;i++){
+            if($(req[i]).val().length == 0){
+              $(req[i]).addClass('error');
+              isEmpty = true;
+            }
+          }
+          return isEmpty;
+        }
+
+        $('.j-submit').on('click',function(e){
+          e.preventDefault();
+          var form = $(this).parent('form')
+          var isEmpty = validate(form);
+          console.log(isEmpty);
+          if(!isEmpty){
+            var data = {};
+            data.name = $(form).find('input[name="name"]').val();
+            data.password = $(form).find('input[name="password"]').val();
+            console.log(data);
+            $.post('/user/signin',data,function(result){
+              if(result.errcode == 422){
+                $('.j-msg').html(result.msg);
+              }else{
+              $('.j-msg').html('');
+                window.location.href="/admin";
+              }
+            });
+          }
+        });
+
+        $('.j-signup').on('click',function(e){
+          e.preventDefault();
+          var form = $(this).parent('form')
+          var isEmpty = validate(form);
+          if(!isEmpty){
+            var data = {};
+            data.name = $(form).find('input[name="name"]').val();
+            data.password = $(form).find('input[name="password"]').val();
+            $.post('/user/signup',data,function(result){
+              if(result.errcode == 422){
+                $('.j-msg').html(result.msg);
+              }else{
+                window.location.href='/admin';
+              }
+            })
+          }
+        })
       })
