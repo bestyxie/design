@@ -170,9 +170,9 @@ block scripts
         })
       });
       wx.onMenuShareTimeline({
-        title: #{product.name},
+        title: '#{product.name}',
         link: window.location.href,//分享链接
-        imgUrl: #{product.pics[0]},//分享图片
+        imgUrl: '#{product.pics[0]}',//分享图片
         success: function(res) {
           console.log(res);
         },
