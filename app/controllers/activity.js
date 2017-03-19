@@ -72,11 +72,11 @@ var new_act = exports.new_act = function new_act(req, res) {
   activity.pic = pic;
   console.log(activity);
   var _activity = new _activity2.Activity(activity);
-  _activity.save(function (err) {
+  _activity.save(function (err, act) {
     if (err) {
       res.send(err);
     }
-    _product2.default.where({ _id: { '$in': activity.products } }).update({ discount: activity.discount });
+    _product2.default.where({ _id: { '$in': activity.products } }).update({ discount: activity.discount, activity: act._id });
     res.redirect('/admin/activity');
   });
 };

@@ -108,7 +108,7 @@ module.exports.new = function(req,res){
           console.log(err);
           res.redirect('/admin');
         }
-        create_doc(_product,res => {
+        create_doc(_product,res => { //将新增的上坪加入到elasticsearch中，方便检索
           // console.log(res);
         })
         res.redirect('/admin');
@@ -242,21 +242,25 @@ module.exports.query = function(req,res){
     let promise = new Promise((resolve,reject) => {
       search({'type':type,'q':q},(result) => {
         // product.concat(result);
-        console.log(result);
+        // console.log(result);
         resolve(result);
       });
     });
 
     promise.then((pd)=>{
-      console.log(pd);
+      // console.log(pd);
       search({'type': 'description','q':q},result => {
         result = result.concat(pd);
+        var rest = [];
+        // console.log(result)
         for(let i=0,len=result.length;i<len;i++){
-          result._source._id = result._id;
-          result._source.pics.split(' ');
+          result[i]._source._id = result._id;
+          result[i]._source.pics = result[i]._source.pics.split(' ');
+          rest.push(result[i]._source);
         }
+
         res.render('mobile/search/',{
-          products: result._source
+          products: rest
         });
         // res.send(result);
       });

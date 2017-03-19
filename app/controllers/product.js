@@ -136,7 +136,7 @@ module.exports.new = function (req, res) {
           console.log(err);
           res.redirect('/admin');
         }
-        (0, _bulkIndex.create_doc)(_product, function (res) {
+        (0, _bulkIndex.create_doc)(_product, function (res) {//将新增的上坪加入到elasticsearch中，方便检索
           // console.log(res);
         });
         res.redirect('/admin');
@@ -267,21 +267,25 @@ module.exports.query = function (req, res) {
     var promise = new Promise(function (resolve, reject) {
       (0, _search.search)({ 'type': type, 'q': q }, function (result) {
         // product.concat(result);
-        console.log(result);
+        // console.log(result);
         resolve(result);
       });
     });
 
     promise.then(function (pd) {
-      console.log(pd);
+      // console.log(pd);
       (0, _search.search)({ 'type': 'description', 'q': q }, function (result) {
         result = result.concat(pd);
+        var rest = [];
+        // console.log(result)
         for (var i = 0, len = result.length; i < len; i++) {
-          result._source._id = result._id;
-          result._source.pics.split(' ');
+          result[i]._source._id = result._id;
+          result[i]._source.pics = result[i]._source.pics.split(' ');
+          rest.push(result[i]._source);
         }
+
         res.render('mobile/search/', {
-          products: result._source
+          products: rest
         });
         // res.send(result);
       });
