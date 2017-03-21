@@ -24,7 +24,8 @@ let base_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?'
 let getAccesstoken = (code) =>{
   const APPID = config.wx.app_id,
         APP_SECRET = config.wx.app_secret;
-  let tokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid="+APPID+"&secret="+APP_SECRET+"&code="+code+"&grant_type=authorization_code ";
+  let tokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid="+
+              APPID+"&secret="+APP_SECRET+"&code="+code+"&grant_type=authorization_code ";
 
   return new Promise((resolve,reject)=> {
     request.get(tokenUrl,req);//request
@@ -38,10 +39,10 @@ let getAccesstoken = (code) =>{
 
           resolve({openid: openid,access_token: access_token});
         }else{
-          tokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid="+APPID+"&secret="+APP_SECRET+"&code="+code+"&grant_type=authorization_code ";
+          tokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid="+
+                    APPID+"&secret="+APP_SECRET+"&code="+code+"&grant_type=authorization_code ";
           console.log('access_token 过期！！！');
           request.get(tokenUrl,req);
-          // reject();
         }
       }
     }
@@ -50,7 +51,8 @@ let getAccesstoken = (code) =>{
 
 let getUserinfo = (openid,access_token) => {
   let promise = new Promise((resolve,reject) => {
-    let infoUrl = 'https://api.weixin.qq.com/sns/userinfo?access_token='+access_token+'&openid='+openid;
+    let infoUrl = 'https://api.weixin.qq.com/sns/userinfo?access_token='+
+                  access_token+'&openid='+openid;
     request.get(infoUrl,function(err,res,body){
       resolve(JSON.parse(body));
     });

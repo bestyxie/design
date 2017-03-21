@@ -34,7 +34,6 @@ block scripts
       }
 
       $('#j-pay').on('click',function(e){
-        console.log('click')
         $(this).html('正在提交订单...');
         var data = {};
         data.attach = '';
@@ -44,7 +43,9 @@ block scripts
         data.total_fee = #{(order.total+order.express)*100};
         $.post('/getsign',data,function(result){
           if(typeof WeixinJSBridge == 'undefined'){
-            $(document).on('WeixinJSBridgeReady',function(){onBridgeReady(result)},false);
+            $(document).on('WeixinJSBridgeReady',function(){
+              onBridgeReady(result)
+            },false);
           }else{
             onBridgeReady(result)
           }
@@ -61,17 +62,6 @@ block scripts
             console.log('checkJsApi'+JSON.stringify(res));
           }
         })
-      });
-      wx.onMenuShareTimeline({
-        title: '分享的标题',
-        link: 'www.baidu.com',//分享链接
-        imgUrl: '',//分享图片
-        success: function(res) {
-          console.log(res);
-        },
-        cancel: function(res){
-          console.log(res);
-        }
       });
       wx.error(function(res){
         console.log('error:'+JSON.stringify(res));

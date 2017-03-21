@@ -57,11 +57,11 @@ export const new_act = (req,res) => {
   activity.pic = pic;
   console.log(activity);
   let _activity = new Activity(activity);
-  _activity.save(err => {
+  _activity.save((err,act) => {
     if(err){
       res.send(err);
     }
-    Product.where({_id: {'$in': activity.products}}).update({discount: activity.discount})
+    Product.where({_id: {'$in': activity.products}}).update({discount: activity.discount,activity: act._id})
     res.redirect('/admin/activity');
   })
 }
