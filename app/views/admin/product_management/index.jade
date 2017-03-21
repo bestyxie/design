@@ -54,11 +54,16 @@ block scripts
       $('.next').on('click',function(){
         if($(this).hasClass('disabled')){
           var ipts = Array.prototype.slice.call($('#newproduct .required'));
+          var flag = true;
           ipts.forEach(function(ipt){
             if($(ipt).val().length == 0){
               $(ipt).addClass('err');
+              flag = false;
             }
           });
+          if(flag) {
+            $(this).removeClass('disabled')
+          }
         }else{
           var ipts = Array.prototype.slice.call($('input.rqrednum'));
           var pattern = /[^\d]/g;
@@ -74,7 +79,7 @@ block scripts
         }
       });
 
-      uploadPic();
+      uploadPic(true);
       
       delete_operation('product/delete','.j-product-list');
     })

@@ -194,14 +194,14 @@ function uploadPic(multi){
     }
 
   }
-  $('.newpic').on('click',function(){
+  /*$('.newpic').on('click',function(){
     var file = $('input[type="file"]');
     if(file.length == 1){
       file.trigger('click');
     }else{
       $(file[1]).trigger('click');
     }
-  });
+  }); */
   $(document).on('change','input[type="file"]',function(){
     console.log('file');
     var self = $(this);

@@ -312,11 +312,20 @@ header .user .logout:hover {
   text-align: center;
   line-height: 50px;
   position: relative;
-  cursor: pointer;
+  overflow: hidden;
 }
 .newpic:hover {
   border-color: #a9a9a9;
   color: #a9a9a9;
+}
+.newpic input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
 }
 /* 组件样式 */
 .form-group {
