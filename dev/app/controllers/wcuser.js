@@ -1,5 +1,6 @@
 import {Wcuser} from '../models/wcuser';
 import {base_set,ANCHOR,base_url,getAccesstoken,getUserinfo} from './weixin';
+import Order from '../models/order';
 import qs from 'querystring';
 import request from 'request';
 
@@ -74,13 +75,72 @@ module.exports.msigninRequire = (req,res,next) =>{
 // 用户主页
 module.exports.homepage = function(req,res){
   let user_id = req.session.user._id;
-  Wcuser.findOne({_id: user_id},(err,user) => {
+  new Promise((resolve,reject) => {
+    Order.find({user_id: user_id},function(err,orders){
+      if(err){
+        reject(err);
+      }
+      var result = {
+        wait_delive: 0,
+        wait_pay: 0,
+        wait_reciept: 0,
+        wait_comm: 0,
+        ret: 0
+      }
+      for(var i=0,len=orders.length;i<len;i++){
+        switch(users[i].status){
+          case "待付款":
+            result.wait_pay++; break;
+          case "待发货":
+            result.wait_delive++; break;
+          case "待收货":
+            result.wait_reciept++; break;
+          case "待评价":
+            result.wait_comm++; break;
+          case "待退款":
+            result.ret++; break;
+          default: ;
+        }
+      }
+      resolve(result);
+    })
+  }).then(result => {
+    Wcuser.findOne({_id: user_id},(err,user) => {
+      if(err){
+        console.log(err);
+        res.send(err);
+      }
+      if(!user){
+        res.send('请登录')
+      }
+      result.user = user;
+      res.render('mobile/user/',result);
+    })
+    
+  })
+}
+
+module.exports.list = function(req,res){
+  Wcuser.find({},function(err,users){
     if(err){
-      console.log(err);
       res.send(err);
     }
-    res.render('mobile/user/',{
-      user: user
-    });
+
+    res.render('admin/wcuser/',{
+      users: users
+    })
+  })
+}
+
+module.exports.delete_wc = function(req,res){
+  var _id = req.body._id;
+
+  Wcuser.findOneAndRemove({_id: _id},function(err,result){
+    if(err){
+      console.log(err);
+      res.json({err: err});
+    }
+    res.json({success: true});
+    console.log(result);
   })
 }

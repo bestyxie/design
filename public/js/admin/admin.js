@@ -210,8 +210,10 @@ function uploadPic(multi){
     if(!multi){
       $('.newpic').hide();
     }else{
-      var newpic = $('<input type="file" name="picture" accept="image/*" class="hide" />')
-      self.parent().append(newpic);
+      console.log($('.newpic input').val())
+     // $('.newpic input').hide();
+      //var newpic = $('<input type="file" name="picture" accept="image/*" />')
+      //self.parent().append(newpic);
     }
   });
   $(document).on('click','.imgbox .icon',function(){

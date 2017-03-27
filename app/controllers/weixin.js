@@ -46,7 +46,6 @@ var getAccesstoken = function getAccesstoken(code) {
           tokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + APPID + "&secret=" + APP_SECRET + "&code=" + code + "&grant_type=authorization_code ";
           console.log('access_token 过期！！！');
           request.get(tokenUrl, req);
-          // reject();
         }
       }
     }

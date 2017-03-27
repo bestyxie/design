@@ -44,7 +44,6 @@ module.exports.signin = function (req, res) {
       return;
     }
     user.comparePassword(_user.password, function (isMatch) {
-      // console.log(isMatch);
       if (isMatch) {
         req.session.user = user;
         res.json({

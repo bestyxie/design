@@ -48,13 +48,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 module.exports.list = function (req, res) {
   var login = false;
   if (req.cookies && req.cookies.openid) {
-    login = true;
     _wcuser.Wcuser.findOne({ openid: req.cookies.openid }, { _id: 1, openid: 1 }, function (err, user) {
       if (err) {
         console.log(err);
         return;
       }
       if (user) {
+        login = true;
         req.session.user = user;
       }
     });
@@ -67,10 +67,13 @@ module.exports.list = function (req, res) {
       }
       resolve(acts);
     });
-  });
-
-  promise.then(function (acts) {
+  }).then(function (acts) {
     _product3.default.find({}).sort({ 'meta.updateAt': -1 }).exec(function (err, products) {
+      /*makebulk(products,function(bulk){
+        indexall(bulk,function(item){
+          console.log(item);
+        })
+      });*/
       res.render('mobile/home/', {
         products: products,
         acts: acts,
@@ -200,6 +203,9 @@ module.exports.editproduct = function (req, res) {
 module.exports.updateproduct = function (req, res) {
   var product = req.body.product;
   var files = req.files;
+
+  console.log(files.length);
+
   var deletepic = product.deletepic.split(' ').slice(0, -1);
   product.labels = product.labels.split(' ');
   if (product.labels.length == 1 && product.labels[0] == '') {
@@ -211,7 +217,7 @@ module.exports.updateproduct = function (req, res) {
 
   var pic_list = [];
   var promise = new Promise(function (resolve, reject) {
-    _product3.default.find({ _id: product._id }, function (err, prod) {
+    _product3.default.findOne({ _id: product._id }, function (err, prod) {
       if (err) {
         console.log(err);
         reject();
@@ -220,7 +226,7 @@ module.exports.updateproduct = function (req, res) {
     });
   });
   promise.then(function (thispro) {
-    thispro = thispro[0];
+    //thispro = thispro[0];
     var pics = thispro.pics,
         deletepic_url = [];
 

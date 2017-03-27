@@ -104,7 +104,9 @@ module.exports = function(app){
   app.get('/pay/paid',Order.paid)
   // wxpay
   app.post('/getsign',Order.getsign);
-  app.post('/wechat',Order.wechat)
+  app.post('/wechat',Order.wechat);
+  app.get('/admin/wcuser',Wcuser.list);
+  app.post('/admin/wcuser/delete',Wcuser.delete_wc);
 
   app.get('/express',Order.express_msg);
 

@@ -9,14 +9,14 @@ block content
           .swiper_wrap
             .wipe_img_con
               a.swiper_wrap_a
-                img(src="#{product.pics[0]}")
+                img(src="#{product.pics[product.pics.length - 1]}")
             each pic in product.pics
               .wipe_img_con
                 a.swiper_wrap_a
                   img(src="#{pic}")
             .wipe_img_con
               a.swiper_wrap_a
-                img(src="#{product.pics[product.pics.length - 1]}")
+                img(src="#{product.pics[0]}")
           .swiper-page
             em#SwiperPageNum 1
             i &frasl;

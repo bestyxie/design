@@ -16,24 +16,29 @@ block content
           a.block.paying(href="/order?status=待付款")
             i.fa.fa-credit-card
             p 待付款
-            .tips 10
+            if wait_pay
+              .tips #{wait_pay}
           a.block.delivery(href="/order?status=待发货")
             i.fa.fa-archive
             p 待发货
-          a.block.receiving(href="/order?status=待收款")
+            if wait_delive
+              .tips #{wait_delive}
+          a.block.receiving(href="/order?status=待收货")
             i.fa.fa-archive
             p 待收货
-            .tips 10
+            if wait_reciept
+              .tips #{wait_reciept}
         li.line
           a.block.evaluate(href="/order?status=待评价")
             i.fa.fa-commenting-o
             p 待评价
-            .tips 10
+            if wait_comm
+              .tips #{wait_comm}
           a.block.return(href="/returns/list")
             i.fa.fa-retweet
             p 退货退款
-            .tips 10
+            if ret
+              .tips 10
           a.block.order(href="/order")
             i.fa.fa-gift
             p 全部订单
-            .tips 10

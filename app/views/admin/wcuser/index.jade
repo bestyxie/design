@@ -1,0 +1,31 @@
+extends ../../adminLayout
+
+block content
+  //- .header
+  h2 微信用户管理
+  .wrapper
+    .productlist.section
+      .head
+        h3 用户列表（共#{users.length}个）
+      table
+        thead
+          tr
+            td 头像
+            td 昵称
+            td 操作
+        tbody.j-product-list
+          each user,index in users
+            tr.j-productItem
+              td.img-column
+                .imgbox
+                  img(src="#{user.headimgurl}")
+              td.name-column
+                p #{user.nickname}
+              td(data-id="#{user._id}")
+                a.edit(href="javascript:void(0);") 编辑
+                a.delete.j-delete(href="javascript:void(0);") 删除
+block scripts
+  script.
+    $(function(){  
+      delete_operation('/admin/wcuser/delete','.j-product-list');
+    })
