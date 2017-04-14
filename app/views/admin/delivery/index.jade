@@ -63,6 +63,8 @@ block scripts
 
       $('.j-dropdown').on('click','li',function(e){
         var exp = $(this).data('express');
+        var c_exp = $(this).html();
+        $(this).parents('.j-dropdown').find('.j-exp_name').html(c_exp);
         $(this).parents('.j-dropdown').find('#exporess_name').val(exp);
       })
     });

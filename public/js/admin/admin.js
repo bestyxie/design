@@ -203,7 +203,7 @@ function uploadPic(multi){
     }
   }); */
   $(document).on('change','input[type="file"]',function(){
-    console.log('file');
+    //console.log('file');
     var self = $(this);
     previewPic(self.val(),self);
 
