@@ -88,7 +88,7 @@ module.exports.homepage = function(req,res){
         ret: 0
       }
       for(var i=0,len=orders.length;i<len;i++){
-        switch(users[i].status){
+        switch(orders[i].status){
           case "待付款":
             result.wait_pay++; break;
           case "待发货":
