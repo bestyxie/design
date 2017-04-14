@@ -323,3 +323,26 @@ export const wechat = (req,res) => {
     })
   });
 }
+
+export const getAll_orders = (req,res) => {
+  Order.find({},(err,orders) => {
+    if(err){
+      res.send(err);
+    }
+    res.render('admin/order/',{
+      orders: orders
+    })
+  })
+}
+
+export const update_status = (req,res) => {
+  var _id = req.body._id;
+  var status = req.body.status;
+
+  Order.findOneAndUpdate({_id: _id},{status: status},function(err){
+    if(err){
+      res.json({success: false});
+    }
+    res.json({success: true});
+  })
+}

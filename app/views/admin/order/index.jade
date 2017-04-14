@@ -1,0 +1,44 @@
+extends ../../adminLayout
+
+block content
+  h2 订单管理
+  .wrapper.delivery
+    .productlist.section
+      table
+        thead
+          tr
+            td 订单编号
+            td 状态
+            td 操作
+        tbody.j-product-list
+          each order in orders
+            tr(data-id="#{order._id}")
+              td #{order._id}
+              td.j-status #{order.status}
+              td
+                a.j-edit(href="javascript:void(0);") 修改状态
+                .j-change-status(style="display:none;")
+                  input(type="text")
+                  a.j-commit(href="javascript:void(0);") 确定
+block scripts
+  script.
+    $(function(){
+      $("body").on('click','.j-edit',function(){
+        $(this).hide();
+        $(this).siblings('.j-change-status').show();
+      });
+      $("body").on('click','.j-commit',function(){
+        $(this).parent().hide();
+        $(this).parent().siblings('.j-edit').show();
+        var data = {
+          _id: $(this).parents('tr').data('id'),
+          status: $(this).siblings('input').val()
+        }
+        var self = this;
+        $.post('/order/update',data,function(result){
+          if(result.success){
+            $(self).parents('tr').find('.j-status').html(data.status);
+          }
+        });
+      });
+    })

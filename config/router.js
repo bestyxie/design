@@ -98,10 +98,13 @@ module.exports = function(app){
   app.get('/order',Order.order_list);
   app.get('/admin/delivery',Order.getAll_paid);
   app.post('/admin/order/update',Order.update);
-  app.get('/order/cancle',Order.cancle)
+  app.get('/order/cancle',Order.cancle);
   app.get('/order/pay',Order.pay);
   app.post('/pay/complete',Order.complete);
   app.get('/pay/paid',Order.paid)
+
+  app.get('/admin/order/all',Order.getAll_orders);
+  app.post('/order/update',Order.update_status);
   // wxpay
   app.post('/getsign',Order.getsign);
   app.post('/wechat',Order.wechat);

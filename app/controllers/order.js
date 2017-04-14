@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.wechat = exports.getsign = exports.cancle = exports.receipt = exports.express_msg = exports.update = exports.getAll_paid = exports.paid = exports.complete = exports.order_list = exports.pay = exports.submit_order = exports.create_order = undefined;
+exports.update_status = exports.getAll_orders = exports.wechat = exports.getsign = exports.cancle = exports.receipt = exports.express_msg = exports.update = exports.getAll_paid = exports.paid = exports.complete = exports.order_list = exports.pay = exports.submit_order = exports.create_order = undefined;
 
 var _order2 = require('../models/order');
 
@@ -353,5 +353,28 @@ var wechat = exports.wechat = function wechat(req, res) {
       console.log(result);
       res.send(result);
     });
+  });
+};
+
+var getAll_orders = exports.getAll_orders = function getAll_orders(req, res) {
+  _order3.default.find({}, function (err, orders) {
+    if (err) {
+      res.send(err);
+    }
+    res.render('admin/order/', {
+      orders: orders
+    });
+  });
+};
+
+var update_status = exports.update_status = function update_status(req, res) {
+  var _id = req.body._id;
+  var status = req.body.status;
+
+  _order3.default.findOneAndUpdate({ _id: _id }, { status: status }, function (err) {
+    if (err) {
+      res.json({ success: false });
+    }
+    res.json({ success: true });
   });
 };
