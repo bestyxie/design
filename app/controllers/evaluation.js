@@ -13,6 +13,8 @@ var _order = require('../models/order');
 
 var _order2 = _interopRequireDefault(_order);
 
+var _wcuser = require('../models/wcuser');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var evaluate = exports.evaluate = function evaluate(req, res) {
@@ -49,13 +51,17 @@ var subimit = exports.subimit = function subimit(req, res) {
     comments.user_id = user_id;
     comments.content = msg.content;
     comments.grade = msg.grade;
-    comments.imgs = req.files[0].path;
-    var _evaluation = new _evaluation3.default(comments);
-    _evaluation.save(function (err) {
-      if (err) {
-        console.log(err);
-        res.send(err);
-      }
+    comments.imgs = req.files[0] ? req.files[0].path : '';
+    _wcuser.Wcuser.findOne({ _id: user_id }, function (err, user) {
+      comments.user_headimgurl = user.headimgurl;
+      comments.user_nickname = user.nickname;
+      var _evaluation = new _evaluation3.default(comments);
+      _evaluation.save(function (err) {
+        if (err) {
+          console.log(err);
+          res.send(err);
+        }
+      });
     });
   }
   if (Array.isArray(prodts)) {
@@ -67,14 +73,18 @@ var subimit = exports.subimit = function subimit(req, res) {
   } else {
     save_evl(prodts, 0);
   }
-  _order2.default.findOneAndUpdate({ _id: orderid }, { evaluate: true });
+  _order2.default.findOneAndUpdate({ _id: orderid }, { evaluate: true, status: "交易完成" }, function (err) {
+    if (err) {
+      console.log(err);
+    }
+  });
   res.redirect('/order');
 };
 
 var list = exports.list = function list(req, res) {
   var product_id = req.query.id;
 
-  _evaluation3.default.find({ product_id: product_id }, function (err, evls) {
+  _evaluation3.default.find({ product_id: product_id }).sort({ 'meta.updateAt': -1 }).exec(function (err, evls) {
     if (err) {
       console.log(err);
       res.send(err);

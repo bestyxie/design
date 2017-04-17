@@ -146,7 +146,10 @@ export const order_list = (req,res) => {
     condiction.status = status;
   }
 
-  Order.find(condiction,(err,orders) => {
+  Order.find(condiction).sort({createAt: -1}).exec((err,orders) => {
+    if(err){
+      res.send(err);
+    }
     res.render('mobile/order/',{
       orders: orders
     })
@@ -175,10 +178,21 @@ export const complete = (req,res) => {
 export const paid = (req,res) => {
   res.render('mobile/order/pay_complete');
 }
+export const get_goods = (req,res) => {
+  var order_id = req.body._id;
+
+  Order.findOneAndUpdate({_id: order_id},{status: "交易完成"},(err) => {
+    if(err){
+      console.log(err);
+      res.send(err);
+    }
+    res.render('mobile/order/get_goods');
+  })
+}
 
 export const getAll_paid = (req,res) => {
   // {status: '待发货'}
-  Order.find({},(err,orders) => {
+  Order.find({status: '待发货'}).sort({'meta.updateAt':-1}).exec((err,orders) => {
     if(err){
       console.log(err);
       res.send(err);
@@ -186,7 +200,7 @@ export const getAll_paid = (req,res) => {
     res.render('admin/delivery/',{
       orders: orders
     });
-  });
+  });                  
 }
 
 export const update = (req,res) => {

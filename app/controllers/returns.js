@@ -66,9 +66,14 @@ var reply = exports.reply = function reply(req, res) {
         console.log(err);
         res.send(err);
       }
-      _order3.default.findOneAndUpdate({ _id: orderid }, { status: '退款退货' });
-      res.render('mobile/returnOrder/success', {
-        p: '申请成功！请耐心等待审核'
+      _order3.default.findOneAndUpdate({ _id: orderid }, { status: '退款退货' }, function (err) {
+        if (err) {
+          console.log(err);
+          res.send(err);
+        }
+        res.render('mobile/returnOrder/success', {
+          p: '申请成功！请耐心等待审核'
+        });
       });
     });
   });
@@ -153,7 +158,7 @@ var complete = exports.complete = function complete(req, res) {
         timestamp: Date.now()
       });
       _request2.default.post('https://api.mch.weixin.qq.com/secapi/pay/refund', data, function (err, res, body) {
-        var result = JSON.parse(body);
+        var result = body && JSON.parse(body);
         if (result.return_code == 'SUCCESS') {
           // do something
         }

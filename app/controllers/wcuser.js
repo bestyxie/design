@@ -108,12 +108,13 @@ module.exports.homepage = function (req, res) {
             result.wait_reciept++;break;
           case "待评价":
             result.wait_comm++;break;
-          case "待退款":
+          case "退款退货":
             result.ret++;break;
           default:
             ;
         }
       }
+      console.log(result.ret);
       resolve(result);
     });
   }).then(function (result) {

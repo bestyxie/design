@@ -7,6 +7,8 @@ var ObjectId = Schema.Types.ObjectId;
 var EvaluationSchema = new Schema({
   product_id: ObjectId,
   user_id: ObjectId,
+  user_nickname: String,
+  user_headimgurl: String,
   content: String,
   grade: String,
   // 好评，中评，差评

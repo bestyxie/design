@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.update_status = exports.getAll_orders = exports.wechat = exports.getsign = exports.cancle = exports.receipt = exports.express_msg = exports.update = exports.getAll_paid = exports.paid = exports.complete = exports.order_list = exports.pay = exports.submit_order = exports.create_order = undefined;
+exports.update_status = exports.getAll_orders = exports.wechat = exports.getsign = exports.cancle = exports.receipt = exports.express_msg = exports.update = exports.getAll_paid = exports.get_goods = exports.paid = exports.complete = exports.order_list = exports.pay = exports.submit_order = exports.create_order = undefined;
 
 var _order2 = require('../models/order');
 
@@ -171,7 +171,10 @@ var order_list = exports.order_list = function order_list(req, res) {
     condiction.status = status;
   }
 
-  _order3.default.find(condiction, function (err, orders) {
+  _order3.default.find(condiction).sort({ createAt: -1 }).exec(function (err, orders) {
+    if (err) {
+      res.send(err);
+    }
     res.render('mobile/order/', {
       orders: orders
     });
@@ -200,10 +203,21 @@ var complete = exports.complete = function complete(req, res) {
 var paid = exports.paid = function paid(req, res) {
   res.render('mobile/order/pay_complete');
 };
+var get_goods = exports.get_goods = function get_goods(req, res) {
+  var order_id = req.body._id;
+
+  _order3.default.findOneAndUpdate({ _id: order_id }, { status: "交易完成" }, function (err) {
+    if (err) {
+      console.log(err);
+      res.send(err);
+    }
+    res.render('mobile/order/get_goods');
+  });
+};
 
 var getAll_paid = exports.getAll_paid = function getAll_paid(req, res) {
   // {status: '待发货'}
-  _order3.default.find({}, function (err, orders) {
+  _order3.default.find({ status: '待发货' }).sort({ 'meta.updateAt': -1 }).exec(function (err, orders) {
     if (err) {
       console.log(err);
       res.send(err);

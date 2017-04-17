@@ -1,5 +1,6 @@
 import Evaluation from '../models/evaluation';
 import Order from '../models/order';
+import {Wcuser} from '../models/wcuser';
 
 export const evaluate = (req,res) => {
   let orderid = req.query._id;
@@ -35,13 +36,17 @@ export const subimit = (req,res) => {
     comments.user_id = user_id;
     comments.content = msg.content;
     comments.grade = msg.grade;
-    comments.imgs = req.files[0].path;
-    let _evaluation = new Evaluation(comments);
-    _evaluation.save(err => {
-      if(err){
-        console.log(err);
-        res.send(err);
-      }
+    comments.imgs = req.files[0] ? req.files[0].path : '';
+    Wcuser.findOne({_id: user_id},(err,user) => {
+      comments.user_headimgurl = user.headimgurl;
+      comments.user_nickname = user.nickname;
+      let _evaluation = new Evaluation(comments);
+      _evaluation.save(err => {
+        if(err){
+          console.log(err);
+          res.send(err);
+        }
+      })
     })
     
   }
@@ -54,14 +59,18 @@ export const subimit = (req,res) => {
   }else{
     save_evl(prodts,0)
   }
-  Order.findOneAndUpdate({_id: orderid},{evaluate: true});
+  Order.findOneAndUpdate({_id: orderid},{evaluate: true,status: "交易完成"},(err) => {
+    if(err){
+      console.log(err);
+    }
+  });
   res.redirect('/order');
 }
 
 export const list = (req,res) => {
   let product_id = req.query.id;
 
-  Evaluation.find({product_id: product_id},(err,evls) => {
+  Evaluation.find({product_id: product_id}).sort({'meta.updateAt':-1}).exec((err,evls) => {
     if(err){
       console.log(err);
       res.send(err);

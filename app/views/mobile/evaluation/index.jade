@@ -11,8 +11,8 @@ block content
         each evl in evls
           .rate-item
             .rate-user
-              img.avatar(src="/images/d1.jpg")
-              span.name 空间规划2016
+              img.avatar(src="#{evl.user_headimgurl}")
+              span.name #{evl.user_nickname}
             .rate-cont #{evl.content}
             .rate-attr
               span.time #{evl.createAt.getYear()}-#{evl.createAt.getMonth()}-#{evl.createAt.getDay()}
@@ -20,4 +20,5 @@ block content
             .show-img
               ul.clearfix
                 li.small-img
-                  img(src="#{evl.imgs}")
+                  if evl.imgs
+                    img(src="#{evl.imgs}")

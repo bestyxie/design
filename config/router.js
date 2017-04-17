@@ -102,6 +102,7 @@ module.exports = function(app){
   app.get('/order/pay',Order.pay);
   app.post('/pay/complete',Order.complete);
   app.get('/pay/paid',Order.paid)
+  app.post('/order/get',Order.get_goods);
 
   app.get('/admin/order/all',Order.getAll_orders);
   app.post('/order/update',Order.update_status);

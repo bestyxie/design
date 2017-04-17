@@ -45,10 +45,16 @@ export const reply = (req,res) => {
         console.log(err);
         res.send(err);
       }
-      Order.findOneAndUpdate({_id: orderid},{status: '退款退货'});
-      res.render('mobile/returnOrder/success',{
-        p: '申请成功！请耐心等待审核'
-      })
+      Order.findOneAndUpdate({_id: orderid},{status: '退款退货'},(err) => {
+        if(err){
+          console.log(err);
+          res.send(err);
+        }
+        res.render('mobile/returnOrder/success',{
+          p: '申请成功！请耐心等待审核'
+        })
+      });
+      
     })
     
   })
@@ -134,7 +140,7 @@ export const complete = (req,res) => {
         timestamp: Date.now()
       });
       request.post('https://api.mch.weixin.qq.com/secapi/pay/refund',data,(err,res,body) => {
-        let result = JSON.parse(body);
+        let result = body && JSON.parse(body);
         if(result.return_code == 'SUCCESS'){
           // do something
         }

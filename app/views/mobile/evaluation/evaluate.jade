@@ -19,7 +19,7 @@ block content
               .img-box
                 img(src="#{product.pics[0]}")
               p.name.ellipsis #{product.name}
-            textarea(name="#{product.productId}[content]").evlue-content 建议您多说说使用后的效果感受，对其他小伙伴帮助很大哦~
+            textarea(name="#{product.productId}[content]",placeholder="建议您多说说使用后的效果感受，对其他小伙伴帮助很大哦~").evlue-content
             .uploadpic
               i.fa.fa-camera-retro
               input(type="file",name="evl[imgs]")
