@@ -327,8 +327,12 @@ $(function(){
         labels += '<a href="/product?type=labels&q='+data[i]+'" class="labels '+classes[i%cl_len]+'">'+data[i]+'</a>';
       }
       document.getElementsByClassName('j_class_pannel')[0].innerHTML=labels;
+      $('.labels').on('click',function(e){
+        $.closeModal($('.j-popup-search'));
+      })
     });
   });
+
 
   // 关闭popup
   $(document).on('close','.j-popup-search',function(){
@@ -338,7 +342,7 @@ $(function(){
   // 点击搜索弹窗 隐藏popup
   $('.j-popup-search').on('click',function(e){
     if($(e.target).hasClass('j-popup-search')){
-      $.closeModal(this);
+      $.closeModal($(this));
     }
   });
 

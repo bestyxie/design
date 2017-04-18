@@ -114,7 +114,6 @@ module.exports.homepage = function (req, res) {
             ;
         }
       }
-      console.log(result.ret);
       resolve(result);
     });
   }).then(function (result) {

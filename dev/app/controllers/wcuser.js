@@ -102,7 +102,6 @@ module.exports.homepage = function(req,res){
           default: ;
         }
       }
-      console.log(result.ret);
       resolve(result);
     })
   }).then(result => {

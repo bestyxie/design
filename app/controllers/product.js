@@ -123,6 +123,7 @@ module.exports.detail = function (req, res) {
 module.exports.new = function (req, res) {
   var new_product = req.body.product;
   var files = req.files;
+  new_product.discount = new_product.discount || 10;
 
   new_product.pics = files.map(function (item) {
     return '/images/upload/' + item.filename;
@@ -203,8 +204,9 @@ module.exports.editproduct = function (req, res) {
 module.exports.updateproduct = function (req, res) {
   var product = req.body.product;
   var files = req.files;
+  console.log(req.files);
 
-  console.log(files.length);
+  //console.log(files.length);
 
   var deletepic = product.deletepic.split(' ').slice(0, -1);
   product.labels = product.labels.split(' ');
@@ -242,14 +244,14 @@ module.exports.updateproduct = function (req, res) {
     for (var i = 0; i < files.length; i++) {
       pic_list.push('/images/upload/' + files[i].filename);
     }
-
+    console.log(files.length);
     product.pics = pic_list;
     try {
       for (var item in product) {
         thispro[item] = product[item];
       }
     } catch (err) {
-      console.log(err);
+      console.log("line226 error:", err);
     }
 
     thispro.save(function (err) {
@@ -283,9 +285,9 @@ module.exports.query = function (req, res) {
       (0, _search.search)({ 'type': 'description', 'q': q }, function (result) {
         result = result.concat(pd);
         var rest = [];
-        // console.log(result)
+        console.log(result[0]);
         for (var i = 0, len = result.length; i < len; i++) {
-          result[i]._source._id = result._id;
+          result[i]._source._id = result[i]._id;
           result[i]._source.pics = result[i]._source.pics.split(' ');
           rest.push(result[i]._source);
         }
@@ -316,7 +318,7 @@ module.exports.getProduct = function (req, res) {
   var curr = req.body.curr;
   var limit = req.body.limit;
 
-  _product3.default.find({}, { _id: 1, name: 1, labels: 1, pics: 1 }).skip((curr - 1) * limit).limit(limit).exec(function (err, products) {
+  _product3.default.find({}, { _id: 1, name: 1, labels: 1, pics: 1 }).sort({ 'meta.updateAt': -1 }).skip((curr - 1) * limit).limit(limit).exec(function (err, products) {
     if (err) {
       console.log(err);
       return;

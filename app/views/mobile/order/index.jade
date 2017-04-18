@@ -53,8 +53,8 @@ block scripts
       $(document).on('click','.j-cancle-order',function(){
         var orderid = $(this).data('id');
         $(this).parent('.operate').empty();
-        $.get('/order/cancle',{orderid: order},function(result){
-          console.log(result);
+        $(this).parents('order-item').find('order-status').html("交易关闭");
+        $.get('/order/cancle',{orderid: orderid},function(result){
         })
       })
     })
