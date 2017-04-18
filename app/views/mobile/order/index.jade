@@ -39,7 +39,7 @@ block content
                   a.red-btn.j-cancle-order(href="javascript:;",data-id="#{order._id}") 取消订单
                   a.red-btn(href="/order/pay?_id=#{order._id}",external) 去付款
                 else if order.status == '待收货'
-                  a.red-btn(href="/order/get") 确认收货
+                  a.red-btn(href="/order/reciept?_id=#{order._id}") 确认收货
                   a.red-btn(href="/express?name=#{order.express_msg.name}&number=#{order.express_msg.number}&orderid=#{order._id}") 订单跟踪
                   a.red-btn(href="/returns/goods?orderid=#{order._id}",external) 申请退货
                 else if order.status == '待评价'

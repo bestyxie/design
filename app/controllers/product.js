@@ -283,7 +283,7 @@ module.exports.query = function (req, res) {
     promise.then(function (pd) {
       // console.log(pd);
       (0, _search.search)({ 'type': 'description', 'q': q }, function (result) {
-        result = result.concat(pd);
+        result = result || result.concat(pd);
         var rest = [];
         console.log(result[0]);
         for (var i = 0, len = result.length; i < len; i++) {

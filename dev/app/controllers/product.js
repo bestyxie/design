@@ -258,7 +258,7 @@ module.exports.query = function(req,res){
     promise.then((pd)=>{
       // console.log(pd);
       search({'type': 'description','q':q},result => {
-        result = result.concat(pd);
+        result = result || result.concat(pd);
         var rest = [];
         console.log(result[0])
         for(let i=0,len=result.length;i<len;i++){
