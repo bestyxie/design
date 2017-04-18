@@ -34,7 +34,8 @@ var api = new API(config.app_id, config.app_secret);
 
 var create_order = exports.create_order = function create_order(req, res) {
   var prod_msg = req.body.products;
-  var user_id = prod_msg.user_id;
+  //let user_id = prod_msg.user_id;
+  var user_id = req.session.user._id;
   var count = 0,
       sum = 0;
 
@@ -68,6 +69,7 @@ var create_order = exports.create_order = function create_order(req, res) {
       }
 
       var default_addr = addrs.filter(function (addr) {
+        console.log(addr.default);
         if (addr.default) {
           return addr;
         }
@@ -320,7 +322,7 @@ var express_msg = exports.express_msg = function express_msg(req, res) {
 var receipt = exports.receipt = function receipt(req, res) {
   var orderid = req.query._id;
 
-  _order3.default.findOneAndUpdate({ _id: orderid }, { status: '交易完成' }, function (err) {
+  _order3.default.findOneAndUpdate({ _id: orderid }, { status: '待评价' }, function (err) {
     if (err) {
       console.log(err);
       res.send(err);

@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.complete = exports.get_return = exports.adopt = exports.admin_retlist = exports.reply = exports._return = undefined;
+exports.complete = exports.get_return = exports.adopt = exports.admin_retlist = exports.apply = exports._return = undefined;
 
 var _order2 = require('../models/order');
 
@@ -44,10 +44,10 @@ var _return = exports._return = function _return(req, res) {
   });
 };
 
-var reply = exports.reply = function reply(req, res) {
+var apply = exports.apply = function apply(req, res) {
   var _order = req.body.ret;
   var orderid = _order.orderid;
-  var file = req.files[0];
+  var file = req.files[0] || '';
   file = '/images/upload/' + file.filename;
 
   _order3.default.findOne({ _id: orderid }, function (err, order) {

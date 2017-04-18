@@ -123,8 +123,8 @@ block scripts
               if($('j-addr_list .address').length == 0){
                 var _html = [];
                 _html.push('<input type="hidden" name="order[address]" value="'+result.addr_id+'">');
-                _html.push('<div class="contack"><em class="default-label j-default-label">默认</em>收货人：'+addrData.address.recipient+' &nbsp;&nbsp;&nbsp;'+addrData.address.tel+'</div>');
-                html.push('<div class="detail">'+addrData.address.address+'</div>')
+                _html.push('<div class="contact"><em class="default-label j-default-label">默认</em>收货人：'+addrData.address.recipient+' &nbsp;&nbsp;&nbsp;'+addrData.address.tel+'</div>');
+                _html.push('<div class="detail">'+addrData.address.address+'</div>')
                 $('#order .addr_detail').empty();
                 $('#order .addr_detail').html(_html.join(""));
                 $('#order .default-addr').removeClass('hide');

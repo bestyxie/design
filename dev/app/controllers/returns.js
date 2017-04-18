@@ -23,10 +23,10 @@ export const _return = (req,res) => {
   })
 }
 
-export const reply = (req,res) => {
+export const apply = (req,res) => {
   let _order = req.body.ret;
   let orderid = _order.orderid;
-  let file = req.files[0];
+  let file = req.files[0] || '';
   file = '/images/upload/'+file.filename
 
   Order.findOne({_id: orderid},(err,order) => {

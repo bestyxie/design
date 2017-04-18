@@ -11,7 +11,8 @@ const api = new API(config.app_id,config.app_secret);
 
 export const create_order = (req,res) => {
   let prod_msg = req.body.products;
-  let user_id = prod_msg.user_id;
+  //let user_id = prod_msg.user_id;
+  let user_id = req.session.user._id;
   let count = 0, sum = 0;
 
   prod_msg.openid = req.session.user.openid;
@@ -44,6 +45,7 @@ export const create_order = (req,res) => {
       }
 
       let default_addr = addrs.filter(function(addr) {
+        console.log(addr.default);
         if(addr.default){
           return addr;
         }
@@ -288,7 +290,7 @@ export const express_msg = (req,res) => {
 export const receipt = (req,res) => {
   let orderid = req.query._id;
 
-  Order.findOneAndUpdate({_id: orderid},{status: '交易完成'},(err) => {
+  Order.findOneAndUpdate({_id: orderid},{status: '待评价'},(err) => {
     if(err){
       console.log(err);
       res.send(err);

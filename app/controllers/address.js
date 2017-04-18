@@ -15,21 +15,26 @@ var add = exports.add = function add(req, res) {
   var _address = new _address2.Address(addr);
 
   if (addr.default) {
-    _address2.Address.findOneAndUpdate({ user: userid, default: true }, { default: false }, function (err, address) {
-      if (err) {
-        console.log(err);
-        return;
-      }
-      console.log('update address::', address);
+    new Promise(function (resolve, reject) {
+      _address2.Address.findOneAndUpdate({ user: userid, default: true }, { default: false }, function (err, address) {
+        if (err) {
+          console.log(err);
+          reject();
+          return;
+        }
+        resolve();
+        console.log('update address::', address);
+      });
+    }).then(function () {
+      _address.save(function (err, address) {
+        if (err) {
+          console.log(err);
+          res.json({ success: false });
+        }
+        res.json({ success: true, addr_id: address._id });
+      });
     });
   }
-  _address.save(function (err, address) {
-    if (err) {
-      console.log(err);
-      res.json({ success: false });
-    }
-    res.json({ success: true, addr_id: address._id });
-  });
 };
 
 var update = exports.update = function update(req, res) {

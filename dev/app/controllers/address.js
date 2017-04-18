@@ -8,21 +8,27 @@ export const add = (req,res) => {
   let _address = new Address(addr);
   
   if(addr.default){
-    Address.findOneAndUpdate({user: userid,default: true},{default: false},(err,address) => {
-      if(err){
-        console.log(err);
-        return;
-      }
-      console.log('update address::',address);
-    });
+    new Promise(function(resolve,reject){
+      Address.findOneAndUpdate({user: userid,default: true},{default: false},(err,address) => {
+        if(err){
+          console.log(err);
+          reject()
+          return;
+        }
+        resolve();
+        console.log('update address::',address);
+      });
+    }).then(function(){
+      _address.save((err,address) => {
+        if(err){
+          console.log(err);
+          res.json({success: false});
+        }
+        res.json({success: true,addr_id: address._id});
+      });
+    })
   }
-  _address.save((err,address) => {
-    if(err){
-      console.log(err);
-      res.json({success: false});
-    }
-    res.json({success: true,addr_id: address._id});
-  });
+  
 }
 
 export const update = (req,res) => {
