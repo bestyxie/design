@@ -3,7 +3,7 @@ extends ../../layout
 block content
   .page.order_list
     header.head-block.bar.bar-nav.header
-      a.arr(href="javascript:history.back();")
+      a.arr(href="/user/home")
         i.fa.fa-angle-left
       h1.title 我的订单
     .content.native-scroll.wrapper
@@ -34,7 +34,8 @@ block content
                 em ￥#{sum}
               .operate
                 if order.status == '待发货'
-                  p 等待发货
+                  p(style="display:inline-block;") 等待发货
+                  a.red-btn(href="/returns/goods?orderid=#{order._id}",external) 申请退款
                 else if order.status == '待付款'
                   a.red-btn.j-cancle-order(href="javascript:;",data-id="#{order._id}") 取消订单
                   a.red-btn(href="/order/pay?_id=#{order._id}",external) 去付款

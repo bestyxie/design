@@ -10,7 +10,7 @@ block content
       .section
         p 订单金额
         em ￥#{order.total+order.express}
-      a.pay#j-pay(href="",data-id="#{order._id}") 去支付
+      a.pay#j-pay(href="",data-id="#{order._id}",style="margin-top: 2rem;") 去支付
 
 block scripts
   script.
